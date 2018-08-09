@@ -9,6 +9,7 @@
   "author": "jason tian",
   "license": "ISC",
   "dependencies": {
+    "antd": "^3.8.0",
     "axios": "^0.18.0",
     "mobx": "^5.0.3",
     "mobx-react": "^5.2.3",
