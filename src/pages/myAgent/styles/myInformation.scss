@@ -1,0 +1,13 @@
+.myInfo-container{
+    padding: 30px;
+    background: white;
+    .orderDetail-item{
+        padding: 5px 0;
+        .myInfo-item-label{
+            display: inline-block;
+            width: 60px;
+            text-align: left;
+            margin-right: 10px;
+        }
+    }
+}

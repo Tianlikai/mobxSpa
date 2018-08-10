@@ -1,0 +1,115 @@
+
+.promotionDetail-container{
+    padding: 30px;
+    background: white;
+    .proInfo-container{
+        position: relative;
+        font-size: 13px;
+        padding-bottom: 80px;
+        .proInfo-left{
+            padding-top: 20px;
+            .proInfo-item{
+                float: left;
+                margin-bottom: 5px;
+                width: 195px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                .proInfo-item-label{
+                    margin-right: 5px;
+                }
+            }
+            &::after{
+                content: '';
+                display: block;
+                clear: both;
+            }
+        }
+        .proInfo-right{
+            position: absolute;
+            right: 0;
+            top: 0;
+            height: 100px;
+            width: 100px;
+            .code {
+                position: relative;
+                width: 100px;
+                margin: 0 auto;
+                .pCode{
+                    .weiCode{
+                      height: 100px;
+                      width: 100px;
+                    }
+                }
+                .downImg {
+                    margin: 10px auto;
+                }
+                button{
+                    width: 80px;
+                    margin-left: 10px;
+                }
+            }
+        }
+        &::after{
+            content: '';
+            display: block;
+            clear: both;
+        }
+    }
+}
+.operations-orgGo{
+    .ant-btn{
+      box-sizing: border-box;
+      width: 70px;
+      height: 30px;
+      line-height: 30px;
+      display: block;
+      text-align: center;
+      padding: 0;
+      &.ant-btn-primary{
+        background-color: #2C5B8F;
+        border: #2C5B8F;
+        margin-bottom: 10px;
+        margin-right: 10px;
+      }
+    }
+}
+.create-order-createPromotion{
+    float: left;
+    left: 30px;
+    top: 12px;
+}
+
+.data-frame-container{
+    margin-bottom: 1em;
+    .data-frame-item{
+        height: 188px;
+        border-radius: 2px;
+        box-shadow: 0 0 4px #BFBFBF;
+        padding: 30px 9%;
+        .item-title{
+            font-size: 14px;
+            .title-icon-right-show{
+                float: right;
+                margin-top: 4px;
+                cursor: pointer;
+            }
+        }
+        .item-value{
+            font-size: 30px;
+            color: #000;
+        }
+        .item-bar{
+            margin-top: 55px;
+            height: 1px;
+            background-color: #BFBFBF;
+        }
+        .item-footer{
+            margin-top: 8px;
+            font-size: 14px;
+            .item-footer-value{
+                margin-left: 10px;
+            }
+        }
+    }
+}
