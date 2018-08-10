@@ -1,0 +1,45 @@
+.goPoints{
+  &.special .content{
+    padding: 0;
+  }
+  .content {
+    width: 100%;
+    display: flex;
+    height: 350px;
+    justify-content: space-around;
+    align-items: center;
+    padding: 40px 0;
+    text-align: center;
+    .title {
+      margin-bottom: 20px;
+      h5 {
+        color: #333;
+        font-size: 16px;
+        font-weight: 500;
+      }
+      p {
+        color: #666;
+        line-height: 22px;
+        font-size: 12px;
+      }
+    }
+    .cont-left {
+      height: 100%;
+      flex: 1;
+    }
+  }
+}
+.code {
+  position: relative;
+  width: 200px;
+  margin: 0 auto;
+  .pCode{
+    .weiCode{
+      height: 200px;
+      width: 200px;
+    }
+  }
+}
+.downImg {
+    margin: 30px auto;
+}
