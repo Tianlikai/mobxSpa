@@ -1,4 +1,7 @@
 const Mock = require('mockjs')
+const moment = require('moment')
+const mathVersion = ['通用版', '人教版', '浙教版', '苏教版', '北师大版']
+const englishVersion = ['通用版', '人教版', '外研版', '苏教译林版', '上海牛津版']
 
 class Agent {
     constructor(
@@ -40,10 +43,18 @@ class Agent {
                     'address': Mock.Random.city(),
                     'school': Mock.Random.cword(5) + '学校',
                     'grade|1': [7, 8, 9],
-                    'className': '',
+                    'className|1': ['一班', '二班', '三班', '四班', '五班', '六班', '七班', '八班', '九班', '十班', '十一班'],
                     'registerNumber|1-1000': 100,
                     'totalPayMoney|1-10000': 100,
-                    'totalShare|1-10000': 100
+                    'yesterdayRegisterNumber|1-10000': 100,
+                    'totalShare|1-10000': 100,
+                    'yesterdayShare|1-10000': 100,
+                    'payRegisterNumber|1-10000': 100,
+                    'yesterdayPayRegisterNumber|1-10000': 100,
+                    'mathTeacher': Mock.Random.cname(),
+                    'mathPressName|1': mathVersion,
+                    'englishTeacher': Mock.Random.cname(),
+                    'englishPressName|1': englishVersion
                 }
             })
             cachedPro.push(mock.item)
@@ -70,19 +81,29 @@ class Agent {
      * @param {number: 页码} pageNo
      * @param {number: 每页长度} itemsPerPage
      * @param {number: 年级} grade
+     * @param {string: 开始日期} startTime
+     * @param {string: 截止日期} endTime
      */
-    getProList(name, pageNo, itemsPerPage, grade) {
+    getProList(name, pageNo, itemsPerPage, grade, startTime, endTime) {
         let copyCached = this.cachedPro.slice()
         grade = grade ? grade + '' : null
         name = name ? name + '' : null
         if (name) {
             copyCached = copyCached.filter(element => {
-                return element.name.indexOf(name) >= 0 || (element.id + '').indexOf(name) >= 0 || (element.mobile + '').indexOf(name) >= 0
+                return element.school.indexOf(name) >= 0 || (element.className + '').indexOf(name) >= 0
             })
         }
         if (grade) {
             copyCached = copyCached.filter(element => {
                 return element.grade + '' === grade
+            })
+        }
+        if (startTime && endTime) {
+            copyCached = copyCached.filter(element => {
+                const createdAt = new Date(element.createdAt)
+                const start = new Date(startTime)
+                const end = new Date(endTime)
+                return createdAt >= start && createdAt <= end
             })
         }
         let len = copyCached.length
@@ -141,6 +162,65 @@ class Agent {
             accountName: '账户名称',
             companyName: '公司名称'
         }
+    }
+
+    /**
+     * 获取推广详情
+     * @param {number: 推广id} id
+     */
+    getPromotionById(id) {
+        const res = this.cachedPro.find(element => {
+            return element.id + '' === id + ''
+        })
+        return res
+    }
+
+    /**
+     * 创建推广
+     * @param {*} area
+     * @param {*} city
+     * @param {*} className
+     * @param {*} englishTeacher
+     * @param {*} englishPress
+     * @param {*} grade
+     * @param {*} mathPress
+     * @param {*} mathTeacher
+     * @param {*} province
+     * @param {*} school
+     */
+    createPromotion(
+        area = '',
+        city = '',
+        className = '',
+        englishTeacher = '',
+        englishPress = '',
+        grade = '',
+        mathPress = '',
+        mathTeacher = '',
+        province = '',
+        school = '') {
+        let id = this.cachedPro.length + 1
+        const data = {
+            'id': id,
+            'createdAt': moment().format('YYYY-MM-DD HH:mm:ss'),
+            'address': city,
+            'school': school,
+            'grade': grade,
+            'className': className,
+            'registerNumber': 0,
+            'totalPayMoney': 0,
+            'yesterdayRegisterNumber': 0,
+            'totalShare': 0,
+            'yesterdayShare': 0,
+            'payRegisterNumber': 0,
+            'yesterdayPayRegisterNumber': 0,
+            'mathTeacher': mathTeacher,
+            'mathPressName': mathVersion[mathPress - 1],
+            'englishTeacher': englishTeacher,
+            'englishPressName': englishVersion[englishPress - 1]
+        }
+        this.cachedPro.unshift(data)
+        return data
     }
 }
 

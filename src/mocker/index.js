@@ -1,3 +1,5 @@
+const fs = require('fs')
+const path = require('path')
 const qs = require('qs')
 const login = require('./login')
 const org = require('./org')
@@ -9,7 +11,7 @@ const orderLog = require('./orderLog')
 const proxy = {
     'POST /__api/8/user/login': login,
     'GET /__api/11/org/list': function(req, res) {
-        console.log('mock: /__api/11/org/list')
+        console.log('GET mock: /__api/11/org/list')
         const {name, pageNo, itemsPerPage, state} = qs.parse(req._parsedUrl.query)
         const {items, count} = org.getOrgList(name, pageNo, itemsPerPage, state)
         res.json({
@@ -24,7 +26,7 @@ const proxy = {
         })
     },
     'GET /__api/13/productOrder/getOrderList': function(req, res) {
-        console.log('mock: /__api/13/productOrder/getOrderList')
+        console.log('GET mock: /__api/13/productOrder/getOrderList')
         const {name, pageNo, itemsPerPage, state} = qs.parse(req._parsedUrl.query)
         const {items, count} = order.getOrderList(name, pageNo, itemsPerPage, state)
         res.json({
@@ -39,7 +41,7 @@ const proxy = {
         })
     },
     'GET /__api/11/promotion/getMyProfit': function(req, res) {
-        console.log('mock: /__api/11/promotion/getMyProfit')
+        console.log('GET mock: /__api/11/promotion/getMyProfit')
         const {pageNo, itemsPerPage} = qs.parse(req._parsedUrl.query)
         const {items, totalShare, settled, settling, noSettle, count} = agent.getMyShare(pageNo, itemsPerPage)
         res.json({
@@ -58,9 +60,9 @@ const proxy = {
         })
     },
     'GET /__api/11/promotion/getPromotionList': function(req, res) {
-        console.log('mock: /__api/11/promotion/getPromotionList')
-        const {name, pageNo, itemsPerPage, grade} = qs.parse(req._parsedUrl.query)
-        const {items, count} = agent.getProList(name, pageNo, itemsPerPage, grade)
+        console.log('GET mock: /__api/11/promotion/getPromotionList')
+        const {name, pageNo, itemsPerPage, grade, startTime, endTime} = qs.parse(req._parsedUrl.query)
+        const {items, count} = agent.getProList(name, pageNo, itemsPerPage, grade, startTime, endTime)
         res.json({
             code: '0',
             data: {
@@ -73,7 +75,7 @@ const proxy = {
         })
     },
     'GET /__api/11/promotion/getAgent': function(req, res) {
-        console.log('mock: /__api/11/promotion/getAgent')
+        console.log('GET mock: /__api/11/promotion/getAgent')
         const data = agent.getMyInfo()
         res.json({
             code: '0',
@@ -84,7 +86,7 @@ const proxy = {
         })
     },
     'GET /__api/11/org/log/list': function(req, res) {
-        console.log('mock: /__api/11/org/log/list')
+        console.log('GET mock: /__api/11/org/log/list')
         const {name, pageNo, itemsPerPage, state} = qs.parse(req._parsedUrl.query)
         const {items, count} = orgLog.getLog(name, pageNo, itemsPerPage, state)
         res.json({
@@ -99,7 +101,7 @@ const proxy = {
         })
     },
     'GET /__api/13/org/getOrderLogList': function(req, res) {
-        console.log('mock: /__api/13/org/getOrderLogList')
+        console.log('GET mock: /__api/13/org/getOrderLogList')
         const {name, pageNo, itemsPerPage, state} = qs.parse(req._parsedUrl.query)
         const {items, count} = orderLog.getLog(name, pageNo, itemsPerPage, state)
         res.json({
@@ -108,6 +110,138 @@ const proxy = {
                 items: items,
                 count: count
             },
+            err: null,
+            message: 'success!',
+            successful: true
+        })
+    },
+    'POST /__api/11/promotion/getPromotionQrCode': function(req, res) {
+        let url = path.resolve(__dirname, 'images', 'md.jpg')
+        console.log('POST mock: /__api/11/promotion/getPromotionQrCode')
+        fs.readFile(url, function(err, file) {
+            if (err) {
+                res.json({
+                    code: '1',
+                    data: null,
+                    err: '读取图片失败',
+                    message: '读取图片失败',
+                    successful: false
+                })
+            } else {
+                res.json({
+                    code: '0',
+                    data: file.toString('base64'),
+                    err: null,
+                    message: 'success!',
+                    successful: true
+                })
+            }
+        })
+    },
+    'GET /__api/11/promotion/getPromotionDetail': function(req, res) {
+        console.log('GET mock: /__api/11/promotion/getPromotionDetail')
+        const {promotionId} = qs.parse(req._parsedUrl.query)
+        let data = {
+            courseOrderlist: []
+        }
+        const result = agent.getPromotionById(promotionId)
+        data = Object.assign({}, data, result)
+        res.json({
+            code: '0',
+            data: data,
+            err: null,
+            message: 'success!',
+            successful: true
+        })
+    },
+    'GET /__api/11/public/getArea': function(req, res) {
+        console.log('GET mock: /__api/11/public/getArea')
+        const area = require('../static/area.json')
+        res.json(area)
+    },
+    'GET /__api/11/public/getDict/Math_type': function(req, res) {
+        res.json({
+            'code': '0',
+            'message': 'success',
+            'httpCode': '200',
+            'err': null,
+            'data': [
+                {
+                    'dictvalue': '1',
+                    'dicttext': '通用版'
+                }, {
+                    'dictvalue': '2',
+                    'dicttext': '人教版'
+                }, {
+                    'dictvalue': '3',
+                    'dicttext': '浙教版'
+                }, {
+                    'dictvalue': '4',
+                    'dicttext': '苏科版'
+                }, {
+                    'dictvalue': '5',
+                    'dicttext': '北师大版'
+                }
+            ],
+            'successful': true
+        })
+    },
+    'GET /__api/11/public/getDict/English_type': function(req, res) {
+        res.json({
+            'code': '0',
+            'message': 'success',
+            'httpCode': '200',
+            'err': null,
+            'data': [
+                {
+                    'dictvalue': '1',
+                    'dicttext': '通用版'
+                }, {
+                    'dictvalue': '2',
+                    'dicttext': '人教版'
+                }, {
+                    'dictvalue': '3',
+                    'dicttext': '外研版'
+                }, {
+                    'dictvalue': '4',
+                    'dicttext': '苏教译林版'
+                }, {
+                    'dictvalue': '5',
+                    'dicttext': '上海牛津版'
+                }
+            ],
+            'successful': true
+        })
+    },
+    'POST /__api/11/promotion/addPromotion': function(req, res) {
+        console.log('POST mock: /__api/11/promotion/addPromotion')
+        const {
+            area,
+            city,
+            className,
+            englishTeacher,
+            englishPress,
+            grade,
+            mathPress,
+            mathTeacher,
+            province,
+            school
+        } = req.body
+        const data = agent.createPromotion(
+            area,
+            city,
+            className,
+            englishTeacher,
+            englishPress,
+            grade,
+            mathPress,
+            mathTeacher,
+            province,
+            school
+        )
+        res.json({
+            code: '0',
+            data: data,
             err: null,
             message: 'success!',
             successful: true
