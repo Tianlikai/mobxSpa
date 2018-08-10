@@ -40,8 +40,10 @@ class Order {
      * @param {number: 页码} pageNo
      * @param {number: 每页长度} itemsPerPage
      * @param {number: 该条记录状态} state
+     * @param {string: 开始日期} startTime
+     * @param {string: 截止日期} endTime
      */
-    getOrderList(name, pageNo, itemsPerPage, state) {
+    getOrderList(name, pageNo, itemsPerPage, state, startTime, endTime) {
         let copyCached = this.cached.slice()
         state = state ? state + '' : null
         name = name ? name + '' : null
@@ -55,6 +57,14 @@ class Order {
                 return element.countState + '' === state
             })
         }
+        if (startTime && endTime) {
+            copyCached = copyCached.filter(element => {
+                const createdAt = new Date(element.createTime)
+                const start = new Date(startTime)
+                const end = new Date(endTime)
+                return createdAt >= start && createdAt <= end
+            })
+        }
         let len = copyCached.length
         let items = []
         let {start, end} = this.getStartAndStop(pageNo, itemsPerPage, len)
@@ -63,6 +73,27 @@ class Order {
             ++start
         }
         return {items, count: len}
+    }
+
+    /**
+     * 取消订单
+     * @param {number: 订单id} id
+     * @param {string: 备注信息} note
+     * @param {string: 状态} state
+     */
+    cancelOrderById(id, note, state) {
+        let pos = this.cached.findIndex(element => {
+            return element.orderId + '' === id + ''
+        })
+        if (pos >= 0) {
+            console.log(this.cached[pos])
+            console.log(note)
+            this.cached[pos].note = note
+            this.cached[pos].state = state
+            return true
+        } else {
+            return false
+        }
     }
 }
 
