@@ -62,6 +62,10 @@ export default class SignIn extends Component {
         console.log('submit')
     }
     render() {
+        const footer = {
+            color: 'gray',
+            fontSize: 18
+        }
         return (
             <div className='signIn'>
                 <div className='header' />
@@ -71,7 +75,7 @@ export default class SignIn extends Component {
                     </div>
                     <SignInForm />
                 </div>
-                <div className='footer'>
+                <div className='footer' style={footer}>
                     power to go!
                 </div>
             </div>
