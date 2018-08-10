@@ -37,20 +37,30 @@ class OrderLog {
      * @param {string: 搜索条件} name
      * @param {number: 页码} pageNo
      * @param {number: 每页长度} itemsPerPage
-     * @param {number: 该条记录状态} state
+     * @param {number: 操作状态} state
+     * @param {string: 开始日期} startTime
+     * @param {string: 截止日期} endTime
      */
-    getLog(name, pageNo, itemsPerPage, state) {
+    getLog(name, pageNo, itemsPerPage, state, startTime, endTime) {
         let copyCached = this.cached.slice()
         state = state ? state + '' : null
         name = name ? name + '' : null
         if (name) {
             copyCached = copyCached.filter(element => {
-                return element.name.indexOf(name) >= 0 || (element.id + '').indexOf(name) >= 0 || (element.mobile + '').indexOf(name) >= 0
+                return element.orgName.indexOf(name) >= 0 || element.userName.indexOf(name) >= 0
             })
         }
         if (state) {
             copyCached = copyCached.filter(element => {
-                return element.countState + '' === state
+                return element.operationType + '' === state
+            })
+        }
+        if (startTime && endTime) {
+            copyCached = copyCached.filter(element => {
+                const createdAt = new Date(element.operateDate)
+                const start = new Date(startTime)
+                const end = new Date(endTime)
+                return createdAt >= start && createdAt <= end
             })
         }
         let len = copyCached.length

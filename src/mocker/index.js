@@ -87,8 +87,8 @@ const proxy = {
     },
     'GET /__api/11/org/log/list': function(req, res) {
         console.log('GET mock: /__api/11/org/log/list')
-        const {name, pageNo, itemsPerPage, state} = qs.parse(req._parsedUrl.query)
-        const {items, count} = orgLog.getLog(name, pageNo, itemsPerPage, state)
+        const {name, pageNo, itemsPerPage, operationType, startTime, endTime} = qs.parse(req._parsedUrl.query)
+        const {items, count} = orgLog.getLog(name, pageNo, itemsPerPage, operationType, startTime, endTime)
         res.json({
             code: '0',
             data: {
@@ -102,8 +102,8 @@ const proxy = {
     },
     'GET /__api/13/org/getOrderLogList': function(req, res) {
         console.log('GET mock: /__api/13/org/getOrderLogList')
-        const {name, pageNo, itemsPerPage, state} = qs.parse(req._parsedUrl.query)
-        const {items, count} = orderLog.getLog(name, pageNo, itemsPerPage, state)
+        const {name, pageNo, itemsPerPage, type, startTime, endTime} = qs.parse(req._parsedUrl.query)
+        const {items, count} = orderLog.getLog(name, pageNo, itemsPerPage, type, startTime, endTime)
         res.json({
             code: '0',
             data: {
