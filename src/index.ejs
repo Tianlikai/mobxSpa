@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<!--[if IE 9]>          <html lang="zh" class="ie9 no-js">   <![endif]-->
+<!--[if gt IE 9]><!-->  <html lang="zh" class="no-js">       <!--<![endif]-->
+<head>
+  <title>mox-react</title>
+  <meta charset="utf-8">
+  <meta name="description" content="">
+
+  <link href="./static/rl.png" rel="icon" type="image/png" sizes="16x16">
+
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+  <meta name="full-screen" content="yes">
+  <meta name="format-detection" content="telephone=no;address=no;email=no;">
+  <meta http-equiv="cleartype" content="on">
+
+  <!--[if IE 9]>
+  <script type="text/javascript" src="/static/ie9.js"></script>
+  <![endif]-->
+
+  <link rel="stylesheet" href="<%= htmlWebpackPlugin.options.dllCSS %>"></link>
+
+  <% for (var i in htmlWebpackPlugin.files.css) { %>
+  <link rel="stylesheet" href="<%= htmlWebpackPlugin.files.css[i] %>">
+  <% } %>
+</head>
+<body>
+  <div class='partnerContainer' id="root"><div class="render fullHeight">
+    <img style="display: block; width: 40px; margin: 50px auto 6px;" src="https://lcdns-static.learnta.com/spinner.gif"/>
+  <div></div>
+
+  <script src="<%= htmlWebpackPlugin.options.dllJS %>"></script>
+
+  <% for (var chunk in htmlWebpackPlugin.files.chunks) { %>
+    <script type="text/javascript" src="<%=htmlWebpackPlugin.files.chunks[chunk].entry %>"></script>
+  <% } %>
+</body>
+</html>
