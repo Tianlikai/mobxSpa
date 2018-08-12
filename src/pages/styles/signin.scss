@@ -1,0 +1,70 @@
+.signIn {
+    height: 100%;
+    position: relative;
+    .logo {
+        width: 98px;
+    }
+    .header {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 58px;
+        background: #001529;
+        padding: 0 30px;
+        z-index: 1;
+        text-align: left;
+    }
+    .content {
+        position: absolute;
+        width: 400px;
+        height: 368px;
+        top: 50%;
+        left: 50%;
+        margin-left: -200px;
+        margin-top: -184px;
+        z-index: 2;
+        .logo {
+            text-align: center;
+            width: 100%;
+            img {
+                width: 160px;
+            }
+        }
+        .title {
+            font-size: 24px;
+            color: #666;
+            margin: 11px;
+        }
+        .submit {
+            width: 100%;
+            height: 60px;
+            text-align: center;
+            color: #fff;
+            background: #2c5b8f;
+            font-size: 24px;
+        }
+    }
+    .footer {
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        width: 150px;
+        margin-left: -75px;
+        height: 40px;
+        z-index: 0;
+        img {
+            width: 100%;
+            height: 100%;
+        }
+        color: gray;
+        font-size: 20px;
+    }
+    input {
+        width: 100%;
+        height: 60px;
+        background: #f0f1f3;
+        font-size: 20px;
+        padding: 0 30px;
+    }
+}

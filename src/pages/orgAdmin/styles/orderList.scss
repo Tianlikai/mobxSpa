@@ -1,0 +1,29 @@
+.confirm-order, .confirm{
+    padding: 5px 0;
+}
+.confirm-note{
+    padding-bottom: 10px;
+}
+.operations-orgGo{
+    .ant-btn{
+      box-sizing: border-box;
+      width: 70px;
+      height: 30px;
+      line-height: 30px;
+      display: block;
+      text-align: center;
+      padding: 0;
+      &.ant-btn-primary{
+        background-color: #2C5B8F;
+        border: #2C5B8F;
+        margin-bottom: 10px;
+        margin-right: 10px;
+      }
+    }
+}
+.ant-calendar-range-middle{
+    margin-left: -12px;
+}
+.ant-calendar-range-right .ant-calendar-date-input-wrap{
+    margin-left: 0;
+}

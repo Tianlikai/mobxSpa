@@ -1,0 +1,18 @@
+.orderDetail-container{
+    min-width: 800px;
+    margin-top: 37px;
+    padding: 30px 0 100px 0;
+    background: white;
+    .orderDetail-item{
+        font-size: 16px;
+        color: #333;
+        margin-bottom: 0;
+        .ant-form-item-label{
+            label{
+                font-size: 16px;
+                color: #333;
+                min-width: 100px;
+            }
+        }
+    }
+}
