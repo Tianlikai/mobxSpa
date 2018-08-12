@@ -150,6 +150,14 @@ const SIDE_MENU = {
     }
 }
 
+const SYSTEM_IDS = {
+    BD_ORG: 10,
+    LT_ADMIN: 13,
+    OPERATION_ADMIN: 15
+}
+
+const QINIU_DOMAIN = 'https://lcdns-pic.your.com/'
+
 export {
     OPTION, // 订单列表状态 通用
     ORG_STATE, // 机构列表状态
@@ -166,5 +174,7 @@ export {
     ORDER_FIELD,
     GRADE, // 年级表
     PERMISSIONS,
-    SIDE_MENU
+    SIDE_MENU,
+    SYSTEM_IDS,
+    QINIU_DOMAIN
 }
