@@ -55,7 +55,8 @@ class Organization {
 
     @action
     disableOrg(organizationId, state, callback) {
-        G.api.updateOrgState({urlParams: {organizationId, state}}).then(data => {
+        let data = {organizationId, state}
+        G.api.updateOrgState({data}).then(data => {
             const list = this.organizationList.slice()
             list.find(v => v.id === organizationId).state = state
             this.organizationList = list
