@@ -76,12 +76,12 @@ class Order {
     }
 
     /**
-     * 取消订单
+     * 更新订单状态
      * @param {number: 订单id} id
      * @param {string: 备注信息} note
      * @param {string: 状态} state
      */
-    cancelOrderById(id, note, state) {
+    updateOrderById(id, note, state) {
         let pos = this.cached.findIndex(element => {
             return element.orderId + '' === id + ''
         })

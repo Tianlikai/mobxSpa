@@ -65,6 +65,27 @@ class Org {
         }
         return {items, count: len}
     }
+
+    /**
+     * 更新机构状态
+     * @param {number: 机构id} id
+     * @param {string: 状态} state
+     */
+    updateOrderById(id, state) {
+        let pos = this.cached.findIndex(element => {
+            return element.id + '' === id + ''
+        })
+        if (pos >= 0) {
+            console.log(this.cached[pos])
+            this.cached[pos].state = state
+            return true
+        } else {
+            console.log(pos)
+            console.log(id)
+            console.log(state)
+            return false
+        }
+    }
 }
 
 const org = new Org()

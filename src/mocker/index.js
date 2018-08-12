@@ -25,6 +25,28 @@ const proxy = {
             successful: true
         })
     },
+    'PUT /__api/11/org/updateOrganisationStateById': function(req, res) {
+        console.log('PUT /__api/11/org/updateOrganisationStateById')
+        let {organizationId, state} = req.body
+        const result = org.updateOrderById(organizationId, state)
+        if (result) {
+            res.json({
+                code: '0',
+                data: 'success',
+                err: null,
+                message: 'success!',
+                successful: true
+            })
+        } else {
+            res.json({
+                code: '1',
+                data: 'error',
+                err: null,
+                message: 'error!',
+                successful: true
+            })
+        }
+    },
     'GET /__api/13/productOrder/getOrderList': function(req, res) {
         console.log('GET mock: /__api/13/productOrder/getOrderList')
         const {name, pageNo, itemsPerPage, state, startTime, endTime} = qs.parse(req._parsedUrl.query)
@@ -43,7 +65,7 @@ const proxy = {
     'PUT /__api/13/productOrder/updateStateById': function(req, res) {
         console.log('PUT /__api/13/productOrder/updateStateById')
         let {orderId, note, state} = req.body
-        const result = order.cancelOrderById(orderId, note, state)
+        const result = order.updateOrderById(orderId, note, state)
         if (result) {
             res.json({
                 code: '0',
