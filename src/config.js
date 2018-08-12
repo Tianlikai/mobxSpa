@@ -6,6 +6,8 @@ const ORG_STATE = {
     '4': '禁用'
 }
 
+const ACTION_STATE = ['启用', '禁用']
+
 const OPTION = [
     {key: 'all', value: 0, text: '全部'},
     {key: 'done', value: 1, text: '已支付'},
@@ -151,6 +153,7 @@ const SIDE_MENU = {
 export {
     OPTION, // 订单列表状态 通用
     ORG_STATE, // 机构列表状态
+    ACTION_STATE,
     DEFAULT_FORM_OPTION, // 订单列表 默认下拉选项
     DEFAULT_OPTION, // 默认选项
     LABEL_LIST, // 订单详情列表 所有字段
