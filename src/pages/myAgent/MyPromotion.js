@@ -6,7 +6,7 @@ import {Form, Input, Button, Table, DatePicker, Select} from 'antd'
 import {ModuleLine} from './MyIncome'
 import ShareModal from 'components/myPromotionShareModal/index'
 import {createForm} from '../../libs/antdUtils'
-import {GRADE} from '../../config'
+import {GRADE} from '../../settings/consts'
 import './styles/myPromotion.scss'
 
 const FormItem = Form.Item

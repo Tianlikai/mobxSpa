@@ -2,7 +2,7 @@ import Component from '../../components/Component'
 import OrgLogs from './OrgLogs'
 import OrderLogs from './OrderLogs'
 import Container from '../../layouts/Container'
-import {PERMISSIONS} from '../../config'
+import {PERMISSIONS} from '../../settings/consts'
 
 const {Route, Switch} = ReactRouterDOM
 

@@ -4,7 +4,7 @@ import {Form, Input, Select, Button, Radio, Cascader} from 'antd'
 import Spinner from 'components/spiner/Spinner'
 import {ModuleLine} from './MyIncome'
 import {createForm} from '../../libs/antdUtils'
-import {GRADE} from '../../config'
+import {GRADE} from '../../settings/consts'
 import './styles/createPromotion.scss'
 
 const FormItem = Form.Item

@@ -1,5 +1,5 @@
 import {action, observable} from 'mobx'
-import {DEFAULT_OPTION, ORDER_TYPE, UNIT, PAY_TYPE} from '../config'
+import {DEFAULT_OPTION, ORDER_TYPE, UNIT, PAY_TYPE} from '../settings/consts'
 import {message} from 'antd'
 
 class Orders {
@@ -59,9 +59,8 @@ class Orders {
 
     @action
     updateOrderState(orderId, orgId, state, note, query, callback) {
-        let urlParams = {orderId}
-        let data = {orgId, note, state}
-        G.api.updateOrderState({urlParams, data}).then(data => {
+        let data = {orgId, note, state, orderId}
+        G.api.updateOrderState({data}).then(data => {
             this.getOrderList(query)
             callback && callback()
         }).catch(e => {

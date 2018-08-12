@@ -1,7 +1,7 @@
 import Component from '../components/Component'
 import {Menu, Icon} from 'antd'
 import {Link} from 'react-router-dom'
-import {SIDE_MENU} from '../config'
+import {SIDE_MENU} from '../settings/consts'
 import './styles/SideMenu.scss'
 
 const {Item, SubMenu} = Menu

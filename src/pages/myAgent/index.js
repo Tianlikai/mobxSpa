@@ -5,7 +5,7 @@ import CreatePromotion from './CreatePromotion'
 import PromotionDetail from './PromotionDetail'
 import MyInformation from './MyInformation'
 import Container from '../../layouts/Container'
-import {PERMISSIONS} from '../../config'
+import {PERMISSIONS} from '../../settings/consts'
 
 const {Route, Switch} = ReactRouterDOM
 

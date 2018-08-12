@@ -1,5 +1,5 @@
 import {action, observable} from 'mobx'
-import {GRADE} from '../config'
+import {GRADE} from '../settings/consts'
 import moment from 'moment'
 
 class Income {
