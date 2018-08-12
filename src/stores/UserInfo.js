@@ -52,34 +52,6 @@ class UserInfo {
     }
 
     @action
-    signInWithPrivilege(data, callback) {
-        G.api.signInWithPrivilege({data}).then((data) => {
-            data.isSucceed = '成功'
-            callback(data)
-            this.setUserInfo(data)
-            this.saveUserInfo(data)
-        }).catch(error => {
-            error.isSucceed = '失败'
-            callback(error)
-            Modal.error({
-                title: error.message
-            })
-        })
-    }
-
-    @action
-    signInGetCode(data) {
-        G.api.signInGetCode({data}).then(() => {
-            this.setIntervalSMS()
-        }).catch(error => {
-            this.clearIntervalSMS()
-            Modal.error({
-                title: error.message
-            })
-        })
-    }
-
-    @action
     setIntervalSMS() {
         this.count = 60
         this.sid = setInterval(() => {
