@@ -15,7 +15,7 @@ require('babel-polyfill')
 const env = require('./env.js')
 const mocker = path.resolve('./src/mocker/index.js')
 
-const cdnUrl = 'CDN-URL' // 静态资源上传地址
+const cdnUrl = '' // 静态资源上传地址
 const rootDir = path.resolve(__dirname)
 const srcDir = path.join(rootDir, 'src')
 const distDir = path.join(rootDir, 'dist')
@@ -45,7 +45,7 @@ let wp = {
     ] : ['babel-polyfill', path.join(srcDir, 'index.js')],
     output: {
         filename: env.DEV ? '[name].js' : '[name]-[chunkhash:8].js',
-        publicPath: env.DEV ? env.FRONTEND : `${cdnUrl}/${env.PRODUCT}/${env.TARGET}/`,
+        publicPath: env.DEV ? env.FRONTEND : `${cdnUrl}/`,
         path: distDir,
         chunkFilename: '[name].[chunkhash:8].js'
     },
@@ -151,7 +151,7 @@ let wp = {
                 loader: 'url-loader',
                 options: {
                     limit: 1024,
-                    publicPath: env.DEV ? env.FRONTEND : `${cdnUrl}/${env.PRODUCT}/${env.TARGET}/`
+                    publicPath: env.DEV ? env.FRONTEND : `${cdnUrl}/`
                 }
             },
             {
@@ -193,8 +193,8 @@ let wp = {
             template: path.resolve(srcDir, 'index.ejs'),
             inject: false,
             hash: true,
-            dllJS: env.DEV ? `/static/${getDllName()}.js` : `${cdnUrl}/${process.env.PRODUCT}/${env.TARGET}/${getDllName()}.js`,
-            dllCSS: env.DEV ? `/static/${getDllName()}.css` : `${cdnUrl}/${process.env.PRODUCT}/${env.TARGET}/${getDllName()}.css`
+            dllJS: env.DEV ? `/static/${getDllName()}.js` : `${cdnUrl}/${getDllName()}.js`,
+            dllCSS: env.DEV ? `/static/${getDllName()}.css` : `${cdnUrl}/${getDllName()}.css`
         }),
         // 定义全局变量React指向react库就不用每次import react
         new webpack.ProvidePlugin({
