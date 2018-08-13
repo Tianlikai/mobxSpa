@@ -66,7 +66,7 @@ export default class Home extends Component {
                     {ROUTE.map(route => {
                         if (G.checkPermission(route.PERMISSIONS)) return <Route exact={route.exact} path={`${this.props.match.url}${route.path}`} component={route.component} />
                     })}
-                    <Redirect exact from='/' to='/orgAdmin/orgList' />
+                    <Redirect exact from='/' to='/myAgent/myPromotion' />
                 </Switch>
             </div>
         )
