@@ -5,7 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "clean": "rm src/static/dll.vendor.* && rm src/static/manifest.dll.json",
     "build:dll": "rm -rf src/static/dll.vendor.* && rm -f src/static/manifest.dll.json && node_modules/.bin/webpack --config webpack.dll.config.js",
+    "build:webpack": "rm -rf dist/* && cross-env NODE_ENV=prod node_modules/.bin/webpack",
+    "build": "npm run clean && npm run build:dll && npm run build:webpack",
     "dev": "cross-env NODE_ENV=dev webpack-dev-server --progress --mode development"
   },
   "author": "jason tian",

@@ -1,4 +1,4 @@
-let env = getEnv('ENV', 'dev')
+let env = getEnv('NODE_ENV', 'dev')
 let backendIp
 let dev = /dev/i.test(env)
 let hot = getEnv('HOT', dev)
