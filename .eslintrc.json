@@ -30,7 +30,8 @@
         "Immutable": false,
         "__DEV__": false,
         "G": false,
-        "ReactRouterDOM": false
+        "ReactRouterDOM": false,
+        "__TARGET__": false
     },
 
     "rules": {
