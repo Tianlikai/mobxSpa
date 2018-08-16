@@ -94,6 +94,62 @@ const SIDE_MENU = {
     }
 }
 
+/**
+ * 头部配置
+ */
+const AUTHORITY = {
+    createOrder: {
+        pageTitle: '创建订单',
+        btnText: '< 返回',
+        target: '/orgAdmin/orderList'
+    },
+    orderDetail: {
+        pageTitle: '订单详情',
+        btnText: '< 返回',
+        target: '/orgAdmin/orderList'
+    },
+    orderList: {
+        pageTitle: '',
+        btnText: '创建订单',
+        target: '/orgAdmin/createOrder'
+    },
+    myIncome: {
+        pageTitle: '我的分成',
+        btnText: '',
+        target: ''
+    },
+    myPromotion: {
+        pageTitle: '我的推广',
+        btnText: '',
+        target: ''
+    },
+    createPromotion: {
+        pageTitle: '新增推广',
+        btnText: '< 返回',
+        target: '/myAgent/myPromotion'
+    },
+    promotionDetail: {
+        pageTitle: '推广详情',
+        btnText: '< 返回',
+        target: '/myAgent/myPromotion'
+    },
+    applicationSettlement: {
+        pageTitle: '申请结算',
+        btnText: '',
+        target: ''
+    },
+    settlementHistory: {
+        pageTitle: '结算历史',
+        btnText: '',
+        target: ''
+    },
+    myInformation: {
+        pageTitle: '我的信息',
+        btnText: '',
+        target: ''
+    }
+}
+
 // 导航路径
 const NAV = {
     createOrg: ['机构管理', '创建机构'],
@@ -232,5 +288,6 @@ export {
     ROUTE_MYAGENT,
     ROUTE_OPERATIONLOG,
     PERMISSIONS,
-    SIDE_MENU
+    SIDE_MENU,
+    AUTHORITY
 }
