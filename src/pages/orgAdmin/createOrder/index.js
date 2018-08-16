@@ -106,7 +106,9 @@ class OrderForm extends Component {
             selectProductType,
             selectNumber
         } = this.state
-        if (selectProductType === value) return null
+        if (selectProductType === value) {
+            return null
+        }
         if (value === '7') {
             this.setState({
                 selectProductType: value,
@@ -351,7 +353,9 @@ class OrderForm extends Component {
             ? productType[0].value
             : '智能课堂（支持1对多/1对1）'
         let pos = productType && this.getSelectedProductSubscript(selectProductType, productType)
-        if (pos && pos > 0) selectValue = productType[pos].value
+        if (pos && pos > 0) {
+            selectValue = productType[pos].value
+        }
         let amountProps = this.state.amountError
             ? {help: '充值金额不能为"0"或空', validateStatus: 'error'}
             : null

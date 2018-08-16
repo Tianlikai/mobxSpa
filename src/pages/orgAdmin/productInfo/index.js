@@ -136,7 +136,9 @@ export default class ProductInfo extends Component {
     }
     handleDelaySetting = (params) => {
         let {disableTime} = params
-        if (!disableTime) return undefined
+        if (!disableTime) {
+            return null
+        }
         let orgId = this.props.match.params.id
         let disabledTime = moment(disableTime).format('YYYY-MM-DD HH:mm:ss')
         G.api.extensionTime({data: {orgId, disabledTime}}).then(data => {

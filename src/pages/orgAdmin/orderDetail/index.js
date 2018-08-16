@@ -17,7 +17,9 @@ export class DetailForm extends Component {
     render() {
         const {getFieldDecorator} = this.props.form
         let {initialValues} = this.props
-        if (!initialValues) return null
+        if (!initialValues) {
+            return null
+        }
         let keys = ORDER_FIELD.slice()
         if (!initialValues.buyNum > 0 || initialValues.product === 6) {
             keys.splice(6, 1)
@@ -26,13 +28,17 @@ export class DetailForm extends Component {
         switch (initialValues.state) {
             case '已支付': {
                 keys.splice(3, 0, 'payTime')
-                if (!initialValues['nowNum'] || initialValues['type'] !== '升级服务') keys.splice(keys.indexOf('nowNum'), 1)
+                if (!initialValues['nowNum'] || initialValues['type'] !== '升级服务') {
+                    keys.splice(keys.indexOf('nowNum'), 1)
+                }
                 keys.splice(keys.length - 1, 0, 'payType')
                 break
             }
             case '待支付':
             case '已取消': {
-                if (!initialValues['nowNum'] || initialValues['type'] !== '升级服务') keys.splice(keys.indexOf('nowNum'), 1)
+                if (!initialValues['nowNum'] || initialValues['type'] !== '升级服务') {
+                    keys.splice(keys.indexOf('nowNum'), 1)
+                }
                 break
             }
             default: { break }
@@ -63,7 +69,9 @@ export class DetailForm extends Component {
             <Form onSubmit={this.onSubmit}>
                 {keys.map((key) => {
                     let label = LABEL_LIST[key]
-                    if (key === 'buyNum') label = initialValues['type'] === '升级服务' ? label[1] : label[0]
+                    if (key === 'buyNum') {
+                        label = initialValues['type'] === '升级服务' ? label[1] : label[0]
+                    }
                     let text = initialValues[key]
                     if (key === 'note') {
                         return <FormItem key={key} {...formItemLayout} className='orderDetail-item' label={label}>

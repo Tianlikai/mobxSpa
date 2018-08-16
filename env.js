@@ -6,12 +6,17 @@ let inline = getEnv('INLINE', dev)
 let host = process.env.HOST ? getIpAddress() : 'localhost'
 let https = getEnv('HTTPS', true)
 
-if (env.toLowerCase().indexOf('dev') > -1) backendIp = 'demo.yourIP.cn'
-else if (env.toLowerCase().indexOf('pro') > -1) backendIp = 'yourIP.cn'
+if (env.toLowerCase().indexOf('dev') > -1) {
+    backendIp = 'demo.yourIP.cn'
+} else if (env.toLowerCase().indexOf('pro') > -1) {
+    backendIp = 'yourIP.cn'
+}
 
 let port = parseInt(getEnv('PORT'))
 
-if (!port) port = 8008
+if (!port) {
+    port = 8008
+}
 
 let conf = {
     VERSION: require('./package.json').version,

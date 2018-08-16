@@ -23,11 +23,29 @@ class SearchForm extends Component {
         return current && current > moment()
     }
     render() {
-        const {getFieldDecorator, resetFields} = this.props.form
+        const {
+            getFieldDecorator,
+            resetFields
+        } = this.props.form
         const searchStyle = {width: 185}
-        let {state, startTime, endTime, name} = this.props.initialValue || {name: undefined, state: '', startTime: undefined, endTime: undefined}
-        startTime = startTime ? moment(startTime, 'YYYY-MM-DD') : undefined
-        endTime = endTime ? moment(endTime, 'YYYY-MM-DD') : undefined
+        let {
+            state,
+            startTime,
+            endTime,
+            name
+        } = this.props.initialValue
+            || {
+                name: undefined,
+                state: '',
+                startTime: undefined,
+                endTime: undefined
+            }
+        startTime = startTime
+            ? moment(startTime, 'YYYY-MM-DD')
+            : undefined
+        endTime = endTime
+            ? moment(endTime, 'YYYY-MM-DD')
+            : undefined
         return (
             <div className='search'>
                 <Form layout='inline' onSubmit={this.onSubmit}>
@@ -36,7 +54,13 @@ class SearchForm extends Component {
                             initialValue: state || 0
                         })(
                             <Select>
-                                {DEFAULT_FORM_OPTION.map(option => <Option key={option.key} value={option.value}>{option.text}</Option>)}
+                                {
+                                    DEFAULT_FORM_OPTION.map(option => <Option
+                                        key={option.key}
+                                        value={option.value}>
+                                        {option.text}
+                                    </Option>)
+                                }
                             </Select>
                         )}
                     </FormItem>
@@ -44,7 +68,11 @@ class SearchForm extends Component {
                         {getFieldDecorator('timeLimit', {
                             initialValue: [startTime, endTime]
                         })(
-                            <RangePicker disabledDate={this.disabledDate} format='YYYY-MM-DD' placeholder={['开始时间', '结束时间']} />
+                            <RangePicker
+                                disabledDate={this.disabledDate}
+                                format='YYYY-MM-DD'
+                                placeholder={['开始时间', '结束时间']}
+                            />
                         )}
                     </FormItem>
                     <FormItem>
@@ -142,7 +170,10 @@ class OrderList extends Component {
             this.props.OrdersStore.getOrderList(copyQuery)
         }
         G.delReturnParams('returnParams')
-        this.setState({query: query, pageNo: pageNo})
+        this.setState({
+            query: query,
+            pageNo: pageNo
+        })
     }
     get columns() {
         return [{
@@ -188,14 +219,40 @@ class OrderList extends Component {
             key: 'action',
             render: (text, record) => <div>
                 <Button type='primary' size='small' onClick={() => this.goToOrderDetail(text, record)}>查看详情</Button>
-                {record.state === 2 && this.state.hadCancelOrder && <Button type='primary' size='small' onClick={this.showDeleteOrderModal.bind(null, record)}>取消订单</Button>}
-                {record.state === 2 && this.state.hadConfirmPayment && <Button type='primary' size='small' onClick={this.showConfirmPaymentModal.bind(null, record)}>确认收款</Button>}
+                {
+                    record.state === 2
+                    && this.state.hadCancelOrder
+                    && <Button
+                        type='primary'
+                        size='small'
+                        onClick={this.showDeleteOrderModal.bind(null, record)}>
+                        取消订单
+                    </Button>
+                }
+                {
+                    record.state === 2
+                    && this.state.hadConfirmPayment
+                    && <Button
+                        type='primary'
+                        size='small'
+                        onClick={this.showConfirmPaymentModal.bind(null, record)}>
+                        确认收款
+                    </Button>
+                }
             </div>
         }]
     }
     goToOrderDetail(text, record) {
-        G.setReturnParams('returnParams', {pageNo: this.state.pageNo, query: this.state.query})
-        G.history.push({pathname: `/orgAdmin/orderDetail/${record.orderId}`})
+        G.setReturnParams(
+            'returnParams',
+            {
+                pageNo: this.state.pageNo,
+                query: this.state.query
+            }
+        )
+        G.history.push({
+            pathname: `/orgAdmin/orderDetail/${record.orderId}`
+        })
     }
     showDeleteOrderModal = (record) => {
         this.setState({
@@ -226,36 +283,93 @@ class OrderList extends Component {
         this.props.OrdersStore.getOrderList(params)
     }
     handleOrderConfirm = (params) => {
-        let {selectOrdId, selectOrgId, query} = this.state
-        this.props.OrdersStore.updateOrderState(selectOrdId, selectOrgId, 3, params.confirmNote || '', query, this.handleCloseModal.bind(this))
+        let {
+            selectOrdId,
+            selectOrgId,
+            query
+        } = this.state
+        this.props.OrdersStore.updateOrderState(
+            selectOrdId,
+            selectOrgId,
+            3,
+            params.confirmNote || '',
+            query,
+            this.handleCloseModal.bind(this)
+        )
     }
     handlePaymentConfirm = (params) => {
-        let {selectOrdId, selectOrgId, query} = this.state
-        this.props.OrdersStore.updateOrderState(selectOrdId, selectOrgId, 1, params.confirmNote || '', query, this.handleCloseModal.bind(this))
+        let {
+            selectOrdId,
+            selectOrgId,
+            query
+        } = this.state
+        this.props.OrdersStore.updateOrderState(
+            selectOrdId,
+            selectOrgId,
+            1,
+            params.confirmNote || '',
+            query,
+            this.handleCloseModal.bind(this)
+        )
     }
     onReset() {
         const params = {}
-        this.setState({query: params, pageNo: 1})
+        this.setState({
+            query: params,
+            pageNo: 1
+        })
         this.loadOrganizationList(params)
     }
     handleChange(value) {
         const query = this.state.query
-        this.setState({pageNo: value.current})
-        const params = Object.assign(query, {pageNo: value.current})
+        this.setState({
+            pageNo: value.current
+        })
+        const params = Object.assign(
+            query,
+            {
+                pageNo: value.current
+            })
         this.loadOrganizationList(params)
     }
     onSubmit(value) {
-        let {timeLimit, type: state, queryCond: name} = value
-        let startTime = (timeLimit && timeLimit[0]) && timeLimit[0].format().substr(0, 10)
-        let endTime = (timeLimit && timeLimit[1]) && timeLimit[1].format().substr(0, 10)
-        if (state === 0) state = ''
-        name = name ? name.replace(/^(\s|\u00A0)+/, '').replace(/(\s|\u00A0)+$/, '') : undefined
-        const params = {state, startTime, endTime, name: name}
-        this.setState({query: params, pageNo: 1})
+        let {
+            timeLimit,
+            type: state,
+            queryCond: name
+        } = value
+
+        let startTime = (timeLimit && timeLimit[0])
+            && timeLimit[0].format().substr(0, 10)
+
+        let endTime = (timeLimit && timeLimit[1])
+        && timeLimit[1].format().substr(0, 10)
+
+        if (state === 0) {
+            state = ''
+        }
+
+        name = name
+            ? name.replace(/^(\s|\u00A0)+/, '').replace(/(\s|\u00A0)+$/, '')
+            : undefined
+        const params = {
+            state,
+            startTime,
+            endTime,
+            name: name
+        }
+        this.setState({
+            query: params,
+            pageNo: 1
+        })
         this.loadOrganizationList(params)
     }
     render() {
-        const {orderList, orderListTotal, listLoading} = this.props.OrdersStore
+        const {
+            orderList,
+            orderListTotal,
+            listLoading
+        } = this.props.OrdersStore
         const dataSource = mobx.toJS(orderList)
         const pagination = {
             total: orderListTotal,
@@ -274,7 +388,11 @@ class OrderList extends Component {
         }
         return (
             <div className='list'>
-                <SearchForm onSubmit={this.onSubmit} onReset={this.onReset} initialValue={initialValue} />
+                <SearchForm
+                    onSubmit={this.onSubmit}
+                    onReset={this.onReset}
+                    initialValue={initialValue}
+                />
                 <Table {...tableProps} />
                 <ModalForm
                     key={'modalOrder' + this.state.selectOrdId}
