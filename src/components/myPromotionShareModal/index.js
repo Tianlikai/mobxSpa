@@ -10,7 +10,18 @@ const Title = (props) => <div className={props.className}>
 export class WeiCode extends Component {
     handleDownloadQRCode = () => {
         const {recordType} = this.props
-        const {address, school, grade, className} = this.props.record || {address: '', school: '', grade: '', className: ''}
+        const {
+            address,
+            school,
+            grade,
+            className
+        } = this.props.record
+            || {
+                address: '',
+                school: '',
+                grade: '',
+                className: ''
+            }
         let promotionName
         if (recordType === 'string') {
             promotionName = address + school + grade + className + '推广'
