@@ -19,6 +19,15 @@ import OrgLogs from '../pages/operationLog/OrgLogs'
 import OrderLogs from '../pages/operationLog/OrderLogs'
 
 /**
+ * 项目配置说明
+ * 1 引入要展示的页面
+ * 2 在 PERMISSIONS 中写入该页面的权限 （权限由后端返回，在用户登陆时获取
+ * 3 在 SIDE_MENU 配置左侧菜单
+ * 4 在 AUTHORITY 配置 Header 权限
+ * 5 是否为新模块页面，是则需要陪新的 ROUTE 然后 export
+ */
+
+/**
  * 权限列表
  */
 const PERMISSIONS = {
@@ -33,7 +42,12 @@ const PERMISSIONS = {
 }
 
 /**
- * 左侧菜单列表
+ * 左侧菜单 需要展示的路由
+ * @param {iconType} antd内置图标
+ * @param {text} label展示
+ * @param {PERMISSIONS} 包含的所有权限 有一个就需要展示
+ * @param {children} 子菜单
+ * @param {to} 跳转地址
  */
 const SIDE_MENU = {
     orgAdmin: {
@@ -96,6 +110,10 @@ const SIDE_MENU = {
 
 /**
  * 头部配置
+ * 不同页面的Header组件可能有不同功能
+ * @param {pageTitle} 页面标题
+ * @param {btnText} 左侧跳转按钮文字
+ * @param {target} 跳转地址
  */
 const AUTHORITY = {
     createOrder: {
@@ -150,7 +168,10 @@ const AUTHORITY = {
     }
 }
 
-// 导航路径
+/**
+ * 导航路径
+ * 例子：机构管理 / 创建机构
+ */
 const NAV = {
     createOrg: ['机构管理', '创建机构'],
     orgList: ['机构管理', '机构列表'],
@@ -165,6 +186,12 @@ const NAV = {
     orderLogs: ['操作日志', '订单']
 }
 
+/**
+ * 以下组件都需要 Container 组件进行增强
+ * Container为以下组件提供公共组件部分
+ * @param {nav} 路径展示配置
+ * @param {component} 需要增强的组件
+ */
 const PartnerListWrapper = Container(NAV.orgList)(PartnerList)
 const OrderListWrapper = Container(NAV.orderList)(OrderList)
 
@@ -201,6 +228,9 @@ const ROUTE_HOME = [
     }
 ]
 
+/**
+ * 机构管理路由
+ */
 const ROUTE_ORGADMIN = [
     {
         path: '/orgList',
@@ -234,6 +264,9 @@ const ROUTE_ORGADMIN = [
     }
 ]
 
+/**
+ * 我的代理路由
+ */
 const ROUTE_MYAGENT = [
     {
         path: '/myIncome',
@@ -267,6 +300,9 @@ const ROUTE_MYAGENT = [
     }
 ]
 
+/**
+ * 操作日志路由
+ */
 const ROUTE_OPERATIONLOG = [
     {
         path: '/orgLogs',
