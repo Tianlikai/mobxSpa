@@ -42,11 +42,6 @@ const SIDE_MENU = {
         PERMISSIONS: [PERMISSIONS.createOrg, PERMISSIONS.orgList, PERMISSIONS.orderList],
         children: [
             {
-                to: '/orgAdmin/createOrg',
-                text: '创建机构',
-                PERMISSIONS: [PERMISSIONS.createOrg]
-            },
-            {
                 to: '/orgAdmin/orgList',
                 text: '机构列表',
                 PERMISSIONS: [PERMISSIONS.orgList]
