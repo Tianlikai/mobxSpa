@@ -1,10 +1,10 @@
-import Component from '../../components/Component'
+import Component from 'components/Component'
 import {observer, inject} from 'mobx-react'
 import {Form, Input, Button} from 'antd'
-import Spinner from 'components/spiner/Spinner'
-import {createForm} from '../../libs/antdUtils'
-import {LABEL_LIST, ORDER_FIELD} from '../../settings/consts'
-import './styles/orderDetail.scss'
+import Spinner from '../../../components/spiner/Spinner'
+import {createForm} from 'libs/antdUtils'
+import {LABEL_LIST, ORDER_FIELD} from '../../../settings/consts'
+import './orderDetail.scss'
 
 const FormItem = Form.Item
 const {TextArea} = Input
@@ -113,10 +113,6 @@ export default class OrderDetail extends Component {
     }
     render() {
         const initialValues = this.props.OrdersStore.orderDetail
-        const footer = {
-            color: 'gray',
-            fontSize: 18
-        }
         return (
             <div className='container'>
                 <div className='content'>
@@ -125,8 +121,8 @@ export default class OrderDetail extends Component {
                         <DetailForm edit={this.state.edit} onSubmit={this.handleSubmit} initialValues={initialValues} />
                     </div>
                 </div>
-                <div className='footer' style={footer}>
-                    power to go!
+                <div className='footer'>
+                    power to go
                 </div>
             </div>
         )

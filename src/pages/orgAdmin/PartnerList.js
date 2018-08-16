@@ -1,9 +1,9 @@
-import Component from '../../components/Component'
+import Component from 'components/Component'
 import {Form, Input, Button, Table, Modal, Select} from 'antd'
 import {observer, inject} from 'mobx-react'
 import * as mobx from 'mobx'
-import {ORG_STATE, ACTION_STATE} from '../../settings/consts'
-import {createForm} from '../../libs/antdUtils'
+import {ORG_STATE} from '../../settings/consts'
+import {createForm} from 'libs/antdUtils'
 
 const FormItem = Form.Item
 const Search = Input.Search
@@ -96,9 +96,9 @@ class PartnerList extends Component {
             key: 'studentNum'
         }, {
             title: '状态',
-            dataIndex: 'state',
-            key: 'state',
-            render: (text, record) => <span>{ACTION_STATE[record.state]}</span>
+            dataIndex: 'countState',
+            key: 'countState',
+            render: (text, record) => <span>{ORG_STATE[record.countState]}</span>
         }, {
             title: '创建时间',
             dataIndex: 'createdAtFormat',
@@ -110,6 +110,7 @@ class PartnerList extends Component {
             render: (text, record) => {
                 return (
                     <div>
+                        <Button type='primary' size='small' onClick={() => this.goToEditPage(text, record)}>基本信息</Button>
                         <Button type='primary' size='small' onClick={() => this.goToProductInfoPage(text, record)}>产品信息</Button>
                         <Button type='primary' size='small' onClick={() => this.showModal(text, record)}>{record.state === 0 ? '禁用' : '启用'}</Button>
                     </div>

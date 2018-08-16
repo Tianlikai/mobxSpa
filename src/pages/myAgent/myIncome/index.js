@@ -1,10 +1,9 @@
-import Component from '../../components/Component'
+import Component from 'components/Component'
 import * as mobx from 'mobx'
 import {observer, inject} from 'mobx-react'
 import {Table} from 'antd'
-import './styles/myIncome.scss'
-
-export const ModuleLine = (props) => <div className='contentTitle'>{props.title}{props.children}</div>
+import ModuleLine from '../ModuleLine'
+import './myIncome.scss'
 
 const IncomeBox = (props) => {
     return (

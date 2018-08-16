@@ -1,9 +1,9 @@
-import Component from '../../components/Component'
+import Component from 'components/Component'
 import {Form, Input, Button, Table, Select, DatePicker} from 'antd'
 import * as mobx from 'mobx'
 import {observer, inject} from 'mobx-react'
 import moment from 'moment'
-import {createForm} from '../../libs/antdUtils'
+import {createForm} from 'libs/antdUtils'
 import {ORD_LOG_STATE} from '../../settings/consts'
 
 const FormItem = Form.Item

@@ -1,11 +1,11 @@
-import Component from '../../components/Component'
+import Component from 'components/Component'
 import * as mobx from 'mobx'
 import {observer, inject} from 'mobx-react'
 import {Row, Col, Table, Icon, Tooltip} from 'antd'
-import ShareModal, {WeiCode} from '../../components/myPromotionShareModal/index'
-import {ModuleLine} from './MyIncome'
+import ShareModal, {WeiCode} from '../../../components/MyPromotionShareModal'
+import ModuleLine from '../ModuleLine'
 import Storage from 'libs/storage'
-import './styles/promotionDetail.scss'
+import './promotionDetail.scss'
 
 export const VIDEO_CUSTOM_URL = 'https://lcdns-pic.learnta.com/'
 

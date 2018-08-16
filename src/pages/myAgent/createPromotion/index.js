@@ -1,11 +1,11 @@
-import Component from '../../components/Component'
+import Component from 'components/Component'
 import {inject, observer} from 'mobx-react'
 import {Form, Input, Select, Button, Radio, Cascader} from 'antd'
-import Spinner from 'components/spiner/Spinner'
-import {ModuleLine} from './MyIncome'
-import {createForm} from '../../libs/antdUtils'
-import {GRADE} from '../../settings/consts'
-import './styles/createPromotion.scss'
+import Spinner from '../../../components/spiner/Spinner'
+import ModuleLine from '../ModuleLine'
+import {createForm} from 'libs/antdUtils'
+import {GRADE} from '../../../settings/consts'
+import './createPromotion.scss'
 
 const FormItem = Form.Item
 const Option = Select.Option
@@ -84,7 +84,13 @@ class OrderForm extends Component {
                             <Select
                                 placeholder='选择年级'>
                                 {GRADE.map((grade, i) => {
-                                    if (i > 0) return <Option key={grade.key} value={grade.value}>{grade.text}</Option>
+                                    if (i > 0) {
+                                        return <Option
+                                            key={grade.key}
+                                            value={grade.value}>
+                                            {grade.text}
+                                        </Option>
+                                    }
                                 })}
                             </Select>
                         )}
@@ -118,7 +124,13 @@ class OrderForm extends Component {
                             initialValue: mathType[0] ? mathType[0].dictvalue : ''
                         })(
                             <RadioGroup>
-                                {mathType.map(version => <Radio key={version.dictvalue} value={version.dictvalue}>{version.dicttext}</Radio>)}
+                                {
+                                    mathType.map(version => <Radio
+                                        key={version.dictvalue}
+                                        value={version.dictvalue}>
+                                        {version.dicttext}
+                                    </Radio>)
+                                }
                             </RadioGroup>
                         )}
                     </FormItem>
@@ -152,7 +164,12 @@ class CreatePromotion extends Component {
         this.props.CreatePromotionStore.CreatePromotion(data)
     }
     render() {
-        const {regions, mathType, englishType, loading} = this.props.CreatePromotionStore
+        const {
+            regions,
+            mathType,
+            englishType,
+            loading
+        } = this.props.CreatePromotionStore
         return (
             <div className='createPromotion-container'>
                 <ModuleLine title={'新增推广'} />

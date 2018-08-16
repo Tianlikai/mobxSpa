@@ -1,13 +1,15 @@
 import Component from 'components/Component'
-import {observer, inject} from 'mobx-react'
+import ShareModal from '../../../components/MyPromotionShareModal'
 import * as mobx from 'mobx'
 import moment from 'moment'
+import {observer, inject} from 'mobx-react'
 import {Form, Input, Button, Table, DatePicker, Select} from 'antd'
-import {ModuleLine} from './MyIncome'
-import ShareModal from 'components/myPromotionShareModal/index'
-import {createForm} from '../../libs/antdUtils'
-import {GRADE} from '../../settings/consts'
-import './styles/myPromotion.scss'
+
+import ModuleLine from '../ModuleLine'
+import {createForm} from 'libs/antdUtils'
+
+import {GRADE} from '../../../settings/consts'
+import './myPromotion.scss'
 
 const FormItem = Form.Item
 const Search = Input.Search
@@ -20,21 +22,9 @@ class SearchForm extends Component {
         this.props.onSubmit && this.props.onSubmit(v)
     }
     render() {
-        const {
-            getFieldDecorator,
-            resetFields} = this.props.form
+        const {getFieldDecorator, resetFields} = this.props.form
         const searchStyle = {width: 220}
-        let {
-            startTime,
-            endTime,
-            name,
-            grade
-        } = this.props.initialValue || {
-            name: undefined,
-            startTime: undefined,
-            endTime: undefined,
-            grade: undefined
-        }
+        let {startTime, endTime, name, grade} = this.props.initialValue || {name: undefined, startTime: undefined, endTime: undefined, grade: undefined}
         startTime = startTime ? moment(startTime, 'YYYY-MM-DD HH:MM:SS') : undefined
         endTime = endTime ? moment(endTime, 'YYYY-MM-DD HH:MM:SS') : undefined
         return (
@@ -45,13 +35,7 @@ class SearchForm extends Component {
                             initialValue: grade || ''
                         })(
                             <Select>
-                                {
-                                    GRADE.map(grade => <Option
-                                        key={grade.key}
-                                        value={grade.value}>
-                                        {grade.text}
-                                    </Option>)
-                                }
+                                {GRADE.map(grade => <Option key={grade.key} value={grade.value}>{grade.text}</Option>)}
                             </Select>
                         )}
                     </FormItem>
@@ -110,10 +94,7 @@ class MyPromotion extends Component {
             this.props.PromotionStore.getPromotionList(copyQuery)
         }
         G.delReturnParams('returnParams')
-        this.setState({
-            query: query,
-            pageNo: pageNo
-        })
+        this.setState({query: query, pageNo: pageNo})
     }
     get columns() {
         return [{
@@ -179,10 +160,7 @@ class MyPromotion extends Component {
             visibleModal: true,
             record
         })
-        this.props.PromotionStore.getWeiCode({
-            promotionId: record.id,
-            record
-        })
+        this.props.PromotionStore.getWeiCode({promotionId: record.id, record})
     }
     handleCloseShareModal = () => {
         this.setState({
@@ -192,51 +170,29 @@ class MyPromotion extends Component {
     }
     onReset() {
         const params = {}
-        this.setState({
-            query: params,
-            pageNo: 1
-        })
+        this.setState({query: params, pageNo: 1})
         this.loadOrganizationList(params)
     }
     handleChange(value) {
         const query = this.state.query
-        this.setState({
-            pageNo: value.current
-        })
+        this.setState({pageNo: value.current})
         const params = Object.assign(query, {pageNo: value.current})
         this.loadOrganizationList(params)
     }
     onSubmit(value) {
-        let {
-            timeLimit,
-            queryCond: name,
-            grade
-        } = value
+        let {timeLimit, queryCond: name, grade} = value
         let startTime = (timeLimit && timeLimit[0]) && timeLimit[0].format('YYYY-MM-DD HH:mm:ss')
         let endTime = (timeLimit && timeLimit[1]) && timeLimit[1].format('YYYY-MM-DD HH:mm:ss')
         name = name ? name.replace(/^(\s|\u00A0)+/, '').replace(/(\s|\u00A0)+$/, '') : undefined
-        const params = {
-            startTime,
-            endTime,
-            name,
-            grade: grade || undefined
-        }
-        this.setState({
-            query: params,
-            pageNo: 1
-        })
+        const params = {startTime, endTime, name, grade: grade || undefined}
+        this.setState({query: params, pageNo: 1})
         this.loadOrganizationList(params)
     }
     loadOrganizationList(params) {
         this.props.PromotionStore.getPromotionList(params)
     }
     render() {
-        const {
-            promotionList,
-            promotionListotal,
-            listLoading,
-            chooseImgByte
-        } = this.props.PromotionStore
+        const {promotionList, promotionListotal, listLoading, chooseImgByte} = this.props.PromotionStore
         const dataSource = mobx.toJS(promotionList)
         const pagination = {
             total: promotionListotal,
@@ -255,19 +211,9 @@ class MyPromotion extends Component {
         return (
             <div className='list'>
                 <ModuleLine title={'我的推广'}>
-                    <Button
-                        className='promotionBtn'
-                        type='primary'
-                        size='middle'
-                        onClick={this.redirectToCreatePromotion}>
-                        新增推广
-                    </Button>
+                    <Button onClick={this.redirectToCreatePromotion} className='promotionBtn' type='primary' size='middle'>新增推广</Button>
                 </ModuleLine>
-                <SearchForm
-                    onSubmit={this.onSubmit}
-                    onReset={this.onReset}
-                    initialValue={initialValue}
-                />
+                <SearchForm onSubmit={this.onSubmit} onReset={this.onReset} initialValue={initialValue} />
                 <Table {...tableProps} />
                 <ShareModal
                     imgByte={chooseImgByte}
@@ -278,8 +224,7 @@ class MyPromotion extends Component {
                     recordType='string'
                     visible={this.state.visibleModal}
                     handleClose={this.handleCloseShareModal}
-                    titleValue={['本次推广专属小程序二维码', '本次推广专属小程序链接']}
-                />
+                    titleValue={['本次推广专属小程序二维码', '本次推广专属小程序链接']} />
             </div>
         )
     }

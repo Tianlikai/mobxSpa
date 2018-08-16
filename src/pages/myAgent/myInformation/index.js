@@ -1,6 +1,6 @@
-import Component from '../../components/Component'
-import {ModuleLine} from './MyIncome'
-import './styles/myInformation.scss'
+import Component from 'components/Component'
+import ModuleLine from '../ModuleLine'
+import './myInformation.scss'
 
 class InfoContainer extends Component {
     render() {

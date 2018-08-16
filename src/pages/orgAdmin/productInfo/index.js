@@ -1,11 +1,11 @@
-import Component from '../../components/Component'
+import Component from 'components/Component'
 import {Form, Button, Modal, DatePicker, message} from 'antd'
-import Spinner from 'components/spiner/Spinner'
+import Spinner from '../../../components/spiner/Spinner'
 import {observer, inject} from 'mobx-react'
-import {createForm} from '../../libs/antdUtils'
+import {createForm} from 'libs/antdUtils'
 import moment from 'moment'
 import Storage from 'libs/storage'
-import './styles/productinfo.scss'
+import './productinfo.scss'
 
 const FormItem = Form.Item
 @createForm()
@@ -148,10 +148,6 @@ export default class ProductInfo extends Component {
     }
     render() {
         let productInfo = this.props.OrganizationStore.productInfo
-        const footer = {
-            color: 'gray',
-            fontSize: 18
-        }
         return (
             <div className='container'>
                 <div className='content'>
@@ -169,8 +165,8 @@ export default class ProductInfo extends Component {
                         {this.state.loading && <Spinner />}
                     </div>
                 </div>
-                <div className='footer' style={footer}>
-                    power to go!
+                <div className='footer'>
+                            power to go
                 </div>
             </div>
         )

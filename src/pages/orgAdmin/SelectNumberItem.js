@@ -1,4 +1,4 @@
-import Component from '../../components/Component'
+import Component from 'components/Component'
 import {Form, Input} from 'antd'
 import SelectButtonList from './SelectButtonList'
 
