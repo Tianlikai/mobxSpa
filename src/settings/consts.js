@@ -81,75 +81,6 @@ const GRADE = [
     {key: 9, value: 9, text: '九年级'}
 ]
 
-const PERMISSIONS = {
-    orgList: 130002, // 机构列表
-    orderList: 130003, // 订单列表
-    myIncome: 120001, // 我的分成
-    myPromotion: 120002, // 我的推广
-    myInformation: 120003, // 我的信息
-    orgLogs: 110001, // 操作日志 机构
-    orderLogs: 110002 // 操作日志 订单
-}
-
-const SIDE_MENU = {
-    orgAdmin: {
-        iconType: 'desktop',
-        text: '机构管理',
-        PERMISSIONS: [PERMISSIONS.createOrg, PERMISSIONS.orgList, PERMISSIONS.orderList],
-        children: [
-            {
-                to: '/orgAdmin/orgList',
-                text: '机构列表',
-                PERMISSIONS: [PERMISSIONS.orgList]
-            },
-            {
-                to: '/orgAdmin/orderList',
-                text: '订单列表',
-                PERMISSIONS: [PERMISSIONS.orderList]
-            }
-        ]
-    },
-    myAgent: {
-        iconType: 'idcard',
-        text: '我的代理',
-        PERMISSIONS: [PERMISSIONS.myIncome, PERMISSIONS.myPromotion, PERMISSIONS.myInformation],
-        children: [
-            {
-                to: '/myAgent/myIncome',
-                text: '我的分成',
-                PERMISSIONS: [PERMISSIONS.myIncome]
-            },
-            {
-                to: '/myAgent/myPromotion',
-                text: '我的推广',
-                PERMISSIONS: [PERMISSIONS.myPromotion]
-            },
-            {
-                to: '/myAgent/myInformation',
-                text: '我的信息',
-                PERMISSIONS: [PERMISSIONS.myInformation]
-            }
-        ]
-    },
-    logs: {
-        iconType: 'book',
-        text: '操作日志',
-        PERMISSIONS: [PERMISSIONS.orgLogs, PERMISSIONS.orderLogs],
-        children: [
-            {
-                to: '/logs/orgLogs',
-                text: '机构',
-                PERMISSIONS: [PERMISSIONS.orgLogs]
-            },
-            {
-                to: '/logs/orderLogs',
-                text: '订单',
-                PERMISSIONS: [PERMISSIONS.orderLogs]
-            }
-        ]
-    }
-}
-
 const SYSTEM_IDS = {
     BD_ORG: 10,
     LT_ADMIN: 13,
@@ -173,8 +104,6 @@ export {
     DEFAULT_CLASSES,
     ORDER_FIELD,
     GRADE, // 年级表
-    PERMISSIONS,
-    SIDE_MENU,
     SYSTEM_IDS,
     QINIU_DOMAIN
 }

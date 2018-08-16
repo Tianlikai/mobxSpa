@@ -58,18 +58,6 @@ const SIDE_MENU = {
             }
         ]
     },
-    settlementAdmin: {
-        iconType: 'calculator',
-        text: '结算管理',
-        PERMISSIONS: [PERMISSIONS.createOrg, PERMISSIONS.orgList, PERMISSIONS.orderList], // 权限待修改
-        children: [
-            {
-                to: '/settlementAdmin/settlement',
-                text: '结算管理',
-                PERMISSIONS: [PERMISSIONS.createOrg] // 权限待修改
-            }
-        ]
-    },
     myAgent: {
         iconType: 'idcard',
         text: '我的代理',
