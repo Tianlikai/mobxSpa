@@ -3,7 +3,8 @@ import {Form, Input, Button} from 'antd'
 import {observer, inject} from 'mobx-react'
 import {createForm} from '../libs/antdUtils'
 
-import {SYSTEM_IDS, PERMISSIONS} from '../settings/consts'
+import {SYSTEM_IDS} from '../settings/consts'
+import {PERMISSIONS} from '../settings/routeAndPermissions'
 import './styles/signin.scss'
 
 @inject('UserInfoStore')

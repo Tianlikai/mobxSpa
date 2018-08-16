@@ -53,7 +53,7 @@ export default class Home extends Component {
                                 component={route.component} />
                         }
                     })}
-                    <Redirect exact from='/' to='/orgAdmin/orgList' />
+                    <Redirect exact from='/' to='/myAgent/myPromotion' />
                 </Switch>
             </div>
         )
