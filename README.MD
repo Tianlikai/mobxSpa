@@ -58,3 +58,9 @@ mock数据前端独立开发
 
 ## 生产环境
 * npm run build
+
+## 注意
+* windows 平台下“git clone”项目可能会出现丢失src目录下部分代码
+* windows 平台下可以通过 Download Zip 形式下载
+* 解压后部分“import”文件名或出错，通过“npm i” -> "npm run dev“ 会抛出所有错误文件目录定位
+* 找到修改为正确的文件目录即可
