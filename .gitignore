@@ -4,4 +4,4 @@ node_modules/
 .idea/
 dist/
 docs/
-.package-lock.json
+package-lock.json
