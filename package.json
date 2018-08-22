@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "clean": "rm src/static/dll.vendor.* && rm src/static/manifest.dll.json",
-    "build:dll": "rm -rf src/static/dll.vendor.* && rm -f src/static/manifest.dll.json && node_modules/.bin/webpack --config webpack.dll.config.js",
-    "build:webpack": "rm -rf dist/* && cross-env NODE_ENV=prod node_modules/.bin/webpack",
+    "clean": "rimraf src/static/dll.vendor.* && rimraf src/static/manifest.dll.json",
+    "build:dll": "rimraf src/static/dll.vendor.* && rimraf src/static/manifest.dll.json && node_modules/.bin/webpack --config webpack.dll.config.js",
+    "build:webpack": "rimraf dist/* && cross-env NODE_ENV=prod node_modules/.bin/webpack",
     "build": "npm run clean && npm run build:dll && npm run build:webpack",
     "dev": "cross-env NODE_ENV=dev webpack-dev-server --progress --mode development"
   },
@@ -60,16 +60,17 @@
     "node-sass": "^4.9.2",
     "postcss-loader": "^3.0.0",
     "postcss-scss": "^2.0.0",
+    "rimraf": "^2.6.2",
     "sass-loader": "^7.1.0",
     "source-map-loader": "^0.2.3",
     "style-loader": "^0.22.1",
     "url-loader": "^1.0.1",
     "webpack": "^4.16.5",
+    "webpack-api-mocker": "^1.5.9",
     "webpack-bundle-analyzer": "^2.13.1",
     "webpack-cli": "^3.1.0",
+    "webpack-dev-server": "^3.1.5",
     "webpack-manifest-plugin": "^2.0.3",
-    "webpack-md5-hash": "0.0.6",
-    "webpack-api-mocker": "^1.5.9",
-    "webpack-dev-server": "^3.1.5"
+    "webpack-md5-hash": "0.0.6"
   }
 }
