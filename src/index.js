@@ -1,5 +1,5 @@
 import Component from './components/Component'
-import {Provider} from 'mobx-react'
+import { Provider } from 'mobx-react'
 import './libs/G.js'
 
 import Home from './pages/Home'
@@ -8,7 +8,7 @@ import stores from './stores/index'
 
 import './styles.scss'
 
-const {HashRouter: Router, Route, Switch} = ReactRouterDOM
+const { HashRouter: Router, Route, Switch } = ReactRouterDOM
 
 class Entry extends Component {
     render() {

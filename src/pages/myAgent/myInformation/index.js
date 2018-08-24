@@ -6,15 +6,20 @@ class InfoContainer extends Component {
     render() {
         return (
             <div>
-                {this.props.data && Object.keys(this.props.data).map(key => {
-                    const info = this.props.data[key]
-                    return (
-                        <div className='orderDetail-item'>
-                            <span className='myInfo-item-label'>{info.label}</span>
-                            <span className='ant-form-text'>{info.value}</span>
-                        </div>
-                    )
-                })}
+                {this.props.data
+                    && Object.keys(this.props.data).map(key => {
+                        const info = this.props.data[key]
+                        return (
+                            <div className='orderDetail-item'>
+                                <span className='myInfo-item-label'>
+                                    {info.label}
+                                </span>
+                                <span className='ant-form-text'>
+                                    {info.value}
+                                </span>
+                            </div>
+                        )
+                    })}
             </div>
         )
     }
@@ -58,7 +63,7 @@ class MyInformation extends Component {
                 DATA[key].value = data[key]
             })
             console.log(DATA)
-            this.setState({data: DATA})
+            this.setState({ data: DATA })
         })
     }
     render() {

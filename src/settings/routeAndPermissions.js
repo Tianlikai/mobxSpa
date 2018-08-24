@@ -53,7 +53,11 @@ const SIDE_MENU = {
     orgAdmin: {
         iconType: 'desktop',
         text: '机构管理',
-        PERMISSIONS: [PERMISSIONS.createOrg, PERMISSIONS.orgList, PERMISSIONS.orderList],
+        PERMISSIONS: [
+            PERMISSIONS.createOrg,
+            PERMISSIONS.orgList,
+            PERMISSIONS.orderList
+        ],
         children: [
             {
                 to: '/orgAdmin/orgList',
@@ -70,7 +74,11 @@ const SIDE_MENU = {
     myAgent: {
         iconType: 'idcard',
         text: '我的代理',
-        PERMISSIONS: [PERMISSIONS.myIncome, PERMISSIONS.myPromotion, PERMISSIONS.myInformation],
+        PERMISSIONS: [
+            PERMISSIONS.myIncome,
+            PERMISSIONS.myPromotion,
+            PERMISSIONS.myInformation
+        ],
         children: [
             {
                 to: '/myAgent/myIncome',
@@ -212,13 +220,21 @@ const ROUTE_HOME = [
         path: 'orgAdmin',
         component: OrgAdmin,
         exact: false,
-        PERMISSIONS: [PERMISSIONS.createOrg, PERMISSIONS.orgList, PERMISSIONS.orderList]
+        PERMISSIONS: [
+            PERMISSIONS.createOrg,
+            PERMISSIONS.orgList,
+            PERMISSIONS.orderList
+        ]
     },
     {
         path: 'myAgent',
         component: MyAgent,
         exact: false,
-        PERMISSIONS: [PERMISSIONS.myIncome, PERMISSIONS.myPromotion, PERMISSIONS.myInformation]
+        PERMISSIONS: [
+            PERMISSIONS.myIncome,
+            PERMISSIONS.myPromotion,
+            PERMISSIONS.myInformation
+        ]
     },
     {
         path: 'logs',

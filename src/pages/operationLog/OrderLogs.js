@@ -1,10 +1,10 @@
 import Component from 'components/Component'
-import {Form, Input, Button, Table, Select, DatePicker} from 'antd'
+import { Form, Input, Button, Table, Select, DatePicker } from 'antd'
 import * as mobx from 'mobx'
-import {observer, inject} from 'mobx-react'
+import { observer, inject } from 'mobx-react'
 import moment from 'moment'
-import {createForm} from 'libs/antdUtils'
-import {ORD_LOG_STATE} from '../../settings/consts'
+import { createForm } from 'libs/antdUtils'
+import { ORD_LOG_STATE } from '../../settings/consts'
 
 const FormItem = Form.Item
 const Option = Select.Option
@@ -21,9 +21,9 @@ class SearchForm extends Component {
     }
 
     render() {
-        const {getFieldDecorator, resetFields} = this.props.form
+        const { getFieldDecorator, resetFields } = this.props.form
         const initialType = +this.props.initialValue.type
-        const searchStyle = {width: 185}
+        const searchStyle = { width: 185 }
         return (
             <div className='search'>
                 <Form layout='inline' onSubmit={this.onSubmit}>
@@ -32,7 +32,11 @@ class SearchForm extends Component {
                             initialValue: initialType || '0'
                         })(
                             <Select>
-                                {Object.keys(ORD_LOG_STATE).map(key => <Option key={key} value={key}>{ORD_LOG_STATE[key]}</Option>)}
+                                {Object.keys(ORD_LOG_STATE).map(key => (
+                                    <Option key={key} value={key}>
+                                        {ORD_LOG_STATE[key]}
+                                    </Option>
+                                ))}
                             </Select>
                         )}
                     </FormItem>
@@ -40,27 +44,46 @@ class SearchForm extends Component {
                         {getFieldDecorator('name', {
                             initialValue: this.props.initialValue.name || ''
                         })(
-                            <Search style={searchStyle} placeholder='搜索机构名称、操作人' />
+                            <Search
+                                style={searchStyle}
+                                placeholder='搜索机构名称、操作人'
+                            />
                         )}
                     </FormItem>
                     <FormItem>
                         {getFieldDecorator('startTime')(
-                            <DatePicker showTime format='YYYY-MM-DD HH:mm:ss' placeholder='开始时间' />
+                            <DatePicker
+                                showTime
+                                format='YYYY-MM-DD HH:mm:ss'
+                                placeholder='开始时间'
+                            />
                         )}
                     </FormItem>
                     <FormItem>
                         {getFieldDecorator('endTime')(
-                            <DatePicker showTime format='YYYY-MM-DD HH:mm:ss' placeholder='结束时间' />
+                            <DatePicker
+                                showTime
+                                format='YYYY-MM-DD HH:mm:ss'
+                                placeholder='结束时间'
+                            />
                         )}
                     </FormItem>
                     <FormItem>
-                        <Button htmlType='submit' type='primary'>搜索</Button>
+                        <Button htmlType='submit' type='primary'>
+                            搜索
+                        </Button>
                     </FormItem>
                     <FormItem>
-                        <Button type='primary' htmlType='reset' onClick={() => {
-                            this.props.onReset()
-                            resetFields()
-                        }}>重置</Button>
+                        <Button
+                            type='primary'
+                            htmlType='reset'
+                            onClick={() => {
+                                this.props.onReset()
+                                resetFields()
+                            }}
+                        >
+                            重置
+                        </Button>
                     </FormItem>
                 </Form>
             </div>
@@ -83,58 +106,73 @@ class Logs extends Component {
         this.props.OrdersStore.getOrderLog(query)
     }
     get columns() {
-        return [{
-            title: '订单号',
-            dataIndex: 'orderId',
-            key: 'orderId'
-        }, {
-            title: '操作类型',
-            dataIndex: 'operationType',
-            key: 'operationType'
-        }, {
-            title: '机构名称',
-            dataIndex: 'orgName',
-            key: 'orgName'
-        }, {
-            title: '操作描述',
-            dataIndex: 'operationDescription',
-            key: 'operationDescription'
-        }, {
-            title: '操作人',
-            dataIndex: 'userName',
-            key: 'userName'
-        }, {
-            title: '操作时间',
-            dataIndex: 'operateDate',
-            key: 'operateDate'
-        }]
+        return [
+            {
+                title: '订单号',
+                dataIndex: 'orderId',
+                key: 'orderId'
+            },
+            {
+                title: '操作类型',
+                dataIndex: 'operationType',
+                key: 'operationType'
+            },
+            {
+                title: '机构名称',
+                dataIndex: 'orgName',
+                key: 'orgName'
+            },
+            {
+                title: '操作描述',
+                dataIndex: 'operationDescription',
+                key: 'operationDescription'
+            },
+            {
+                title: '操作人',
+                dataIndex: 'userName',
+                key: 'userName'
+            },
+            {
+                title: '操作时间',
+                dataIndex: 'operateDate',
+                key: 'operateDate'
+            }
+        ]
     }
 
     loadOrderLog(params) {
-        let {startTime, endTime} = params
-        params.startTime = !startTime ? undefined : moment(startTime).format('YYYY-MM-DD HH:mm:ss')
-        params.endTime = !endTime ? undefined : moment(endTime).format('YYYY-MM-DD HH:mm:ss')
+        let { startTime, endTime } = params
+        params.startTime = !startTime
+            ? undefined
+            : moment(startTime).format('YYYY-MM-DD HH:mm:ss')
+        params.endTime = !endTime
+            ? undefined
+            : moment(endTime).format('YYYY-MM-DD HH:mm:ss')
         params.type = params.type === '0' ? undefined : params.type
-        params.name = params.name ? params.name.replace(/^(\s|\u00A0)+/, '').replace(/(\s|\u00A0)+$/, '') : undefined
+        params.name = params.name
+            ? params.name
+                .replace(/^(\s|\u00A0)+/, '')
+                .replace(/(\s|\u00A0)+$/, '')
+            : undefined
         this.props.OrdersStore.getOrderLog(params)
     }
     onSubmit(value) {
-        this.setState({query: value, pageNo: 1})
+        this.setState({ query: value, pageNo: 1 })
         this.loadOrderLog(value)
     }
     onReset() {
         const params = {}
-        this.setState({query: params, pageNo: 1})
+        this.setState({ query: params, pageNo: 1 })
         this.loadOrderLog(params)
     }
     handleChange(value) {
         const query = this.state.query
-        const params = Object.assign(query, {pageNo: value.current})
-        this.setState({pageNo: value.current})
+        const params = Object.assign(query, { pageNo: value.current })
+        this.setState({ pageNo: value.current })
         this.loadOrderLog(params)
     }
     render() {
-        const {orderLog, orderLogTotal, listLoading} = this.props.OrdersStore
+        const { orderLog, orderLogTotal, listLoading } = this.props.OrdersStore
         const dataSource = mobx.toJS(orderLog)
         const pagination = {
             total: orderLogTotal,
@@ -144,8 +182,20 @@ class Logs extends Component {
         const initialValue = G.getQuery()
         return (
             <div className='list'>
-                <SearchForm onReset={this.onReset} onSubmit={this.onSubmit} initialValue={initialValue} />
-                <Table dataSource={dataSource} bordered columns={this.columns} onChange={this.handleChange} pagination={pagination} loading={listLoading} locale={{emptyText: '暂无数据'}} />
+                <SearchForm
+                    onReset={this.onReset}
+                    onSubmit={this.onSubmit}
+                    initialValue={initialValue}
+                />
+                <Table
+                    dataSource={dataSource}
+                    bordered
+                    columns={this.columns}
+                    onChange={this.handleChange}
+                    pagination={pagination}
+                    loading={listLoading}
+                    locale={{ emptyText: '暂无数据' }}
+                />
             </div>
         )
     }

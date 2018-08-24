@@ -6,7 +6,8 @@ let _prefix = `__ta/${__PRODUCT__}_`
 let _cache = {}
 let storage
 
-try { // IE 8 或移动端的隐身模式 下直接调用 window.localStorage 会报错（其实也不用支持 IE8）
+try {
+    // IE 8 或移动端的隐身模式 下直接调用 window.localStorage 会报错（其实也不用支持 IE8）
     _store.setItem('bs_:)_', '__')
     _store.removeItem('bs_:)_')
 } catch (e) {
@@ -54,15 +55,23 @@ if (_store) {
         },
 
         has(key) {
-            return (key in _cache) || !!_store.getItem(_prefix + key)
+            return key in _cache || !!_store.getItem(_prefix + key)
         }
     }
 } else {
     storage = {
-        set(key, val) { _cache[key] = val },
-        get(key) { return _cache[key] },
-        del(key) { delete _cache[key] },
-        has(key) { return key in _cache }
+        set(key, val) {
+            _cache[key] = val
+        },
+        get(key) {
+            return _cache[key]
+        },
+        del(key) {
+            delete _cache[key]
+        },
+        has(key) {
+            return key in _cache
+        }
     }
 }
 

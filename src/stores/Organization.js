@@ -1,29 +1,44 @@
-import {action, observable} from 'mobx'
+import { action, observable } from 'mobx'
 
 class Organization {
-    @observable username = null
-    @observable orgId = null
-    @observable mobile = null
-    @observable organizationList = []
-    @observable organizationListTotal = 0
-    @observable organizationLog = []
-    @observable organizationLogTotal = 0
-    @observable pageSize = 10
-    @observable organizationDetail = null
-    @observable productInfo = null
-    @observable listLoading = false
+    @observable
+    username = null
+    @observable
+    orgId = null
+    @observable
+    mobile = null
+    @observable
+    organizationList = []
+    @observable
+    organizationListTotal = 0
+    @observable
+    organizationLog = []
+    @observable
+    organizationLogTotal = 0
+    @observable
+    pageSize = 10
+    @observable
+    organizationDetail = null
+    @observable
+    productInfo = null
+    @observable
+    listLoading = false
 
     @action
-    getOrganizationList({name, pageNo = 1, state}) {
+    getOrganizationList({ name, pageNo = 1, state }) {
         this.listLoading = true
-        G.api.getOrganizationList({params: {name, pageNo, itemsPerPage: this.pageSize, state}}).then(data => {
-            this.listLoading = false
-            this.organizationListTotal = data.count
-            this.organizationList = data.items.map((item) => {
-                item.key = item.id
-                return item
+        G.api
+            .getOrganizationList({
+                params: { name, pageNo, itemsPerPage: this.pageSize, state }
             })
-        })
+            .then(data => {
+                this.listLoading = false
+                this.organizationListTotal = data.count
+                this.organizationList = data.items.map(item => {
+                    item.key = item.id
+                    return item
+                })
+            })
     }
 
     deleteEmptyValue(obj) {
@@ -37,17 +52,35 @@ class Organization {
     }
 
     @action
-    getOrganizationLog({name, type, pageNo = 1, startTime, endTime, username}) {
+    getOrganizationLog({
+        name,
+        type,
+        pageNo = 1,
+        startTime,
+        endTime,
+        username
+    }) {
         this.listLoading = true
         const types = ['全部', '创建', '禁用', '启用', '编辑', '重置密码']
-        const params = this.deleteEmptyValue({username, startTime, endTime, name: name, pageNo, pageSize: this.pageSize, operationType: type})
+        const params = this.deleteEmptyValue({
+            username,
+            startTime,
+            endTime,
+            name: name,
+            pageNo,
+            pageSize: this.pageSize,
+            operationType: type
+        })
         console.log(params)
-        G.api.getOrgLogList({params}).then(data => {
+        G.api.getOrgLogList({ params }).then(data => {
             this.listLoading = false
             this.organizationLogTotal = data.count
             this.organizationLog = data.items.map((item, index) => {
                 item.key = index
-                item.operationType = typeof item.operationType === 'number' ? types[item.operationType] : item.operationType
+                item.operationType
+                    = typeof item.operationType === 'number'
+                        ? types[item.operationType]
+                        : item.operationType
                 return item
             })
         })
@@ -55,8 +88,8 @@ class Organization {
 
     @action
     disableOrg(organizationId, state, callback) {
-        let data = {organizationId, state}
-        G.api.updateOrgState({data}).then(data => {
+        let data = { organizationId, state }
+        G.api.updateOrgState({ data }).then(data => {
             const list = this.organizationList.slice()
             list.find(v => v.id === organizationId).state = state
             this.organizationList = list
@@ -66,7 +99,7 @@ class Organization {
 
     @action
     getOrgDetail(id) {
-        G.api.getOrganizationDetail({urlParams: {orgId: id}}).then(data => {
+        G.api.getOrganizationDetail({ urlParams: { orgId: id } }).then(data => {
             this.organizationDetail = data
         })
     }
@@ -78,7 +111,7 @@ class Organization {
 
     @action
     getProductInfo(id, cb) {
-        G.api.getProductInfo({urlParams: {orgId: id}}).then(data => {
+        G.api.getProductInfo({ urlParams: { orgId: id } }).then(data => {
             this.productInfo = data
             cb && cb()
         })

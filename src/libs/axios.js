@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {message} from 'antd'
+import { message } from 'antd'
 import api from '../settings/api'
 
 for (let key in api) {
@@ -18,15 +18,22 @@ const Axios = axios.create({
     }
 })
 
-Axios.interceptors.request.use(config => {
-    let token = G.token
+Axios.interceptors.request.use(
+    config => {
+        let token = G.token
 
-    if (token) config.headers.Authorization = `Bearer ${token}`
+        if (token) config.headers.Authorization = `Bearer ${token}`
 
-    return config
-}, error => {
-    message.error('【Axios.interceptors.request】error.data.error.message:' + error.data.error.message, 3)
-})
+        return config
+    },
+    error => {
+        message.error(
+            '【Axios.interceptors.request】error.data.error.message:'
+                + error.data.error.message,
+            3
+        )
+    }
+)
 
 function fetch(options, urlOptions) {
     options = Object.assign({}, options, urlOptions)
@@ -34,25 +41,27 @@ function fetch(options, urlOptions) {
         options.url = replaceParams(options.url, options.urlParams)
     }
     return new Promise((resolve, reject) => {
-        Axios(options).then(response => {
-            const {code, data} = response.data
+        Axios(options)
+            .then(response => {
+                const { code, data } = response.data
 
-            if (code === '0' && data) {
-                resolve(data)
-            } else if (code && code !== '0') {
-                reject(response.data)
-            } else {
-                resolve(response.data)
-            }
-            // console.log('axios data', data)
-        }).catch(e => {
-            console.error('error', e)
-            if (e.response.status === 401) {
-                // Storage.del('token')
-                G.gotoSignIn()
-            }
-            reject(e.response.data)
-        })
+                if (code === '0' && data) {
+                    resolve(data)
+                } else if (code && code !== '0') {
+                    reject(response.data)
+                } else {
+                    resolve(response.data)
+                }
+                // console.log('axios data', data)
+            })
+            .catch(e => {
+                console.error('error', e)
+                if (e.response.status === 401) {
+                    // Storage.del('token')
+                    G.gotoSignIn()
+                }
+                reject(e.response.data)
+            })
     })
 }
 

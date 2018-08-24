@@ -1,51 +1,38 @@
 import Component from 'components/Component'
 import * as mobx from 'mobx'
 import moment from 'moment'
-import {observer, inject} from 'mobx-react'
-import {Form, Input, Button, Table, Modal, Select, DatePicker} from 'antd'
-import {createForm} from 'libs/antdUtils'
+import { observer, inject } from 'mobx-react'
+import { Form, Input, Button, Table, Modal, Select, DatePicker } from 'antd'
+import { createForm } from 'libs/antdUtils'
 import Storage from 'libs/storage'
-import {DEFAULT_FORM_OPTION, DEFAULT_OPTION} from '../../../settings/consts'
+import { DEFAULT_FORM_OPTION, DEFAULT_OPTION } from '../../../settings/consts'
 import './orderList.scss'
 
 const FormItem = Form.Item
 const Option = Select.Option
 const Search = Input.Search
-const {RangePicker} = DatePicker
-const {TextArea} = Input
+const { RangePicker } = DatePicker
+const { TextArea } = Input
 
 @createForm()
 class SearchForm extends Component {
     onSubmit(v) {
         this.props.onSubmit && this.props.onSubmit(v)
     }
-    disabledDate = (current) => {
+    disabledDate = current => {
         return current && current > moment()
     }
     render() {
-        const {
-            getFieldDecorator,
-            resetFields
-        } = this.props.form
-        const searchStyle = {width: 185}
-        let {
-            state,
-            startTime,
-            endTime,
-            name
-        } = this.props.initialValue
-            || {
-                name: undefined,
-                state: '',
-                startTime: undefined,
-                endTime: undefined
-            }
-        startTime = startTime
-            ? moment(startTime, 'YYYY-MM-DD')
-            : undefined
-        endTime = endTime
-            ? moment(endTime, 'YYYY-MM-DD')
-            : undefined
+        const { getFieldDecorator, resetFields } = this.props.form
+        const searchStyle = { width: 185 }
+        let { state, startTime, endTime, name } = this.props.initialValue || {
+            name: undefined,
+            state: '',
+            startTime: undefined,
+            endTime: undefined
+        }
+        startTime = startTime ? moment(startTime, 'YYYY-MM-DD') : undefined
+        endTime = endTime ? moment(endTime, 'YYYY-MM-DD') : undefined
         return (
             <div className='search'>
                 <Form layout='inline' onSubmit={this.onSubmit}>
@@ -54,13 +41,14 @@ class SearchForm extends Component {
                             initialValue: state || 0
                         })(
                             <Select>
-                                {
-                                    DEFAULT_FORM_OPTION.map(option => <Option
+                                {DEFAULT_FORM_OPTION.map(option => (
+                                    <Option
                                         key={option.key}
-                                        value={option.value}>
+                                        value={option.value}
+                                    >
                                         {option.text}
-                                    </Option>)
-                                }
+                                    </Option>
+                                ))}
                             </Select>
                         )}
                     </FormItem>
@@ -79,17 +67,28 @@ class SearchForm extends Component {
                         {getFieldDecorator('queryCond', {
                             initialValue: name
                         })(
-                            <Search style={searchStyle} placeholder='搜索订单号、机构名称' />
+                            <Search
+                                style={searchStyle}
+                                placeholder='搜索订单号、机构名称'
+                            />
                         )}
                     </FormItem>
                     <FormItem>
-                        <Button htmlType='submit' type='primary'>搜索</Button>
+                        <Button htmlType='submit' type='primary'>
+                            搜索
+                        </Button>
                     </FormItem>
                     <FormItem>
-                        <Button type='primary' htmlType='reset' onClick={() => {
-                            this.props.onReset()
-                            resetFields()
-                        }}>重置</Button>
+                        <Button
+                            type='primary'
+                            htmlType='reset'
+                            onClick={() => {
+                                this.props.onReset()
+                                resetFields()
+                            }}
+                        >
+                            重置
+                        </Button>
                     </FormItem>
                 </Form>
             </div>
@@ -106,9 +105,9 @@ class ModalForm extends Component {
         this.props.onClose && this.props.onClose()
     }
     render() {
-        const {getFieldDecorator} = this.props.form
-        const styleFormItem = {marginBottom: 0}
-        const styleText = {width: '90%'}
+        const { getFieldDecorator } = this.props.form
+        const styleFormItem = { marginBottom: 0 }
+        const styleText = { width: '90%' }
         let modalProps = {
             title: '',
             visible: this.props.visible,
@@ -122,15 +121,15 @@ class ModalForm extends Component {
             <div>
                 <Modal {...modalProps}>
                     <h3>{this.props.title}</h3>
-                    <div className='confirm-order'>{this.props.confirmText}</div>
+                    <div className='confirm-order'>
+                        {this.props.confirmText}
+                    </div>
                     <div className='confirm-note'>{this.props.note}</div>
                     <Form>
                         <FormItem style={styleFormItem}>
                             {getFieldDecorator('confirmNote', {
                                 initialValue: initialNote
-                            })(
-                                <TextArea style={styleText} rows={4} />
-                            )}
+                            })(<TextArea style={styleText} rows={4} />)}
                         </FormItem>
                     </Form>
                 </Modal>
@@ -166,7 +165,7 @@ class OrderList extends Component {
         } else {
             query = returnParams.query
             pageNo = returnParams.pageNo
-            let copyQuery = Object.assign({}, query, {pageNo: pageNo})
+            let copyQuery = Object.assign({}, query, { pageNo: pageNo })
             this.props.OrdersStore.getOrderList(copyQuery)
         }
         G.delReturnParams('returnParams')
@@ -176,85 +175,116 @@ class OrderList extends Component {
         })
     }
     get columns() {
-        return [{
-            title: '订单号',
-            dataIndex: 'orderId',
-            key: 'orderId'
-        }, {
-            title: '创建时间',
-            dataIndex: 'createTime',
-            key: 'createTime'
-        }, {
-            title: '支付时间',
-            dataIndex: 'payTime',
-            key: 'payTime'
-        }, {
-            title: '机构名称',
-            dataIndex: 'orgName',
-            key: 'orgName'
-        }, {
-            title: '手机号',
-            dataIndex: 'mobile',
-            key: 'mobile'
-        }, {
-            title: '支付金额',
-            dataIndex: 'payMoney',
-            key: 'payMoney'
-        }, {
-            title: '支付状态',
-            dataIndex: 'state',
-            key: 'state',
-            render: (i, record) => <span>{DEFAULT_OPTION[i].text}</span>
-        }, {
-            title: '备注',
-            dataIndex: 'note',
-            key: 'note',
-            render: (text, record) => {
-                const style = {width: '100%', height: 30, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap'}
-                return <div style={style} title={text}>{text}</div>
+        return [
+            {
+                title: '订单号',
+                dataIndex: 'orderId',
+                key: 'orderId'
+            },
+            {
+                title: '创建时间',
+                dataIndex: 'createTime',
+                key: 'createTime'
+            },
+            {
+                title: '支付时间',
+                dataIndex: 'payTime',
+                key: 'payTime'
+            },
+            {
+                title: '机构名称',
+                dataIndex: 'orgName',
+                key: 'orgName'
+            },
+            {
+                title: '手机号',
+                dataIndex: 'mobile',
+                key: 'mobile'
+            },
+            {
+                title: '支付金额',
+                dataIndex: 'payMoney',
+                key: 'payMoney'
+            },
+            {
+                title: '支付状态',
+                dataIndex: 'state',
+                key: 'state',
+                render: (i, record) => <span>{DEFAULT_OPTION[i].text}</span>
+            },
+            {
+                title: '备注',
+                dataIndex: 'note',
+                key: 'note',
+                render: (text, record) => {
+                    const style = {
+                        width: '100%',
+                        height: 30,
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        whiteSpace: 'nowrap'
+                    }
+                    return (
+                        <div style={style} title={text}>
+                            {text}
+                        </div>
+                    )
+                }
+            },
+            {
+                title: '操作',
+                dataIndex: 'action',
+                key: 'action',
+                render: (text, record) => (
+                    <div>
+                        <Button
+                            type='primary'
+                            size='small'
+                            onClick={() => this.goToOrderDetail(text, record)}
+                        >
+                            查看详情
+                        </Button>
+                        {record.state === 2
+                            && this.state.hadCancelOrder && (
+                            <Button
+                                type='primary'
+                                size='small'
+                                onClick={this.showDeleteOrderModal.bind(
+                                    null,
+                                    record
+                                )}
+                            >
+                                    取消订单
+                            </Button>
+                        )}
+                        {record.state === 2
+                            && this.state.hadConfirmPayment && (
+                            <Button
+                                type='primary'
+                                size='small'
+                                onClick={this.showConfirmPaymentModal.bind(
+                                    null,
+                                    record
+                                )}
+                            >
+                                    确认收款
+                            </Button>
+                        )}
+                    </div>
+                )
             }
-        }, {
-            title: '操作',
-            dataIndex: 'action',
-            key: 'action',
-            render: (text, record) => <div>
-                <Button type='primary' size='small' onClick={() => this.goToOrderDetail(text, record)}>查看详情</Button>
-                {
-                    record.state === 2
-                    && this.state.hadCancelOrder
-                    && <Button
-                        type='primary'
-                        size='small'
-                        onClick={this.showDeleteOrderModal.bind(null, record)}>
-                        取消订单
-                    </Button>
-                }
-                {
-                    record.state === 2
-                    && this.state.hadConfirmPayment
-                    && <Button
-                        type='primary'
-                        size='small'
-                        onClick={this.showConfirmPaymentModal.bind(null, record)}>
-                        确认收款
-                    </Button>
-                }
-            </div>
-        }]
+        ]
     }
     goToOrderDetail(text, record) {
-        G.setReturnParams(
-            'returnParams',
-            {
-                pageNo: this.state.pageNo,
-                query: this.state.query
-            }
-        )
+        G.setReturnParams('returnParams', {
+            pageNo: this.state.pageNo,
+            query: this.state.query
+        })
         G.history.push({
             pathname: `/orgAdmin/orderDetail/${record.orderId}`
         })
     }
-    showDeleteOrderModal = (record) => {
+    showDeleteOrderModal = record => {
         this.setState({
             visibleModal: 'deleteOrderModal',
             selectOrdId: record.orderId,
@@ -262,7 +292,7 @@ class OrderList extends Component {
             note: record.note
         })
     }
-    showConfirmPaymentModal = (record) => {
+    showConfirmPaymentModal = record => {
         this.setState({
             visibleModal: 'confirmPaymentModal',
             selectOrdId: record.orderId,
@@ -282,12 +312,8 @@ class OrderList extends Component {
     loadOrganizationList(params) {
         this.props.OrdersStore.getOrderList(params)
     }
-    handleOrderConfirm = (params) => {
-        let {
-            selectOrdId,
-            selectOrgId,
-            query
-        } = this.state
+    handleOrderConfirm = params => {
+        let { selectOrdId, selectOrgId, query } = this.state
         this.props.OrdersStore.updateOrderState(
             selectOrdId,
             selectOrgId,
@@ -297,12 +323,8 @@ class OrderList extends Component {
             this.handleCloseModal.bind(this)
         )
     }
-    handlePaymentConfirm = (params) => {
-        let {
-            selectOrdId,
-            selectOrgId,
-            query
-        } = this.state
+    handlePaymentConfirm = params => {
+        let { selectOrdId, selectOrgId, query } = this.state
         this.props.OrdersStore.updateOrderState(
             selectOrdId,
             selectOrgId,
@@ -325,25 +347,19 @@ class OrderList extends Component {
         this.setState({
             pageNo: value.current
         })
-        const params = Object.assign(
-            query,
-            {
-                pageNo: value.current
-            })
+        const params = Object.assign(query, {
+            pageNo: value.current
+        })
         this.loadOrganizationList(params)
     }
     onSubmit(value) {
-        let {
-            timeLimit,
-            type: state,
-            queryCond: name
-        } = value
+        let { timeLimit, type: state, queryCond: name } = value
 
-        let startTime = (timeLimit && timeLimit[0])
-            && timeLimit[0].format().substr(0, 10)
+        let startTime
+            = timeLimit && timeLimit[0] && timeLimit[0].format().substr(0, 10)
 
-        let endTime = (timeLimit && timeLimit[1])
-        && timeLimit[1].format().substr(0, 10)
+        let endTime
+            = timeLimit && timeLimit[1] && timeLimit[1].format().substr(0, 10)
 
         if (state === 0) {
             state = ''
@@ -384,7 +400,7 @@ class OrderList extends Component {
             onChange: this.handleChange,
             pagination: pagination,
             loading: listLoading,
-            locale: {emptyText: '暂无数据'}
+            locale: { emptyText: '暂无数据' }
         }
         return (
             <div className='list'>
@@ -399,17 +415,21 @@ class OrderList extends Component {
                     visible={this.state.visibleModal === 'deleteOrderModal'}
                     onSubmit={this.handleOrderConfirm}
                     onClose={this.handleCloseModal}
-                    title='取消订单' confirmText='确认取消该订单?'
+                    title='取消订单'
+                    confirmText='确认取消该订单?'
                     note='备注'
-                    initialNote={this.state.note} />
+                    initialNote={this.state.note}
+                />
                 <ModalForm
                     key={'modalPayment' + this.state.selectOrdId}
                     visible={this.state.visibleModal === 'confirmPaymentModal'}
                     onSubmit={this.handlePaymentConfirm}
                     onClose={this.handleCloseModal}
-                    title='确认收款' confirmText='确认该订单已收款?'
+                    title='确认收款'
+                    confirmText='确认该订单已收款?'
                     note='备注'
-                    initialNote={this.state.note} />
+                    initialNote={this.state.note}
+                />
             </div>
         )
     }

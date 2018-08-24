@@ -1,14 +1,14 @@
 import Component from 'components/Component'
-import {Form, Input, Select, Button, message} from 'antd'
-import {createForm} from 'libs/antdUtils'
+import { Form, Input, Select, Button, message } from 'antd'
+import { createForm } from 'libs/antdUtils'
 import SelectNumberItem from '../selectNumberItem'
 import Spinner from '../../../components/spiner/Spinner'
-import {DAFAULT_TEXT, DEFAULT_CLASSES, UNIT} from '../../../settings/consts'
+import { DAFAULT_TEXT, DEFAULT_CLASSES, UNIT } from '../../../settings/consts'
 import './createOrder.scss'
 
 const FormItem = Form.Item
 const Option = Select.Option
-const {TextArea} = Input
+const { TextArea } = Input
 
 @createForm()
 class OrderForm extends Component {
@@ -32,7 +32,7 @@ class OrderForm extends Component {
         }
     }
     componentDidMount() {
-        this.setState({loading: true})
+        this.setState({ loading: true })
         G.api.getInitService().then(data => {
             let initProductType = []
             let totalPrice
@@ -70,18 +70,20 @@ class OrderForm extends Component {
         }
     }
     getSelectedProductSubscript = (selectProductType, productType) => {
-        return productType.findIndex(product => product.key === selectProductType)
+        return productType.findIndex(
+            product => product.key === selectProductType
+        )
     }
-    validatorAmount = (e) => {
-        let {value} = e.target
+    validatorAmount = e => {
+        let { value } = e.target
         const reg = /^(0|[1-9][0-9]*)(\.[0-9]{0,2})?$/
-        if (reg.test(value) && !isNaN(value) || value === '') {
-            this.setState({amount: value, amountError: false})
+        if ((reg.test(value) && !isNaN(value)) || value === '') {
+            this.setState({ amount: value, amountError: false })
         }
     }
     handleAccounting = (n, isCustom) => {
-        this.setState({countLoading: true})
-        let {orgId, selectProductType} = this.state
+        this.setState({ countLoading: true })
+        let { orgId, selectProductType } = this.state
         let type = Number(selectProductType) > 4 ? 3 : 2 // selectProductType大于4为 升级版或充值
         let data = {
             orgId: orgId || '',
@@ -89,23 +91,22 @@ class OrderForm extends Component {
             cid: selectProductType,
             countNumber: n
         }
-        G.api.getOrderTotalAmount({data}).then(data => {
-            this.setState({
-                totalPrice: Number(data),
-                selectNumber: Number(n),
-                countLoading: false,
-                customInputVisible: isCustom === 'custom'
+        G.api
+            .getOrderTotalAmount({ data })
+            .then(data => {
+                this.setState({
+                    totalPrice: Number(data),
+                    selectNumber: Number(n),
+                    countLoading: false,
+                    customInputVisible: isCustom === 'custom'
+                })
             })
-        }).catch((e) => {
-            message.error(e.message)
-        })
+            .catch(e => {
+                message.error(e.message)
+            })
     }
-    handleProductTypeChange = (value) => {
-        let {
-            productType,
-            selectProductType,
-            selectNumber
-        } = this.state
+    handleProductTypeChange = value => {
+        let { productType, selectProductType, selectNumber } = this.state
         if (selectProductType === value) {
             return null
         }
@@ -126,14 +127,18 @@ class OrderForm extends Component {
         let i = this.getSelectedProductSubscript(value, productType)
         let unitPrice = productType[i].unitPrice
         selectNumber = productType[i].value.indexOf('升级') >= 0 ? 0 : 100
-        this.setState({
-            selectProductType: value,
-            selectNumber: selectNumber,
-            unitPrice: unitPrice,
-            customInputVisible: false,
-            amount: undefined
-        },
-        () => { this.handleAccounting(selectNumber) })
+        this.setState(
+            {
+                selectProductType: value,
+                selectNumber: selectNumber,
+                unitPrice: unitPrice,
+                customInputVisible: false,
+                amount: undefined
+            },
+            () => {
+                this.handleAccounting(selectNumber)
+            }
+        )
     }
     handleSearchOrgControl = (rules, value, cb) => {
         let r = /^\+?[0-9]{6,7}$/
@@ -154,96 +159,96 @@ class OrderForm extends Component {
         }
     }
     handleSearchOrg = (rules, value, cb) => {
-        let params = {urlParams: {orgId: value}}
-        G.api.getOpenService(params).then(data => {
-            if (!data) {
-                cb('未查询到该机构信息!')
-            } else {
-                let {
-                    name,
-                    orgServiceList,
+        let params = { urlParams: { orgId: value } }
+        G.api
+            .getOpenService(params)
+            .then(data => {
+                if (!data) {
+                    cb('未查询到该机构信息!')
+                } else {
+                    let { name, orgServiceList, orgServiceEntityList } = data
+                    let purchasedService = [{}, {}]
+                    let productType = []
+                    orgServiceList.forEach(service => {
+                        if (!service) return null
+                        let {
+                            type,
+                            laveNum,
+                            accountNum,
+                            name,
+                            outrideNum
+                        } = service
+                        if (type === 1) {
+                            purchasedService[0] = {
+                                key: '1',
+                                name,
+                                outrideNum,
+                                accountBalance: laveNum,
+                                totalAccounts: accountNum
+                            }
+                        } else if (type === 6) {
+                            purchasedService[0] = {
+                                key: '' + type,
+                                name,
+                                accountBalance: null,
+                                totalAccounts: null
+                            }
+                        } else {
+                            purchasedService[1] = {
+                                key: '' + type,
+                                name,
+                                accountBalance: laveNum,
+                                totalAccounts: accountNum
+                            }
+                        }
+                    })
+                    let totalPrice
                     orgServiceEntityList
-                } = data
-                let purchasedService = [{}, {}]
-                let productType = []
-                orgServiceList.forEach(service => {
-                    if (!service) return null
-                    let {
-                        type,
-                        laveNum,
-                        accountNum,
-                        name,
-                        outrideNum
-                    } = service
-                    if (type === 1) {
-                        purchasedService[0] = {
-                            key: '1',
-                            name,
-                            outrideNum,
-                            accountBalance: laveNum,
-                            totalAccounts: accountNum
-                        }
-                    } else if (type === 6) {
-                        purchasedService[0] = {
-                            key: '' + type,
-                            name,
-                            accountBalance: null,
-                            totalAccounts: null
-                        }
-                    } else {
-                        purchasedService[1] = {
-                            key: '' + type,
-                            name,
-                            accountBalance: laveNum,
-                            totalAccounts: accountNum
-                        }
-                    }
-                })
-                let totalPrice
-                orgServiceEntityList
-                && orgServiceEntityList.forEach(product => {
-                    let {
-                        cid: key,
-                        name: value,
-                        price: unitPrice
-                    } = product
-                    if (key === 8) {
-                        totalPrice = Number(product.price)
-                        productType.unshift({
-                            key: '' + key,
-                            value,
-                            unitPrice: Number(unitPrice)
+                        && orgServiceEntityList.forEach(product => {
+                            let {
+                                cid: key,
+                                name: value,
+                                price: unitPrice
+                            } = product
+                            if (key === 8) {
+                                totalPrice = Number(product.price)
+                                productType.unshift({
+                                    key: '' + key,
+                                    value,
+                                    unitPrice: Number(unitPrice)
+                                })
+                            } else {
+                                productType.push({
+                                    key: '' + key,
+                                    value,
+                                    unitPrice: Number(unitPrice)
+                                })
+                            }
                         })
-                    } else {
-                        productType.push({
-                            key: '' + key,
-                            value,
-                            unitPrice: Number(unitPrice)
-                        })
-                    }
-                })
-                this.setState({
-                    selectProductType: productType[0].key,
-                    orgId: value,
-                    institutionName: name,
-                    purchasedService: purchasedService,
-                    productType,
-                    selectNumber: 0,
-                    unitPrice: 0,
-                    totalPrice: totalPrice,
-                    customInputVisible: false
-                }, () => { cb() })
-            }
-        }).catch(e => {
-            message.error(e.message)
-        })
+                    this.setState(
+                        {
+                            selectProductType: productType[0].key,
+                            orgId: value,
+                            institutionName: name,
+                            purchasedService: purchasedService,
+                            productType,
+                            selectNumber: 0,
+                            unitPrice: 0,
+                            totalPrice: totalPrice,
+                            customInputVisible: false
+                        },
+                        () => {
+                            cb()
+                        }
+                    )
+                }
+            })
+            .catch(e => {
+                message.error(e.message)
+            })
     }
     onSubmit(values) {
-        let {
-            orgId,
-            confirmNote: note,
-            customNumber
-        } = values
+        let { orgId, confirmNote: note, customNumber } = values
         let {
             unitPrice: price,
             totalPrice: payMoney,
@@ -252,7 +257,10 @@ class OrderForm extends Component {
             selectProductType,
             amount
         } = this.state
-        let pos = this.getSelectedProductSubscript(selectProductType, productType)
+        let pos = this.getSelectedProductSubscript(
+            selectProductType,
+            productType
+        )
         let name = productType[pos]['value']
         note = note || ''
         let data = {
@@ -266,7 +274,7 @@ class OrderForm extends Component {
         }
         if (selectProductType === '7') {
             if (!amount || amount === '0') {
-                this.setState({amountError: true})
+                this.setState({ amountError: true })
                 return null
             }
             data.type = 1 // 充值服务
@@ -278,22 +286,23 @@ class OrderForm extends Component {
             data.price = ''
             data.buyNum = ''
         } else {
-            let type = name.indexOf('升级') >= 0
-                ? 3
-                : 2 // 2: 购买服务 3: 升级服务
+            let type = name.indexOf('升级') >= 0 ? 3 : 2 // 2: 购买服务 3: 升级服务
             data.type = type
             data.buyNum = buyNum || customNumber || 0
             data.payMoney = Number(payMoney).toFixed(2)
         }
-        G.api.createOrder({data}).then(data => {
-            message.success('订单创建成功')
-            G.history.replace('/orgAdmin/orderList')
-        }).catch(e => {
-            message.error(e.message)
-        })
+        G.api
+            .createOrder({ data })
+            .then(data => {
+                message.success('订单创建成功')
+                G.history.replace('/orgAdmin/orderList')
+            })
+            .catch(e => {
+                message.error(e.message)
+            })
     }
     render() {
-        const {getFieldDecorator} = this.props.form
+        const { getFieldDecorator } = this.props.form
         const formItemLayout = {
             labelCol: {
                 xs: { span: 24 },
@@ -316,7 +325,7 @@ class OrderForm extends Component {
                 }
             }
         }
-        
+
         let {
             selectNumber,
             customInputVisible,
@@ -329,7 +338,7 @@ class OrderForm extends Component {
             totalPrice,
             purchasedService
         } = this.state
-       
+
         const SelectNumberItemProps = {
             selectProductType,
             purchasedService,
@@ -342,45 +351,59 @@ class OrderForm extends Component {
             openCustomInput: this.openCustomInput
         }
         const styleSpinner = {
-            'display': 'block',
-            'width': '30px',
+            display: 'block',
+            width: '30px',
             margin: '4px auto'
         }
-        const unitText = selectProductType === '1'
-            ? UNIT[0]
-            : UNIT[1]
+        const unitText = selectProductType === '1' ? UNIT[0] : UNIT[1]
         let selectValue = productType
             ? productType[0].value
             : '智能课堂（支持1对多/1对1）'
-        let pos = productType && this.getSelectedProductSubscript(selectProductType, productType)
+        let pos
+            = productType
+            && this.getSelectedProductSubscript(selectProductType, productType)
         if (pos && pos > 0) {
             selectValue = productType[pos].value
         }
         let amountProps = this.state.amountError
-            ? {help: '充值金额不能为"0"或空', validateStatus: 'error'}
+            ? { help: '充值金额不能为"0"或空', validateStatus: 'error' }
             : null
         return (
             <div>
                 {loading && <Spinner />}
-                {
-                    !loading && <Form onSubmit={this.onSubmit}>
-                        <FormItem className='orderForm-item' label='机构编号' {...formItemLayout}>
+                {!loading && (
+                    <Form onSubmit={this.onSubmit}>
+                        <FormItem
+                            className='orderForm-item'
+                            label='机构编号'
+                            {...formItemLayout}
+                        >
                             {getFieldDecorator('orgId', {
-                                rules: [{
-                                    required: true,
-                                    validator: this.handleSearchOrgControl
-                                }],
+                                rules: [
+                                    {
+                                        required: true,
+                                        validator: this.handleSearchOrgControl
+                                    }
+                                ],
                                 validateTrigger: 'onChange'
-                            })(
-                                <Input placeholder='最多7位数字' />
-                            )}
+                            })(<Input placeholder='最多7位数字' />)}
                         </FormItem>
 
-                        <FormItem className='orderForm-item-name' {...formItemLayout} label='机构名称'>
-                            <span className='ant-form-text'>{institutionName}</span>
+                        <FormItem
+                            className='orderForm-item-name'
+                            {...formItemLayout}
+                            label='机构名称'
+                        >
+                            <span className='ant-form-text'>
+                                {institutionName}
+                            </span>
                         </FormItem>
 
-                        <FormItem className='orderForm-item-service' {...formItemLayout} label='开通服务'>
+                        <FormItem
+                            className='orderForm-item-service'
+                            {...formItemLayout}
+                            label='开通服务'
+                        >
                             {purchasedService.map((service, i) => {
                                 let {
                                     name,
@@ -393,76 +416,96 @@ class OrderForm extends Component {
                                     ? `; 已超出:${outrideNum})`
                                     : ')'
                                 if (!key) {
-                                    return <div className={DEFAULT_CLASSES[i]}>{DAFAULT_TEXT[i]}</div>
+                                    return (
+                                        <div className={DEFAULT_CLASSES[i]}>
+                                            {DAFAULT_TEXT[i]}
+                                        </div>
+                                    )
                                 } else {
-                                    return <div key={key} className={DEFAULT_CLASSES[i] + ' ' + 'own'}>
-                                        {name}
-                                        {
-                                            totalAccounts
-                                            && <span>{`(账号总数:${totalAccounts}; 账号余量:${accountBalance}${outerText}`}</span>
-                                        }
-                                    </div>
+                                    return (
+                                        <div
+                                            key={key}
+                                            className={
+                                                DEFAULT_CLASSES[i] + ' ' + 'own'
+                                            }
+                                        >
+                                            {name}
+                                            {totalAccounts && (
+                                                <span
+                                                >{`(账号总数:${totalAccounts}; 账号余量:${accountBalance}${outerText}`}</span>
+                                            )}
+                                        </div>
+                                    )
                                 }
                             })}
                         </FormItem>
-                        
-                        <FormItem className='accounting-item-type' label='商品类型' {...formItemLayout}>
+
+                        <FormItem
+                            className='accounting-item-type'
+                            label='商品类型'
+                            {...formItemLayout}
+                        >
                             <Select
                                 value={selectValue}
-                                onChange={this.handleProductTypeChange}>
-                                {
-                                    productType
-                                    && productType.map((product) => {
-                                        let {
-                                            key,
-                                            value
-                                        } = product
-                                        return <Option key={key}>{value}</Option>
-                                    })
-                                }
+                                onChange={this.handleProductTypeChange}
+                            >
+                                {productType
+                                    && productType.map(product => {
+                                        let { key, value } = product
+                                        return (
+                                            <Option key={key}>{value}</Option>
+                                        )
+                                    })}
                             </Select>
                         </FormItem>
-                        
-                        {
-                            (
-                                selectProductType !== '7'
-                                && selectProductType !== '8'
-                                && selectProductType !== '9'
-                            )
-                            && <SelectNumberItem {...SelectNumberItemProps} />
-                        }
-                        
-                        {
-                            (
-                                selectProductType !== '7'
-                                && selectProductType !== '8'
-                                && selectProductType !== '9'
-                            )
-                            && <FormItem className='accounting-item' {...formItemLayout} label='单价'>
+
+                        {selectProductType !== '7'
+                            && selectProductType !== '8'
+                            && selectProductType !== '9' && (
+                            <SelectNumberItem {...SelectNumberItemProps} />
+                        )}
+
+                        {selectProductType !== '7'
+                            && selectProductType !== '8'
+                            && selectProductType !== '9' && (
+                            <FormItem
+                                className='accounting-item'
+                                {...formItemLayout}
+                                label='单价'
+                            >
                                 <span className='ant-form-text'>
                                     {`${unitPrice.toFixed(2)}${unitText}`}
                                 </span>
                             </FormItem>
-                        }
+                        )}
 
-                        {
-                            selectProductType !== '7' && <FormItem className='accounting-item' {...formItemLayout} label='总价'>
-                                {!countLoading && <span className='ant-form-text'>
-                                    {`¥${totalPrice.toFixed(2)}`}</span>
-                                }
-                                {countLoading && <span className='ant-form-text'>
-                                    <Spinner style={styleSpinner} />
-                                </span>}
+                        {selectProductType !== '7' && (
+                            <FormItem
+                                className='accounting-item'
+                                {...formItemLayout}
+                                label='总价'
+                            >
+                                {!countLoading && (
+                                    <span className='ant-form-text'>
+                                        {`¥${totalPrice.toFixed(2)}`}
+                                    </span>
+                                )}
+                                {countLoading && (
+                                    <span className='ant-form-text'>
+                                        <Spinner style={styleSpinner} />
+                                    </span>
+                                )}
                             </FormItem>
-                        }
+                        )}
 
-                        {
-                            selectProductType === '7' && <FormItem
+                        {selectProductType === '7' && (
+                            <FormItem
                                 {...amountProps}
                                 required='true'
                                 className='orderForm-item'
                                 label='充值金额'
-                                {...formItemLayout}>
+                                {...formItemLayout}
+                            >
                                 <Input
                                     maxLength='10'
                                     onChange={this.validatorAmount}
@@ -470,22 +513,30 @@ class OrderForm extends Component {
                                     placeholder='请输入充值金额'
                                 />
                             </FormItem>
-                        }
+                        )}
 
                         <FormItem {...formItemLayout} label='订单备注'>
                             {getFieldDecorator('confirmNote', {
-                                rules: [{message: '请输入订单备注'}, {validator: this.validator}],
+                                rules: [
+                                    { message: '请输入订单备注' },
+                                    { validator: this.validator }
+                                ],
                                 validateTrigger: 'onBlur'
                             })(
-                                <TextArea placeholder='请输入订单备注' rows={4} />
+                                <TextArea
+                                    placeholder='请输入订单备注'
+                                    rows={4}
+                                />
                             )}
                         </FormItem>
-                        
+
                         <FormItem {...tailFormItemLayout}>
-                            <Button htmlType='submit' type='primary'>创建</Button>
+                            <Button htmlType='submit' type='primary'>
+                                创建
+                            </Button>
                         </FormItem>
                     </Form>
-                }
+                )}
             </div>
         )
     }
@@ -499,9 +550,7 @@ export default class CreatePartner extends Component {
                         <OrderForm />
                     </div>
                 </div>
-                <div className='footer'>
-                    power to go
-                </div>
+                <div className='footer'>power to go</div>
             </div>
         )
     }

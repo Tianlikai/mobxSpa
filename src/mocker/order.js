@@ -6,15 +6,15 @@ class Order {
         let cached = []
         for (let i = 0; i < this.initialLength; ++i) {
             let mock = Mock.mock({
-                'item': {
+                item: {
                     'orderId|+1': 1100000 + i,
-                    'createTime': Mock.Random.datetime(),
-                    'payTime': Mock.Random.datetime(),
-                    'orgName': Mock.Random.csentence(),
-                    'mobile': /^1[34578]\d{9}$/,
+                    createTime: Mock.Random.datetime(),
+                    payTime: Mock.Random.datetime(),
+                    orgName: Mock.Random.csentence(),
+                    mobile: /^1[34578]\d{9}$/,
                     'payMoney|1-10000': 100,
                     'state|1': [0, 1, 2, 3, 4],
-                    'note': Mock.Random.csentence()
+                    note: Mock.Random.csentence()
                 }
             })
             cached.push(mock.item)
@@ -31,7 +31,7 @@ class Order {
         let start = (p - 1) * 10
         let end = start + 10
         if (end > max) end = max
-        return {start, end}
+        return { start, end }
     }
 
     /**
@@ -49,7 +49,11 @@ class Order {
         name = name ? name + '' : null
         if (name) {
             copyCached = copyCached.filter(element => {
-                return element.name.indexOf(name) >= 0 || (element.id + '').indexOf(name) >= 0 || (element.mobile + '').indexOf(name) >= 0
+                return (
+                    element.name.indexOf(name) >= 0
+                    || (element.id + '').indexOf(name) >= 0
+                    || (element.mobile + '').indexOf(name) >= 0
+                )
             })
         }
         if (state) {
@@ -67,12 +71,12 @@ class Order {
         }
         let len = copyCached.length
         let items = []
-        let {start, end} = this.getStartAndStop(pageNo, itemsPerPage, len)
+        let { start, end } = this.getStartAndStop(pageNo, itemsPerPage, len)
         while (start < end) {
             items.push(copyCached[start])
             ++start
         }
-        return {items, count: len}
+        return { items, count: len }
     }
 
     /**

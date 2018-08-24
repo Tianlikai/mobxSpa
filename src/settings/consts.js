@@ -9,15 +9,19 @@ const ORG_STATE = {
 const ACTION_STATE = ['启用', '禁用']
 
 const OPTION = [
-    {key: 'all', value: 0, text: '全部'},
-    {key: 'done', value: 1, text: '已支付'},
-    {key: 'wait', value: 2, text: '待支付'},
-    {key: 'delete', value: 3, text: '已取消'}
+    { key: 'all', value: 0, text: '全部' },
+    { key: 'done', value: 1, text: '已支付' },
+    { key: 'wait', value: 2, text: '待支付' },
+    { key: 'delete', value: 3, text: '已取消' }
 ]
 
 const DEFAULT_FORM_OPTION = OPTION.slice()
 
-const DEFAULT_OPTION = OPTION.slice().concat({key: 'fail', value: 4, text: '支付失败'})
+const DEFAULT_OPTION = OPTION.slice().concat({
+    key: 'fail',
+    value: 4,
+    text: '支付失败'
+})
 
 const ORD_LOG_STATE = {
     '0': '全部',
@@ -53,7 +57,8 @@ const ORDER_FIELD = [
     'nowNum',
     'buyNum',
     'payMoney',
-    'note']
+    'note'
+]
 
 const ORDER_TYPE = {
     '1': '充值',
@@ -75,10 +80,10 @@ const DAFAULT_TEXT = ['未开通测评服务账号', '未开通教学服务账�
 const DEFAULT_CLASSES = ['assessmentService', 'teachingServices']
 
 const GRADE = [
-    {key: '', value: '', text: '全部'},
-    {key: 7, value: 7, text: '七年级'},
-    {key: 8, value: 8, text: '八年级'},
-    {key: 9, value: 9, text: '九年级'}
+    { key: '', value: '', text: '全部' },
+    { key: 7, value: 7, text: '七年级' },
+    { key: 8, value: 8, text: '八年级' },
+    { key: 9, value: 9, text: '九年级' }
 ]
 
 const SYSTEM_IDS = {

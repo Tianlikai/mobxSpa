@@ -6,13 +6,13 @@ class OrderLog {
         let cached = []
         for (let i = 0; i < this.initialLength; ++i) {
             let mock = Mock.mock({
-                'item': {
+                item: {
                     'orderId|+1': 1400000 + i,
                     'operationType|1': [1, 2, 3],
-                    'orgName': Mock.Random.cword(4),
-                    'operationDescription': Mock.Random.csentence(),
-                    'userName': Mock.Random.cname(),
-                    'operateDate': Mock.Random.datetime()
+                    orgName: Mock.Random.cword(4),
+                    operationDescription: Mock.Random.csentence(),
+                    userName: Mock.Random.cname(),
+                    operateDate: Mock.Random.datetime()
                 }
             })
             cached.push(mock.item)
@@ -29,7 +29,7 @@ class OrderLog {
         let start = (p - 1) * 10
         let end = start + 10
         if (end > max) end = max
-        return {start, end}
+        return { start, end }
     }
 
     /**
@@ -47,7 +47,10 @@ class OrderLog {
         name = name ? name + '' : null
         if (name) {
             copyCached = copyCached.filter(element => {
-                return element.orgName.indexOf(name) >= 0 || element.userName.indexOf(name) >= 0
+                return (
+                    element.orgName.indexOf(name) >= 0
+                    || element.userName.indexOf(name) >= 0
+                )
             })
         }
         if (state) {
@@ -65,12 +68,12 @@ class OrderLog {
         }
         let len = copyCached.length
         let items = []
-        let {start, end} = this.getStartAndStop(pageNo, itemsPerPage, len)
+        let { start, end } = this.getStartAndStop(pageNo, itemsPerPage, len)
         while (start < end) {
             items.push(copyCached[start])
             ++start
         }
-        return {items, count: len}
+        return { items, count: len }
     }
 }
 

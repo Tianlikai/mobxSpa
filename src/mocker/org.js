@@ -6,16 +6,16 @@ class Org {
         let cached = []
         for (let i = 0; i < this.initialLength; ++i) {
             let mock = Mock.mock({
-                'item': {
+                item: {
                     'id|+1': 1000000 + i,
                     'state|1': [0, 1],
-                    'name': Mock.Random.cname(),
-                    'mobile': /^1[34578]\d{9}$/,
-                    'createdBy': Mock.Random.cname(),
+                    name: Mock.Random.cname(),
+                    mobile: /^1[34578]\d{9}$/,
+                    createdBy: Mock.Random.cname(),
                     'teacherNum|1-100': 100,
                     'studentNum|1-100': 100,
                     'countState|1': [0, 1, 2, 3, 4],
-                    'createdAtFormat': Mock.Random.datetime()
+                    createdAtFormat: Mock.Random.datetime()
                 }
             })
             cached.push(mock.item)
@@ -32,7 +32,7 @@ class Org {
         let start = (p - 1) * 10
         let end = start + 10
         if (end > max) end = max
-        return {start, end}
+        return { start, end }
     }
 
     /**
@@ -48,7 +48,11 @@ class Org {
         name = name ? name + '' : null
         if (name) {
             copyCached = copyCached.filter(element => {
-                return element.name.indexOf(name) >= 0 || (element.id + '').indexOf(name) >= 0 || (element.mobile + '').indexOf(name) >= 0
+                return (
+                    element.name.indexOf(name) >= 0
+                    || (element.id + '').indexOf(name) >= 0
+                    || (element.mobile + '').indexOf(name) >= 0
+                )
             })
         }
         if (state) {
@@ -58,12 +62,12 @@ class Org {
         }
         let len = copyCached.length
         let items = []
-        let {start, end} = this.getStartAndStop(pageNo, itemsPerPage, len)
+        let { start, end } = this.getStartAndStop(pageNo, itemsPerPage, len)
         while (start < end) {
             items.push(copyCached[start])
             ++start
         }
-        return {items, count: len}
+        return { items, count: len }
     }
 
     /**

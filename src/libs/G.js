@@ -29,7 +29,7 @@ function gotoSignIn() {
 }
 
 function setUpUser(data) {
-    const {token} = data
+    const { token } = data
     G.token = token
 }
 
@@ -54,12 +54,14 @@ function encodeQuery(params) {
         return
     }
     result = '?'
-    Object.keys(params).filter(k => !!params[k]).forEach((p, idx) => {
-        if (idx !== 0) {
-            result = result + '&'
-        }
-        result = result + p + '=' + params[p]
-    })
+    Object.keys(params)
+        .filter(k => !!params[k])
+        .forEach((p, idx) => {
+            if (idx !== 0) {
+                result = result + '&'
+            }
+            result = result + p + '=' + params[p]
+        })
     return result
 }
 
@@ -85,7 +87,11 @@ function delReturnParams(key) {
 }
 
 function checkPermission(hadPermissionList) {
-    if (Object.prototype.toString.call(hadPermissionList) === '[object Boolean]' && hadPermissionList) return true
+    if (
+        Object.prototype.toString.call(hadPermissionList)
+            === '[object Boolean]'
+        && hadPermissionList
+    ) { return true }
     const permissionList = Storage.get('permissionList') || []
     let permissions = hadPermissionList.findIndex(p => {
         return permissionList.indexOf(p) >= 0

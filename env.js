@@ -41,21 +41,29 @@ outputConf(conf)
 module.exports = conf
 
 function getEnv(key, defaultValue) {
-    return process.env[key.toUpperCase()] || process.env[key.toLowerCase()] || defaultValue
+    return (
+        process.env[key.toUpperCase()]
+        || process.env[key.toLowerCase()]
+        || defaultValue
+    )
 }
 
 function outputConf(conf) {
     let KEYS = Object.keys(conf)
     let MAX_LENGTH = Math.max(...KEYS.map(k => k.length)) + 2
 
-    console.log('\r\n\x1b[36m==================== 环境变量 ======================\x1b[0m')
+    console.log(
+        '\r\n\x1b[36m==================== 环境变量 ======================\x1b[0m'
+    )
     Object.keys(conf).forEach(k => {
         let color = conf[k] === true ? '\x1b[35m' : ''
         let len = k.length
         let prefix = len < MAX_LENGTH ? ' '.repeat(MAX_LENGTH - k.length) : ''
         console.log('%s%s: %j\x1b[0m', color, prefix + k, conf[k])
     })
-    console.log('\x1b[36m===================================================\x1b[0m\r\n')
+    console.log(
+        '\x1b[36m===================================================\x1b[0m\r\n'
+    )
 }
 
 function getIpAddress() {
@@ -64,7 +72,11 @@ function getIpAddress() {
         let iface = interfaces[devName]
         for (let i = 0; i < iface.length; i++) {
             let alias = iface[i]
-            if (alias.family === 'IPv4' && alias.address !== '127.0.0.1' && !alias.internal) {
+            if (
+                alias.family === 'IPv4'
+                && alias.address !== '127.0.0.1'
+                && !alias.internal
+            ) {
                 return alias.address
             }
         }

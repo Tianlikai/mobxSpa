@@ -1,15 +1,15 @@
 import Component from '../components/Component'
-import {Menu, Icon} from 'antd'
-import {Link} from 'react-router-dom'
-import {SIDE_MENU} from '../settings/routeAndPermissions'
+import { Menu, Icon } from 'antd'
+import { Link } from 'react-router-dom'
+import { SIDE_MENU } from '../settings/routeAndPermissions'
 import './styles/SideMenu.scss'
 
-const {Item, SubMenu} = Menu
+const { Item, SubMenu } = Menu
 
 export default class SideMenu extends Component {
     constructor(props) {
         super(props)
-        let {selectedKeys} = this.props
+        let { selectedKeys } = this.props
         let openKeys = [selectedKeys.split('/')[1]]
         this.state = {
             openKeys: openKeys
@@ -21,8 +21,8 @@ export default class SideMenu extends Component {
     handleClick(e) {
         console.log('click', e)
     }
-    handleOpenChange = (openKeys) => {
-        this.setState({openKeys: openKeys})
+    handleOpenChange = openKeys => {
+        this.setState({ openKeys: openKeys })
     }
     get menu() {
         let SHOW_SIDE_MENU = {}
@@ -33,11 +33,11 @@ export default class SideMenu extends Component {
         return SHOW_SIDE_MENU
     }
     render() {
-        const {selectedKeys} = this.props
+        const { selectedKeys } = this.props
         let menuProps = {
             onClick: this.handleClick,
             onOpenChange: this.handleOpenChange,
-            style: {width: 200, height: '100%'},
+            style: { width: 200, height: '100%' },
             theme: 'dark',
             selectedKeys: [selectedKeys],
             openKeys: this.state.openKeys,
@@ -54,11 +54,10 @@ export default class SideMenu extends Component {
                                 title={
                                     <span>
                                         <Icon type={this.menu[key].iconType} />
-                                        <span>
-                                            {this.menu[key].text}
-                                        </span>
+                                        <span>{this.menu[key].text}</span>
                                     </span>
-                                }>
+                                }
+                            >
                                 {this.menu[key].children.map(item => {
                                     if (G.checkPermission(item.PERMISSIONS)) {
                                         return (
@@ -66,7 +65,8 @@ export default class SideMenu extends Component {
                                                 <Link to={item.to}>
                                                     {item.text}
                                                 </Link>
-                                            </Item>)
+                                            </Item>
+                                        )
                                     }
                                 })}
                             </SubMenu>

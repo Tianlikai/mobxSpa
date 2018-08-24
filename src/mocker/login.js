@@ -1,5 +1,5 @@
 const login = (req, res) => {
-    const {username, password} = req.body
+    const { username, password } = req.body
     if (!password || !username) {
         res.json({
             err: null,
@@ -31,129 +31,129 @@ const login = (req, res) => {
                             id: null,
                             displayOrder: -1,
                             createdAt: null,
-                            'operationId': 60000,
-                            'state': 0,
-                            'isRight': 1
+                            operationId: 60000,
+                            state: 0,
+                            isRight: 1
                         },
                         {
-                            'id': null,
-                            'displayOrder': -1,
-                            'createdAt': null,
-                            'operationId': 60001,
-                            'state': 2,
-                            'isRight': 1
+                            id: null,
+                            displayOrder: -1,
+                            createdAt: null,
+                            operationId: 60001,
+                            state: 2,
+                            isRight: 1
                         },
                         {
-                            'id': null,
-                            'displayOrder': -1,
-                            'createdAt': null,
-                            'operationId': 60002,
-                            'state': 2,
-                            'isRight': 1
+                            id: null,
+                            displayOrder: -1,
+                            createdAt: null,
+                            operationId: 60002,
+                            state: 2,
+                            isRight: 1
                         },
                         {
-                            'id': null,
-                            'displayOrder': -1,
-                            'createdAt': null,
-                            'operationId': 60003,
-                            'state': 2,
-                            'isRight': 1
+                            id: null,
+                            displayOrder: -1,
+                            createdAt: null,
+                            operationId: 60003,
+                            state: 2,
+                            isRight: 1
                         },
                         {
-                            'id': null,
-                            'displayOrder': -1,
-                            'createdAt': null,
-                            'operationId': 60004,
-                            'state': 2,
-                            'isRight': 1
+                            id: null,
+                            displayOrder: -1,
+                            createdAt: null,
+                            operationId: 60004,
+                            state: 2,
+                            isRight: 1
                         },
                         {
-                            'id': null,
-                            'displayOrder': -1,
-                            'createdAt': null,
-                            'operationId': 110000,
-                            'state': 0,
-                            'isRight': 1
+                            id: null,
+                            displayOrder: -1,
+                            createdAt: null,
+                            operationId: 110000,
+                            state: 0,
+                            isRight: 1
                         },
                         {
-                            'id': null,
-                            'displayOrder': -1,
-                            'createdAt': null,
-                            'operationId': 110001,
-                            'state': 2,
-                            'isRight': 1
+                            id: null,
+                            displayOrder: -1,
+                            createdAt: null,
+                            operationId: 110001,
+                            state: 2,
+                            isRight: 1
                         },
                         {
-                            'id': null,
-                            'displayOrder': -1,
-                            'createdAt': null,
-                            'operationId': 110002,
-                            'state': 2,
-                            'isRight': 1
+                            id: null,
+                            displayOrder: -1,
+                            createdAt: null,
+                            operationId: 110002,
+                            state: 2,
+                            isRight: 1
                         },
                         {
-                            'id': null,
-                            'displayOrder': -1,
-                            'createdAt': null,
-                            'operationId': 120000,
-                            'state': 0,
-                            'isRight': 1
+                            id: null,
+                            displayOrder: -1,
+                            createdAt: null,
+                            operationId: 120000,
+                            state: 0,
+                            isRight: 1
                         },
                         {
-                            'id': null,
-                            'displayOrder': -1,
-                            'createdAt': null,
-                            'operationId': 120001,
-                            'state': 2,
-                            'isRight': 1
+                            id: null,
+                            displayOrder: -1,
+                            createdAt: null,
+                            operationId: 120001,
+                            state: 2,
+                            isRight: 1
                         },
                         {
-                            'id': null,
-                            'displayOrder': -1,
-                            'createdAt': null,
-                            'operationId': 120002,
-                            'state': 2,
-                            'isRight': 1
+                            id: null,
+                            displayOrder: -1,
+                            createdAt: null,
+                            operationId: 120002,
+                            state: 2,
+                            isRight: 1
                         },
                         {
-                            'id': null,
-                            'displayOrder': -1,
-                            'createdAt': null,
-                            'operationId': 120003,
-                            'state': 2,
-                            'isRight': 1
+                            id: null,
+                            displayOrder: -1,
+                            createdAt: null,
+                            operationId: 120003,
+                            state: 2,
+                            isRight: 1
                         },
                         {
-                            'id': null,
-                            'displayOrder': -1,
-                            'createdAt': null,
-                            'operationId': 130000,
-                            'state': 0,
-                            'isRight': 1
+                            id: null,
+                            displayOrder: -1,
+                            createdAt: null,
+                            operationId: 130000,
+                            state: 0,
+                            isRight: 1
                         },
                         {
-                            'id': null,
-                            'displayOrder': -1,
-                            'createdAt': null,
-                            'operationId': 130001,
-                            'state': 2,
-                            'isRight': 1
+                            id: null,
+                            displayOrder: -1,
+                            createdAt: null,
+                            operationId: 130001,
+                            state: 2,
+                            isRight: 1
                         },
                         {
-                            'id': null,
-                            'displayOrder': -1,
-                            'createdAt': null,
-                            'operationId': 130002,
-                            'state': 2,
-                            'isRight': 1
+                            id: null,
+                            displayOrder: -1,
+                            createdAt: null,
+                            operationId: 130002,
+                            state: 2,
+                            isRight: 1
                         },
                         {
-                            'id': null,
-                            'displayOrder': -1,
-                            'createdAt': null,
-                            'operationId': 130003,
-                            'state': 2,
-                            'isRight': 1
+                            id: null,
+                            displayOrder: -1,
+                            createdAt: null,
+                            operationId: 130003,
+                            state: 2,
+                            isRight: 1
                         }
                     ]
                 }
@@ -164,4 +164,3 @@ const login = (req, res) => {
 }
 
 module.exports = login
-

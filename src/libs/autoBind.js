@@ -43,9 +43,7 @@ export default function autoBind(context) {
     // B，C 上的函数也都会 autoBind
     while (proto && proto !== React.Component.prototype) {
         Object.getOwnPropertyNames(proto)
-            .filter(method => (
-                wontBind.indexOf(method) < 0 && !(method in map)
-            ))
+            .filter(method => wontBind.indexOf(method) < 0 && !(method in map))
             .forEach(method => {
                 let desc = Object.getOwnPropertyDescriptor(proto, method)
                 if (typeof desc.value !== 'function') {

@@ -12,8 +12,15 @@ const proxy = {
     'POST /__api/8/user/login': login,
     'GET /__api/11/org/list': function(req, res) {
         console.log('GET mock: /__api/11/org/list')
-        const {name, pageNo, itemsPerPage, state} = qs.parse(req._parsedUrl.query)
-        const {items, count} = org.getOrgList(name, pageNo, itemsPerPage, state)
+        const { name, pageNo, itemsPerPage, state } = qs.parse(
+            req._parsedUrl.query
+        )
+        const { items, count } = org.getOrgList(
+            name,
+            pageNo,
+            itemsPerPage,
+            state
+        )
         res.json({
             code: '0',
             data: {
@@ -27,7 +34,7 @@ const proxy = {
     },
     'PUT /__api/11/org/updateOrganisationStateById': function(req, res) {
         console.log('PUT /__api/11/org/updateOrganisationStateById')
-        let {organizationId, state} = req.body
+        let { organizationId, state } = req.body
         const result = org.updateOrderById(organizationId, state)
         if (result) {
             res.json({
@@ -49,8 +56,22 @@ const proxy = {
     },
     'GET /__api/13/productOrder/getOrderList': function(req, res) {
         console.log('GET mock: /__api/13/productOrder/getOrderList')
-        const {name, pageNo, itemsPerPage, state, startTime, endTime} = qs.parse(req._parsedUrl.query)
-        const {items, count} = order.getOrderList(name, pageNo, itemsPerPage, state, startTime, endTime)
+        const {
+            name,
+            pageNo,
+            itemsPerPage,
+            state,
+            startTime,
+            endTime
+        } = qs.parse(req._parsedUrl.query)
+        const { items, count } = order.getOrderList(
+            name,
+            pageNo,
+            itemsPerPage,
+            state,
+            startTime,
+            endTime
+        )
         res.json({
             code: '0',
             data: {
@@ -64,7 +85,7 @@ const proxy = {
     },
     'PUT /__api/13/productOrder/updateStateById': function(req, res) {
         console.log('PUT /__api/13/productOrder/updateStateById')
-        let {orderId, note, state} = req.body
+        let { orderId, note, state } = req.body
         const result = order.updateOrderById(orderId, note, state)
         if (result) {
             res.json({
@@ -86,8 +107,15 @@ const proxy = {
     },
     'GET /__api/11/promotion/getMyProfit': function(req, res) {
         console.log('GET mock: /__api/11/promotion/getMyProfit')
-        const {pageNo, itemsPerPage} = qs.parse(req._parsedUrl.query)
-        const {items, totalShare, settled, settling, noSettle, count} = agent.getMyShare(pageNo, itemsPerPage)
+        const { pageNo, itemsPerPage } = qs.parse(req._parsedUrl.query)
+        const {
+            items,
+            totalShare,
+            settled,
+            settling,
+            noSettle,
+            count
+        } = agent.getMyShare(pageNo, itemsPerPage)
         res.json({
             code: '0',
             data: {
@@ -105,8 +133,22 @@ const proxy = {
     },
     'GET /__api/11/promotion/getPromotionList': function(req, res) {
         console.log('GET mock: /__api/11/promotion/getPromotionList')
-        const {name, pageNo, itemsPerPage, grade, startTime, endTime} = qs.parse(req._parsedUrl.query)
-        const {items, count} = agent.getProList(name, pageNo, itemsPerPage, grade, startTime, endTime)
+        const {
+            name,
+            pageNo,
+            itemsPerPage,
+            grade,
+            startTime,
+            endTime
+        } = qs.parse(req._parsedUrl.query)
+        const { items, count } = agent.getProList(
+            name,
+            pageNo,
+            itemsPerPage,
+            grade,
+            startTime,
+            endTime
+        )
         res.json({
             code: '0',
             data: {
@@ -131,8 +173,22 @@ const proxy = {
     },
     'GET /__api/11/org/log/list': function(req, res) {
         console.log('GET mock: /__api/11/org/log/list')
-        const {name, pageNo, itemsPerPage, operationType, startTime, endTime} = qs.parse(req._parsedUrl.query)
-        const {items, count} = orgLog.getLog(name, pageNo, itemsPerPage, operationType, startTime, endTime)
+        const {
+            name,
+            pageNo,
+            itemsPerPage,
+            operationType,
+            startTime,
+            endTime
+        } = qs.parse(req._parsedUrl.query)
+        const { items, count } = orgLog.getLog(
+            name,
+            pageNo,
+            itemsPerPage,
+            operationType,
+            startTime,
+            endTime
+        )
         res.json({
             code: '0',
             data: {
@@ -146,8 +202,22 @@ const proxy = {
     },
     'GET /__api/13/org/getOrderLogList': function(req, res) {
         console.log('GET mock: /__api/13/org/getOrderLogList')
-        const {name, pageNo, itemsPerPage, type, startTime, endTime} = qs.parse(req._parsedUrl.query)
-        const {items, count} = orderLog.getLog(name, pageNo, itemsPerPage, type, startTime, endTime)
+        const {
+            name,
+            pageNo,
+            itemsPerPage,
+            type,
+            startTime,
+            endTime
+        } = qs.parse(req._parsedUrl.query)
+        const { items, count } = orderLog.getLog(
+            name,
+            pageNo,
+            itemsPerPage,
+            type,
+            startTime,
+            endTime
+        )
         res.json({
             code: '0',
             data: {
@@ -184,7 +254,7 @@ const proxy = {
     },
     'GET /__api/11/promotion/getPromotionDetail': function(req, res) {
         console.log('GET mock: /__api/11/promotion/getPromotionDetail')
-        const {promotionId} = qs.parse(req._parsedUrl.query)
+        const { promotionId } = qs.parse(req._parsedUrl.query)
         let data = {
             courseOrderlist: []
         }
@@ -205,56 +275,64 @@ const proxy = {
     },
     'GET /__api/11/public/getDict/Math_type': function(req, res) {
         res.json({
-            'code': '0',
-            'message': 'success',
-            'httpCode': '200',
-            'err': null,
-            'data': [
+            code: '0',
+            message: 'success',
+            httpCode: '200',
+            err: null,
+            data: [
                 {
-                    'dictvalue': '1',
-                    'dicttext': '通用版'
-                }, {
-                    'dictvalue': '2',
-                    'dicttext': '人教版'
-                }, {
-                    'dictvalue': '3',
-                    'dicttext': '浙教版'
-                }, {
-                    'dictvalue': '4',
-                    'dicttext': '苏科版'
-                }, {
-                    'dictvalue': '5',
-                    'dicttext': '北师大版'
+                    dictvalue: '1',
+                    dicttext: '通用版'
+                },
+                {
+                    dictvalue: '2',
+                    dicttext: '人教版'
+                },
+                {
+                    dictvalue: '3',
+                    dicttext: '浙教版'
+                },
+                {
+                    dictvalue: '4',
+                    dicttext: '苏科版'
+                },
+                {
+                    dictvalue: '5',
+                    dicttext: '北师大版'
                 }
             ],
-            'successful': true
+            successful: true
         })
     },
     'GET /__api/11/public/getDict/English_type': function(req, res) {
         res.json({
-            'code': '0',
-            'message': 'success',
-            'httpCode': '200',
-            'err': null,
-            'data': [
+            code: '0',
+            message: 'success',
+            httpCode: '200',
+            err: null,
+            data: [
                 {
-                    'dictvalue': '1',
-                    'dicttext': '通用版'
-                }, {
-                    'dictvalue': '2',
-                    'dicttext': '人教版'
-                }, {
-                    'dictvalue': '3',
-                    'dicttext': '外研版'
-                }, {
-                    'dictvalue': '4',
-                    'dicttext': '苏教译林版'
-                }, {
-                    'dictvalue': '5',
-                    'dicttext': '上海牛津版'
+                    dictvalue: '1',
+                    dicttext: '通用版'
+                },
+                {
+                    dictvalue: '2',
+                    dicttext: '人教版'
+                },
+                {
+                    dictvalue: '3',
+                    dicttext: '外研版'
+                },
+                {
+                    dictvalue: '4',
+                    dicttext: '苏教译林版'
+                },
+                {
+                    dictvalue: '5',
+                    dicttext: '上海牛津版'
                 }
             ],
-            'successful': true
+            successful: true
         })
     },
     'POST /__api/11/promotion/addPromotion': function(req, res) {
@@ -294,4 +372,3 @@ const proxy = {
 }
 
 module.exports = proxy
-

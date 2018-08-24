@@ -1,24 +1,31 @@
-import {action, observable} from 'mobx'
+import { action, observable } from 'mobx'
 import Storage from '../libs/storage'
-import {Modal} from 'antd'
+import { Modal } from 'antd'
 
 class UserInfo {
-    @observable username = null
-    @observable count = 0
-    @observable sid = null
-    @observable area = null
+    @observable
+    username = null
+    @observable
+    count = 0
+    @observable
+    sid = null
+    @observable
+    area = null
 
     @action
     signIn(data, callback) {
-        G.api.signIn({data}).then((data) => {
-            this.setUserInfo(data)
-            let permissionList = this.saveUserInfo(data)
-            callback(permissionList)
-        }).catch(error => {
-            Modal.error({
-                title: error.message
+        G.api
+            .signIn({ data })
+            .then(data => {
+                this.setUserInfo(data)
+                let permissionList = this.saveUserInfo(data)
+                callback(permissionList)
             })
-        })
+            .catch(error => {
+                Modal.error({
+                    title: error.message
+                })
+            })
     }
 
     @action
@@ -28,12 +35,15 @@ class UserInfo {
 
     @action
     saveUserInfo(data) {
-        let {user: { roleOperations }} = data
+        let {
+            user: { roleOperations }
+        } = data
         let permissionList = [] // 目前对读写权限做处理
-        roleOperations && roleOperations.forEach(element => {
-            if (element.state === 2) permissionList.push(element.operationId)
-        })
-        G.setUpUser({token: data.access_token})
+        roleOperations
+            && roleOperations.forEach(element => {
+                if (element.state === 2) { permissionList.push(element.operationId) }
+            })
+        G.setUpUser({ token: data.access_token })
         Storage.set('token', data.access_token)
         Storage.set('expires_date', data.expires_in + Date.now())
         Storage.set('username', data.user.name)

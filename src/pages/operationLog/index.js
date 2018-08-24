@@ -1,7 +1,7 @@
 import Component from 'components/Component'
-import {ROUTE_OPERATIONLOG} from '../../settings/routeAndPermissions'
+import { ROUTE_OPERATIONLOG } from '../../settings/routeAndPermissions'
 
-const {Route, Switch} = ReactRouterDOM
+const { Route, Switch } = ReactRouterDOM
 
 export default class Logs extends Component {
     render() {
@@ -9,10 +9,13 @@ export default class Logs extends Component {
             <Switch>
                 {ROUTE_OPERATIONLOG.map(route => {
                     if (G.checkPermission(route.PERMISSIONS)) {
-                        return <Route
-                            exact={route.exact}
-                            path={`${this.props.match.url}${route.path}`}
-                            component={route.component} />
+                        return (
+                            <Route
+                                exact={route.exact}
+                                path={`${this.props.match.url}${route.path}`}
+                                component={route.component}
+                            />
+                        )
                     }
                 })}
             </Switch>

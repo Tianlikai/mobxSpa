@@ -1,18 +1,14 @@
-import {inject, observer} from 'mobx-react'
+import { inject, observer } from 'mobx-react'
 import Component from 'components/Component'
 import Storage from 'libs/storage'
 
 import SideMenu from '../layouts/SideMenu'
 import Header from '../layouts/Header'
 
-import {ROUTE_HOME} from '../settings/routeAndPermissions'
+import { ROUTE_HOME } from '../settings/routeAndPermissions'
 import './styles/home.scss'
 
-const {
-    Route,
-    Switch,
-    Redirect
-} = ReactRouterDOM
+const { Route, Switch, Redirect } = ReactRouterDOM
 
 @inject('UserInfoStore')
 @observer
@@ -21,15 +17,15 @@ export default class Home extends Component {
         const token = Storage.get('token')
         const expiresDate = Storage.get('expires_date')
         const username = Storage.get('username')
-        if (!token || (expiresDate && (Date.now() > expiresDate))) {
+        if (!token || (expiresDate && Date.now() > expiresDate)) {
             G.history.replace('/signin')
         } else {
-            G.setUpUser({token})
-            this.props.UserInfoStore.setUserInfo({name: username})
+            G.setUpUser({ token })
+            this.props.UserInfoStore.setUserInfo({ name: username })
             this.props.UserInfoStore.getArea()
         }
     }
-    
+
     logOut() {
         this.props.UserInfoStore.logOut()
     }
@@ -43,14 +39,20 @@ export default class Home extends Component {
                 <Header
                     username={this.props.UserInfoStore.username}
                     logOut={this.logOut}
-                    currentAddress={this.props.location.pathname} />
+                    currentAddress={this.props.location.pathname}
+                />
                 <Switch>
                     {ROUTE_HOME.map(route => {
                         if (G.checkPermission(route.PERMISSIONS)) {
-                            return <Route
-                                exact={route.exact}
-                                path={`${this.props.match.url}${route.path}`}
-                                component={route.component} />
+                            return (
+                                <Route
+                                    exact={route.exact}
+                                    path={`${this.props.match.url}${
+                                        route.path
+                                    }`}
+                                    component={route.component}
+                                />
+                            )
                         }
                     })}
                     <Redirect exact from='/' to='/myAgent/myPromotion' />
