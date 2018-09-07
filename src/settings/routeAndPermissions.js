@@ -19,6 +19,12 @@ import OrgLogs from '../pages/operationLog/OrgLogs'
 import OrderLogs from '../pages/operationLog/OrderLogs'
 
 /**
+ * 等待优化
+ * 所有权限更具路由进行配置
+ * 所有路径/权限/路由相互映射 自动配置
+ */
+
+/**
  * 项目配置说明
  * 1 引入要展示的页面
  * 2 在 PERMISSIONS 中写入该页面的权限 （权限由后端返回，在用户登陆时获取
