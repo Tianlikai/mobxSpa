@@ -1,4 +1,5 @@
 import Component from '../components/Component'
+import Breadcrumb from '../components/breadcrumb'
 
 const Container = config => WrappedComponent =>
     class extends Component {
@@ -10,9 +11,7 @@ const Container = config => WrappedComponent =>
             return (
                 <div className='container'>
                     <div className='content'>
-                        <div className='subTitle'>
-                            {config[0] || '-'} / <span>{config[1] || '-'}</span>
-                        </div>
+                        <Breadcrumb config={config} />
                         <WrappedComponent {...this.props} />
                     </div>
                     <div className='footer' style={footer}>
