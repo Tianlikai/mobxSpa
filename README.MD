@@ -12,6 +12,9 @@ antd 做 ui 易于维护
 axios 请求 api
 mock 数据前端独立开发
 
+写得不容易
+大家喜欢的话随手感谢给个星
+
 ## 文件目录
 
 ```
@@ -82,10 +85,19 @@ mock 数据前端独立开发
 - /src/settings/routeAndPermissions.js 配置文件 （结合/src/pages/Home.js 看）
 - /src/pages/myAgent/index.js 项目子模块 进入文件看注释 （结合/src/settings/routeAndPermissions.js 看）
 
-## 带优化项
+## 待优化项
 
 - 权限/路由/目录 三者之间项目映射 简化配置
 - mobx 性能优化
+- 编写单元测试
+- 异步请求优化
+- 动态加载组件 [react-loadable](https://github.com/jamiebuilds/react-loadable)
+
+## 未来展望
+
+- css in js [style-component](https://github.com/styled-components/styled-components)
+- 脚本生成组件模块以及测试用例
+- 离线优先
 
 ## 注意
 
