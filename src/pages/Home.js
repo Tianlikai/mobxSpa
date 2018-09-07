@@ -14,6 +14,7 @@ const { Route, Switch, Redirect } = ReactRouterDOM
 @observer
 export default class Home extends Component {
     componentDidMount() {
+        // 验证token
         const token = Storage.get('token')
         const expiresDate = Storage.get('expires_date')
         const username = Storage.get('username')
@@ -33,16 +34,20 @@ export default class Home extends Component {
     render() {
         return (
             <div className='home'>
-                <div className='menu'>
-                    <SideMenu selectedKeys={this.props.location.pathname} />
-                </div>
+                <SideMenu selectedKeys={this.props.location.pathname} />
                 <Header
                     username={this.props.UserInfoStore.username}
                     logOut={this.logOut}
                     currentAddress={this.props.location.pathname}
                 />
                 <Switch>
+                    {/* ROUTE_HOME为改模块下的子路由数组对象*/}
                     {ROUTE_HOME.map(route => {
+                        // route 是一个自定义对象
+                        // route.PERMISSIONS该子路由所具有的所有权限
+                        // route.path该子路由的 url
+                        // route.component该路由下的组件模块
+                        // G.checkPermission 权限验证方法
                         if (G.checkPermission(route.PERMISSIONS)) {
                             return (
                                 <Route

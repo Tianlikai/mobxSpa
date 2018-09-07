@@ -44,35 +44,41 @@ export default class SideMenu extends Component {
             mode: 'inline'
         }
         return (
-            <div className='sideMenu'>
-                <div className='logo' />
-                <Menu {...menuProps}>
-                    {Object.keys(this.menu).map(key => {
-                        return (
-                            <SubMenu
-                                key={key}
-                                title={
-                                    <span>
-                                        <Icon type={this.menu[key].iconType} />
-                                        <span>{this.menu[key].text}</span>
-                                    </span>
-                                }
-                            >
-                                {this.menu[key].children.map(item => {
-                                    if (G.checkPermission(item.PERMISSIONS)) {
-                                        return (
-                                            <Item key={item.to}>
-                                                <Link to={item.to}>
-                                                    {item.text}
-                                                </Link>
-                                            </Item>
-                                        )
+            <div className='menu'>
+                <div className='sideMenu'>
+                    <div className='logo' />
+                    <Menu {...menuProps}>
+                        {Object.keys(this.menu).map(key => {
+                            return (
+                                <SubMenu
+                                    key={key}
+                                    title={
+                                        <span>
+                                            <Icon
+                                                type={this.menu[key].iconType}
+                                            />
+                                            <span>{this.menu[key].text}</span>
+                                        </span>
                                     }
-                                })}
-                            </SubMenu>
-                        )
-                    })}
-                </Menu>
+                                >
+                                    {this.menu[key].children.map(item => {
+                                        if (
+                                            G.checkPermission(item.PERMISSIONS)
+                                        ) {
+                                            return (
+                                                <Item key={item.to}>
+                                                    <Link to={item.to}>
+                                                        {item.text}
+                                                    </Link>
+                                                </Item>
+                                            )
+                                        }
+                                    })}
+                                </SubMenu>
+                            )
+                        })}
+                    </Menu>
+                </div>
             </div>
         )
     }
