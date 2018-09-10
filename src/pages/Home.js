@@ -36,7 +36,7 @@ export default class Home extends Component {
             <div className='home'>
                 <SideMenu selectedKeys={this.props.location.pathname} />
                 <Header
-                    username={this.props.UserInfoStore.username}
+                    UserInfoStore={this.props.UserInfoStore}
                     logOut={this.logOut}
                     currentAddress={this.props.location.pathname}
                 />

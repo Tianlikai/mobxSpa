@@ -19,7 +19,7 @@ export default class Header extends Component {
         return permissionList.indexOf(60003) >= 0 || false
     }
     render() {
-        let { logOut, currentAddress, AUTHORITY } = this.props
+        const { logOut, currentAddress, AUTHORITY, UserInfoStore } = this.props
         let key = currentAddress.split('/')[2]
         let { pageTitle, btnText, target } = AUTHORITY[key] || {}
         let hadCreatePermission = this.handleAuthority() // 是否有创建权限
@@ -47,7 +47,7 @@ export default class Header extends Component {
                     <div className='create-order-title'>{pageTitle}</div>
                 )}
                 <Dropdown overlay={menu}>
-                    <a>{this.props.username}</a>
+                    <a>{UserInfoStore.username}</a>
                 </Dropdown>
             </div>
         )
