@@ -266,6 +266,7 @@ class MyPromotion extends Component {
         this.props.PromotionStore.getPromotionList(params)
     }
     render() {
+        const { pageNo, query, record, visibleModal } = this.state
         const {
             promotionList,
             promotionListotal,
@@ -275,10 +276,14 @@ class MyPromotion extends Component {
         const dataSource = mobx.toJS(promotionList)
         const pagination = {
             total: promotionListotal,
-            current: this.state.pageNo,
+            current: pageNo,
             showTotal: () => `共 ${promotionListotal} 条`
         }
-        const initialValue = this.state.query
+        const titleValue = [
+            '本次推广专属小程序二维码',
+            '本次推广专属小程序链接'
+        ]
+        const initialValue = query
         let tableProps = {
             dataSource: dataSource,
             columns: this.columns,
@@ -289,7 +294,7 @@ class MyPromotion extends Component {
         }
         return (
             <div className='list'>
-                <ModuleLine title={'我的推广'}>
+                <ModuleLine title='我的推广'>
                     <Button
                         onClick={this.redirectToCreatePromotion}
                         className='promotionBtn'
@@ -310,14 +315,11 @@ class MyPromotion extends Component {
                     width={600}
                     showTitle={false}
                     titleDownImg='保存'
-                    record={this.state.record}
+                    record={record}
                     recordType='string'
-                    visible={this.state.visibleModal}
+                    visible={visibleModal}
                     handleClose={this.handleCloseShareModal}
-                    titleValue={[
-                        '本次推广专属小程序二维码',
-                        '本次推广专属小程序链接'
-                    ]}
+                    titleValue={titleValue}
                 />
             </div>
         )
