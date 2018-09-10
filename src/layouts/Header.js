@@ -8,7 +8,8 @@ const MenuItem = Menu.Item
 
 export default class Header extends Component {
     static defaultProps = {
-        AUTHORITY
+        AUTHORITY,
+        username: Storage.get('username')
     }
     goToTargetPage = target => {
         G.updateReturnParams('returnParams')
@@ -19,7 +20,7 @@ export default class Header extends Component {
         return permissionList.indexOf(60003) >= 0 || false
     }
     render() {
-        const { logOut, currentAddress, AUTHORITY, UserInfoStore } = this.props
+        const { logOut, currentAddress, AUTHORITY, username } = this.props
         let key = currentAddress.split('/')[2]
         let { pageTitle, btnText, target } = AUTHORITY[key] || {}
         let hadCreatePermission = this.handleAuthority() // 是否有创建权限
@@ -47,7 +48,7 @@ export default class Header extends Component {
                     <div className='create-order-title'>{pageTitle}</div>
                 )}
                 <Dropdown overlay={menu}>
-                    <a>{UserInfoStore.username}</a>
+                    <a>{username}</a>
                 </Dropdown>
             </div>
         )
