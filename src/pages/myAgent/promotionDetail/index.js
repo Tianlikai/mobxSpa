@@ -2,7 +2,8 @@ import Component from 'components/Component'
 import * as mobx from 'mobx'
 import { observer, inject } from 'mobx-react'
 import { Row, Col, Table, Icon, Tooltip } from 'antd'
-import ShareModal, { WeiCode } from '../../../components/MyPromotionShareModal'
+import ShareModal from '../../../components/myPromotionShareModal'
+import ImgWithSave from '../../../components/img/ImgWithSave'
 import ModuleLine from '../ModuleLine'
 import Storage from 'libs/storage'
 import './promotionDetail.scss'
@@ -139,17 +140,17 @@ class PromotionDetail extends Component {
         } = this.props.ProDetailStore
         const { chooseImgByte } = this.props.PromotionStore
         const dataSource = mobx.toJS(detailList)
-        const WeiCodeStyle = {
-            display: 'block',
+        const loadingStyle = {
             width: '40px',
-            margin: '35px auto'
+            height: '40px',
+            margin: '30px'
         }
         const pagination = {
             total: detailListTotal,
             current: this.state.pageNo,
             showTotal: () => `共 ${detailListTotal} 条`
         }
-        let tableProps = {
+        const tableProps = {
             dataSource: dataSource,
             columns: this.columns,
             onChange: this.handleChange,
@@ -157,9 +158,13 @@ class PromotionDetail extends Component {
             loading: listLoading,
             locale: { emptyText: '暂无数据' }
         }
+        const titleValue = [
+            '本次推广专属小程序二维码',
+            '本次推广专属小程序链接'
+        ]
         return (
             <div className='promotionDetail-container'>
-                <ModuleLine title={'推广详情'} />
+                <ModuleLine title='推广详情' />
                 <div className='proInfo-container'>
                     <div className='proInfo-left'>
                         {basicInformation
@@ -172,16 +177,16 @@ class PromotionDetail extends Component {
                             ))}
                     </div>
                     <div className='proInfo-right'>
-                        <WeiCode
+                        <ImgWithSave
                             record={basicInformation}
                             recordType='object'
-                            style={WeiCodeStyle}
+                            loadingStyle={loadingStyle}
                             imgByte={chooseImgByte}
-                            titleDownImg={'保存'}
+                            titleDownImg='保存'
                         />
                     </div>
                 </div>
-                <ModuleLine title={'数据总览'} />
+                <ModuleLine title='数据总览' />
                 <div className='data-frame-container'>
                     <Row type='flex' justify='space-between'>
                         {dataOverview
@@ -200,7 +205,7 @@ class PromotionDetail extends Component {
                             ))}
                     </Row>
                 </div>
-                <ModuleLine title={'订单列表'} />
+                <ModuleLine title='订单列表' />
                 <Table {...tableProps} />
                 <ShareModal
                     className='special'
@@ -213,10 +218,7 @@ class PromotionDetail extends Component {
                     recordType='object'
                     visible={this.state.visibleModal}
                     handleClose={this.handleCloseShareModal}
-                    titleValue={[
-                        '本次推广专属小程序二维码',
-                        '本次推广专属小程序链接'
-                    ]}
+                    titleValue={titleValue}
                 />
             </div>
         )
