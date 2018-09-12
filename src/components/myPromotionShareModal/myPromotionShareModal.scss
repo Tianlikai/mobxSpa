@@ -1,5 +1,5 @@
-.goPoints{
-  &.special .content{
+.goPoints {
+  &.special .content {
     padding: 0;
   }
   .content {
@@ -28,18 +28,8 @@
       flex: 1;
     }
   }
-}
-.code {
-  position: relative;
-  width: 200px;
-  margin: 0 auto;
-  .pCode{
-    .weiCode{
-      height: 200px;
-      width: 200px;
-    }
+  .code {
+    height: 200px;
+    width: 200px;
   }
-}
-.downImg {
-    margin: 30px auto;
 }
