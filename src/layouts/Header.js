@@ -1,11 +1,16 @@
 import Component from '../components/Component'
+import { inject, observer } from 'mobx-react'
 import { Dropdown, Menu, Button } from 'antd'
 import Storage from 'libs/storage'
 
 import { AUTHORITY } from '../settings/routeAndPermissions'
+
 import './styles/Header.scss'
+
 const MenuItem = Menu.Item
 
+@inject('UserInfoStore')
+@observer
 export default class Header extends Component {
     static defaultProps = {
         AUTHORITY,
@@ -20,7 +25,8 @@ export default class Header extends Component {
         return permissionList.indexOf(60003) >= 0 || false
     }
     render() {
-        const { logOut, currentAddress, AUTHORITY, username } = this.props
+        const { logOut, currentAddress, AUTHORITY } = this.props
+        const { username } = this.props.UserInfoStore
         let key = currentAddress.split('/')[2]
         let { pageTitle, btnText, target } = AUTHORITY[key] || {}
         let hadCreatePermission = this.handleAuthority() // 是否有创建权限

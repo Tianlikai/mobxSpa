@@ -41,7 +41,9 @@ class UserInfo {
         let permissionList = [] // 目前对读写权限做处理
         roleOperations
             && roleOperations.forEach(element => {
-                if (element.state === 2) { permissionList.push(element.operationId) }
+                if (element.state === 2) {
+                    permissionList.push(element.operationId)
+                }
             })
         G.setUpUser({ token: data.access_token })
         Storage.set('token', data.access_token)
