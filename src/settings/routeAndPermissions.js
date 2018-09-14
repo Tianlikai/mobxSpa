@@ -1,7 +1,3 @@
-import OrgAdmin from '../pages/orgAdmin'
-import MyAgent from '../pages/myAgent'
-import Logs from '../pages/operationLog'
-
 import ProductInfo from '../pages/orgAdmin/productInfo'
 import PartnerList from '../pages/orgAdmin/PartnerList'
 import OrderList from '../pages/orgAdmin/orderList'
