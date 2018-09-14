@@ -1,5 +1,5 @@
 import Component from 'components/Component'
-import ShareModal from '../../../components/MyPromotionShareModal'
+import ProModal from '../../../components/MyPromotionShareModal/ProModal'
 import * as mobx from 'mobx'
 import moment from 'moment'
 import { observer, inject } from 'mobx-react'
@@ -310,7 +310,7 @@ class MyPromotion extends Component {
                     initialValue={initialValue}
                 />
                 <Table {...tableProps} />
-                <ShareModal
+                <ProModal
                     imgByte={chooseImgByte}
                     width={600}
                     showTitle={false}

@@ -2,7 +2,7 @@ import Component from 'components/Component'
 import * as mobx from 'mobx'
 import { observer, inject } from 'mobx-react'
 import { Row, Col, Table, Icon, Tooltip } from 'antd'
-import ShareModal from '../../../components/myPromotionShareModal'
+import ProModal from '../../../components/myPromotionShareModal/ProModal'
 import ImgWithSave from '../../../components/img/ImgWithSave'
 import ModuleLine from '../ModuleLine'
 import Storage from 'libs/storage'
@@ -207,7 +207,7 @@ class PromotionDetail extends Component {
                 </div>
                 <ModuleLine title='订单列表' />
                 <Table {...tableProps} />
-                <ShareModal
+                <ProModal
                     className='special'
                     imgByte={chooseImgByte}
                     width={600}

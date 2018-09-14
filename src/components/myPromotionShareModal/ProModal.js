@@ -2,7 +2,7 @@ import Component from '../Component'
 import { Modal } from 'antd'
 import ImgWithSave from '../img/ImgWithSave'
 
-import './myPromotionShareModal.scss'
+import './style.scss'
 
 const Title = props => (
     <div className={props.className}>
@@ -10,7 +10,7 @@ const Title = props => (
     </div>
 )
 
-export default class MyPromotionShareModal extends Component {
+export default class ProModal extends Component {
     handleClose = () => {
         this.props.handleClose && this.props.handleClose()
     }
