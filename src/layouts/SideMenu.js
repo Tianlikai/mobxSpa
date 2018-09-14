@@ -33,15 +33,18 @@ export default class SideMenu extends Component {
         return SHOW_SIDE_MENU
     }
     render() {
-        const { selectedKeys } = this.props
+        const { selectedKeys: selKeys } = this.props
+        const selectedKeys = [selKeys]
+        const { openKeys } = this.state
+        const style = { width: 200, height: '100%' }
         let menuProps = {
-            onClick: this.handleClick,
-            onOpenChange: this.handleOpenChange,
-            style: { width: 200, height: '100%' },
+            mode: 'inline',
             theme: 'dark',
-            selectedKeys: [selectedKeys],
-            openKeys: this.state.openKeys,
-            mode: 'inline'
+            style,
+            openKeys,
+            selectedKeys,
+            onClick: this.handleClick,
+            onOpenChange: this.handleOpenChange
         }
         return (
             <div className='menu'>
