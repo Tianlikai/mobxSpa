@@ -14,6 +14,8 @@ import MyInformation from '../pages/myAgent/myInformation'
 import OrgLogs from '../pages/operationLog/OrgLogs'
 import OrderLogs from '../pages/operationLog/OrderLogs'
 
+import factory from '../pages/factory'
+
 /**
  * 等待优化
  * 所有权限更具路由进行配置
@@ -215,38 +217,6 @@ const OrgLogsWrapper = Container(NAV.orgLogs)(OrgLogs)
 const OrderLogsWrapper = Container(NAV.orderLogs)(OrderLogs)
 
 /**
- * 顶级路由
- */
-const ROUTE_HOME = [
-    {
-        path: 'orgAdmin',
-        component: OrgAdmin,
-        exact: false,
-        PERMISSIONS: [
-            PERMISSIONS.createOrg,
-            PERMISSIONS.orgList,
-            PERMISSIONS.orderList
-        ]
-    },
-    {
-        path: 'myAgent',
-        component: MyAgent,
-        exact: false,
-        PERMISSIONS: [
-            PERMISSIONS.myIncome,
-            PERMISSIONS.myPromotion,
-            PERMISSIONS.myInformation
-        ]
-    },
-    {
-        path: 'logs',
-        component: Logs,
-        exact: false,
-        PERMISSIONS: [PERMISSIONS.orgLogs, PERMISSIONS.orderLogs]
-    }
-]
-
-/**
  * 机构管理路由
  */
 const ROUTE_ORGADMIN = [
@@ -333,6 +303,42 @@ const ROUTE_OPERATIONLOG = [
         component: OrderLogsWrapper,
         exact: false,
         PERMISSIONS: [PERMISSIONS.orderLogs]
+    }
+]
+
+const OrgAdmin = factory(ROUTE_ORGADMIN)
+const MyAgent = factory(ROUTE_MYAGENT)
+const Logs = factory(ROUTE_OPERATIONLOG)
+
+/**
+ * 顶级路由
+ */
+const ROUTE_HOME = [
+    {
+        path: 'orgAdmin',
+        component: OrgAdmin,
+        exact: false,
+        PERMISSIONS: [
+            PERMISSIONS.createOrg,
+            PERMISSIONS.orgList,
+            PERMISSIONS.orderList
+        ]
+    },
+    {
+        path: 'myAgent',
+        component: MyAgent,
+        exact: false,
+        PERMISSIONS: [
+            PERMISSIONS.myIncome,
+            PERMISSIONS.myPromotion,
+            PERMISSIONS.myInformation
+        ]
+    },
+    {
+        path: 'logs',
+        component: Logs,
+        exact: false,
+        PERMISSIONS: [PERMISSIONS.orgLogs, PERMISSIONS.orderLogs]
     }
 ]
 
