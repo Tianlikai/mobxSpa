@@ -1,3 +1,17 @@
+/**
+ * 等待优化
+ * 所有权限更具路由进行配置
+ * 所有路径/权限/路由相互映射 自动配置
+ */
+
+/**
+ * 项目配置说明
+ * 1 引入要展示的页面
+ * 2 在 PERMISSIONS 中写入该页面的权限 （权限由后端返回，在用户登陆时获取
+ * 3 在 SIDE_MENU 配置左侧菜单
+ * 4 在 AUTHORITY 配置 Header 权限
+ * 5 是否为新模块页面，是则需要陪新的 ROUTE 然后 export
+ */
 import CreatePromotion from '../pages/home/myAgent/createPromotion'
 import MyIncome from '../pages/home/myAgent/myIncome'
 import MyInformation from '../pages/home/myAgent/myInformation'
@@ -17,19 +31,40 @@ import Container from 'layouts/Container'
 import factory from 'components/factory'
 
 /**
- * 等待优化
- * 所有权限更具路由进行配置
- * 所有路径/权限/路由相互映射 自动配置
+ * 导航路径
+ * 例子：机构管理 / 创建机构
  */
+const NAV = {
+    createOrg: ['机构管理', '创建机构'],
+    orgList: ['机构管理', '机构列表'],
+    orderList: ['机构管理', '订单列表'],
+    settlementDetail: ['结算管理', '结算详情'],
+    myIncome: ['我的代理', '我的分成'],
+    myPromotion: ['我的代理', '我的推广'],
+    myInformation: ['我的代理', '我的信息'],
+    createPromotion: ['我的代理', '新增推广'],
+    promotionDetail: ['我的代理', '推广详情'],
+    orgLogs: ['操作日志', '机构'],
+    orderLogs: ['操作日志', '订单']
+}
 
 /**
- * 项目配置说明
- * 1 引入要展示的页面
- * 2 在 PERMISSIONS 中写入该页面的权限 （权限由后端返回，在用户登陆时获取
- * 3 在 SIDE_MENU 配置左侧菜单
- * 4 在 AUTHORITY 配置 Header 权限
- * 5 是否为新模块页面，是则需要陪新的 ROUTE 然后 export
+ * 以下组件都需要 Container 组件进行增强
+ * Container为以下组件提供公共组件部分
+ * @param {nav} 路径展示配置
+ * @param {component} 需要增强的组件
  */
+const PartnerListWrapper = Container(NAV.orgList)(PartnerList)
+const OrderListWrapper = Container(NAV.orderList)(OrderList)
+
+const MyIncomeWrapper = Container(NAV.myIncome)(MyIncome)
+const MyPromotionWrapper = Container(NAV.myPromotion)(MyPromotion)
+const CreatePromotionWrapper = Container(NAV.createPromotion)(CreatePromotion)
+const PromotionDetailWrapper = Container(NAV.promotionDetail)(PromotionDetail)
+const MyInformationWrapper = Container(NAV.myInformation)(MyInformation)
+
+const OrgLogsWrapper = Container(NAV.orgLogs)(OrgLogs)
+const OrderLogsWrapper = Container(NAV.orderLogs)(OrderLogs)
 
 /**
  * 权限列表
@@ -179,42 +214,6 @@ const AUTHORITY = {
         target: ''
     }
 }
-
-/**
- * 导航路径
- * 例子：机构管理 / 创建机构
- */
-const NAV = {
-    createOrg: ['机构管理', '创建机构'],
-    orgList: ['机构管理', '机构列表'],
-    orderList: ['机构管理', '订单列表'],
-    settlementDetail: ['结算管理', '结算详情'],
-    myIncome: ['我的代理', '我的分成'],
-    myPromotion: ['我的代理', '我的推广'],
-    myInformation: ['我的代理', '我的信息'],
-    createPromotion: ['我的代理', '新增推广'],
-    promotionDetail: ['我的代理', '推广详情'],
-    orgLogs: ['操作日志', '机构'],
-    orderLogs: ['操作日志', '订单']
-}
-
-/**
- * 以下组件都需要 Container 组件进行增强
- * Container为以下组件提供公共组件部分
- * @param {nav} 路径展示配置
- * @param {component} 需要增强的组件
- */
-const PartnerListWrapper = Container(NAV.orgList)(PartnerList)
-const OrderListWrapper = Container(NAV.orderList)(OrderList)
-
-const MyIncomeWrapper = Container(NAV.myIncome)(MyIncome)
-const MyPromotionWrapper = Container(NAV.myPromotion)(MyPromotion)
-const CreatePromotionWrapper = Container(NAV.createPromotion)(CreatePromotion)
-const PromotionDetailWrapper = Container(NAV.promotionDetail)(PromotionDetail)
-const MyInformationWrapper = Container(NAV.myInformation)(MyInformation)
-
-const OrgLogsWrapper = Container(NAV.orgLogs)(OrgLogs)
-const OrderLogsWrapper = Container(NAV.orderLogs)(OrderLogs)
 
 /**
  * 机构管理路由
