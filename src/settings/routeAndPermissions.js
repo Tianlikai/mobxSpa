@@ -1,19 +1,19 @@
-import ProductInfo from '../pages/orgAdmin/productInfo'
-import PartnerList from '../pages/orgAdmin/PartnerList'
-import OrderList from '../pages/orgAdmin/orderList'
-import CreateOrder from '../pages/orgAdmin/createOrder'
-import OrderDetail from '../pages/orgAdmin/orderDetail'
+import CreatePromotion from '../pages/home/myAgent/createPromotion'
+import MyIncome from '../pages/home/myAgent/myIncome'
+import MyInformation from '../pages/home/myAgent/myInformation'
+import MyPromotion from '../pages/home/myAgent/myPromotion'
+import PromotionDetail from '../pages/home/myAgent/promotionDetail'
+
+import OrderLogs from '../pages/home/operationLog/orderLogs'
+import OrgLogs from '../pages/home/operationLog/orgLogs'
+
+import CreateOrder from '../pages/home/orgAdmin/createOrder'
+import OrderDetail from '../pages/home/orgAdmin/orderDetail'
+import ProductInfo from '../pages/home/orgAdmin/productInfo'
+import OrderList from '../pages/home/orgAdmin/orderList'
+import PartnerList from '../pages/home/orgAdmin/partnerList'
+
 import Container from '../layouts/Container'
-
-import MyIncome from '../pages/myAgent/myIncome'
-import MyPromotion from '../pages/myAgent/myPromotion'
-import CreatePromotion from '../pages/myAgent/createPromotion'
-import PromotionDetail from '../pages/myAgent/promotionDetail'
-import MyInformation from '../pages/myAgent/myInformation'
-
-import OrgLogs from '../pages/operationLog/OrgLogs'
-import OrderLogs from '../pages/operationLog/OrderLogs'
-
 import factory from '../pages/factory'
 
 /**
