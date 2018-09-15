@@ -13,8 +13,8 @@ import ProductInfo from '../pages/home/orgAdmin/productInfo'
 import OrderList from '../pages/home/orgAdmin/orderList'
 import PartnerList from '../pages/home/orgAdmin/partnerList'
 
-import Container from '../layouts/Container'
-import factory from '../pages/factory'
+import Container from 'layouts/Container'
+import factory from 'components/factory'
 
 /**
  * 等待优化
