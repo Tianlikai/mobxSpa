@@ -1,11 +1,15 @@
 import Component from 'components/Component'
 import * as mobx from 'mobx'
 import { observer, inject } from 'mobx-react'
+
 import { Row, Col, Table, Icon, Tooltip } from 'antd'
-import ProModal from '../../../components/myPromotionShareModal/ProModal'
-import ImgWithSave from '../../../components/img/ImgWithSave'
+
+import ProModal from 'components/myPromotionShareModal/ProModal'
+import ImgWithSave from 'components/img/ImgWithSave'
 import ModuleLine from '../ModuleLine'
+
 import Storage from 'libs/storage'
+
 import './promotionDetail.scss'
 
 export const VIDEO_CUSTOM_URL = 'https://lcdns-pic.learnta.com/'

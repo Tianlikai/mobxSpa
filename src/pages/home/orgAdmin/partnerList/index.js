@@ -1,9 +1,12 @@
 import Component from 'components/Component'
-import { Form, Input, Button, Table, Modal, Select } from 'antd'
 import { observer, inject } from 'mobx-react'
 import * as mobx from 'mobx'
-import { ORG_STATE } from '../../settings/consts'
+
+import { Form, Input, Button, Table, Modal, Select } from 'antd'
+
 import { createForm } from 'libs/antdUtils'
+
+import { ORG_STATE } from 'settings/consts'
 
 const FormItem = Form.Item
 const Search = Input.Search

@@ -1,14 +1,17 @@
 import Component from 'components/Component'
-import ProModal from '../../../components/MyPromotionShareModal/ProModal'
 import * as mobx from 'mobx'
 import moment from 'moment'
 import { observer, inject } from 'mobx-react'
+
 import { Form, Input, Button, Table, DatePicker, Select } from 'antd'
 
-import ModuleLine from '../ModuleLine'
 import { createForm } from 'libs/antdUtils'
 
-import { GRADE } from '../../../settings/consts'
+import ProModal from 'components/MyPromotionShareModal/ProModal'
+import ModuleLine from '../ModuleLine'
+
+import { GRADE } from 'settings/consts'
+
 import './myPromotion.scss'
 
 const FormItem = Form.Item

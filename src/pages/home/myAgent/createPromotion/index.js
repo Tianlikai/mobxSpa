@@ -1,10 +1,15 @@
 import Component from 'components/Component'
 import { inject, observer } from 'mobx-react'
+
 import { Form, Input, Select, Button, Radio, Cascader } from 'antd'
-import Spinner from '../../../components/spiner/Spinner'
-import ModuleLine from '../ModuleLine'
+
 import { createForm } from 'libs/antdUtils'
-import { GRADE } from '../../../settings/consts'
+
+import Spinner from 'components/spiner/Spinner'
+import ModuleLine from '../ModuleLine'
+
+import { GRADE } from 'settings/consts'
+
 import './createPromotion.scss'
 
 const FormItem = Form.Item

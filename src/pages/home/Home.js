@@ -2,11 +2,12 @@ import { inject, observer } from 'mobx-react'
 import Component from 'components/Component'
 import Storage from 'libs/storage'
 
-import SideMenu from '../layouts/SideMenu'
-import Header from '../layouts/Header'
+import SideMenu from 'layouts/SideMenu'
+import Header from 'layouts/Header'
 
-import { ROUTE_HOME } from '../settings/routeAndPermissions'
-import './styles/home.scss'
+import { ROUTE_HOME } from 'settings/routeAndPermissions'
+
+import './home.scss'
 
 const { Route, Switch, Redirect } = ReactRouterDOM
 

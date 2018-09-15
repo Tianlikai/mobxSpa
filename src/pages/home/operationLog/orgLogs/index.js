@@ -1,9 +1,13 @@
 import Component from 'components/Component'
-import { Form, Input, Button, Table, Select, DatePicker } from 'antd'
-import { observer, inject } from 'mobx-react'
 import * as mobx from 'mobx'
+import { observer, inject } from 'mobx-react'
+import moment from 'moment'
+
+import { Form, Input, Button, Table, Select, DatePicker } from 'antd'
 
 import { createForm } from 'libs/antdUtils'
+
+import { ORD_LOG_STATE } from 'settings/consts'
 
 const FormItem = Form.Item
 const Option = Select.Option
@@ -22,19 +26,20 @@ class SearchForm extends Component {
     render() {
         const { getFieldDecorator, resetFields } = this.props.form
         const initialType = +this.props.initialValue.type
+        const searchStyle = { width: 185 }
         return (
             <div className='search'>
                 <Form layout='inline' onSubmit={this.onSubmit}>
                     <FormItem label='操作类型'>
                         {getFieldDecorator('type', {
-                            initialValue: initialType || 0
+                            initialValue: initialType || '0'
                         })(
                             <Select>
-                                <Option value={0}>全部</Option>
-                                <Option value={1}>创建</Option>
-                                <Option value={2}>禁用</Option>
-                                <Option value={3}>启用</Option>
-                                <Option value={4}>编辑</Option>
+                                {Object.keys(ORD_LOG_STATE).map(key => (
+                                    <Option key={key} value={key}>
+                                        {ORD_LOG_STATE[key]}
+                                    </Option>
+                                ))}
                             </Select>
                         )}
                     </FormItem>
@@ -43,13 +48,13 @@ class SearchForm extends Component {
                             initialValue: this.props.initialValue.name || ''
                         })(
                             <Search
-                                style={{ width: 185 }}
+                                style={searchStyle}
                                 placeholder='搜索机构名称、操作人'
                             />
                         )}
                     </FormItem>
                     <FormItem>
-                        {getFieldDecorator('startTime', {})(
+                        {getFieldDecorator('startTime')(
                             <DatePicker
                                 showTime
                                 format='YYYY-MM-DD HH:mm:ss'
@@ -58,7 +63,7 @@ class SearchForm extends Component {
                         )}
                     </FormItem>
                     <FormItem>
-                        {getFieldDecorator('endTime', {})(
+                        {getFieldDecorator('endTime')(
                             <DatePicker
                                 showTime
                                 format='YYYY-MM-DD HH:mm:ss'
@@ -89,7 +94,7 @@ class SearchForm extends Component {
     }
 }
 
-@inject('OrganizationStore')
+@inject('OrdersStore')
 @observer
 class Logs extends Component {
     constructor(props) {
@@ -101,11 +106,15 @@ class Logs extends Component {
     }
     componentDidMount() {
         const query = G.getQuery()
-        console.log({ query })
-        this.props.OrganizationStore.getOrganizationLog(query)
+        this.props.OrdersStore.getOrderLog(query)
     }
     get columns() {
         return [
+            {
+                title: '订单号',
+                dataIndex: 'orderId',
+                key: 'orderId'
+            },
             {
                 title: '操作类型',
                 dataIndex: 'operationType',
@@ -123,55 +132,55 @@ class Logs extends Component {
             },
             {
                 title: '操作人',
-                dataIndex: 'username',
-                key: 'username'
+                dataIndex: 'userName',
+                key: 'userName'
             },
             {
                 title: '操作时间',
-                dataIndex: 'createdAtFormat',
-                key: 'createdAtFormat'
+                dataIndex: 'operateDate',
+                key: 'operateDate'
             }
         ]
     }
 
-    loadOrganizationLog(params) {
+    loadOrderLog(params) {
+        let { startTime, endTime } = params
+        params.startTime = !startTime
+            ? undefined
+            : moment(startTime).format('YYYY-MM-DD HH:mm:ss')
+        params.endTime = !endTime
+            ? undefined
+            : moment(endTime).format('YYYY-MM-DD HH:mm:ss')
+        params.type = params.type === '0' ? undefined : params.type
         params.name = params.name
             ? params.name
                 .replace(/^(\s|\u00A0)+/, '')
                 .replace(/(\s|\u00A0)+$/, '')
             : undefined
-        this.props.OrganizationStore.getOrganizationLog(params)
-        // G.history.push(`/admin/logs${G.encodeQuery(params)}`)
+        this.props.OrdersStore.getOrderLog(params)
     }
     onSubmit(value) {
         this.setState({ query: value, pageNo: 1 })
-        console.log('submit', value)
-        this.loadOrganizationLog(value)
+        this.loadOrderLog(value)
     }
     onReset() {
         const params = {}
         this.setState({ query: params, pageNo: 1 })
-        this.loadOrganizationLog(params)
+        this.loadOrderLog(params)
     }
     handleChange(value) {
-        console.log('change', value)
         const query = this.state.query
         const params = Object.assign(query, { pageNo: value.current })
-        console.log('change', params)
         this.setState({ pageNo: value.current })
-        this.loadOrganizationLog(params)
+        this.loadOrderLog(params)
     }
     render() {
-        const {
-            organizationLog,
-            organizationLogTotal,
-            listLoading
-        } = this.props.OrganizationStore
-        const dataSource = mobx.toJS(organizationLog)
+        const { orderLog, orderLogTotal, listLoading } = this.props.OrdersStore
+        const dataSource = mobx.toJS(orderLog)
         const pagination = {
-            total: organizationLogTotal,
+            total: orderLogTotal,
             current: this.state.pageNo,
-            showTotal: () => `共 ${organizationLogTotal} 条`
+            showTotal: () => `共 ${orderLogTotal} 条`
         }
         const initialValue = G.getQuery()
         return (

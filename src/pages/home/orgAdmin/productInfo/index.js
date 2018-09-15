@@ -1,10 +1,14 @@
 import Component from 'components/Component'
-import { Form, Button, Modal, DatePicker, message } from 'antd'
-import Spinner from '../../../components/spiner/Spinner'
 import { observer, inject } from 'mobx-react'
-import { createForm } from 'libs/antdUtils'
 import moment from 'moment'
+
+import { Form, Button, Modal, DatePicker, message } from 'antd'
+
+import { createForm } from 'libs/antdUtils'
 import Storage from 'libs/storage'
+
+import Spinner from 'components/spiner/Spinner'
+
 import './productinfo.scss'
 
 const FormItem = Form.Item

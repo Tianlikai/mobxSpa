@@ -1,8 +1,11 @@
 import Component from 'components/Component'
 import * as mobx from 'mobx'
 import { observer, inject } from 'mobx-react'
+
 import { Table } from 'antd'
+
 import ModuleLine from '../ModuleLine'
+
 import './myIncome.scss'
 
 const IncomeBox = props => {

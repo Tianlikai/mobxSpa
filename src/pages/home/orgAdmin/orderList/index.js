@@ -2,10 +2,14 @@ import Component from 'components/Component'
 import * as mobx from 'mobx'
 import moment from 'moment'
 import { observer, inject } from 'mobx-react'
+
 import { Form, Input, Button, Table, Modal, Select, DatePicker } from 'antd'
+
 import { createForm } from 'libs/antdUtils'
 import Storage from 'libs/storage'
-import { DEFAULT_FORM_OPTION, DEFAULT_OPTION } from '../../../settings/consts'
+
+import { DEFAULT_FORM_OPTION, DEFAULT_OPTION } from 'settings/consts'
+
 import './orderList.scss'
 
 const FormItem = Form.Item

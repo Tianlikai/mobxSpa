@@ -1,9 +1,13 @@
 import Component from 'components/Component'
 import { Form, Input, Select, Button, message } from 'antd'
+
 import { createForm } from 'libs/antdUtils'
-import SelectNumberItem from '../selectNumberItem'
-import Spinner from '../../../components/spiner/Spinner'
-import { DAFAULT_TEXT, DEFAULT_CLASSES, UNIT } from '../../../settings/consts'
+
+import SelectNumberItem from './selectNumberItem'
+import Spinner from 'components/spiner/Spinner'
+
+import { DAFAULT_TEXT, DEFAULT_CLASSES, UNIT } from 'settings/consts'
+
 import './createOrder.scss'
 
 const FormItem = Form.Item

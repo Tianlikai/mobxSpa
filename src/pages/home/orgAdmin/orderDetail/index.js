@@ -1,9 +1,14 @@
 import Component from 'components/Component'
 import { observer, inject } from 'mobx-react'
+
 import { Form, Input, Button } from 'antd'
-import Spinner from '../../../components/spiner/Spinner'
+
+import Spinner from 'components/spiner/Spinner'
+
 import { createForm } from 'libs/antdUtils'
-import { LABEL_LIST, ORDER_FIELD } from '../../../settings/consts'
+
+import { LABEL_LIST, ORDER_FIELD } from 'settings/consts'
+
 import './orderDetail.scss'
 
 const FormItem = Form.Item
