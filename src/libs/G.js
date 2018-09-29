@@ -25,7 +25,7 @@ const G = {
 }
 
 function gotoSignIn() {
-    G.history.push('/signin')
+    G.history.push('/signIn')
 }
 
 function setUpUser(data) {
@@ -91,7 +91,9 @@ function checkPermission(hadPermissionList) {
         Object.prototype.toString.call(hadPermissionList)
             === '[object Boolean]'
         && hadPermissionList
-    ) { return true }
+    ) {
+        return true
+    }
     const permissionList = Storage.get('permissionList') || []
     let permissions = hadPermissionList.findIndex(p => {
         return permissionList.indexOf(p) >= 0

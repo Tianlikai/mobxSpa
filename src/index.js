@@ -21,7 +21,7 @@ class Entry extends Component {
             <Provider {...stores}>
                 <Router>
                     <Switch>
-                        <Route exact path='/signin' component={SignIn} />
+                        <Route exact path='/signIn' component={SignIn} />
                         <Route path='/' component={Home} />
                     </Switch>
                 </Router>
