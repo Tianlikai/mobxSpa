@@ -12,20 +12,20 @@
  * 4 在 AUTHORITY 配置 Header 权限
  * 5 是否为新模块页面，是则需要陪新的 ROUTE 然后 export
  */
-import CreatePromotion from '../pages/home/myAgent/createPromotion'
-import MyIncome from '../pages/home/myAgent/myIncome'
-import MyInformation from '../pages/home/myAgent/myInformation'
-import MyPromotion from '../pages/home/myAgent/myPromotion'
-import PromotionDetail from '../pages/home/myAgent/promotionDetail'
+import CreatePromotion from '../routes/home/myAgent/createPromotion'
+import MyIncome from '../routes/home/myAgent/myIncome'
+import MyInformation from '../routes/home/myAgent/myInformation'
+import MyPromotion from '../routes/home/myAgent/myPromotion'
+import PromotionDetail from '../routes/home/myAgent/promotionDetail'
 
-import OrderLogs from '../pages/home/operationLog/orderLogs'
-import OrgLogs from '../pages/home/operationLog/orgLogs'
+import OrderLogs from '../routes/home/operationLog/orderLogs'
+import OrgLogs from '../routes/home/operationLog/orgLogs'
 
-import CreateOrder from '../pages/home/orgAdmin/createOrder'
-import OrderDetail from '../pages/home/orgAdmin/orderDetail'
-import ProductInfo from '../pages/home/orgAdmin/productInfo'
-import OrderList from '../pages/home/orgAdmin/orderList'
-import PartnerList from '../pages/home/orgAdmin/partnerList'
+import CreateOrder from '../routes/home/orgAdmin/createOrder'
+import OrderDetail from '../routes/home/orgAdmin/orderDetail'
+import ProductInfo from '../routes/home/orgAdmin/productInfo'
+import OrderList from '../routes/home/orgAdmin/orderList'
+import PartnerList from '../routes/home/orgAdmin/partnerList'
 
 import Container from 'layouts/Container'
 import factory from 'components/factory'
