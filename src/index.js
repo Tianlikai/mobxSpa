@@ -4,9 +4,9 @@ import { Provider } from 'mobx-react'
 import './libs/G.js'
 
 // 单页面应用主文件
-import Home from './pages/home/Home'
+import Home from './routes/home/Home'
 // 登陆页面
-import SignIn from './pages/signIn/SignIn'
+import SignIn from './routes/signIn/SignIn'
 // mobx store
 import stores from './stores/index'
 

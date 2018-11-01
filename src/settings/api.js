@@ -1,3 +1,10 @@
+/**
+ * 接口统一管理
+ * axios 参数传递方式
+ * get query 参数 {params}
+ * post data 数据 {data}
+ * url 拼接参数 {urlParams}
+ */
 module.exports = {
     // 登陆
     signIn: { url: '8/user/login', method: 'post' },
@@ -43,21 +50,3 @@ module.exports = {
         method: 'post'
     }
 }
-
-/**
- * axiox 参数传递方式
- * get query 参数 {params}
- * post data 数据 {data}
- * url 拼接参数 {urlParams}
- */
-
-// function localRequest({url, ...rest}) {
-//     let result = {...rest}
-//     if (__DEV__) {
-//         result.url = `0${url}`
-//     } else {
-//         result.url = url
-//         result.baseURL = ''
-//     }
-//     return result
-// }
