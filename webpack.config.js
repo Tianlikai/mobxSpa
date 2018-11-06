@@ -13,7 +13,7 @@ const manifest = require('./src/static/manifest.dll.json')
 require('babel-polyfill')
 
 const env = require('./env.js')
-const mocker = path.resolve('./src/mocker/index.js')
+const mocker = path.resolve('./src/_mocker_')
 
 const cdnUrl = '' // 静态资源上传地址
 const rootDir = path.resolve(__dirname)
