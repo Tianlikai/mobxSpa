@@ -1,7 +1,7 @@
-import React from 'react'
+import Component from 'components/Component'
 import PropTypes from 'prop-types'
 
-class BreadcrumbItem extends React.Component {
+class BreadcrumbItem extends Component {
     static defaultProps = {
         prefixCls: 'breadItem',
         separator: '/',

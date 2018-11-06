@@ -1,11 +1,11 @@
-import React from 'react'
+import Component from 'components/Component'
 import PropTypes from 'prop-types'
 import BreadcrumbItem from './BreadcrumbItem'
 import classNames from 'classnames'
 
 import './style.scss'
 
-class Breadcrumb extends React.Component {
+class Breadcrumb extends Component {
     static defaultProps = {
         prefixCls: 'breadcrumb'
     }
