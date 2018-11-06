@@ -1,6 +1,9 @@
 import Component from 'components/Component'
 import { Form, Input, Button } from 'antd'
+import { Helmet } from 'react-helmet'
 import { observer, inject } from 'mobx-react'
+
+import BasicFooter from '../../layouts/BasicFooter'
 
 import { createForm } from 'utils/antdUtils'
 
@@ -67,7 +70,7 @@ class SignInForm extends Component {
                     className='submit'
                     loading={this.isLoading}
                 >
-                    s{this.isLoading ? '登录中...' : '登录'}
+                    {this.isLoading ? '登录中...' : '登录'}
                 </Button>
             </Form>
         )
@@ -79,12 +82,12 @@ export default class SignIn extends Component {
         console.log('submit')
     }
     render() {
-        const footer = {
-            color: 'gray',
-            fontSize: 18
-        }
         return (
             <div className='signIn'>
+                <Helmet>
+                    <title>登录 - SPA</title>
+                    <meta name='description' content='论答CRM' />
+                </Helmet>
                 <div className='header' />
                 <div className='content'>
                     <div className='logo'>
@@ -92,9 +95,7 @@ export default class SignIn extends Component {
                     </div>
                     <SignInForm />
                 </div>
-                <div className='footer' style={footer}>
-                    power to go!
-                </div>
+                <BasicFooter className='footer' />
             </div>
         )
     }

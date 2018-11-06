@@ -3,7 +3,7 @@ import { Menu, Icon } from 'antd'
 import { Link } from 'react-router-dom'
 import SIDE_MENU from '../../settings/sideMenu'
 
-// import LogoWhite from '../../images/logo-white.png'
+import Logo from './logo.svg'
 import './style.scss'
 
 const { Item, SubMenu } = Menu
@@ -49,7 +49,8 @@ export default class SideMenu extends Component {
         return (
             <div className='sideMenu'>
                 <div className='logo'>
-                    <img src={''} alt='logo' />
+                    <img src={Logo} alt='logo' />
+                    <span>{' ~~~~'}</span>
                 </div>
                 <Menu {...menuProps}>
                     {Object.keys(this.menu).map(key => {

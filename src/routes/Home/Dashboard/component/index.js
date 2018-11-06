@@ -11,7 +11,7 @@ export default class Dashboard extends Component {
         return (
             <div style={style}>
                 <Helmet>
-                    <title>仪表盘 - 论答CRM</title>
+                    <title>仪表盘 - SPA</title>
                     <meta name='description' content='论答CRM' />
                 </Helmet>
                 欢迎来到论答CRM系统

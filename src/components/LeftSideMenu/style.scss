@@ -1,22 +1,15 @@
 .sideMenu {
   .logo {
     height: 70px;
+    line-height: 70px;
     background: #001529;
-    padding: 20px 30px;
+    padding: 0 0 0 24px;
+    color: white;
+    font-size: 20px;
     img {
-      width: 90px;
-      height: 21px;
+      height: 35px;
     }
   }
-  //.ant-menu-submenu-title {
-  //    font-size: 12px;
-  //}
-  //.ant-menu-item {
-  //    font-size: 12px;
-  //}
-  //.ant-menu-submenu-inline>.ant-menu-submenu-title:after {
-  //    font-size: 12px;
-  //}
   .ant-menu-dark.ant-menu-inline .ant-menu-item-selected {
     background: #3296be;
   }

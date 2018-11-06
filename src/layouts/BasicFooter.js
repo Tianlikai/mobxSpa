@@ -10,7 +10,8 @@ export default class BasicFooter extends Component {
         const { className } = this.props
         return (
             <div className={className} style={styDiv}>
-                Project maintenance by jason
+                Project maintenance <br />
+                by jason
             </div>
         )
     }

@@ -9,7 +9,7 @@ const styleOf404 = {
 export default () => (
     <div style={styleOf404}>
         <Helmet>
-            <title>404 - 论答CRM</title>
+            <title>404 - SPA</title>
             <meta name='description' content='论答CRM' />
         </Helmet>
         没有找到相关页面

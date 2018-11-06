@@ -9,7 +9,7 @@ import { createRoutes } from 'utils/core'
 
 const routesConfig = () => [
     {
-        path: '/signin',
+        path: '/signIn',
         exact: true,
         PERMISSIONS: true,
         component: SignIn

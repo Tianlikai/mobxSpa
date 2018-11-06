@@ -1,16 +1,17 @@
 import Component from 'components/Component'
+import ModuleLine from 'components/ModuleLine'
 import { WithBreadcrumb } from 'components/Breadcrumb'
-
-import * as mobx from 'mobx'
-import moment from 'moment'
-import { observer, inject } from 'mobx-react'
+import ProModal from 'components/MyPromotionShareModal/ProModal'
 
 import { Form, Input, Button, Table, DatePicker, Select } from 'antd'
 
-import { createForm } from 'utils/antdUtils'
+import moment from 'moment'
+import { Helmet } from 'react-helmet'
 
-import ProModal from 'components/MyPromotionShareModal/ProModal'
-import ModuleLine from 'components/ModuleLine'
+import * as mobx from 'mobx'
+import { observer, inject } from 'mobx-react'
+
+import { createForm } from 'utils/antdUtils'
 
 import { GRADE } from 'settings/consts'
 
@@ -293,6 +294,7 @@ class MyPromotion extends Component {
         ]
         const initialValue = query
         let tableProps = {
+            bordered: true,
             dataSource: dataSource,
             columns: this.columns,
             onChange: this.handleChange,
@@ -302,15 +304,19 @@ class MyPromotion extends Component {
         }
         return (
             <WithBreadcrumb config={config}>
+                <Helmet>
+                    <title>查询表格 - SPA</title>
+                    <meta name='description' content='论答CRM' />
+                </Helmet>
                 <div className='list'>
-                    <ModuleLine title='我的推广'>
+                    <ModuleLine title='查询表格'>
                         <Button
                             onClick={this.redirectToCreatePromotion}
                             className='promotionBtn'
                             type='primary'
                             size='middle'
                         >
-                            新增推广
+                            新增
                         </Button>
                     </ModuleLine>
                     <SearchForm
