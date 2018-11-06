@@ -5,7 +5,7 @@ import Table from './Home/Table'
 import NotFound from './ErrorPage/404'
 
 import BasicLayout from '../layouts/BasicLayout'
-import { createRoutes } from './../libs/core'
+import { createRoutes } from 'utils/core'
 
 const routesConfig = () => [
     {

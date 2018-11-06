@@ -1,4 +1,4 @@
-import autoBind from 'libs/autoBind'
+import autoBind from 'utils/autoBind'
 
 export default class Component extends React.Component {
     constructor(props) {

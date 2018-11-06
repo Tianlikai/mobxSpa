@@ -1,5 +1,5 @@
 import { action, observable } from 'mobx'
-import Storage from '../libs/storage'
+import Storage from 'utils/storage'
 import { Modal } from 'antd'
 
 class UserInfo {

@@ -57,7 +57,7 @@ let wp = {
         alias: {
             components: path.join(srcDir, 'components'),
             layouts: path.join(srcDir, 'layouts'),
-            libs: path.join(srcDir, 'libs'),
+            utils: path.join(srcDir, 'utils'),
             settings: path.join(srcDir, 'settings'),
             redactor: path.join(srcDir, 'static/redactor')
         }

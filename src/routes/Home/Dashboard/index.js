@@ -1,6 +1,6 @@
 import Loadable from 'react-loadable'
 
-import { createRoute } from 'libs/core'
+import { createRoute } from 'utils/core'
 const Spinner = () => null
 
 const routesConfig = () => ({

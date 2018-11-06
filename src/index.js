@@ -2,7 +2,7 @@ import Component from './components/Component'
 import { Provider } from 'mobx-react'
 
 // 引入全局函数
-import './libs/G.js'
+import 'utils/G.js'
 // store
 import stores from './stores/index'
 

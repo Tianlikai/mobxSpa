@@ -1,6 +1,6 @@
 import { inject, observer } from 'mobx-react'
 import Component from 'components/Component'
-import Storage from 'libs/storage'
+import Storage from 'utils/storage'
 
 import Layout from './Layout'
 import BasicFooter from './BasicFooter'

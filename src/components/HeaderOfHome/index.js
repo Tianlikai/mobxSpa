@@ -1,6 +1,6 @@
 import Component from 'components/Component'
 import { Dropdown, Menu, Button } from 'antd'
-import Storage from 'libs/storage'
+import Storage from 'utils/storage'
 
 import AUTHORITY from '../../settings/headerConfig'
 import './style.scss'

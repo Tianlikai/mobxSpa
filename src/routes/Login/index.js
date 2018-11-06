@@ -2,7 +2,7 @@ import Component from 'components/Component'
 import { Form, Input, Button } from 'antd'
 import { observer, inject } from 'mobx-react'
 
-import { createForm } from 'libs/antdUtils'
+import { createForm } from 'utils/antdUtils'
 
 import { SYSTEM_IDS } from 'settings/consts'
 

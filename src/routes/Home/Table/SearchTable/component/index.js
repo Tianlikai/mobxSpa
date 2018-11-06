@@ -7,7 +7,7 @@ import { observer, inject } from 'mobx-react'
 
 import { Form, Input, Button, Table, DatePicker, Select } from 'antd'
 
-import { createForm } from 'libs/antdUtils'
+import { createForm } from 'utils/antdUtils'
 
 import ProModal from 'components/MyPromotionShareModal/ProModal'
 import ModuleLine from 'components/ModuleLine'

@@ -1,4 +1,4 @@
-import { createRoute } from 'libs/core'
+import { createRoute } from 'utils/core'
 
 import Container from '../../../layouts/Container'
 import SearchTable from './SearchTable'
