@@ -282,6 +282,7 @@ class MyPromotion extends Component {
             listLoading,
             chooseImgByte
         } = PromotionStore
+
         const dataSource = mobx.toJS(promotionList)
         const pagination = {
             total: promotionListotal,
@@ -293,6 +294,7 @@ class MyPromotion extends Component {
             '本次推广专属小程序链接'
         ]
         const initialValue = query
+        const emptyText = { emptyText: '暂无数据' }
         let tableProps = {
             bordered: true,
             dataSource: dataSource,
@@ -300,7 +302,7 @@ class MyPromotion extends Component {
             onChange: this.handleChange,
             pagination: pagination,
             loading: listLoading,
-            locale: { emptyText: '暂无数据' }
+            locale: emptyText
         }
         return (
             <WithBreadcrumb config={config}>
