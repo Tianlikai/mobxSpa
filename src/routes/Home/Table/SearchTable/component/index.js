@@ -132,8 +132,7 @@ class MyPromotion extends Component {
             {
                 title: '创建时间',
                 dataIndex: 'createdAt',
-                key: 'createdAt',
-                width: 180
+                key: 'createdAt'
             },
             {
                 title: '地区',

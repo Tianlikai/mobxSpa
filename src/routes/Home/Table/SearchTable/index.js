@@ -6,7 +6,7 @@ const Spinner = () => null
 const routesConfig = () => ({
     path: '/table/searchTable',
     PERMISSIONS: true,
-    config: ['论答CRM', '短信通知', '发送短信'],
+    config: ['Admin', '表格页', '查询表格'],
     component: Loadable({
         loader: () => import('./component'),
         loading: Spinner
