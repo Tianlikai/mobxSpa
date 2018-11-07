@@ -11,13 +11,13 @@ import { SYSTEM_IDS } from 'settings/consts'
 
 import './style.scss'
 
-@inject('UserInfoStore')
+@inject('User')
 @observer
 @createForm()
 class SignInForm extends Component {
     onSubmit(values) {
         const { username, password } = values
-        this.props.UserInfoStore.signIn(
+        this.props.User.signIn(
             { username, password, systemId: SYSTEM_IDS.BD_ORG },
             res => {
                 let replaceUrl = '/home'

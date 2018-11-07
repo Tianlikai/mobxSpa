@@ -13,7 +13,7 @@ import './styles/BasicLayout.scss'
 const { Switch } = ReactRouterDOM
 const LayoutSide = Layout.LayoutSide
 
-@inject('UserInfoStore')
+@inject('User')
 @observer
 export default class Home extends Component {
     componentDidMount() {
@@ -23,13 +23,13 @@ export default class Home extends Component {
             G.history.replace('/signin')
         } else {
             G.setUpUser({ token })
-            this.props.UserInfoStore.setUserInfo({ name: username })
-            this.props.UserInfoStore.getArea()
+            this.props.User.setUserInfo({ name: username })
+            this.props.User.getArea()
         }
     }
 
     logOut() {
-        this.props.UserInfoStore.logOut()
+        this.props.User.logOut()
     }
 
     render() {

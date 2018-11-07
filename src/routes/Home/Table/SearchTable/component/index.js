@@ -99,7 +99,7 @@ class SearchForm extends Component {
     }
 }
 
-@inject('PromotionStore')
+@inject('TableSearch')
 @observer
 class MyPromotion extends Component {
     constructor(props) {
@@ -117,12 +117,12 @@ class MyPromotion extends Component {
         let query = {}
         let pageNo = this.state.pageNo
         if (!returnParams || !returnParams.effective) {
-            this.props.PromotionStore.getPromotionList({})
+            this.props.TableSearch.getPromotionList({})
         } else {
             query = returnParams.query
             pageNo = returnParams.pageNo
             let copyQuery = Object.assign({}, query, { pageNo: pageNo })
-            this.props.PromotionStore.getPromotionList(copyQuery)
+            this.props.TableSearch.getPromotionList(copyQuery)
         }
         G.delReturnParams('returnParams')
         this.setState({ query: query, pageNo: pageNo })
@@ -228,7 +228,7 @@ class MyPromotion extends Component {
             visibleModal: true,
             record
         })
-        this.props.PromotionStore.getWeiCode({ promotionId: record.id, record })
+        this.props.TableSearch.getWeiCode({ promotionId: record.id, record })
     }
     handleCloseShareModal = () => {
         this.setState(
@@ -236,7 +236,7 @@ class MyPromotion extends Component {
                 visibleModal: false,
                 record: {}
             },
-            () => this.props.PromotionStore.delWeiCode()
+            () => this.props.TableSearch.delWeiCode()
         )
     }
     onReset() {
@@ -268,11 +268,11 @@ class MyPromotion extends Component {
         this.loadOrganizationList(params)
     }
     loadOrganizationList(params) {
-        this.props.PromotionStore.getPromotionList(params)
+        this.props.TableSearch.getPromotionList(params)
     }
     render() {
         const { pageNo, query, record, visibleModal } = this.state
-        const { routerData, PromotionStore } = this.props
+        const { routerData, TableSearch } = this.props
         const { config } = routerData
 
         const {
@@ -280,7 +280,7 @@ class MyPromotion extends Component {
             promotionListotal,
             listLoading,
             chooseImgByte
-        } = PromotionStore
+        } = TableSearch
 
         const dataSource = mobx.toJS(promotionList)
         const pagination = {
