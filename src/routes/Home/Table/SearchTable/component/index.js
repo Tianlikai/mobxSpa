@@ -1,103 +1,17 @@
 import Component from 'components/Component'
+
+import * as mobx from 'mobx'
+import { Helmet } from 'react-helmet'
+import { observer, inject } from 'mobx-react'
+
+import SearchForm from './SearchForm'
 import ModuleLine from 'components/ModuleLine'
 import { WithBreadcrumb } from 'components/Breadcrumb'
 import ProModal from 'components/MyPromotionShareModal/ProModal'
 
-import { Form, Input, Button, Table, DatePicker, Select } from 'antd'
-
-import moment from 'moment'
-import { Helmet } from 'react-helmet'
-
-import * as mobx from 'mobx'
-import { observer, inject } from 'mobx-react'
-
-import { createForm } from 'utils/antdUtils'
-
-import { GRADE } from 'settings/consts'
+import { Button, Table } from 'antd'
 
 import './style.scss'
-
-const FormItem = Form.Item
-const Search = Input.Search
-const { RangePicker } = DatePicker
-const Option = Select.Option
-
-@createForm()
-class SearchForm extends Component {
-    onSubmit(v) {
-        this.props.onSubmit && this.props.onSubmit(v)
-    }
-    render() {
-        const { getFieldDecorator, resetFields } = this.props.form
-        const searchStyle = { width: 220 }
-        let { startTime, endTime, name, grade } = this.props.initialValue || {
-            name: undefined,
-            startTime: undefined,
-            endTime: undefined,
-            grade: undefined
-        }
-        startTime = startTime
-            ? moment(startTime, 'YYYY-MM-DD HH:MM:SS')
-            : undefined
-        endTime = endTime ? moment(endTime, 'YYYY-MM-DD HH:MM:SS') : undefined
-        return (
-            <div className='search'>
-                <Form layout='inline' onSubmit={this.onSubmit}>
-                    <FormItem label='年级'>
-                        {getFieldDecorator('grade', {
-                            initialValue: grade || ''
-                        })(
-                            <Select>
-                                {GRADE.map(grade => (
-                                    <Option key={grade.key} value={grade.value}>
-                                        {grade.text}
-                                    </Option>
-                                ))}
-                            </Select>
-                        )}
-                    </FormItem>
-                    <FormItem label='时间范围'>
-                        {getFieldDecorator('timeLimit', {
-                            initialValue: [startTime, endTime]
-                        })(
-                            <RangePicker
-                                format='YYYY-MM-DD HH:MM:SS'
-                                placeholder={['开始时间', '结束时间']}
-                            />
-                        )}
-                    </FormItem>
-                    <FormItem>
-                        {getFieldDecorator('queryCond', {
-                            initialValue: name
-                        })(
-                            <Search
-                                style={searchStyle}
-                                placeholder='请输入学校，班级'
-                            />
-                        )}
-                    </FormItem>
-                    <FormItem>
-                        <Button htmlType='submit' type='primary'>
-                            搜索
-                        </Button>
-                    </FormItem>
-                    <FormItem>
-                        <Button
-                            type='primary'
-                            htmlType='reset'
-                            onClick={() => {
-                                this.props.onReset()
-                                resetFields()
-                            }}
-                        >
-                            重置
-                        </Button>
-                    </FormItem>
-                </Form>
-            </div>
-        )
-    }
-}
 
 @inject('TableSearch')
 @observer
@@ -106,7 +20,6 @@ class MyPromotion extends Component {
         super(props)
         this.state = {
             visibleModal: false,
-            address: '',
             pageNo: 1,
             query: {},
             record: {}
@@ -239,9 +152,9 @@ class MyPromotion extends Component {
             () => this.props.TableSearch.delWeiCode()
         )
     }
-    onReset() {
+    onReset(cb) {
         const params = {}
-        this.setState({ query: params, pageNo: 1 })
+        this.setState({ query: params, pageNo: 1 }, () => cb && cb())
         this.loadOrganizationList(params)
     }
     handleChange(value) {
@@ -275,34 +188,29 @@ class MyPromotion extends Component {
         const { routerData, TableSearch } = this.props
         const { config } = routerData
 
-        const {
-            promotionList,
-            promotionListotal,
-            listLoading,
-            chooseImgByte
-        } = TableSearch
-
-        const dataSource = mobx.toJS(promotionList)
-        const pagination = {
-            total: promotionListotal,
-            current: pageNo,
-            showTotal: () => `共 ${promotionListotal} 条`
-        }
-        const titleValue = [
-            '本次推广专属小程序二维码',
-            '本次推广专属小程序链接'
-        ]
-        const initialValue = query
+        const { table: tableData, chooseImgByte } = TableSearch
+        const { list, count, loading } = tableData
+        const dataSource = mobx.toJS(list)
         const emptyText = { emptyText: '暂无数据' }
-        let tableProps = {
+        const tableProps = {
             bordered: true,
             dataSource: dataSource,
             columns: this.columns,
             onChange: this.handleChange,
             pagination: pagination,
-            loading: listLoading,
+            loading: loading,
             locale: emptyText
         }
+
+        const pagination = {
+            total: count,
+            current: pageNo,
+            showTotal: () => `共 ${count} 条`
+        }
+        const titleValue = [
+            '本次推广专属小程序二维码',
+            '本次推广专属小程序链接'
+        ]
         return (
             <WithBreadcrumb config={config}>
                 <Helmet>
@@ -321,9 +229,9 @@ class MyPromotion extends Component {
                         </Button>
                     </ModuleLine>
                     <SearchForm
-                        onSubmit={this.onSubmit}
                         onReset={this.onReset}
-                        initialValue={initialValue}
+                        onSubmit={this.onSubmit}
+                        initialValue={query}
                     />
                     <Table {...tableProps} />
                     <ProModal

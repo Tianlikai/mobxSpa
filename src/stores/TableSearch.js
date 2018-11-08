@@ -2,15 +2,10 @@ import { action, observable } from 'mobx'
 import { GRADE } from '../settings/consts'
 import moment from 'moment'
 
-class Orders {
+class TableSearch {
     @observable
-    promotionList = []
-    @observable
-    promotionListotal = 0
-    @observable
-    pageSize = 10
-    @observable
-    listLoading = false
+    table
+
     @observable
     imgByte = {}
     @observable
@@ -18,24 +13,38 @@ class Orders {
     @observable
     activeId = null
 
+    constructor() {
+        this.table = {
+            loading: false,
+            count: 0,
+            list: []
+        }
+    }
+
     @action
-    getPromotionList({ name, grade, pageNo = 1, startTime, endTime }) {
-        this.listLoading = true
+    getPromotionList({
+        name,
+        grade,
+        pageNo = 1,
+        pageSize = 10,
+        startTime,
+        endTime
+    }) {
+        this.table.loading = true
         G.api
             .getPromotionList({
                 params: {
                     name,
                     grade,
                     pageNo,
-                    itemsPerPage: this.pageSize,
+                    itemsPerPage: pageSize,
                     startTime,
                     endTime
                 }
             })
             .then(data => {
-                this.listLoading = false
-                this.promotionListotal = data.count
-                this.promotionList = data.items.map(item => {
+                const count = data.count
+                const list = data.items.map(item => {
                     const pos = GRADE.findIndex(
                         grade => grade.value === item.grade
                     )
@@ -50,6 +59,11 @@ class Orders {
                     item.note = item.note || ''
                     return item
                 })
+                this.table = {
+                    loading: false,
+                    count: count,
+                    list: list
+                }
             })
     }
 
@@ -84,4 +98,4 @@ class Orders {
     }
 }
 
-export default new Orders()
+export default new TableSearch()
