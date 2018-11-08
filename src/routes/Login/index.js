@@ -86,7 +86,7 @@ export default class SignIn extends Component {
             <div className='signIn'>
                 <Helmet>
                     <title>登录 - SPA</title>
-                    <meta name='description' content='论答CRM' />
+                    <meta name='description' content='SPA' />
                 </Helmet>
                 <div className='header' />
                 <div className='content'>

@@ -1,6 +1,8 @@
 import SignIn from './Login'
 
 import Dashboard from './Home/Dashboard'
+import Detail from './Home/Detail'
+import Form from './Home/Form'
 import Table from './Home/Table'
 import NotFound from './ErrorPage/404'
 
@@ -20,7 +22,7 @@ const routesConfig = () => [
         PERMISSIONS: true,
         component: BasicLayout,
         indexRoute: '/home',
-        childRoutes: [Dashboard(), Table(), NotFound()]
+        childRoutes: [Dashboard(), Detail(), Form(), Table(), NotFound()]
     }
 ]
 

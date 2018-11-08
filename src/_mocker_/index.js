@@ -255,11 +255,8 @@ const proxy = {
     'GET /__api/11/promotion/getPromotionDetail': function(req, res) {
         console.log('GET mock: /__api/11/promotion/getPromotionDetail')
         const { promotionId } = qs.parse(req._parsedUrl.query)
-        let data = {
-            courseOrderlist: []
-        }
         const result = agent.getPromotionById(promotionId)
-        data = Object.assign({}, data, result)
+        const data = Object.assign({}, result)
         res.json({
             code: '0',
             data: data,

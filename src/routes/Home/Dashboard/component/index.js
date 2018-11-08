@@ -12,9 +12,9 @@ export default class Dashboard extends Component {
             <div style={style}>
                 <Helmet>
                     <title>仪表盘 - SPA</title>
-                    <meta name='description' content='论答CRM' />
+                    <meta name='description' content='SPA' />
                 </Helmet>
-                欢迎来到论答CRM系统
+                欢迎来到SPA系统
             </div>
         )
     }

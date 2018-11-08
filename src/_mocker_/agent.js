@@ -43,6 +43,7 @@ class Agent {
         }
         let cachedPro = []
         for (let i = 0; i < this.initialMyProLength; ++i) {
+            const courseOrderlist = this.getTable(this.initialMyProLength)
             let mock = Mock.mock({
                 item: {
                     'id|+1': 1200000 + i,
@@ -73,13 +74,33 @@ class Agent {
                     mathTeacher: Mock.Random.cname(),
                     'mathPressName|1': mathVersion,
                     englishTeacher: Mock.Random.cname(),
-                    'englishPressName|1': englishVersion
+                    'englishPressName|1': englishVersion,
+                    courseOrderlist: courseOrderlist
                 }
             })
             cachedPro.push(mock.item)
         }
         this.cached = cached
         this.cachedPro = cachedPro
+    }
+
+    getTable(num) {
+        let table = []
+        for (let i = 0; i < num; ++i) {
+            let mock = Mock.mock({
+                item: {
+                    mobile: /^1[385][1-9]\d{8}/,
+                    userName: Mock.Random.cname(),
+                    payTime: Mock.Random.datetime(),
+                    courseName: Mock.Random.csentence(),
+                    'grade|1': [7, 8, 9],
+                    'payMoney|1-1000': 100,
+                    'share|1-10000': 100
+                }
+            })
+            table.push(mock.item)
+        }
+        return table
     }
 
     /**

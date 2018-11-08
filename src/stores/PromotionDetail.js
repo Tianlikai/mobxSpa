@@ -107,6 +107,7 @@ class PromotionDetail {
                         ? moment(item.payTime).format('YYYY-MM-DD HH:mm:ss')
                         : '-'
                     item.payMoney = item.payMoney ? `¥${item.payMoney}` : '-'
+                    item.share = item.share ? `¥${item.share}` : '-'
                     item.grade
                         = item.grade && pos >= 0
                             ? GRADE[

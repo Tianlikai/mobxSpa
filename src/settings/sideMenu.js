@@ -14,6 +14,18 @@ export default {
         children: [],
         to: '/home'
     },
+    form: {
+        iconType: 'desktop',
+        text: '表单页',
+        PERMISSIONS: true,
+        children: [
+            {
+                to: '/form/baseForm',
+                text: '基础表单',
+                PERMISSIONS: true
+            }
+        ]
+    },
     table: {
         iconType: 'desktop',
         text: '表格页',

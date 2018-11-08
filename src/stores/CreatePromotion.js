@@ -42,7 +42,7 @@ class CreatePromotion {
             .createPromotion({ data })
             .then(data => {
                 const { id } = data
-                G.history.replace(`/myAgent/promotionDetail/${id}`)
+                G.history.replace(`/detail/baseDetail/${id}`)
                 G.delReturnParams('returnParams')
                 Storage.set('fromCreatePromotion', true)
             })

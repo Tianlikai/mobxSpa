@@ -127,14 +127,14 @@ class MyPromotion extends Component {
             pageNo: this.state.pageNo,
             query: this.state.query
         })
-        G.history.push({ pathname: '/myAgent/createPromotion' })
+        G.history.push({ pathname: '/form/baseForm' })
     }
     redirectToDetail = record => {
         G.setReturnParams('returnParams', {
             pageNo: this.state.pageNo,
             query: this.state.query
         })
-        G.history.push({ pathname: `/myAgent/promotionDetail/${record.id}` })
+        G.history.push({ pathname: `/detail/baseDetail/${record.id}` })
     }
     handleOpenShareModal = record => {
         this.setState({
@@ -215,7 +215,7 @@ class MyPromotion extends Component {
             <WithBreadcrumb config={config}>
                 <Helmet>
                     <title>查询表格 - SPA</title>
-                    <meta name='description' content='论答CRM' />
+                    <meta name='description' content='SPA' />
                 </Helmet>
                 <div className='list'>
                     <ModuleLine title='查询表格'>
