@@ -1,6 +1,8 @@
+import moment from 'moment'
+import CloneDeep from 'lodash/cloneDeep'
+
 import { action, observable } from 'mobx'
 import { GRADE } from '../settings/consts'
-import moment from 'moment'
 
 const INFORMATION = {
     createdAt: { label: '开始时间:', value: '-' },
@@ -13,6 +15,7 @@ const INFORMATION = {
     school: { label: '学校:', value: '-' },
     className: { label: '班级:', value: '-' }
 }
+
 const DATA_OVERVIEW = [
     {
         key: 'registerNumber',
@@ -39,46 +42,50 @@ const DATA_OVERVIEW = [
         yesterday: '-'
     }
 ]
+
 class PromotionDetail {
     @observable
-    detailList = []
-    @observable
-    detailListTotal = 0
-    @observable
-    pageSize = 10
-    @observable
-    listLoading = false
-    @observable
-    basicInformation = INFORMATION
-    @observable
-    dataOverview = DATA_OVERVIEW
+    table
+
+    constructor() {
+        this.table = {
+            loading: false,
+            count: 0,
+            list: []
+        }
+        this.basicInformation = INFORMATION
+        this.dataOverview = DATA_OVERVIEW
+    }
 
     @action
-    getPromotionDetail({ id, pageNo = 1 }) {
-        this.listLoading = true
+    getPromotionDetail({ id, pageNo = 1, pageSize = 10 }) {
+        this.table.loading = true
         G.api
             .getPromotionDetail({
-                params: { promotionId: id, pageNo, itemsPerPage: this.pageSize }
+                params: { promotionId: id, pageNo, itemsPerPage: pageSize }
             })
             .then(data => {
-                this.listLoading = false
-                this.detailListTotal = data.totalCourseOrderNumber
-                Object.keys(this.basicInformation).forEach(key => {
+                let basicInformation = CloneDeep(this.basicInformation)
+                const keys = Object.keys(basicInformation)
+                keys.forEach(key => {
                     if (key === 'createdAt') {
-                        this.basicInformation[key].value = data[key]
+                        basicInformation[key].value = data[key]
                             ? moment(data[key]).format('YYYY-MM-DD HH:mm:ss')
                             : '-'
                     } else if (key === 'grade') {
                         const pos = GRADE.findIndex(
                             grade => grade.value === data[key]
                         )
-                        this.basicInformation[key].value
+                        basicInformation[key].value
                             = data[key] && pos >= 0 ? GRADE[pos].text : '-'
                     } else {
-                        this.basicInformation[key].value = data[key] || '-'
+                        basicInformation[key].value = data[key] || '-'
                     }
                 })
-                this.dataOverview.forEach((item, i) => {
+                this.basicInformation = basicInformation
+
+                let dataOverview = this.dataOverview.slice()
+                dataOverview.forEach((item, i) => {
                     switch (item.key) {
                         case 'registerNumber': {
                             item.total = data['registerNumber']
@@ -99,7 +106,10 @@ class PromotionDetail {
                             break
                     }
                 })
-                this.detailList = data.courseOrderlist.map(item => {
+                this.dataOverview = dataOverview
+
+                const count = data.totalCourseOrderNumber
+                const list = data.courseOrderlist.map(item => {
                     const pos = GRADE.findIndex(
                         grade => grade.value === item.grade
                     )
@@ -108,17 +118,22 @@ class PromotionDetail {
                         : '-'
                     item.payMoney = item.payMoney ? `¥${item.payMoney}` : '-'
                     item.share = item.share ? `¥${item.share}` : '-'
-                    item.grade
-                        = item.grade && pos >= 0
-                            ? GRADE[
-                                GRADE.findIndex(
-                                    grade => grade.value === item.grade
-                                )
-                            ].text
-                            : '-'
+                    if (item.grade && pos >= 0) {
+                        let pos = GRADE.findIndex(
+                            grade => grade.value === item.grade
+                        )
+                        item.grade = pos >= 0 ? GRADE[pos].text : '-'
+                    } else {
+                        item.grade = '-'
+                    }
                     item.key = item.id
                     return item
                 })
+                this.table = {
+                    loading: false,
+                    count: count,
+                    list: list
+                }
             })
     }
 

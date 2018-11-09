@@ -32,7 +32,7 @@ class BaseForm extends Component {
                         <title>基础表单 - SPA</title>
                         <meta name='description' content='SPA' />
                     </Helmet>
-                    <ModuleLine title={'新增推广'} />
+                    <ModuleLine title='新增推广' />
                     {loading && <Spinner />}
                     {!loading && (
                         <BForm

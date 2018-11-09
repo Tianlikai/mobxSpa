@@ -192,6 +192,11 @@ class MyPromotion extends Component {
         const { list, count, loading } = tableData
         const dataSource = mobx.toJS(list)
         const emptyText = { emptyText: '暂无数据' }
+        const pagination = {
+            total: count,
+            current: pageNo,
+            showTotal: () => `共 ${count} 条`
+        }
         const tableProps = {
             bordered: true,
             dataSource: dataSource,
@@ -202,11 +207,6 @@ class MyPromotion extends Component {
             locale: emptyText
         }
 
-        const pagination = {
-            total: count,
-            current: pageNo,
-            showTotal: () => `共 ${count} 条`
-        }
         const titleValue = [
             '本次推广专属小程序二维码',
             '本次推广专属小程序链接'

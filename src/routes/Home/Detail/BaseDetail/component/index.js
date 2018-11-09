@@ -14,8 +14,6 @@ import ProModal from 'components/myPromotionShareModal/ProModal'
 
 import './style.scss'
 
-export const VIDEO_CUSTOM_URL = 'https://lcdns-pic.learnta.com/'
-
 const InfoItem = props => {
     return (
         <div className='proInfo-item'>
@@ -100,6 +98,11 @@ class BaseDetail extends Component {
                 key: 'courseName'
             },
             {
+                title: '教材版本',
+                dataIndex: 'version',
+                key: 'version'
+            },
+            {
                 title: '所属年级',
                 dataIndex: 'grade',
                 key: 'grade'
@@ -131,32 +134,34 @@ class BaseDetail extends Component {
         })
     }
     render() {
+        const { visibleModal } = this.state
         const { routerData, TableSearch, ProDetailStore } = this.props
         const { config } = routerData
 
         const {
-            detailList,
-            detailListTotal,
-            listLoading,
+            table: tableData,
             basicInformation,
             dataOverview
         } = ProDetailStore
 
+        const { loading, count, list } = tableData
+
         const { chooseImgByte } = TableSearch
-        const dataSource = mobx.toJS(detailList)
+        const dataSource = mobx.toJS(list)
         const pagination = {
-            total: detailListTotal,
+            total: count,
             current: this.state.pageNo,
-            showTotal: () => `共 ${detailListTotal} 条`
+            showTotal: () => `共 ${count} 条`
         }
+        const emptyText = { emptyText: '暂无数据' }
         const tableProps = {
             bordered: true,
             dataSource: dataSource,
             columns: this.columns,
-            onChange: this.handleChange,
             pagination: pagination,
-            loading: listLoading,
-            locale: { emptyText: '暂无数据' }
+            loading: loading,
+            locale: emptyText,
+            onChange: this.handleChange
         }
 
         const loadingStyle = {
@@ -228,9 +233,9 @@ class BaseDetail extends Component {
                         titleDownImg='保存'
                         record={basicInformation}
                         recordType='object'
-                        visible={this.state.visibleModal}
-                        handleClose={this.handleCloseShareModal}
+                        visible={visibleModal}
                         titleValue={titleValue}
+                        handleClose={this.handleCloseShareModal}
                     />
                 </div>
             </WithBreadcrumb>

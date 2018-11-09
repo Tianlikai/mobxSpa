@@ -75,7 +75,8 @@ class Agent {
                     'mathPressName|1': mathVersion,
                     englishTeacher: Mock.Random.cname(),
                     'englishPressName|1': englishVersion,
-                    courseOrderlist: courseOrderlist
+                    courseOrderlist: courseOrderlist,
+                    totalCourseOrderNumber: courseOrderlist.length
                 }
             })
             cachedPro.push(mock.item)
@@ -86,6 +87,7 @@ class Agent {
 
     getTable(num) {
         let table = []
+        const version = [].concat(mathVersion).concat(englishVersion)
         for (let i = 0; i < num; ++i) {
             let mock = Mock.mock({
                 item: {
@@ -95,7 +97,8 @@ class Agent {
                     courseName: Mock.Random.csentence(),
                     'grade|1': [7, 8, 9],
                     'payMoney|1-1000': 100,
-                    'share|1-10000': 100
+                    'share|1-10000': 100,
+                    'version|1': version
                 }
             })
             table.push(mock.item)
