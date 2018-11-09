@@ -10,7 +10,7 @@ import { Row, Col, Table, Icon, Tooltip } from 'antd'
 import ModuleLine from 'components/ModuleLine'
 import ImgWithSave from 'components/img/ImgWithSave'
 import { WithBreadcrumb } from 'components/Breadcrumb'
-import ProModal from 'components/myPromotionShareModal/ProModal'
+import ShareByQrModal from 'components/ShareByQrModal'
 
 import './style.scss'
 
@@ -224,7 +224,8 @@ class BaseDetail extends Component {
                     </div>
                     <ModuleLine title='订单列表' />
                     <Table {...tableProps} />
-                    <ProModal
+                    <ShareByQrModal
+                        key='base-detail-modal'
                         className='special'
                         imgByte={chooseImgByte}
                         width={600}

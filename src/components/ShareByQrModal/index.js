@@ -1,6 +1,6 @@
-import Component from '../Component'
+import Component from 'components/Component'
+import ImgWithSave from 'components/img/ImgWithSave'
 import { Modal } from 'antd'
-import ImgWithSave from '../img/ImgWithSave'
 
 import './style.scss'
 
@@ -10,7 +10,7 @@ const Title = props => (
     </div>
 )
 
-export default class ProModal extends Component {
+export default class ShareByQrModal extends Component {
     handleClose = () => {
         this.props.handleClose && this.props.handleClose()
     }
@@ -26,7 +26,8 @@ export default class ProModal extends Component {
             titleValue,
             record,
             recordType,
-            titleDownImg
+            titleDownImg,
+            ...others
         } = this.props
 
         const titleStyle = { textAlign: 'center' }
@@ -40,7 +41,8 @@ export default class ProModal extends Component {
             width: width || 800,
             height: height || 400,
             footer: null,
-            onCancel: this.handleClose
+            onCancel: this.handleClose,
+            ...others
         }
 
         const loadingStyle = {

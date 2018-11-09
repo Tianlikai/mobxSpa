@@ -7,7 +7,7 @@ import { observer, inject } from 'mobx-react'
 import SearchForm from './SearchForm'
 import ModuleLine from 'components/ModuleLine'
 import { WithBreadcrumb } from 'components/Breadcrumb'
-import ProModal from 'components/MyPromotionShareModal/ProModal'
+import ShareByQrModal from 'components/ShareByQrModal'
 
 import { Button, Table } from 'antd'
 
@@ -234,7 +234,8 @@ class MyPromotion extends Component {
                         initialValue={query}
                     />
                     <Table {...tableProps} />
-                    <ProModal
+                    <ShareByQrModal
+                        key='base-table-modal'
                         imgByte={chooseImgByte}
                         width={600}
                         showTitle={false}
