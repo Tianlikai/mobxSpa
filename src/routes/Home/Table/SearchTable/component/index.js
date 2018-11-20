@@ -15,7 +15,7 @@ import './style.scss'
 
 @inject('TableSearch')
 @observer
-class MyPromotion extends Component {
+class SearchTable extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -252,4 +252,4 @@ class MyPromotion extends Component {
     }
 }
 
-export default MyPromotion
+export default SearchTable
