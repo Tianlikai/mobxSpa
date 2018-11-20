@@ -264,7 +264,9 @@ class Agent {
             mathTeacher: mathTeacher,
             mathPressName: mathVersion[mathPress - 1],
             englishTeacher: englishTeacher,
-            englishPressName: englishVersion[englishPress - 1]
+            englishPressName: englishVersion[englishPress - 1],
+            courseOrderlist: [],
+            totalCourseOrderNumber: 0
         }
         this.cachedPro.unshift(data)
         return data
