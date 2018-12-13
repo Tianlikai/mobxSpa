@@ -1,0 +1,53 @@
+.cardWrapper {
+  position: relative;
+  width: 20%;
+  padding: 0 2.5% 20px 2.5%;
+  img {
+    width: 100%;
+    border-radius: 3px;
+  }
+}
+.cardTitle {
+  color: #333;
+  width: 140px;
+  margin: 0 auto;
+  overflow: hidden;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.statusWrapper {
+  color: #666;
+  text-align: center;
+}
+.dropDown {
+  position: absolute;
+  top: 5px;
+  right: 41px;
+  height: 26px;
+  width: 26px;
+  line-height: 26px;
+  text-align: center;
+  border-radius: 50%;
+  cursor: pointer;
+  i {
+    color: white;
+  }
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+}
+.previewTitle {
+  text-align: center;
+  font-size: 18px;
+}
+.videoMethod {
+  display: inline-block;
+  width: 72px;
+  text-align: center;
+}
+.checkbox {
+  position: absolute;
+  top: 8px;
+  left: 41px;
+}

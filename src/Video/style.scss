@@ -1,0 +1,31 @@
+:global {
+  .displayNone {
+    display: none;
+  }
+  .selfTable .ant-table {
+    font-size: 14px;
+  }
+  .table-method{
+    span{
+      display: inline-block;
+      color: #1574D4;
+      padding: 0 5px;
+      border-right: 1px solid #E9E9E9;
+      cursor: pointer;
+    }
+    span:last-child {
+      border: none;
+    }
+  }
+  .previewTitle{
+    text-align: center;
+    font-size: 18px;
+  }
+  .videoPreviewModal{
+    width: 964px !important ;
+    height: 708px !important ;
+    .ant-modal-body{
+      padding: 20px 70px;
+    }
+  }
+}
