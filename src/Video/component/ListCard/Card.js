@@ -249,10 +249,12 @@ class Card extends React.Component {
 
     return (
       <div className={classes}>
-        <img src={cover} alt='cover' />
+        <div className={styles.imgWrapper}>
+          <img src={cover} alt='cover' />
+        </div>
         <div className={styles.cardTitle}>{fileName}</div>
 
-        {stateText ? (
+        {stateText && page !== 'recycleBin' ? (
           <div className={styles.statusWrapper}>
             <IconCircle size={10} bcg={bcg} />
             <span>{stateText}</span>

@@ -115,7 +115,7 @@ export default class ListCard extends React.Component {
 
     return (
       <div className={classes}>
-        {selectedVideos ? (
+        {selectedVideos && data && data.length > 0 ? (
           <Checkbox
             className={styles.check}
             indeterminate={indeterminate}

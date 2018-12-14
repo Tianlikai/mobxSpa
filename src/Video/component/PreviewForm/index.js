@@ -49,12 +49,12 @@ class UpdateForm extends AuthComponent {
   }
 
   validatorVideo(rule, value, callback) {
-    if (Object.keys(value).length) {
-      callback()
-      return null
-    } else {
-      callback('请上传视频')
-    }
+    const len = Object.keys(value).length
+    if (!len) return callback('请上传视频')
+    const { name, medias } = value
+    if (!name || !medias) return callback('请上传视频')
+    callback()
+    return null
   }
 
   handleChangeCategory = data => {
@@ -130,6 +130,7 @@ class UpdateForm extends AuthComponent {
 
   handleFail = values => {
     const {
+      query,
       videoId,
       state: { list }
     } = this.props
@@ -145,7 +146,12 @@ class UpdateForm extends AuthComponent {
         if (list && list.length) {
           this.handleOver()
         } else {
-          this.gotoPage(routePath.VIDEO_PENDING_REVIEW)
+          const { from } = query || {}
+          if (from) {
+            this.gotoPage(routePath[from])
+          } else {
+            this.gotoPage(routePath.VIDEO_PENDING_REVIEW)
+          }
         }
       })
       .catch(err => console.log(err))
@@ -153,6 +159,7 @@ class UpdateForm extends AuthComponent {
 
   handlePass = () => {
     const {
+      query,
       videoId,
       state: { list }
     } = this.props
@@ -167,7 +174,12 @@ class UpdateForm extends AuthComponent {
         if (list && list.length) {
           this.handleOver()
         } else {
-          this.gotoPage(routePath.VIDEO_PENDING_REVIEW)
+          const { from } = query || {}
+          if (from) {
+            this.gotoPage(routePath[from])
+          } else {
+            this.gotoPage(routePath.VIDEO_PENDING_REVIEW)
+          }
         }
       })
       .catch(err => console.log(err))
@@ -286,7 +298,7 @@ class UpdateForm extends AuthComponent {
               <FormItem
                 {...layout}
                 className='defaultFormItem'
-                label={<span className='defaultLabel'>备注</span>}
+                label='备注'
               >
                 {getFieldDecorator('remark', {
                   initialValue: initRemark
@@ -296,7 +308,7 @@ class UpdateForm extends AuthComponent {
               <FormItem
                 {...layout}
                 className='defaultFormItem'
-                label={<span className='defaultLabel'>自定义标签</span>}
+                label='自定义标签'
               >
                 {getFieldDecorator('userDefinedTags', {
                   initialValue: initDefinedTags

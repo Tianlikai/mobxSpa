@@ -10,6 +10,7 @@ import SelectGroup from 'widgets/Layout/SelectGroup'
 
 import { Table } from 'antd'
 
+import Storage from '../../helpers/Storage'
 import { FILTER_VIDEO, STATUS_VIDEO } from '../../config'
 
 import './style.scss'
@@ -26,8 +27,11 @@ class SearchGroup extends React.Component {
   }
 
   getLabelList = () => {
+    const params = {
+      orgId: Storage.get('orgId')
+    }
     api
-      .fetchVideoLabelList()
+      .fetchVideoLabelList({ query: params })
       .then(resp => {
         const res = resp
         const list = []
@@ -43,8 +47,11 @@ class SearchGroup extends React.Component {
   }
 
   getCreateList = () => {
+    const params = {
+      orgId: Storage.get('orgId')
+    }
     api
-      .fetchVideoCreateList()
+      .fetchVideoCreateList({ query: params })
       .then(resp => {
         const res = resp
         const list = []
@@ -61,11 +68,22 @@ class SearchGroup extends React.Component {
 
   get searchMessage() {
     let { tagList, createList } = this.state
-    let item = [
+    
+    const { value } = this.props
+
+    const {
+      id,
+      isRelaKPoint,
+      kpointKeyName,
+      userDefinedTag,
+      videoKeyName
+    } = value || {}
+
+    let selectList = [
       {
         type: 'select',
-        label: '审核人',
-        key: 'createdBy',
+        label: '知识点关联状态',
+        key: 'isRelaKPoint',
         class: 'update-state',
         errorMessage: '',
         params: [
@@ -73,12 +91,17 @@ class SearchGroup extends React.Component {
             value: '',
             text: '全部'
           },
-          ...createList
+          {
+            value: '0',
+            text: '尚未关联知识点'
+          },
+          {
+            value: '1',
+            text: '已关联知识点'
+          }
         ],
-        defaultValue: ''
-      }
-    ]
-    let selectList = [
+        defaultValue: isRelaKPoint || ''
+      },
       {
         type: 'select',
         label: '自定义标签',
@@ -92,7 +115,7 @@ class SearchGroup extends React.Component {
           },
           ...tagList
         ],
-        defaultValue: ''
+        defaultValue: userDefinedTag || ''
       }
     ]
     let inputList = [
@@ -101,24 +124,27 @@ class SearchGroup extends React.Component {
         label: '',
         key: 'videoKeyName',
         placeholder: '按视频关键词搜索',
-        errorMessage: ''
+        errorMessage: '',
+        defaultValue: videoKeyName || ''
       },
       {
         type: 'input',
         label: '',
         key: 'id',
-        placeholder: '按视频ID词搜索',
-        errorMessage: ''
+        placeholder: '按视频ID搜索',
+        errorMessage: '',
+        defaultValue: id || ''
       },
       {
         type: 'input',
         label: '',
         key: 'kpointKeyName',
         placeholder: '知识点关键词搜索',
-        errorMessage: ''
+        errorMessage: '',
+        defaultValue: kpointKeyName || ''
       }
     ]
-    inputList = item.concat(selectList).concat(inputList)
+    inputList = selectList.concat(inputList)
     return inputList
   }
 
@@ -127,11 +153,17 @@ class SearchGroup extends React.Component {
     if (searchFn) searchFn(values)
   }
 
+  resetForm = () => {
+    const { searchFn } = this.props
+    if (searchFn) searchFn({})
+  }
+  
   render() {
     return (
       <div className='pSelect'>
         <SelectGroup
           searchMessage={this.searchMessage}
+          resetForm={this.resetForm}
           searchFn={this.searchFn}
         />
       </div>
@@ -148,9 +180,9 @@ class TableWithHeader extends React.Component {
         key: 'id'
       },
       {
-        title: '创建时间',
-        dataIndex: 'createdAt',
-        key: 'createdAt'
+        title: '审核时间',
+        dataIndex: 'reviewTime',
+        key: 'reviewTime'
       },
       {
         title: '视频名称',
@@ -182,7 +214,7 @@ class TableWithHeader extends React.Component {
         render: (text, record) => {
           let str = '未定义'
           if (text.length > 0) {
-            str = text.reduce((l, r) => (l = r + ','), '')
+            str = text.reduce((l, r) => (l += r + ','), '')
           }
           str = str.substring(0, str.length - 1)
           return (
@@ -195,7 +227,12 @@ class TableWithHeader extends React.Component {
       {
         title: '反馈',
         dataIndex: 'reason',
-        key: 'reason'
+        key: 'reason',
+        render: text => (
+          <div title={text}>
+            {text.length > 10 ? text.substring(0, 10) + '...' : text}
+          </div>
+        )
       },
       {
         title: '操作',

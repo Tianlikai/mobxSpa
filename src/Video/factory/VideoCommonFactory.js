@@ -307,6 +307,7 @@ const factory = data => {
       const query = {
         from: ROUTE
       }
+      debugger
       const state = {
         showType,
         current,
@@ -344,10 +345,12 @@ const factory = data => {
       })
     }
 
-    handleReBack({ id, videoSource } = { id: '', videoSource: '' }) {
+    handleReBack(
+      { id, videoSource, hint } = { id: '', videoSource: '', hint: '' }
+    ) {
       Modal.confirm({
         title: '确认操作',
-        content: '确认恢复该视频？删除后视频会进入我的视频。',
+        content: hint,
         okText: '确认',
         cancelText: '取消',
         onOk: this.handleReBackVideo.bind(this, id, videoSource)
@@ -494,8 +497,9 @@ const factory = data => {
 
     // 页吗
     handlePageChange(page) {
-      let { filterData, selectData } = this.state
+      let { filterData, selectData, pageSize } = this.state
       let params = {
+        pageSize,
         pageNo: page,
         ...selectData,
         ...filterData
@@ -546,7 +550,10 @@ const factory = data => {
         url,
         fileName,
         isTree,
-        category
+        category,
+        pageSize,
+        filterData,
+        selectData
       } = this.state
 
       const listDisplay = showType === 'card'
@@ -585,8 +592,8 @@ const factory = data => {
             {NavTabs ? (
               <NavTabs handleTabChange={this.handleTabChange} />
             ) : null}
-            {Select ? <Select handleSelect={this.handleSelect} /> : null}
-            {SearchGroup ? <SearchGroup searchFn={this.searchFn} /> : null}
+            {Select ? <Select value={filterData} handleSelect={this.handleSelect} /> : null}
+            {SearchGroup ? <SearchGroup value={selectData} searchFn={this.searchFn} /> : null}
 
             <SwitchOfList
               showType={showType}
@@ -620,6 +627,7 @@ const factory = data => {
                   onShowSizeChange={this.onSizeChange}
                   current={current}
                   total={count}
+                  pageSize={pageSize}
                 />
               ) : null}
             </div>

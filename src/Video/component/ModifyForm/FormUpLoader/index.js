@@ -84,7 +84,7 @@ export default class FormUpLoader extends React.Component {
         ) : null}
 
         <Button
-          disabled={!medias}
+          disabled={!medias || !name}
           style={marginTop}
           onClick={this.handleOpenPreview}
         >

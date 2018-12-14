@@ -10,6 +10,7 @@ import SelectGroup from 'widgets/Layout/SelectGroup'
 
 import { Table } from 'antd'
 
+import Storage from '../../helpers/Storage'
 import { FILTER_VIDEO, STATUS_VIDEO } from '../../config'
 
 import './style.scss'
@@ -26,8 +27,11 @@ class SearchGroup extends React.Component {
   }
 
   getLabelList = () => {
+    const params = {
+      orgId: Storage.get('orgId')
+    }
     api
-      .fetchVideoLabelList()
+      .fetchVideoLabelList({ query: params })
       .then(resp => {
         const res = resp
         const list = []
@@ -43,8 +47,11 @@ class SearchGroup extends React.Component {
   }
 
   getCreateList = () => {
+    const params = {
+      orgId: Storage.get('orgId')
+    }
     api
-      .fetchVideoCreateList()
+      .fetchVideoCreateList({ query: params })
       .then(resp => {
         const res = resp
         const list = []
@@ -61,6 +68,19 @@ class SearchGroup extends React.Component {
 
   get searchMessage() {
     let { tagList, createList } = this.state
+
+    const { value } = this.props
+
+    const {
+      id,
+      isRelaKPoint,
+      kpointKeyName,
+      state,
+      userDefinedTag,
+      videoKeyName,
+      createdBy
+    } = value || {}
+
     let item = [
       {
         type: 'select',
@@ -75,7 +95,7 @@ class SearchGroup extends React.Component {
           },
           ...createList
         ],
-        defaultValue: ''
+        defaultValue: createdBy || ''
       }
     ]
     let selectList = [
@@ -99,7 +119,7 @@ class SearchGroup extends React.Component {
             text: '已关联知识点'
           }
         ],
-        defaultValue: ''
+        defaultValue: isRelaKPoint || ''
       },
       {
         type: 'select',
@@ -114,7 +134,7 @@ class SearchGroup extends React.Component {
           },
           ...tagList
         ],
-        defaultValue: ''
+        defaultValue: userDefinedTag || ''
       }
     ]
     let inputList = [
@@ -123,21 +143,24 @@ class SearchGroup extends React.Component {
         label: '',
         key: 'videoKeyName',
         placeholder: '按视频关键词搜索',
-        errorMessage: ''
+        errorMessage: '',
+        defaultValue: videoKeyName || ''
       },
       {
         type: 'input',
         label: '',
         key: 'id',
-        placeholder: '按视频ID词搜索',
-        errorMessage: ''
+        placeholder: '按视频ID搜索',
+        errorMessage: '',
+        defaultValue: id || ''
       },
       {
         type: 'input',
         label: '',
         key: 'kpointKeyName',
         placeholder: '知识点关键词搜索',
-        errorMessage: ''
+        errorMessage: '',
+        defaultValue: kpointKeyName || ''
       }
     ]
     inputList = item.concat(selectList).concat(inputList)
@@ -149,11 +172,17 @@ class SearchGroup extends React.Component {
     if (searchFn) searchFn(values)
   }
 
+  resetForm = () => {
+    const { searchFn } = this.props
+    if (searchFn) searchFn({})
+  }
+  
   render() {
     return (
       <div className='pSelect'>
         <SelectGroup
           searchMessage={this.searchMessage}
+          resetForm={this.resetForm}
           searchFn={this.searchFn}
         />
       </div>
@@ -170,9 +199,9 @@ class TableWithHeader extends React.Component {
         key: 'id'
       },
       {
-        title: '创建时间',
-        dataIndex: 'createdAt',
-        key: 'createdAt'
+        title: '提审时间',
+        dataIndex: 'examineTime',
+        key: 'examineTime'
       },
       {
         title: '视频名称',
@@ -204,7 +233,7 @@ class TableWithHeader extends React.Component {
         render: (text, record) => {
           let str = '未定义'
           if (text.length > 0) {
-            str = text.reduce((l, r) => (l = r + ','), '')
+            str = text.reduce((l, r) => (l += r + ','), '')
           }
           str = str.substring(0, str.length - 1)
           return (
@@ -213,11 +242,6 @@ class TableWithHeader extends React.Component {
             </div>
           )
         }
-      },
-      {
-        title: '创建人',
-        dataIndex: 'creatorName',
-        key: 'creatorName'
       },
       {
         title: '创建人',

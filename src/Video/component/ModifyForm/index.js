@@ -48,12 +48,12 @@ class ModifyForm extends AuthComponent {
   }
 
   validatorVideo(rule, value, callback) {
-    if (Object.keys(value).length) {
-      callback()
-      return null
-    } else {
-      callback('请上传视频')
-    }
+    const len = Object.keys(value).length
+    if (!len) return callback('请上传视频')
+    const { name, medias } = value
+    if (!name || !medias) return callback('请上传视频')
+    callback()
+    return null
   }
 
   handleChangeCategory = data => {
@@ -226,7 +226,7 @@ class ModifyForm extends AuthComponent {
         </BoxHeader>
         <div className='quesForm'>
           {errHint ? (
-            <Prompt status='warning'>
+            <Prompt className='noPassReason' status='warning'>
               不通过原因：{errHint || '题目答案错误，需修改'}
             </Prompt>
           ) : null}
@@ -257,7 +257,7 @@ class ModifyForm extends AuthComponent {
               <FormItem
                 {...layout}
                 className='defaultFormItem'
-                label={<span className='defaultLabel'>备注</span>}
+                label='备注'
               >
                 {getFieldDecorator('remark', {
                   initialValue: initRemark
@@ -267,7 +267,7 @@ class ModifyForm extends AuthComponent {
               <FormItem
                 {...layout}
                 className='defaultFormItem'
-                label={<span className='defaultLabel'>自定义标签</span>}
+                label='自定义标签'
               >
                 {getFieldDecorator('userDefinedTags', {
                   initialValue: initDefinedTags
