@@ -168,7 +168,7 @@ class SearchGroup extends React.Component {
   }
 }
 
-videoHoc({
+@videoHoc({
   title: '待修改视频',
   currentKey: null,
   NavTabs: null,
