@@ -1,19 +1,39 @@
-import React, { Component } from 'react'
+import AuthComponent from 'libs/AuthComponent'
+
+import { routerShape } from 'react-router'
+
+import FrameBox from 'widgets/FrameBox'
+import Preview from 'widgets/Preview/Preview'
+// import GearBox from 'widgets/QuestionCard/GearBox'
+import SelectPoints from 'widgets/QuestionCard/SelectPoints'
+
+import SwitchOfList from '../component/SwitchOfList'
+
+import { Pagination, Modal, message } from 'antd'
+
+const BoxHeader = FrameBox.BoxHeader
+const BoxContent = FrameBox.BoxContent
+
+import { routePath } from 'libs/routes'
+import Storage from '../../../helpers/Storage'
+import { FILTER_VIDEO, STATUS_VIDEO } from '../../../config'
+
+export const Title = props => <div className={props.classes}>{props.name}</div>
 
 const videoHoc = config => WrappedComponent => {
   const {
     key,
     title,
     currentKey: curKey,
+    GearBox,
     Select,
     SearchGroup,
     NavTabs,
-    TableWithHeader,
     fetchVideoList,
     route: ROUTE
   } = config
 
-  return class extends Component {
+  return class extends AuthComponent {
     static contextTypes = {
       router: routerShape
     }
@@ -52,7 +72,6 @@ const videoHoc = config => WrappedComponent => {
       this.handleReview = this.handleReview.bind(this)
       this.handleConnect = this.handleConnect.bind(this)
       this.handleEditVideo = this.handleEditVideo.bind(this)
-      this.handleTabChange = this.handleTabChange.bind(this)
       this.historyToCreate = this.historyToCreate.bind(this)
       this.historyToPreview = this.historyToPreview.bind(this)
       this.handlePageChange = this.handlePageChange.bind(this)
@@ -94,6 +113,7 @@ const videoHoc = config => WrappedComponent => {
       this[fetchVideoList]()
     }
 
+    // 获取列表数据
     getVideoList(data = {}, listType = 1) {
       this.setState({ loading: true })
       const { currentKey } = this.state
@@ -198,12 +218,7 @@ const videoHoc = config => WrappedComponent => {
         .catch(err => console.log(err))
     }
 
-    // 页面跳转
-    handleTabChange(key) {
-      this.gotoPage(key)
-    }
-
-    // 视频编辑
+    // to 创建视频
     historyToCreate() {
       const { showType } = this.state
       const query = {
@@ -215,44 +230,7 @@ const videoHoc = config => WrappedComponent => {
       this.gotoPage(routePath.VIDEO_CREATE, {}, query, state)
     }
 
-    handleEditVideo({ videoSource, id } = { videoSource: '', id: '' }) {
-      const { showType, current, pageSize, selectData, filterData } = this.state
-      const query = {
-        from: ROUTE
-      }
-      const state = {
-        showType,
-        current,
-        pageSize,
-        selectData,
-        filterData
-      }
-      const route = routePath.VIDEO_EDIT.replace(':videoId', id).replace(
-        ':videoSource',
-        videoSource
-      )
-      this.gotoPage(route, {}, query, state)
-    }
-
-    handleModifyVideo({ videoSource, id } = { videoSource: '', id: '' }) {
-      const { showType, current, pageSize, selectData, filterData } = this.state
-      const query = {
-        from: ROUTE
-      }
-      const state = {
-        showType,
-        current,
-        pageSize,
-        selectData,
-        filterData
-      }
-      const route = routePath.VIDEO_MODIFY.replace(':videoId', id).replace(
-        ':videoSource',
-        videoSource
-      )
-      this.gotoPage(route, {}, query, state)
-    }
-
+    // to 审核视频
     historyToPreview() {
       const { showType, selectedVideos, videos } = this.state
 
@@ -279,9 +257,51 @@ const videoHoc = config => WrappedComponent => {
         ':videoId',
         first.id
       ).replace(':videoSource', first.videoSource)
+
       this.gotoPage(route, {}, query, state)
     }
 
+    // to 编辑视频
+    handleEditVideo({ videoSource, id } = { videoSource: '', id: '' }) {
+      const { showType, current, pageSize, selectData, filterData } = this.state
+      const query = {
+        from: ROUTE
+      }
+      const state = {
+        showType,
+        current,
+        pageSize,
+        selectData,
+        filterData
+      }
+      const route = routePath.VIDEO_EDIT.replace(':videoId', id).replace(
+        ':videoSource',
+        videoSource
+      )
+      this.gotoPage(route, {}, query, state)
+    }
+
+    // to 修改视频
+    handleModifyVideo({ videoSource, id } = { videoSource: '', id: '' }) {
+      const { showType, current, pageSize, selectData, filterData } = this.state
+      const query = {
+        from: ROUTE
+      }
+      const state = {
+        showType,
+        current,
+        pageSize,
+        selectData,
+        filterData
+      }
+      const route = routePath.VIDEO_MODIFY.replace(':videoId', id).replace(
+        ':videoSource',
+        videoSource
+      )
+      this.gotoPage(route, {}, query, state)
+    }
+
+    // to 审核视频
     handleReview({ videoSource, id } = { videoSource: '', id: '' }) {
       const { showType, current, pageSize, selectData, filterData } = this.state
       const query = {
@@ -301,7 +321,7 @@ const videoHoc = config => WrappedComponent => {
       this.gotoPage(route, {}, query, state)
     }
 
-    // 列表业务
+    // 预览视频
     handleClosePreview() {
       this.setState({ preview: false, url: '', fileName: '' })
     }
@@ -310,12 +330,23 @@ const videoHoc = config => WrappedComponent => {
       this.setState({ preview: true, url, fileName })
     }
 
+    /**
+     * 视频多选回调
+     * @param {arr} selectedRowKeys id数组
+     */
     handleSelectChange(selectedRowKeys) {
       this.setState({ selectedVideos: selectedRowKeys })
     }
 
+    /**
+     * 删除视频
+     * 确认弹窗
+     * @param {number} id 视频id
+     * @param {string} videoSource
+     */
     handleDelete({ id, videoSource } = { id: '', videoSource: '' }) {
       Modal.confirm({
+        className: 'adminConfirm',
         title: '确认操作',
         content: '确认删除该视频？删除后视频会进入回收站。',
         okText: '确认',
@@ -324,16 +355,70 @@ const videoHoc = config => WrappedComponent => {
       })
     }
 
-    handleReBack({ id, videoSource } = { id: '', videoSource: '' }) {
+    handleDeleteVideo(id, videoSource) {
+      api
+        .deleteVideoById({
+          videoId: id,
+          videoSource
+        })
+        .then(resp => {
+          const { current, pageSize, filterData, selectData } = this.state
+          const params = {
+            pageSize,
+            pageNo: current,
+            ...selectData,
+            ...filterData
+          }
+          this[fetchVideoList](params)
+          message.success('视频删除成功')
+        })
+        .catch(() => {
+          message.error('视频删除失败')
+        })
+    }
+
+    /**
+     * 恢复视频
+     * 确认弹窗
+     * @param {number} id 视频id
+     * @param {string} videoSource
+     * @param {string} hint 提示语
+     */
+    handleReBack(
+      { id, videoSource, hint } = { id: '', videoSource: '', hint: '' }
+    ) {
       Modal.confirm({
         title: '确认操作',
-        content: '确认恢复该视频？删除后视频会进入我的视频。',
+        content: hint,
         okText: '确认',
         cancelText: '取消',
         onOk: this.handleReBackVideo.bind(this, id, videoSource)
       })
     }
 
+    handleReBackVideo(id, videoSource) {
+      api
+        .reBackVideoById({
+          videoId: id,
+          videoSource
+        })
+        .then(resp => {
+          const { current, pageSize, filterData, selectData } = this.state
+          const params = {
+            pageSize,
+            pageNo: current,
+            ...selectData,
+            ...filterData
+          }
+          this[fetchVideoList](params)
+          message.success('视频恢复成功')
+        })
+        .catch(() => {
+          message.error('视频恢复失败')
+        })
+    }
+
+    // 知识点关联弹窗
     handleHideTree = () => {
       this.setState({
         isTree: false,
@@ -376,6 +461,10 @@ const videoHoc = config => WrappedComponent => {
       }
     }
 
+    /**
+     * 关联知识点
+     * @param {object} point 知识点信息
+     */
     handleConnect = point => {
       const { selectedVideos, id } = this.state
       const kpointIds = point ? [point.id || point.treeId] : []
@@ -411,50 +500,6 @@ const videoHoc = config => WrappedComponent => {
         })
     }
 
-    handleDeleteVideo(id, videoSource) {
-      api
-        .deleteVideoById({
-          videoId: id,
-          videoSource
-        })
-        .then(resp => {
-          const { current, pageSize, filterData, selectData } = this.state
-          const params = {
-            pageSize,
-            pageNo: current,
-            ...selectData,
-            ...filterData
-          }
-          this[fetchVideoList](params)
-          message.success('视频删除成功')
-        })
-        .catch(() => {
-          message.error('视频删除失败')
-        })
-    }
-
-    handleReBackVideo(id, videoSource) {
-      api
-        .reBackVideoById({
-          videoId: id,
-          videoSource
-        })
-        .then(resp => {
-          const { current, pageSize, filterData, selectData } = this.state
-          const params = {
-            pageSize,
-            pageNo: current,
-            ...selectData,
-            ...filterData
-          }
-          this[fetchVideoList](params)
-          message.success('视频恢复成功')
-        })
-        .catch(() => {
-          message.error('视频恢复失败')
-        })
-    }
-
     // 列表显示方式
     handleRedirectToCard() {
       const { showType } = this.state
@@ -472,10 +517,11 @@ const videoHoc = config => WrappedComponent => {
       })
     }
 
-    // 页吗
+    // 翻页
     handlePageChange(page) {
-      let { filterData, selectData } = this.state
+      let { filterData, selectData, pageSize } = this.state
       let params = {
+        pageSize,
         pageNo: page,
         ...selectData,
         ...filterData
@@ -496,7 +542,7 @@ const videoHoc = config => WrappedComponent => {
       this.setState({ current: 1, pageSize: pageSize })
     }
 
-    // 搜索
+    // 筛选
     handleSelect(data) {
       let { selectData } = this.state
       let params = {}
@@ -515,7 +561,128 @@ const videoHoc = config => WrappedComponent => {
     }
 
     render() {
-      return <WrappedComponent {...this.props} />
+      const {
+        loading,
+
+        count,
+        current,
+        pageSize,
+
+        videos,
+        selectedVideos,
+
+        selectData,
+        filterData,
+
+        showType,
+
+        url,
+        fileName,
+        preview,
+
+        isTree,
+        category
+      } = this.state
+
+      const listDisplay = showType === 'card'
+      const clsTable =
+        showType === 'card' ? 'selfTable displayNone' : 'selfTable'
+
+      const PreviewTitle = (
+        <Title
+          name={
+            fileName.length > 50 ? fileName.substring(0, 50) + '...' : fileName
+          }
+          classes={'previewTitle'}
+        />
+      )
+
+      return (
+        <FrameBox>
+          {GearBox ? (
+            <GearBox
+              historyToCreate={this.historyToCreate}
+              historyToPreview={this.historyToPreview}
+              handleOpenConnect={this.handleOpenConnect}
+            />
+          ) : null}
+          <BoxHeader>
+            <h4 className='storeHead'>{title}</h4>
+          </BoxHeader>
+          <BoxContent>
+            {NavTabs ? <NavTabs /> : null}
+            {Select ? (
+              <Select value={filterData} handleSelect={this.handleSelect} />
+            ) : null}
+            {SearchGroup ? (
+              <SearchGroup value={selectData} searchFn={this.searchFn} />
+            ) : null}
+
+            <SwitchOfList
+              showType={showType}
+              handleRedirectToCard={this.handleRedirectToCard}
+              handleRedirectToTable={this.handleRedirectToTable}
+            />
+
+            <WrappedComponent
+              loading={loading}
+              clsTable={clsTable}
+              videos={videos}
+              selectedVideos={selectedVideos}
+              listDisplay={listDisplay}
+              handleReview={this.handleReview}
+              handleDelete={this.handleDelete}
+              handleReBack={this.handleReBack}
+              handleEditVideo={this.handleEditVideo}
+              handleOpenPreview={this.handleOpenPreview}
+              handleItemConnect={this.handleOpenConnect}
+              handleModifyVideo={this.handleModifyVideo}
+              handleSelectChange={this.handleSelectChange}
+            />
+
+            <div className='pageFooter'>
+              {videos.length ? (
+                <Pagination
+                  showQuickJumper
+                  showSizeChanger
+                  showTotal={() => `共 ${count} 条`}
+                  onChange={this.handlePageChange}
+                  onShowSizeChange={this.onSizeChange}
+                  current={current}
+                  total={count}
+                  pageSize={pageSize}
+                />
+              ) : null}
+            </div>
+
+            {preview && url && (
+              <Preview
+                type='video'
+                data={url}
+                className='videoPreviewModal'
+                title={PreviewTitle}
+                onCancel={this.handleClosePreview}
+              />
+            )}
+
+            {isTree ? (
+              <Modal
+                className='treeModal'
+                title='关联知识点'
+                visible={isTree}
+                footer={null}
+                width={768}
+                onCancel={this.handleHideTree}
+              >
+                <SelectPoints
+                  selectPoint={this.handleConnect}
+                  subjectType={category}
+                />
+              </Modal>
+            ) : null}
+          </BoxContent>
+        </FrameBox>
+      )
     }
   }
 }

@@ -82,6 +82,7 @@ class ModifyForm extends AuthComponent {
     const { form, videoId } = this.props
     let d
     form.validateFields((errors, params) => {
+      if (errors) return null
       const {
         video: { medias, name },
         kPointIds,

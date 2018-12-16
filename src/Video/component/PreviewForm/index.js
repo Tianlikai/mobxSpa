@@ -132,11 +132,13 @@ class UpdateForm extends AuthComponent {
     const {
       query,
       videoId,
+      videoSource,
       state: { list }
     } = this.props
     const data = {
       state: 2,
       id: videoId,
+      videoSource,
       ...values
     }
     api
@@ -161,12 +163,14 @@ class UpdateForm extends AuthComponent {
     const {
       query,
       videoId,
+      videoSource,
       state: { list }
     } = this.props
 
     const data = {
       state: 3,
-      id: videoId
+      id: videoId,
+      videoSource
     }
     api
       .reviewVideo(data)

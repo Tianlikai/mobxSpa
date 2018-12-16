@@ -28,4 +28,12 @@
       padding: 20px 70px;
     }
   }
+  .cBoxContent{
+    .ant-table-thead > tr > th{
+      background: transparent;
+    }
+    .ant-table-tbody > tr > td {
+      background: #f7f7f7;
+    }
+  }
 }

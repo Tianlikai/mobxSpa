@@ -111,13 +111,13 @@ class UpdateForm extends AuthComponent {
   handleSave = () => {
     const params = this.getData()
     if (!params) return null
-    const { initValue } = this.props
-    const { state } = initValue || {}
-    if (state === 1) {
-      return this.handleReview()
-    } else if (state === 3) {
-      return this.handlePush()
-    }
+    // const { initValue } = this.props
+    // const { state } = initValue || {}
+    // if (state === 1) {
+    //   return this.handleReview()
+    // } else if (state === 3) {
+    //   return this.handlePush()
+    // }
     const data = { state: 0, ...params }
     api
       .videoSaveQuestion(data)

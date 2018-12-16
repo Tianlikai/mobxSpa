@@ -4,7 +4,8 @@ import Select from './component/Select'
 import NavTabs from './component/Tabs'
 import ListCard from './component/ListCard'
 import IconCircle from './component/IconCircle'
-import factoryOfVideo from './factory/VideoCommonFactory'
+// import factoryOfVideo from './factory/VideoCommonFactory'
+import videoHoc from './hoc/videoHoc'
 
 import SelectGroup from 'widgets/Layout/SelectGroup'
 
@@ -68,16 +69,11 @@ class SearchGroup extends React.Component {
 
   get searchMessage() {
     let { tagList, createList } = this.state
-    
+
     const { value } = this.props
 
-    const {
-      id,
-      isRelaKPoint,
-      kpointKeyName,
-      userDefinedTag,
-      videoKeyName
-    } = value || {}
+    const { id, isRelaKPoint, kpointKeyName, userDefinedTag, videoKeyName } =
+      value || {}
 
     let selectList = [
       {
@@ -132,8 +128,9 @@ class SearchGroup extends React.Component {
         label: '',
         key: 'id',
         placeholder: '按视频ID搜索',
-        errorMessage: '',
-        defaultValue: id || ''
+        errorMessage: '只能输入数字',
+        defaultValue: id || '',
+        pattern: new RegExp(/^[1-9]\d*$/, 'g')
       },
       {
         type: 'input',
@@ -157,7 +154,7 @@ class SearchGroup extends React.Component {
     const { searchFn } = this.props
     if (searchFn) searchFn({})
   }
-  
+
   render() {
     return (
       <div className='pSelect'>
@@ -171,7 +168,16 @@ class SearchGroup extends React.Component {
   }
 }
 
-class TableWithHeader extends React.Component {
+videoHoc({
+  title: '待修改视频',
+  currentKey: null,
+  NavTabs: null,
+  Select: Select(FILTER_VIDEO),
+  SearchGroup,
+  fetchVideoList: 'getPendingVideoList',
+  route: 'VIDEO_PENDING_MODIFY'
+})
+class VideoPendingModify extends React.Component {
   get columns() {
     return [
       {
@@ -294,15 +300,15 @@ class TableWithHeader extends React.Component {
   }
 }
 
-const VideoPendingModify = factoryOfVideo({
-  title: '待修改视频',
-  currentKey: null,
-  NavTabs: null,
-  Select: Select(FILTER_VIDEO),
-  SearchGroup,
-  TableWithHeader,
-  fetchVideoList: 'getPendingVideoList',
-  route: 'VIDEO_PENDING_MODIFY'
-})
+// const VideoPendingModify = factoryOfVideo({
+//   title: '待修改视频',
+//   currentKey: null,
+//   NavTabs: null,
+//   Select: Select(FILTER_VIDEO),
+//   SearchGroup,
+//   TableWithHeader,
+//   fetchVideoList: 'getPendingVideoList',
+//   route: 'VIDEO_PENDING_MODIFY'
+// })
 
 export default VideoPendingModify

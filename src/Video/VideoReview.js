@@ -52,7 +52,7 @@ export default class VideoReview extends AuthComponent {
     const { initValue } = this.state
     const {
       location: { query, state },
-      params: { videoId }
+      params: { videoId, videoSource }
     } = this.props
     const isSuperRight = G.attendant()
     return (
@@ -61,6 +61,7 @@ export default class VideoReview extends AuthComponent {
         query={query}
         state={state}
         videoId={videoId}
+        videoSource={videoSource}
         initValue={initValue}
         isSuperRight={isSuperRight}
       />

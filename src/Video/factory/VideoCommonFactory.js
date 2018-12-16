@@ -307,7 +307,6 @@ const factory = data => {
       const query = {
         from: ROUTE
       }
-      debugger
       const state = {
         showType,
         current,
@@ -337,6 +336,7 @@ const factory = data => {
 
     handleDelete({ id, videoSource } = { id: '', videoSource: '' }) {
       Modal.confirm({
+        className: 'adminConfirm',
         title: '确认操作',
         content: '确认删除该视频？删除后视频会进入回收站。',
         okText: '确认',
@@ -573,7 +573,11 @@ const factory = data => {
           {/* 临时写法 */}
 
           {key === 1 ? (
-            <GearBox content=' + 添加视频' handleClick={this.historyToCreate} />
+            <GearBox
+              addIcon
+              content='添加视频'
+              handleClick={this.historyToCreate}
+            />
           ) : null}
           {key === 2 ? (
             <GearBox content='审核视频' handleClick={this.historyToPreview} />
@@ -592,8 +596,12 @@ const factory = data => {
             {NavTabs ? (
               <NavTabs handleTabChange={this.handleTabChange} />
             ) : null}
-            {Select ? <Select value={filterData} handleSelect={this.handleSelect} /> : null}
-            {SearchGroup ? <SearchGroup value={selectData} searchFn={this.searchFn} /> : null}
+            {Select ? (
+              <Select value={filterData} handleSelect={this.handleSelect} />
+            ) : null}
+            {SearchGroup ? (
+              <SearchGroup value={selectData} searchFn={this.searchFn} />
+            ) : null}
 
             <SwitchOfList
               showType={showType}

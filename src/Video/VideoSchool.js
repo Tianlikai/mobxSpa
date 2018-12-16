@@ -4,8 +4,10 @@ import Select from './component/Select'
 import NavTabs from './component/Tabs'
 import ListCard from './component/ListCard'
 import IconCircle from './component/IconCircle'
-import factoryOfVideo from './factory/VideoCommonFactory'
+// import factoryOfVideo from './factory/VideoCommonFactory'
+import videoHoc from './hoc/videoHoc'
 
+import GearBox from 'widgets/QuestionCard/GearBox'
 import SelectGroup from 'widgets/Layout/SelectGroup'
 
 import { Table } from 'antd'
@@ -192,8 +194,9 @@ class SearchGroup extends React.Component {
         label: '',
         key: 'id',
         placeholder: '按视频ID搜索',
-        errorMessage: '',
-        defaultValue: id || ''
+        errorMessage: '只能输入数字',
+        defaultValue: id || '',
+        pattern: new RegExp(/^[1-9]\d*$/, 'g')
       },
       {
         type: 'input',
@@ -231,7 +234,24 @@ class SearchGroup extends React.Component {
   }
 }
 
-class TableWithHeader extends React.Component {
+const cur = routePath.VIDEO_SCHOOL
+const curArray = [routePath.VIDEO_PERSONAL, routePath.VIDEO_SCHOOL]
+const GearBoxWithCallBack = props => (
+  <GearBox addIcon content='添加视频' handleClick={props.historyToCreate} />
+)
+
+@videoHoc({
+  key: 1,
+  title: '全部视频',
+  currentKey: 'school',
+  GearBox: GearBoxWithCallBack,
+  NavTabs: NavTabs({ currentKey: cur, routePath: curArray }),
+  Select: Select(FILTER_VIDEO),
+  SearchGroup,
+  fetchVideoList: 'getVideoList',
+  route: 'VIDEO_SCHOOL'
+})
+class VideoSchool extends React.Component {
   get columns() {
     return [
       {
@@ -408,19 +428,16 @@ class TableWithHeader extends React.Component {
   }
 }
 
-const cur = routePath.VIDEO_SCHOOL
-const curArray = [routePath.VIDEO_PERSONAL, routePath.VIDEO_SCHOOL]
-
-const VideoSchool = factoryOfVideo({
-  key: 1,
-  title: '全部视频',
-  currentKey: 'school',
-  NavTabs: NavTabs({ currentKey: cur, routePath: curArray }),
-  Select: Select(FILTER_VIDEO),
-  SearchGroup,
-  TableWithHeader,
-  fetchVideoList: 'getVideoList',
-  route: 'VIDEO_SCHOOL'
-})
+// const VideoSchool = factoryOfVideo({
+//   key: 1,
+//   title: '全部视频',
+//   currentKey: 'school',
+//   NavTabs: NavTabs({ currentKey: cur, routePath: curArray }),
+//   Select: Select(FILTER_VIDEO),
+//   SearchGroup,
+//   TableWithHeader,
+//   fetchVideoList: 'getVideoList',
+//   route: 'VIDEO_SCHOOL'
+// })
 
 export default VideoSchool

@@ -4,8 +4,10 @@ import Select from './component/Select'
 import NavTabs from './component/Tabs'
 import ListCard from './component/ListCard'
 import IconCircle from './component/IconCircle'
-import factoryOfVideo from './factory/VideoCommonFactory'
+// import factoryOfVideo from './factory/VideoCommonFactory'
+import videoHoc from './hoc/videoHoc'
 
+import GearBox from 'widgets/QuestionCard/GearBox'
 import SelectGroup from 'widgets/Layout/SelectGroup'
 
 import { Table } from 'antd'
@@ -71,14 +73,8 @@ class SearchGroup extends React.Component {
 
     const { value } = this.props
 
-    const {
-      id,
-      isRelaKPoint,
-      state,
-      userDefinedTag,
-      videoKeyName,
-      createdBy
-    } = value || {}
+    const { id, isRelaKPoint, state, userDefinedTag, videoKeyName, createdBy } =
+      value || {}
 
     let item = [
       {
@@ -128,8 +124,9 @@ class SearchGroup extends React.Component {
         label: '',
         key: 'id',
         placeholder: '按视频ID搜索',
-        errorMessage: '',
-        defaultValue: id || ''
+        errorMessage: '只能输入数字',
+        defaultValue: id || '',
+        pattern: new RegExp(/^[1-9]\d*$/, 'g')
       }
     ]
     const isSuperRight = G.attendant()
@@ -150,7 +147,7 @@ class SearchGroup extends React.Component {
     const { searchFn } = this.props
     if (searchFn) searchFn({})
   }
-  
+
   render() {
     return (
       <div className='pSelect'>
@@ -164,7 +161,22 @@ class SearchGroup extends React.Component {
   }
 }
 
-class TableWithHeader extends React.Component {
+const GearBoxWithCallBack = props => (
+  <GearBox content='关联知识点' handleClick={props.handleOpenConnect} />
+)
+
+@videoHoc({
+  key: 3,
+  title: '待关联视频',
+  GearBox: GearBoxWithCallBack,
+  currentKey: null,
+  NavTabs: null,
+  Select: Select(FILTER_VIDEO),
+  SearchGroup,
+  fetchVideoList: 'getNoConnectList',
+  route: 'VIDEO_CONNECT'
+})
+class VideoConnect extends React.Component {
   get columns() {
     return [
       {
@@ -298,16 +310,16 @@ class TableWithHeader extends React.Component {
   }
 }
 
-const VideoConnect = factoryOfVideo({
-  key: 3,
-  title: '待关联视频',
-  currentKey: null,
-  NavTabs: null,
-  Select: Select(FILTER_VIDEO),
-  SearchGroup,
-  TableWithHeader,
-  fetchVideoList: 'getNoConnectList',
-  route: 'VIDEO_CONNECT'
-})
+// const VideoConnect = factoryOfVideo({
+//   key: 3,
+//   title: '待关联视频',
+//   currentKey: null,
+//   NavTabs: null,
+//   Select: Select(FILTER_VIDEO),
+//   SearchGroup,
+//   TableWithHeader,
+//   fetchVideoList: 'getNoConnectList',
+//   route: 'VIDEO_CONNECT'
+// })
 
 export default VideoConnect
