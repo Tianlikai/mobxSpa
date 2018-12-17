@@ -5,31 +5,33 @@
   .selfTable .ant-table {
     font-size: 14px;
   }
-  .table-method{
-    span{
+  .table-method {
+    span {
       display: inline-block;
-      color: #1574D4;
+      color: #1574d4;
       padding: 0 5px;
-      border-right: 1px solid #E9E9E9;
+      border-right: 1px solid #e9e9e9;
       cursor: pointer;
     }
     span:last-child {
       border: none;
     }
   }
-  .previewTitle{
+  .previewTitle {
     text-align: center;
     font-size: 18px;
   }
-  .videoPreviewModal{
+  .videoPreviewModal {
     width: 964px !important ;
     height: 708px !important ;
-    .ant-modal-body{
-      padding: 20px 70px;
+    .ant-modal-body {
+      height: 580px;
+      overflow-y: auto;
+      padding: 20px 70px 50px 70px;
     }
   }
-  .cBoxContent{
-    .ant-table-thead > tr > th{
+  .cBoxContent {
+    .ant-table-thead > tr > th {
       background: transparent;
     }
     .ant-table-tbody > tr > td {

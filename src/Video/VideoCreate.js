@@ -7,6 +7,14 @@ export default class VideoCreate extends AuthComponent {
       location: { query, state }
     } = this.props
     const isSuperRight = G.attendant()
-    return <UpdateForm title='添加视频' isSuperRight={isSuperRight} query={query} state={state} />
+    return (
+      <UpdateForm
+        videoSource='metaVideo'
+        title='添加视频'
+        isSuperRight={isSuperRight}
+        query={query}
+        state={state}
+      />
+    )
   }
 }

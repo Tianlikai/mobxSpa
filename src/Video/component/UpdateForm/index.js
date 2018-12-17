@@ -9,7 +9,7 @@ import MulSelect from './MulSelect'
 import ConnectPoint from './ConnectPoint'
 import FormUpLoader from './FormUpLoader'
 
-import { Button, Form, Radio, Input, Select, Icon, Modal } from 'antd'
+import { Button, Form, Radio, Input, Select, Icon, Modal, message } from 'antd'
 
 import { routePath } from 'libs/routes'
 import Storage from '../../../../helpers/Storage'
@@ -118,41 +118,57 @@ class UpdateForm extends AuthComponent {
     // } else if (state === 3) {
     //   return this.handlePush()
     // }
-    const data = { state: 0, ...params }
+    const { videoSource } = this.props
+    const data = { state: 0, videoSource, ...params }
     api
       .videoSaveQuestion(data)
       .then(resp => {
         this.handleHistoryBack()
+        message.success('保存成功')
       })
       .catch(() => {
-        console.log('wrong')
+        message.error('保存失败')
       })
   }
 
   handleReview = () => {
+    const { videoSource } = this.props
     const params = this.getData()
     if (!params) return null
-    const data = { state: 1, ...params }
+    const data = { state: 1, videoSource, ...params }
     api
       .videoSaveQuestion(data)
       .then(resp => {
         this.handleReviewBack()
       })
       .catch(() => {
-        console.log('wrong')
+        message.error('提交审核失败')
       })
   }
 
-  handlePush = () => {
+  confirmPublish = () => {
+    Modal.confirm({
+      className: 'adminConfirm',
+      title: '确认操作',
+      content: '即将直接发布视频至学校库？',
+      okText: '确认',
+      cancelText: '取消',
+      iconType:'exclamation-circle',
+      onOk: this.handlePublish
+    })
+  }
+
+  handlePublish = () => {
     const params = this.getData()
     if (!params) return null
     api
       .videoPush(params)
       .then(resp => {
         this.handleReviewBack()
+        message.success('视频发布成功')
       })
       .catch(() => {
-        console.log('wrong')
+        message.error('视频发布失败')
       })
   }
 
@@ -219,7 +235,7 @@ class UpdateForm extends AuthComponent {
               className='self-right-submit'
               size='large'
               type='primary'
-              onClick={this.handlePush}
+              onClick={this.confirmPublish}
             >
               发布
             </Button>
@@ -266,11 +282,7 @@ class UpdateForm extends AuthComponent {
                 })(<FormUpLoader mimeType={mimeType} />)}
               </FormItem>
 
-              <FormItem
-                {...layout}
-                className='defaultFormItem'
-                label='备注'
-              >
+              <FormItem {...layout} className='defaultFormItem' label='备注'>
                 {getFieldDecorator('remark', {
                   initialValue: initRemark
                 })(<Input style={selStyle} placeholder=' 请输入备注' />)}

@@ -48,6 +48,7 @@ const videoHoc = config => WrappedComponent => {
         pageSize: 10,
 
         videos: [],
+        allVideos: [],
         selectedVideos: [],
 
         selectData: {},
@@ -179,13 +180,25 @@ const videoHoc = config => WrappedComponent => {
       api
         .fetchNoConnectVideoList({ data: params })
         .then(resp => {
+          const { allVideos: oldVideos } = this.state
+
           const { count } = resp
           let { items } = resp
           items.forEach(item => (item.key = item.id))
+
+          let newAllVideos = oldVideos.slice()
+          items.forEach(item => {
+            let i = oldVideos.findIndex(video => video.id === item.id)
+            if (i < 0) {
+              newAllVideos.push(item)
+            }
+          })
+
           this.setState({
             count,
             loading: false,
-            videos: items
+            videos: items,
+            allVideos: newAllVideos
           })
         })
         .catch(err => console.log(err))
@@ -351,6 +364,7 @@ const videoHoc = config => WrappedComponent => {
         content: '确认删除该视频？删除后视频会进入回收站。',
         okText: '确认',
         cancelText: '取消',
+        iconType: 'exclamation-circle',
         onOk: this.handleDeleteVideo.bind(this, id, videoSource)
       })
     }
@@ -428,7 +442,6 @@ const videoHoc = config => WrappedComponent => {
 
     handleOpenConnect = record => {
       const { category: ca, id } = record
-
       if (ca || ca === 0) {
         this.setState({
           isTree: true,
@@ -438,14 +451,14 @@ const videoHoc = config => WrappedComponent => {
         return null
       }
 
-      const { showType, selectedVideos, videos } = this.state
+      const { selectedVideos, allVideos } = this.state
 
       if (!selectedVideos.length) {
         return Modal.info({ title: '请选择视频' })
       }
 
       const list = selectedVideos.map(id => {
-        const resp = videos.find(item => item.id === id)
+        const resp = allVideos.find(item => item.id === id)
         if (resp) return resp.category
       })
 
@@ -468,7 +481,7 @@ const videoHoc = config => WrappedComponent => {
     handleConnect = point => {
       const { selectedVideos, id } = this.state
       const kpointIds = point ? [point.id || point.treeId] : []
-      let data = { kpointIds }
+      let data = { kpointIds, orgId: Storage.get('orgId') || 1000050 }
 
       if (id || id === 0) {
         data.videoId = [id]
@@ -659,6 +672,7 @@ const videoHoc = config => WrappedComponent => {
               <Preview
                 type='video'
                 data={url}
+                footer={null}
                 className='videoPreviewModal'
                 title={PreviewTitle}
                 onCancel={this.handleClosePreview}

@@ -51,11 +51,18 @@
   top: 8px;
   left: 28px;
 }
-.imgWrapper{
+.imgWrapper {
   width: 200px;
   height: 113px;
-  img{
+  img {
     height: 100%;
     width: 100%;
   }
+}
+.pointBC {
+  display: inline-block;
+  width: 26px;
+  height: 26px;
+  background-image: url("./point@3x.png");
+  background-size: 26px 26px;
 }

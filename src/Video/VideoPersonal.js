@@ -3,10 +3,12 @@ import React from 'react'
 import Select from './component/Select'
 import NavTabs from './component/Tabs'
 import ListCard from './component/ListCard'
-import IconCircle from './component/IconCircle'
+import VideoState from './component/VideoState'
+import TextWithIntercept from './component/TextWithIntercept'
+import ActionSet from './component/ActionSet'
 
-// import factoryOfVideo from './factory/VideoCommonFactory'
 import videoHoc from './hoc/videoHoc'
+import searchGroupHoc from './hoc/searchGroupHoc'
 
 import GearBox from 'widgets/QuestionCard/GearBox'
 import SelectGroup from 'widgets/Layout/SelectGroup'
@@ -18,38 +20,10 @@ import { FILTER_VIDEO, STATUS_VIDEO, routePath } from '../../config'
 
 import './style.scss'
 
+@searchGroupHoc({ source: 0 })
 class SearchGroup extends React.Component {
-  state = {
-    tagList: []
-  }
-
-  componentDidMount() {
-    this.getLabelList()
-  }
-
-  getLabelList = () => {
-    const params = {
-      orgId: Storage.get('orgId')
-    }
-    api
-      .fetchVideoLabelList({ query: params })
-      .then(resp => {
-        const res = resp
-        const list = []
-        res.forEach(r => {
-          list.push({
-            value: r,
-            text: r
-          })
-        })
-        this.setState({ tagList: list })
-      })
-      .catch(err => console.log(err))
-  }
-
   get searchMessage() {
-    let { tagList } = this.state
-    const { value } = this.props
+    const { value, tagList } = this.props
 
     const {
       id,
@@ -158,23 +132,14 @@ class SearchGroup extends React.Component {
     return inputList
   }
 
-  searchFn = values => {
-    const { searchFn } = this.props
-    if (searchFn) searchFn(values)
-  }
-
-  resetForm = () => {
-    const { searchFn } = this.props
-    if (searchFn) searchFn({})
-  }
-
   render() {
+    const { searchFn, resetForm } = this.props
     return (
       <div className='pSelect'>
         <SelectGroup
           searchMessage={this.searchMessage}
-          resetForm={this.resetForm}
-          searchFn={this.searchFn}
+          resetForm={resetForm}
+          searchFn={searchFn}
         />
       </div>
     )
@@ -216,11 +181,7 @@ class VideoPersonal extends React.Component {
         title: '视频名称',
         dataIndex: 'fileName',
         key: 'fileName',
-        render: text => (
-          <div title={text}>
-            {text.length > 10 ? text.substring(0, 10) + '...' : text}
-          </div>
-        )
+        render: text => <TextWithIntercept text={text} len={10} />
       },
       {
         title: '知识点关联',
@@ -228,11 +189,7 @@ class VideoPersonal extends React.Component {
         key: 'kpoint',
         render: (text, record) => {
           let value = text[0] ? text[0].name : '未关联'
-          return (
-            <div title={value}>
-              {value.length > 10 ? value.substring(0, 10) + '...' : value}
-            </div>
-          )
+          return <TextWithIntercept text={value} len={10} />
         }
       },
       {
@@ -241,86 +198,35 @@ class VideoPersonal extends React.Component {
         key: 'userDefinedTags',
         render: (text, record) => {
           let str = '未定义'
-          if (text.length > 0) {
+          if (text && text.length > 0)
             str = text.reduce((l, r) => (l += r + ','), '')
-          }
           str = str.substring(0, str.length - 1)
-          return (
-            <div title={str}>
-              {str.length > 10 ? str.substring(0, 10) + '...' : str}
-            </div>
-          )
+          return <TextWithIntercept text={str} len={10} />
         }
       },
       {
         title: '视频状态',
         dataIndex: 'state',
         key: 'state',
-        render: (text, record) => {
-          let stateText
-          if (text || text === 0) {
-            stateText = STATUS_VIDEO[text + 1].text
-          }
-          let bcg = ''
-          switch (text) {
-            case 0:
-              bcg = '#2c5b8f'
-              break
-            case 1:
-              bcg = '#FF9E16'
-              break
-            case 2:
-              bcg = '#FF591A'
-              break
-            case 3:
-              bcg = '#77BC2B'
-              break
-          }
-
-          return (
-            <div>
-              <IconCircle size={10} bcg={bcg} />
-              <span>{stateText}</span>
-            </div>
-          )
-        }
-      },
-      {
-        title: '创建人',
-        dataIndex: 'creatorName',
-        key: 'creatorName'
+        render: (text, record) => (
+          <VideoState size={10} record={record} text={text} />
+        )
       },
       {
         title: '操作',
         dataIndex: 'action',
         key: 'action',
         className: 'td-action',
-        render: (text, record) => {
-          const { state } = record
-          return (
-            <div className='table-method'>
-              <span onClick={this.handleOpenPreview.bind(this, record)}>
-                预览
-              </span>
-              {state === 0 ? (
-                <span onClick={this.handleEditVideo.bind(this, record)}>
-                  编辑
-                </span>
-              ) : null}
-              {state === 1 || state === 3 ? (
-                <span onClick={this.handleEditVideo.bind(this, record)}>
-                  查看
-                </span>
-              ) : null}
-              {state === 2 ? (
-                <span onClick={this.handleModifyVideo.bind(this, record)}>
-                  修改
-                </span>
-              ) : null}
-              <span onClick={this.handleDelete.bind(this, record)}>删除</span>
-            </div>
-          )
-        }
+        render: (text, record) => (
+          <ActionSet
+            page='personal'
+            record={record}
+            handleOpenPreview={this.handleOpenPreview.bind(this, record)}
+            handleEditVideo={this.handleEditVideo.bind(this, record)}
+            handleModifyVideo={this.handleModifyVideo.bind(this, record)}
+            handleDelete={this.handleDelete.bind(this, record)}
+          />
+        )
       }
     ]
   }
@@ -368,17 +274,5 @@ class VideoPersonal extends React.Component {
     )
   }
 }
-
-// const VideoPersonal = factoryOfVideo({
-//   key: 1,
-//   title: '全部视频',
-//   currentKey: 'mine',
-//   NavTabs: NavTabs({ currentKey: cur, routePath: curArray }),
-//   Select: Select(FILTER_VIDEO),
-//   SearchGroup,
-//   TableWithHeader,
-//   fetchVideoList: 'getVideoList',
-//   route: 'VIDEO_PERSONAL'
-// })
 
 export default VideoPersonal

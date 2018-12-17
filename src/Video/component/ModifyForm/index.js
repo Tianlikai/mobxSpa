@@ -112,7 +112,8 @@ class ModifyForm extends AuthComponent {
   handleSave = () => {
     const params = this.getData()
     if (!params) return null
-    const data = { state: 0, ...params }
+    const { videoSource } = this.props
+    const data = { state: 0, videoSource, ...params }
     api
       .videoSaveQuestion(data)
       .then(resp => {
@@ -126,7 +127,8 @@ class ModifyForm extends AuthComponent {
   handleReview = () => {
     const params = this.getData()
     if (!params) return null
-    const data = { state: 1, ...params }
+    const { videoSource } = this.props
+    const data = { state: 1, videoSource, ...params }
     api
       .videoSaveQuestion(data)
       .then(resp => {
@@ -255,11 +257,7 @@ class ModifyForm extends AuthComponent {
                 })(<FormUpLoader mimeType={mimeType} />)}
               </FormItem>
 
-              <FormItem
-                {...layout}
-                className='defaultFormItem'
-                label='备注'
-              >
+              <FormItem {...layout} className='defaultFormItem' label='备注'>
                 {getFieldDecorator('remark', {
                   initialValue: initRemark
                 })(<Input style={selStyle} placeholder=' 请输入备注' />)}

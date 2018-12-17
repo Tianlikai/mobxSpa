@@ -64,7 +64,7 @@ export default class ListCard extends React.Component {
         checkAll: intersect.size !== 0 && intersect.size === currentSize
       },
       () => {
-        const {handleChange} = this.props
+        const { handleChange } = this.props
         const array = Array.from(ids)
         handleChange(array)
       }
@@ -91,7 +91,7 @@ export default class ListCard extends React.Component {
         checkAll: checked
       },
       () => {
-        const {handleChange} = this.props
+        const { handleChange } = this.props
         const array = Array.from(set)
         handleChange(array)
       }
@@ -106,10 +106,11 @@ export default class ListCard extends React.Component {
       data,
       loading,
       selectedRowKeys: selectedVideos,
+      className: cn,
       ...props
     } = this.props
 
-    let classes = display ? `${styles.root}` : styles.displayNone
+    let classes = display ? `${styles.root} ${cn}` : styles.displayNone
 
     classes = loading ? `${classes} ${styles.loading}` : classes
 

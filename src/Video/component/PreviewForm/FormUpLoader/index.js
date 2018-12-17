@@ -86,6 +86,7 @@ export default class FormUpLoader extends React.Component {
         <Button
           disabled={!medias}
           style={marginTop}
+          className='previewBtn'
           onClick={this.handleOpenPreview}
         >
           预览
@@ -95,6 +96,7 @@ export default class FormUpLoader extends React.Component {
           <Preview
             type='video'
             data={medias}
+            footer={null}
             title={PreviewTitle}
             className='videoPreviewModal'
             onCancel={this.handleClosePreview}

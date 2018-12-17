@@ -29,6 +29,11 @@ export default class VideoEdit extends AuthComponent {
 
   render() {
     const { initValue } = this.state
+    const { videoSource } = initValue
+    let VS = ''
+    if (videoSource) {
+      VS = videoSource
+    }
     const {
       location: { query, state },
       params: { videoId }
@@ -41,6 +46,7 @@ export default class VideoEdit extends AuthComponent {
         state={state}
         videoId={videoId}
         initValue={initValue}
+        videoSource={VS}
         isSuperRight={isSuperRight}
       />
     )

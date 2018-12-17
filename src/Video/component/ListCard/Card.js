@@ -6,6 +6,7 @@ import IconCircle from '../IconCircle'
 
 import { STATUS_VIDEO } from '../../../../config'
 
+import POINT from './point@3x.png'
 import styles from './Card.scss'
 
 export const Title = props => <div className={props.classes}>{props.name}</div>
@@ -263,8 +264,8 @@ class Card extends React.Component {
 
         {hasDrop ? (
           <div className={styles.dropDown}>
-            <DropDown overlay={itemMenu}>
-              <Icon type='ellipsis' />
+            <DropDown placement='bottomRight' overlay={itemMenu}>
+              <span className={styles.pointBC} />
             </DropDown>
           </div>
         ) : null}

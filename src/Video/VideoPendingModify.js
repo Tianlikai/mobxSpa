@@ -4,8 +4,11 @@ import Select from './component/Select'
 import NavTabs from './component/Tabs'
 import ListCard from './component/ListCard'
 import IconCircle from './component/IconCircle'
-// import factoryOfVideo from './factory/VideoCommonFactory'
+import TextWithIntercept from './component/TextWithIntercept'
+import ActionSet from './component/ActionSet'
+
 import videoHoc from './hoc/videoHoc'
+import searchGroupHoc from './hoc/searchGroupHoc'
 
 import SelectGroup from 'widgets/Layout/SelectGroup'
 
@@ -16,61 +19,10 @@ import { FILTER_VIDEO, STATUS_VIDEO } from '../../config'
 
 import './style.scss'
 
+@searchGroupHoc({ source: 0, createBy: true })
 class SearchGroup extends React.Component {
-  state = {
-    tagList: [],
-    createList: []
-  }
-
-  componentDidMount() {
-    this.getLabelList()
-    this.getCreateList()
-  }
-
-  getLabelList = () => {
-    const params = {
-      orgId: Storage.get('orgId')
-    }
-    api
-      .fetchVideoLabelList({ query: params })
-      .then(resp => {
-        const res = resp
-        const list = []
-        res.forEach(r => {
-          list.push({
-            value: r,
-            text: r
-          })
-        })
-        this.setState({ tagList: list })
-      })
-      .catch(err => console.log(err))
-  }
-
-  getCreateList = () => {
-    const params = {
-      orgId: Storage.get('orgId')
-    }
-    api
-      .fetchVideoCreateList({ query: params })
-      .then(resp => {
-        const res = resp
-        const list = []
-        res.forEach(r => {
-          list.push({
-            value: r.userId,
-            text: r.name
-          })
-        })
-        this.setState({ createList: list })
-      })
-      .catch(err => console.log(err))
-  }
-
   get searchMessage() {
-    let { tagList, createList } = this.state
-
-    const { value } = this.props
+    const { value, tagList, createList } = this.props
 
     const { id, isRelaKPoint, kpointKeyName, userDefinedTag, videoKeyName } =
       value || {}
@@ -145,23 +97,14 @@ class SearchGroup extends React.Component {
     return inputList
   }
 
-  searchFn = values => {
-    const { searchFn } = this.props
-    if (searchFn) searchFn(values)
-  }
-
-  resetForm = () => {
-    const { searchFn } = this.props
-    if (searchFn) searchFn({})
-  }
-
   render() {
+    const { searchFn, resetForm } = this.props
     return (
       <div className='pSelect'>
         <SelectGroup
           searchMessage={this.searchMessage}
-          resetForm={this.resetForm}
-          searchFn={this.searchFn}
+          resetForm={resetForm}
+          searchFn={searchFn}
         />
       </div>
     )
@@ -194,11 +137,7 @@ class VideoPendingModify extends React.Component {
         title: '视频名称',
         dataIndex: 'fileName',
         key: 'fileName',
-        render: text => (
-          <div title={text}>
-            {text.length > 10 ? text.substring(0, 10) + '...' : text}
-          </div>
-        )
+        render: text => <TextWithIntercept text={text} len={10} />
       },
       {
         title: '知识点关联',
@@ -206,11 +145,7 @@ class VideoPendingModify extends React.Component {
         key: 'kpoint',
         render: (text, record) => {
           let value = text[0] ? text[0].name : '未关联'
-          return (
-            <div title={value}>
-              {value.length > 10 ? value.substring(0, 10) + '...' : value}
-            </div>
-          )
+          return <TextWithIntercept text={value} len={10} />
         }
       },
       {
@@ -219,45 +154,33 @@ class VideoPendingModify extends React.Component {
         key: 'userDefinedTags',
         render: (text, record) => {
           let str = '未定义'
-          if (text.length > 0) {
+          if (text && text.length > 0) {
             str = text.reduce((l, r) => (l += r + ','), '')
           }
           str = str.substring(0, str.length - 1)
-          return (
-            <div title={str}>
-              {str.length > 10 ? str.substring(0, 10) + '...' : str}
-            </div>
-          )
+          return <TextWithIntercept text={str} len={10} />
         }
       },
       {
         title: '反馈',
         dataIndex: 'reason',
         key: 'reason',
-        render: text => (
-          <div title={text}>
-            {text.length > 10 ? text.substring(0, 10) + '...' : text}
-          </div>
-        )
+        render: text => <TextWithIntercept text={text} len={10} />
       },
       {
         title: '操作',
         dataIndex: 'action',
         key: 'action',
         className: 'td-action',
-        render: (text, record) => {
-          return (
-            <div className='table-method'>
-              <span onClick={this.handleOpenPreview.bind(this, record)}>
-                预览
-              </span>
-              <span onClick={this.handleModifyVideo.bind(this, record)}>
-                修改
-              </span>
-              <span onClick={this.handleDelete.bind(this, record)}>删除</span>
-            </div>
-          )
-        }
+        render: (text, record) => (
+          <ActionSet
+            page='modify'
+            record={record}
+            handleOpenPreview={this.handleOpenPreview.bind(this, record)}
+            handleModifyVideo={this.handleModifyVideo.bind(this, record)}
+            handleDelete={this.handleDelete.bind(this, record)}
+          />
+        )
       }
     ]
   }
@@ -299,16 +222,5 @@ class VideoPendingModify extends React.Component {
     )
   }
 }
-
-// const VideoPendingModify = factoryOfVideo({
-//   title: '待修改视频',
-//   currentKey: null,
-//   NavTabs: null,
-//   Select: Select(FILTER_VIDEO),
-//   SearchGroup,
-//   TableWithHeader,
-//   fetchVideoList: 'getPendingVideoList',
-//   route: 'VIDEO_PENDING_MODIFY'
-// })
 
 export default VideoPendingModify

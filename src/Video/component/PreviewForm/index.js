@@ -129,6 +129,8 @@ class UpdateForm extends AuthComponent {
   }
 
   handleFail = values => {
+    const params = this.getData()
+    if (!params) return null
     const {
       query,
       videoId,
@@ -139,6 +141,7 @@ class UpdateForm extends AuthComponent {
       state: 2,
       id: videoId,
       videoSource,
+      ...params,
       ...values
     }
     api
@@ -160,6 +163,8 @@ class UpdateForm extends AuthComponent {
   }
 
   handlePass = () => {
+    const params = this.getData()
+    if (!params) return null
     const {
       query,
       videoId,
@@ -170,7 +175,8 @@ class UpdateForm extends AuthComponent {
     const data = {
       state: 3,
       id: videoId,
-      videoSource
+      videoSource,
+      ...params
     }
     api
       .reviewVideo(data)
@@ -299,11 +305,7 @@ class UpdateForm extends AuthComponent {
                 })(<FormUpLoader mimeType={mimeType} />)}
               </FormItem>
 
-              <FormItem
-                {...layout}
-                className='defaultFormItem'
-                label='备注'
-              >
+              <FormItem {...layout} className='defaultFormItem' label='备注'>
                 {getFieldDecorator('remark', {
                   initialValue: initRemark
                 })(<Input style={selStyle} placeholder=' 请输入备注' />)}

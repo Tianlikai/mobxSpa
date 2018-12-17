@@ -341,6 +341,7 @@ const factory = data => {
         content: '确认删除该视频？删除后视频会进入回收站。',
         okText: '确认',
         cancelText: '取消',
+        iconType:'exclamation-circle',
         onOk: this.handleDeleteVideo.bind(this, id, videoSource)
       })
     }
