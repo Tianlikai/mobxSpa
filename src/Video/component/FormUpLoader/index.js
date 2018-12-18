@@ -2,8 +2,8 @@ import React from 'react'
 
 import { Button } from 'antd'
 
-import Card from '../../ListCard/Card'
-import { Title } from '../../ListCard/Card'
+import Card from '../ListCard/Card'
+import { Title } from '../ListCard/Card'
 
 import Preview from 'widgets/Preview/Preview'
 import Uploader from 'widgets/Upload/Uploader'

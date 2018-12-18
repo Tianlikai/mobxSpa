@@ -1,6 +1,8 @@
 import AuthComponent from '../../libs/AuthComponent'
 import UpdateForm from './component/UpdateForm'
 
+import { message } from 'antd'
+
 export default class VideoEdit extends AuthComponent {
   state = {
     initValue: {}
@@ -20,10 +22,10 @@ export default class VideoEdit extends AuthComponent {
           this.setState({ initValue: resp })
         })
         .catch(err => {
-          console.err(err)
+          message.error('请求出错')
         })
     } else {
-      console.err('参数错误')
+      message.error('参数错误')
     }
   }
 

@@ -1,6 +1,8 @@
 import AuthComponent from '../../libs/AuthComponent'
 import PreviewForm from './component/PreviewForm'
 
+import { message } from 'antd'
+
 export default class VideoReview extends AuthComponent {
   state = {
     initValue: {}
@@ -20,10 +22,10 @@ export default class VideoReview extends AuthComponent {
           this.setState({ initValue: resp })
         })
         .catch(err => {
-          console.log(err)
+          message.error('请求出错')
         })
     } else {
-      console.log('参数错误')
+      message.error('参数错误')
     }
   }
 
