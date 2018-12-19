@@ -1,12 +1,7 @@
 import AuthComponent from 'libs/AuthComponent'
-
 import { routerShape } from 'react-router'
 
 import FrameBox from 'widgets/FrameBox'
-import Preview from 'widgets/Preview/Preview'
-// import GearBox from 'widgets/QuestionCard/GearBox'
-import SelectPoints from 'widgets/QuestionCard/SelectPoints'
-
 import SwitchOfList from '../component/SwitchOfList'
 
 import { Pagination, Modal, message } from 'antd'
@@ -16,16 +11,12 @@ const BoxContent = FrameBox.BoxContent
 
 import { routePath } from 'libs/routes'
 import Storage from '../../../helpers/Storage'
-import { FILTER_VIDEO, STATUS_VIDEO } from '../../../config'
-
-export const Title = props => <div className={props.classes}>{props.name}</div>
 
 const videoHoc = config => WrappedComponent => {
   const {
     key,
     title,
     currentKey: curKey,
-    GearBox,
     Select,
     SearchGroup,
     NavTabs,
@@ -55,15 +46,7 @@ const videoHoc = config => WrappedComponent => {
         filterData: {},
 
         showType: 'card',
-        currentKey: curKey,
-
-        url: '',
-        fileName: '',
-        preview: false,
-
-        id: null,
-        isTree: false,
-        category: null
+        currentKey: curKey
       }
       this.searchFn = this.searchFn.bind(this)
       this.onSizeChange = this.onSizeChange.bind(this)
@@ -73,14 +56,9 @@ const videoHoc = config => WrappedComponent => {
       this.handleReview = this.handleReview.bind(this)
       this.handleConnect = this.handleConnect.bind(this)
       this.handleEditVideo = this.handleEditVideo.bind(this)
-      this.historyToCreate = this.historyToCreate.bind(this)
-      this.historyToPreview = this.historyToPreview.bind(this)
       this.handlePageChange = this.handlePageChange.bind(this)
-      this.handleOpenConnect = this.handleOpenConnect.bind(this)
-      this.handleOpenPreview = this.handleOpenPreview.bind(this)
       this.handleModifyVideo = this.handleModifyVideo.bind(this)
       this.handleSelectChange = this.handleSelectChange.bind(this)
-      this.handleClosePreview = this.handleClosePreview.bind(this)
       this.handleRedirectToCard = this.handleRedirectToCard.bind(this)
       this.handleRedirectToTable = this.handleRedirectToTable.bind(this)
     }
@@ -94,7 +72,6 @@ const videoHoc = config => WrappedComponent => {
         const data = JSON.parse(returnState)
         const { showType, pageSize, current, filterData, selectData } = data
         const params = {
-          showType,
           pageSize,
           pageNo: current || 1,
           ...filterData,
@@ -231,49 +208,6 @@ const videoHoc = config => WrappedComponent => {
         .catch(err => console.log(err))
     }
 
-    // to 创建视频
-    historyToCreate() {
-      const { showType } = this.state
-      const query = {
-        from: ROUTE
-      }
-      const state = {
-        showType
-      }
-      this.gotoPage(routePath.VIDEO_CREATE, {}, query, state)
-    }
-
-    // to 审核视频
-    historyToPreview() {
-      const { showType, selectedVideos, videos } = this.state
-
-      if (!selectedVideos.length) {
-        return Modal.info({ title: '请选择视频' })
-      }
-
-      const list = selectedVideos.map(id => {
-        const resp = videos.find(item => item.id === id)
-        if (resp) return resp
-      })
-
-      const first = list.shift()
-
-      const query = {
-        from: ROUTE
-      }
-
-      const state = {
-        list,
-        showType
-      }
-      const route = routePath.VIDEO_REVIEW.replace(
-        ':videoId',
-        first.id
-      ).replace(':videoSource', first.videoSource)
-
-      this.gotoPage(route, {}, query, state)
-    }
-
     // to 编辑视频
     handleEditVideo({ videoSource, id } = { videoSource: '', id: '' }) {
       const { showType, current, pageSize, selectData, filterData } = this.state
@@ -332,15 +266,6 @@ const videoHoc = config => WrappedComponent => {
         videoSource
       )
       this.gotoPage(route, {}, query, state)
-    }
-
-    // 预览视频
-    handleClosePreview() {
-      this.setState({ preview: false, url: '', fileName: '' })
-    }
-
-    handleOpenPreview({ url, fileName } = { url: '', fileName: '' }) {
-      this.setState({ preview: true, url, fileName })
     }
 
     /**
@@ -432,66 +357,16 @@ const videoHoc = config => WrappedComponent => {
         })
     }
 
-    // 知识点关联弹窗
-    handleHideTree = () => {
-      this.setState({
-        isTree: false,
-        category: null
-      })
-    }
-
-    handleOpenConnect = record => {
-      const { category: ca, id } = record
-      if (ca || ca === 0) {
-        this.setState({
-          isTree: true,
-          category: ca,
-          id: id
-        })
-        return null
-      }
-
-      const { selectedVideos, allVideos } = this.state
-
-      if (!selectedVideos.length) {
-        return Modal.info({ title: '请选择视频' })
-      }
-
-      const list = selectedVideos.map(id => {
-        const resp = allVideos.find(item => item.id === id)
-        if (resp) return resp.category
-      })
-
-      const set = new Set([...list])
-
-      if (set.size > 1) {
-        return message.warning('跨学科内容无法关联同一个知识点')
-      } else {
-        this.setState({
-          isTree: true,
-          category: Array.from(set)[0]
-        })
-      }
-    }
-
     /**
      * 关联知识点
-     * @param {object} point 知识点信息
+     * @param {object} data
+     * @param {function} cb VideoConnect 的回调函数，重置当前的state
      */
-    handleConnect = point => {
-      const { selectedVideos, id } = this.state
-      const kpointIds = point ? [point.id || point.treeId] : []
-      let data = { kpointIds, orgId: Storage.get('orgId') || 1000050 }
-
-      if (id || id === 0) {
-        data.videoId = [id]
-      } else {
-        data.videoId = selectedVideos
-      }
-
+    handleConnect = (data, cb) => {
       api
         .connectVideoPoint(data)
         .then(resp => {
+          cb && cb()
           const { current, pageSize, filterData, selectData } = this.state
           const params = {
             pageSize,
@@ -500,16 +375,13 @@ const videoHoc = config => WrappedComponent => {
             ...filterData
           }
           this.setState({
-            id: null,
-            isTree: false,
-            category: null,
             selectedVideos: []
           })
           message.success('关联成功')
           this[fetchVideoList](params)
         })
         .catch(err => {
-          console.log(err)
+          message.success('关联出错')
         })
     }
 
@@ -562,7 +434,7 @@ const videoHoc = config => WrappedComponent => {
       params.pageNo = 1
       params.pageSize = 10
       params = { ...params, ...selectData, ...data }
-      this.setState({ filterData: data, selectedVideos: [] })
+      this.setState({ current: 1, filterData: data, selectedVideos: [] })
       this[fetchVideoList](params)
     }
 
@@ -570,7 +442,7 @@ const videoHoc = config => WrappedComponent => {
       let { filterData } = this.state
       let params = { ...values, ...filterData }
       this[fetchVideoList](params)
-      this.setState({ selectData: values, selectedVideos: [] })
+      this.setState({ current: 1, selectData: values, selectedVideos: [] })
     }
 
     render() {
@@ -582,43 +454,21 @@ const videoHoc = config => WrappedComponent => {
         pageSize,
 
         videos,
+        allVideos,
         selectedVideos,
 
         selectData,
         filterData,
 
-        showType,
-
-        url,
-        fileName,
-        preview,
-
-        isTree,
-        category
+        showType
       } = this.state
 
       const listDisplay = showType === 'card'
       const clsTable =
         showType === 'card' ? 'selfTable displayNone' : 'selfTable'
 
-      const PreviewTitle = (
-        <Title
-          name={
-            fileName.length > 50 ? fileName.substring(0, 50) + '...' : fileName
-          }
-          classes={'previewTitle'}
-        />
-      )
-
       return (
         <FrameBox>
-          {GearBox ? (
-            <GearBox
-              historyToCreate={this.historyToCreate}
-              historyToPreview={this.historyToPreview}
-              handleOpenConnect={this.handleOpenConnect}
-            />
-          ) : null}
           <BoxHeader>
             <h4 className='storeHead'>{title}</h4>
           </BoxHeader>
@@ -638,17 +488,18 @@ const videoHoc = config => WrappedComponent => {
             />
 
             <WrappedComponent
-              loading={loading}
-              clsTable={clsTable}
               videos={videos}
-              selectedVideos={selectedVideos}
+              loading={loading}
+              showType={showType}
+              clsTable={clsTable}
+              allVideos={allVideos}
               listDisplay={listDisplay}
+              selectedVideos={selectedVideos}
               handleReview={this.handleReview}
               handleDelete={this.handleDelete}
               handleReBack={this.handleReBack}
+              handleConnect={this.handleConnect}
               handleEditVideo={this.handleEditVideo}
-              handleOpenPreview={this.handleOpenPreview}
-              handleItemConnect={this.handleOpenConnect}
               handleModifyVideo={this.handleModifyVideo}
               handleSelectChange={this.handleSelectChange}
             />
@@ -667,33 +518,6 @@ const videoHoc = config => WrappedComponent => {
                 />
               ) : null}
             </div>
-
-            {preview && url && (
-              <Preview
-                type='video'
-                data={url}
-                footer={null}
-                className='videoPreviewModal'
-                title={PreviewTitle}
-                onCancel={this.handleClosePreview}
-              />
-            )}
-
-            {isTree ? (
-              <Modal
-                className='treeModal'
-                title='关联知识点'
-                visible={isTree}
-                footer={null}
-                width={768}
-                onCancel={this.handleHideTree}
-              >
-                <SelectPoints
-                  selectPoint={this.handleConnect}
-                  subjectType={category}
-                />
-              </Modal>
-            ) : null}
           </BoxContent>
         </FrameBox>
       )

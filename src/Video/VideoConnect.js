@@ -6,119 +6,22 @@ import ListCard from './component/ListCard'
 import IconCircle from './component/IconCircle'
 import TextWithIntercept from './component/TextWithIntercept'
 import ActionSet from './component/ActionSet'
+import GroupConnect from './component/SearchGroup/GroupConnect'
 
 import videoHoc from './hoc/videoHoc'
-import searchGroupHoc from './hoc/searchGroupHoc'
+import hocPreviewModal from './hoc/hocPreviewModal'
+import hocConnectModal from './hoc/hocConnectModal'
 
 import GearBox from 'widgets/QuestionCard/GearBox'
-import SelectGroup from 'widgets/Layout/SelectGroup'
 
 import { Table } from 'antd'
 
-import Storage from '../../helpers/Storage'
-import { FILTER_VIDEO, STATUS_VIDEO } from '../../config'
+import { FILTER_VIDEO } from '../../config'
 
 import './style.scss'
 
-@searchGroupHoc({ source: 0, createBy: true })
-class SearchGroup extends React.Component {
-  get searchMessage() {
-    const { value, tagList, createList } = this.props
-
-    const { id, isRelaKPoint, state, userDefinedTag, videoKeyName, createdBy } =
-      value || {}
-
-    let item = [
-      {
-        type: 'select',
-        label: '创建人',
-        key: 'createdBy',
-        class: 'update-state',
-        errorMessage: '',
-        params: [
-          {
-            value: '',
-            text: '全部'
-          },
-          ...createList
-        ],
-        defaultValue: createdBy || ''
-      }
-    ]
-    let selectList = [
-      {
-        type: 'select',
-        label: '自定义标签',
-        key: 'userDefinedTag',
-        class: 'update-state',
-        errorMessage: '',
-        params: [
-          {
-            value: '',
-            text: '全部'
-          },
-          ...tagList
-        ],
-        defaultValue: userDefinedTag || ''
-      }
-    ]
-    let inputList = [
-      {
-        type: 'input',
-        label: '',
-        key: 'videoKeyName',
-        placeholder: '按视频关键词搜索',
-        errorMessage: '',
-        defaultValue: videoKeyName || ''
-      },
-      {
-        type: 'input',
-        label: '',
-        key: 'id',
-        placeholder: '按视频ID搜索',
-        errorMessage: '只能输入数字',
-        defaultValue: id || '',
-        pattern: new RegExp(/^[1-9]\d*$/, 'g')
-      }
-    ]
-    const isSuperRight = G.attendant()
-    if (isSuperRight) {
-      inputList = item.concat(selectList).concat(inputList)
-    } else {
-      inputList = selectList.concat(inputList)
-    }
-    return inputList
-  }
-
-  render() {
-    const { resetForm, searchFn } = this.props
-    return (
-      <div className='pSelect'>
-        <SelectGroup
-          searchMessage={this.searchMessage}
-          resetForm={resetForm}
-          searchFn={searchFn}
-        />
-      </div>
-    )
-  }
-}
-
-const GearBoxWithCallBack = props => (
-  <GearBox content='关联知识点' handleClick={props.handleOpenConnect} />
-)
-
-@videoHoc({
-  key: 3,
-  title: '待关联视频',
-  GearBox: GearBoxWithCallBack,
-  currentKey: null,
-  NavTabs: null,
-  Select: Select(FILTER_VIDEO),
-  SearchGroup,
-  fetchVideoList: 'getNoConnectList',
-  route: 'VIDEO_CONNECT'
-})
+@hocPreviewModal
+@hocConnectModal
 class VideoConnect extends React.Component {
   get columns() {
     return [
@@ -166,7 +69,7 @@ class VideoConnect extends React.Component {
             page='connect'
             record={record}
             handleOpenPreview={this.handleOpenPreview.bind(this, record)}
-            handleItemConnect={this.handleItemConnect.bind(this, record)}
+            handleOpenConnect={this.handleOpenConnect.bind(this, record)}
           />
         )
       }
@@ -176,9 +79,9 @@ class VideoConnect extends React.Component {
     const { handleOpenPreview } = this.props
     if (handleOpenPreview) handleOpenPreview(record)
   }
-  handleItemConnect(record) {
-    const { handleItemConnect } = this.props
-    if (handleItemConnect) handleItemConnect(record)
+  handleOpenConnect(record) {
+    const { handleOpenConnect } = this.props
+    if (handleOpenConnect) handleOpenConnect(record)
   }
   handleSelectChange = selectedRowKeys => {
     const { handleSelectChange } = this.props
@@ -190,7 +93,8 @@ class VideoConnect extends React.Component {
       loading,
       clsTable,
       listDisplay,
-      selectedVideos
+      selectedVideos,
+      handleOpenConnect
     } = this.props
 
     const rowSelection = {
@@ -200,6 +104,7 @@ class VideoConnect extends React.Component {
 
     return (
       <div>
+        <GearBox content='关联知识点' handleClick={handleOpenConnect} />
         <ListCard
           key='listCard'
           page='connect'
@@ -209,7 +114,7 @@ class VideoConnect extends React.Component {
           selectedRowKeys={selectedVideos}
           handleChange={this.handleSelectChange}
           handleOpenPreview={this.handleOpenPreview.bind(this)}
-          handleItemConnect={this.handleItemConnect.bind(this)}
+          handleOpenConnect={this.handleOpenConnect.bind(this)}
         />
         <Table
           bordered
@@ -226,4 +131,13 @@ class VideoConnect extends React.Component {
   }
 }
 
-export default VideoConnect
+export default videoHoc({
+  key: 3,
+  title: '待关联视频',
+  currentKey: null,
+  NavTabs: null,
+  Select: Select(FILTER_VIDEO),
+  SearchGroup: GroupConnect,
+  fetchVideoList: 'getNoConnectList',
+  route: 'VIDEO_CONNECT'
+})(VideoConnect)

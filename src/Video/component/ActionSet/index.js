@@ -7,7 +7,7 @@ const ActionSet = props => {
     handleEditVideo,
     handleModifyVideo,
     handleReview,
-    handleItemConnect,
+    handleOpenConnect,
     handleDelete,
     handleReBack
   } = props
@@ -64,7 +64,7 @@ const ActionSet = props => {
       {hasLook ? <span onClick={handleEditVideo}>查看</span> : null}
       {hasModify ? <span onClick={handleModifyVideo}>修改</span> : null}
       {hasReview ? <span onClick={handleReview}>审核</span> : null}
-      {hasConnect ? <span onClick={handleItemConnect}>关联知识点</span> : null}
+      {hasConnect ? <span onClick={handleOpenConnect}>关联知识点</span> : null}
       {hasDel ? <span onClick={handleDelete}>删除</span> : null}
       {hasReBack ? <span onClick={handleReBack}>恢复</span> : null}
     </div>

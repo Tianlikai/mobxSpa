@@ -19,7 +19,7 @@ class Card extends React.Component {
     this.handleReview = this.handleReview.bind(this)
     this.handleEditVideo = this.handleEditVideo.bind(this)
     this.handleModifyVideo = this.handleModifyVideo.bind(this)
-    this.handleItemConnect = this.handleItemConnect.bind(this)
+    this.handleOpenConnect = this.handleOpenConnect.bind(this)
     this.handleOpenPreview = this.handleOpenPreview.bind(this)
   }
 
@@ -65,10 +65,10 @@ class Card extends React.Component {
     }
   }
 
-  handleItemConnect() {
-    const { handleItemConnect, id, category, videoSource } = this.props
-    if (handleItemConnect) {
-      handleItemConnect({ id, videoSource, category })
+  handleOpenConnect() {
+    const { handleOpenConnect, id, category, videoSource } = this.props
+    if (handleOpenConnect) {
+      handleOpenConnect({ id, videoSource, category })
     }
   }
 
@@ -202,7 +202,7 @@ class Card extends React.Component {
           <Menu.Item>
             <span
               className={styles.videoMethod}
-              onClick={this.handleItemConnect}
+              onClick={this.handleOpenConnect}
             >
               关联知识点
             </span>

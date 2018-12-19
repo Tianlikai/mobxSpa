@@ -1,4 +1,4 @@
-import React from 'react'
+import AuthComponent from 'libs/AuthComponent'
 
 import Select from './component/Select'
 import NavTabs from './component/Tabs'
@@ -6,165 +6,21 @@ import ListCard from './component/ListCard'
 import VideoState from './component/VideoState'
 import TextWithIntercept from './component/TextWithIntercept'
 import ActionSet from './component/ActionSet'
+import GroupPersonal from './component/SearchGroup/GroupPersonal'
 
 import videoHoc from './hoc/videoHoc'
-import searchGroupHoc from './hoc/searchGroupHoc'
+import hocPreviewModal from './hoc/hocPreviewModal'
 
 import GearBox from 'widgets/QuestionCard/GearBox'
-import SelectGroup from 'widgets/Layout/SelectGroup'
 
 import { Table } from 'antd'
 
-import Storage from '../../helpers/Storage'
-import { FILTER_VIDEO, STATUS_VIDEO, routePath } from '../../config'
+import { FILTER_VIDEO, routePath } from '../../config'
 
 import './style.scss'
 
-@searchGroupHoc({ source: 0 })
-class SearchGroup extends React.Component {
-  get searchMessage() {
-    const { value, tagList } = this.props
-
-    const {
-      id,
-      isRelaKPoint,
-      kpointKeyName,
-      state,
-      userDefinedTag,
-      videoKeyName
-    } = value || {}
-
-    const isSuperRight = G.attendant()
-    const videoStatus = isSuperRight
-      ? [
-        {
-          value: '',
-          text: '全部'
-        },
-        {
-          value: '0',
-          text: '未提审'
-        },
-        {
-          value: '3',
-          text: '审核通过'
-        }
-      ]
-      : STATUS_VIDEO
-
-    let selectList = [
-      {
-        type: 'select',
-        label: '视频状态',
-        key: 'state',
-        placeholder: '请输入视频状态',
-        class: 'update-state',
-        errorMessage: '',
-        params: videoStatus,
-        defaultValue: state || ''
-      },
-      {
-        type: 'select',
-        label: '知识点关联状态',
-        key: 'isRelaKPoint',
-        class: 'update-state',
-        errorMessage: '',
-        params: [
-          {
-            value: '',
-            text: '全部'
-          },
-          {
-            value: '0',
-            text: '尚未关联知识点'
-          },
-          {
-            value: '1',
-            text: '已关联知识点'
-          }
-        ],
-        defaultValue: isRelaKPoint || ''
-      },
-      {
-        type: 'select',
-        label: '自定义标签',
-        key: 'userDefinedTag',
-        class: 'update-state',
-        errorMessage: '',
-        params: [
-          {
-            value: '',
-            text: '全部'
-          },
-          ...tagList
-        ],
-        defaultValue: userDefinedTag || ''
-      }
-    ]
-    let inputList = [
-      {
-        type: 'input',
-        label: '',
-        key: 'videoKeyName',
-        placeholder: '按视频关键词搜索',
-        errorMessage: '',
-        defaultValue: videoKeyName || ''
-      },
-      {
-        type: 'input',
-        label: '',
-        key: 'id',
-        placeholder: '按视频ID搜索',
-        errorMessage: '只能输入数字',
-        defaultValue: id || '',
-        pattern: new RegExp(/^[1-9]\d*$/, 'g')
-      },
-      {
-        type: 'input',
-        label: '',
-        key: 'kpointKeyName',
-        placeholder: '知识点关键词搜索',
-        errorMessage: '',
-        defaultValue: kpointKeyName || ''
-      }
-    ]
-    inputList = selectList.concat(inputList)
-    return inputList
-  }
-
-  render() {
-    const { searchFn, resetForm } = this.props
-    return (
-      <div className='pSelect'>
-        <SelectGroup
-          searchMessage={this.searchMessage}
-          resetForm={resetForm}
-          searchFn={searchFn}
-        />
-      </div>
-    )
-  }
-}
-
-const cur = routePath.VIDEO_PERSONAL
-const curArray = [routePath.VIDEO_PERSONAL, routePath.VIDEO_SCHOOL]
-
-const GearBoxWithCallBack = props => (
-  <GearBox addIcon content='添加视频' handleClick={props.historyToCreate} />
-)
-
-@videoHoc({
-  key: 1,
-  title: '全部视频',
-  currentKey: 'mine',
-  GearBox: GearBoxWithCallBack,
-  NavTabs: NavTabs({ currentKey: cur, routePath: curArray }),
-  Select: Select(FILTER_VIDEO),
-  SearchGroup,
-  fetchVideoList: 'getVideoList',
-  route: 'VIDEO_PERSONAL'
-})
-class VideoPersonal extends React.Component {
+@hocPreviewModal
+class VideoPersonal extends AuthComponent {
   get columns() {
     return [
       {
@@ -230,26 +86,47 @@ class VideoPersonal extends React.Component {
       }
     ]
   }
+
   handleOpenPreview(record) {
     const { handleOpenPreview } = this.props
     if (handleOpenPreview) handleOpenPreview(record)
   }
+
   handleEditVideo(record) {
     const { handleEditVideo } = this.props
     if (handleEditVideo) handleEditVideo(record)
   }
+
   handleModifyVideo(record) {
     const { handleModifyVideo } = this.props
     if (handleModifyVideo) handleModifyVideo(record)
   }
+
   handleDelete(record) {
     const { handleDelete } = this.props
     if (handleDelete) handleDelete(record)
   }
+
+  historyToCreate = () => {
+    const { showType } = this.props
+    const query = {
+      from: 'VIDEO_PERSONAL'
+    }
+    const state = {
+      showType
+    }
+    this.gotoPage(routePath.VIDEO_CREATE, {}, query, state)
+  }
+
   render() {
     const { videos, loading, clsTable, listDisplay } = this.props
     return (
       <div>
+        <GearBox
+          addIcon
+          content='添加视频'
+          handleClick={this.historyToCreate}
+        />
         <ListCard
           key='listCard'
           page='personal'
@@ -275,4 +152,16 @@ class VideoPersonal extends React.Component {
   }
 }
 
-export default VideoPersonal
+const cur = routePath.VIDEO_PERSONAL
+const curArray = [routePath.VIDEO_PERSONAL, routePath.VIDEO_SCHOOL]
+
+export default videoHoc({
+  key: 1,
+  title: '全部视频',
+  currentKey: 'mine',
+  NavTabs: NavTabs({ currentKey: cur, routePath: curArray }),
+  Select: Select(FILTER_VIDEO),
+  SearchGroup: GroupPersonal,
+  fetchVideoList: 'getVideoList',
+  route: 'VIDEO_PERSONAL'
+})(VideoPersonal)

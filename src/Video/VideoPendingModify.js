@@ -6,120 +6,18 @@ import ListCard from './component/ListCard'
 import IconCircle from './component/IconCircle'
 import TextWithIntercept from './component/TextWithIntercept'
 import ActionSet from './component/ActionSet'
+import GroupModify from './component/SearchGroup/GroupModify'
 
 import videoHoc from './hoc/videoHoc'
-import searchGroupHoc from './hoc/searchGroupHoc'
-
-import SelectGroup from 'widgets/Layout/SelectGroup'
+import hocPreviewModal from './hoc/hocPreviewModal'
 
 import { Table } from 'antd'
 
-import Storage from '../../helpers/Storage'
-import { FILTER_VIDEO, STATUS_VIDEO } from '../../config'
+import { FILTER_VIDEO } from '../../config'
 
 import './style.scss'
 
-@searchGroupHoc({ source: 0, createBy: true })
-class SearchGroup extends React.Component {
-  get searchMessage() {
-    const { value, tagList, createList } = this.props
-
-    const { id, isRelaKPoint, kpointKeyName, userDefinedTag, videoKeyName } =
-      value || {}
-
-    let selectList = [
-      {
-        type: 'select',
-        label: '知识点关联状态',
-        key: 'isRelaKPoint',
-        class: 'update-state',
-        errorMessage: '',
-        params: [
-          {
-            value: '',
-            text: '全部'
-          },
-          {
-            value: '0',
-            text: '尚未关联知识点'
-          },
-          {
-            value: '1',
-            text: '已关联知识点'
-          }
-        ],
-        defaultValue: isRelaKPoint || ''
-      },
-      {
-        type: 'select',
-        label: '自定义标签',
-        key: 'userDefinedTag',
-        class: 'update-state',
-        errorMessage: '',
-        params: [
-          {
-            value: '',
-            text: '全部'
-          },
-          ...tagList
-        ],
-        defaultValue: userDefinedTag || ''
-      }
-    ]
-    let inputList = [
-      {
-        type: 'input',
-        label: '',
-        key: 'videoKeyName',
-        placeholder: '按视频关键词搜索',
-        errorMessage: '',
-        defaultValue: videoKeyName || ''
-      },
-      {
-        type: 'input',
-        label: '',
-        key: 'id',
-        placeholder: '按视频ID搜索',
-        errorMessage: '只能输入数字',
-        defaultValue: id || '',
-        pattern: new RegExp(/^[1-9]\d*$/, 'g')
-      },
-      {
-        type: 'input',
-        label: '',
-        key: 'kpointKeyName',
-        placeholder: '知识点关键词搜索',
-        errorMessage: '',
-        defaultValue: kpointKeyName || ''
-      }
-    ]
-    inputList = selectList.concat(inputList)
-    return inputList
-  }
-
-  render() {
-    const { searchFn, resetForm } = this.props
-    return (
-      <div className='pSelect'>
-        <SelectGroup
-          searchMessage={this.searchMessage}
-          resetForm={resetForm}
-          searchFn={searchFn}
-        />
-      </div>
-    )
-  }
-}
-
-@videoHoc({
-  title: '待修改视频',
-  currentKey: null,
-  NavTabs: null,
-  Select: Select(FILTER_VIDEO),
-  SearchGroup,
-  fetchVideoList: 'getPendingVideoList',
-  route: 'VIDEO_PENDING_MODIFY'
-})
+@hocPreviewModal
 class VideoPendingModify extends React.Component {
   get columns() {
     return [
@@ -223,4 +121,12 @@ class VideoPendingModify extends React.Component {
   }
 }
 
-export default VideoPendingModify
+export default videoHoc({
+  title: '待修改视频',
+  currentKey: null,
+  NavTabs: null,
+  Select: Select(FILTER_VIDEO),
+  SearchGroup: GroupModify,
+  fetchVideoList: 'getPendingVideoList',
+  route: 'VIDEO_PENDING_MODIFY'
+})(VideoPendingModify)
