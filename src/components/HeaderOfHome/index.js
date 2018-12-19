@@ -1,4 +1,6 @@
 import Component from 'components/Component'
+import PropTypes from 'prop-types'
+
 import { Dropdown, Menu, Button } from 'antd'
 import Storage from 'utils/storage'
 
@@ -12,6 +14,13 @@ export default class Header extends Component {
         AUTHORITY,
         username: '匿名用户'
     }
+    static propTypes = {
+        username: PropTypes.string,
+        currentAddress: PropTypes.string,
+        AUTHORITY: PropTypes.object,
+        logOut: PropTypes.func
+    }
+
     goToTargetPage = target => {
         if (target) {
             let { state } = G.history.location || {}
@@ -26,10 +35,12 @@ export default class Header extends Component {
             G.history.goBack()
         }
     }
+
     handleAuthority = () => {
         let permissionList = Storage.get('permissionList') || []
         return permissionList.indexOf(60003) >= 0 || false
     }
+
     render() {
         const { logOut, currentAddress, AUTHORITY, username } = this.props
         let key = currentAddress.split('/')[2]
@@ -42,13 +53,10 @@ export default class Header extends Component {
         )
         return (
             <div className='header'>
-                {btnText
-                    && hadCreatePermission && (
+                {btnText && hadCreatePermission && (
                     <Button
                         className={
-                            key
-                                ? 'create-order' + '-' + key
-                                : 'create-order'
+                            key ? 'create-order' + '-' + key : 'create-order'
                         }
                         onClick={this.goToTargetPage.bind(null, target)}
                     >

@@ -1,14 +1,20 @@
-import Component from 'components/Component'
+import PropTypes from 'prop-types'
+
 import Breadcrumb from './Breadcrumb'
 
-export default class WithBreadcrumb extends Component {
-    render() {
-        const { children, config } = this.props
-        return (
-            <div>
-                <Breadcrumb config={config} />
-                {children && children}
-            </div>
-        )
-    }
+const WithBreadcrumb = props => {
+    const { children, config } = props
+    return (
+        <div>
+            <Breadcrumb config={config} />
+            {children && children}
+        </div>
+    )
 }
+
+WithBreadcrumb.propTypes = {
+    config: PropTypes.array,
+    children: PropTypes.element
+}
+
+export default WithBreadcrumb

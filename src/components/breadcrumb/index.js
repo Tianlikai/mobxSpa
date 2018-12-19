@@ -1,7 +1,3 @@
-/**
- * TLK
- */
-
 import BreadcrumbItem from './BreadcrumbItem'
 import Breadcrumb from './Breadcrumb'
 import WithBreadcrumb from './WithBreadcrumb'

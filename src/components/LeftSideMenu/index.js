@@ -1,6 +1,9 @@
 import Component from 'components/Component'
-import { Menu, Icon } from 'antd'
+import PropTypes from 'prop-types'
+
 import { Link } from 'react-router-dom'
+
+import { Menu, Icon } from 'antd'
 import SIDE_MENU from '../../settings/sideMenu'
 
 import Logo from './logo.svg'
@@ -9,6 +12,9 @@ import './style.scss'
 const { Item, SubMenu } = Menu
 
 export default class SideMenu extends Component {
+    static propTypes = {
+        selectedKeys: PropTypes.string
+    }
     constructor(props) {
         super(props)
         let { selectedKeys } = this.props
@@ -17,13 +23,14 @@ export default class SideMenu extends Component {
             openKeys: openKeys
         }
     }
-    componentDidMount() {}
     handleClick(e) {}
+
     handleOpenChange = openKeys => {
         this.setState({
             openKeys: openKeys
         })
     }
+
     get menu() {
         let SHOW_SIDE_MENU = {}
         Object.keys(SIDE_MENU).map(key => {
@@ -34,6 +41,7 @@ export default class SideMenu extends Component {
         })
         return SHOW_SIDE_MENU
     }
+
     render() {
         const { selectedKeys: selKeys } = this.props
         const selectedKeys = [selKeys]

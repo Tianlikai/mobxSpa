@@ -1,19 +1,46 @@
 import Component from 'components/Component'
 import ImgWithSave from 'components/img/ImgWithSave'
+
+import PropTypes from 'prop-types'
 import { Modal } from 'antd'
 
 import './style.scss'
 
-const Title = props => (
-    <div className={props.className}>
-        <h5>{props.value}</h5>
-    </div>
-)
+const Title = props => {
+    const { className, value } = props
+    return (
+        <div className={className}>
+            <h5>{value}</h5>
+        </div>
+    )
+}
+
+Title.propTypes = {
+    className: PropTypes.string,
+    value: PropTypes.string
+}
 
 export default class ShareByQrModal extends Component {
-    handleClose = () => {
-        this.props.handleClose && this.props.handleClose()
+    static propTypes = {
+        className: PropTypes.string,
+        title: PropTypes.string,
+        visible: PropTypes.bool,
+        showTitle: PropTypes.string,
+        width: PropTypes.number,
+        height: PropTypes.number,
+        imgByte: PropTypes.string,
+        titleValue: PropTypes.string,
+        record: PropTypes.object,
+        recordType: PropTypes.string,
+        titleDownImg: PropTypes.string,
+        handleClose: PropTypes.func
     }
+
+    handleClose = () => {
+        const { handleClose } = this.props
+        if (handleClose) handleClose()
+    }
+
     render() {
         const {
             className,
