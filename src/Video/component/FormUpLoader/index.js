@@ -11,98 +11,102 @@ import Uploader from 'widgets/Upload/Uploader'
 import './style.scss'
 
 export default class FormUpLoader extends React.Component {
-  state = {
-    preview: false
-  }
-
-  handleClosePreview = () => {
-    this.setState({
-      preview: false
-    })
-  }
-
-  handleOpenPreview = () => {
-    this.setState({
-      preview: true
-    })
-  }
-
-  handleChangeFileName = data => {
-    const { value, onChange } = this.props
-    const video = {
-      name: data,
-      medias: value && value.medias ? value.medias : ''
+    state = {
+        preview: false
     }
-    if (onChange) {
-      onChange(video)
+
+    handleClosePreview = () => {
+        this.setState({
+            preview: false
+        })
     }
-  }
 
-  handleComplete = data => {
-    const { value, onChange } = this.props
-    const video = {
-      name: value && value.name ? value.name : '',
-      medias: data
+    handleOpenPreview = () => {
+        this.setState({
+            preview: true
+        })
     }
-    if (onChange) {
-      onChange(video)
+
+    handleChangeFileName = data => {
+        const { value, onChange } = this.props
+        const video = {
+            name: data,
+            medias: value && value.medias ? value.medias : ''
+        }
+        if (onChange) {
+            onChange(video)
+        }
     }
-  }
 
-  render() {
-    const { preview } = this.state
-    const { value, mimeType } = this.props
-    const { medias, name } = value || {}
+    handleComplete = data => {
+        const { value, onChange } = this.props
+        const video = {
+            name: value && value.name ? value.name : '',
+            medias: data
+        }
+        if (onChange) {
+            onChange(video)
+        }
+    }
 
-    const marginTop = { marginTop: 4 }
+    render() {
+        const { preview } = this.state
+        const { value, mimeType } = this.props
+        const { medias, name } = value || {}
 
-    const PreviewTitle = (
-      <Title
-        name={name && name.length > 60 ? name.substring(0, 60) + '...' : name}
-        classes='previewTitle'
-      />
-    )
+        const marginTop = { marginTop: 4 }
 
-    return (
-      <div>
-        <Uploader
-          value={name}
-          mimeType={mimeType}
-          type='formUploadItem'
-          bucket='learnta-video-public'
-          text={medias ? '重新上传' : '点击上传'}
-          onComplete={this.handleComplete}
-          changeFileName={this.handleChangeFileName}
-        />
+        const PreviewTitle = (
+            <Title
+                name={
+                    name && name.length > 60
+                        ? name.substring(0, 60) + '...'
+                        : name
+                }
+                classes='previewTitle'
+            />
+        )
 
-        {medias && name ? (
-          <Card
-            className='self-card'
-            cover={`https://lcdns-vv.learnta.com/res/${medias}?vframe/jpg/offset/2`}
-            fileName={name}
-          />
-        ) : null}
+        return (
+            <div>
+                <Uploader
+                    value={name}
+                    mimeType={mimeType}
+                    type='formUploadItem'
+                    bucket='learnta-video-public'
+                    text={medias ? '重新上传' : '点击上传'}
+                    onComplete={this.handleComplete}
+                    changeFileName={this.handleChangeFileName}
+                />
 
-        <Button
-          disabled={!medias || !name}
-          style={marginTop}
-          className='previewBtn'
-          onClick={this.handleOpenPreview}
-        >
-          预览
-        </Button>
+                {medias && name ? (
+                    <Card
+                        className='self-card'
+                        cover={`https://lcdns-vv.learnta.com/res/${medias}?vframe/jpg/offset/2`}
+                        fileName={name}
+                    />
+                ) : null}
 
-        {preview && medias && (
-          <Preview
-            type='video'
-            data={medias}
-            title={PreviewTitle}
-            footer={null}
-            className='videoPreviewModal'
-            onCancel={this.handleClosePreview}
-          />
-        )}
-      </div>
-    )
-  }
+                <Button
+                    disabled={!medias || !name}
+                    style={marginTop}
+                    className='previewBtn'
+                    onClick={this.handleOpenPreview}
+                >
+                    预览
+                </Button>
+
+                {preview && medias && (
+                    <Preview
+                        type='video'
+                        data={medias}
+                        title={PreviewTitle}
+                        footer={null}
+                        className='videoPreviewModal'
+                        onCancel={this.handleClosePreview}
+                    />
+                )}
+            </div>
+        )
+    }
 }
