@@ -1,17 +1,18 @@
-import Component from 'components/Component'
+import Component from 'components/Component'; // eslint-disable-line
 
-import * as mobx from 'mobx'
-import { Helmet } from 'react-helmet'
-import { observer, inject } from 'mobx-react'
+import * as mobx from 'mobx';
+import { Helmet } from 'react-helmet';
+import { observer, inject } from 'mobx-react';
 
-import SearchForm from './SearchForm'
-import ModuleLine from 'components/ModuleLine'
-import { WithBreadcrumb } from 'components/Breadcrumb'
-import ShareByQrModal from 'components/ShareByQrModal'
+import { Button, Table } from 'antd';
 
-import { Button, Table } from 'antd'
+import ModuleLine from 'components/ModuleLine'; // eslint-disable-line
+import { WithBreadcrumb } from 'components/Breadcrumb'; // eslint-disable-line
+import ShareByQrModal from 'components/ShareByQrModal'; // eslint-disable-line
 
-import './style.scss'
+import SearchForm from './SearchForm';
+
+import './style.scss';
 
 @inject('TableSearch')
 @observer

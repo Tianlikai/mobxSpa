@@ -4,7 +4,7 @@ import { createForm } from 'utils/antdUtils'
 
 import { Form, Input, Select, Button, Radio, Cascader } from 'antd'
 
-import { GRADE } from 'settings/consts'
+import { GRADE } from 'settings/const'
 
 const FormItem = Form.Item
 const Option = Select.Option

@@ -6,9 +6,8 @@
  * url 拼接参数 {urlParams}
  */
 module.exports = {
-    // 登陆
     signIn: { url: '8/user/login', method: 'post' },
-    // 机构
+
     getOrganizationList: { url: '11/org/list' },
     getOrganizationDetail: { url: '11/org/getOrganisationById/{orgId}' },
     createOrganization: { url: '11/org/saveOrganisation', method: 'post' },

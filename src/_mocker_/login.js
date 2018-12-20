@@ -1,5 +1,6 @@
 const login = (req, res) => {
     const { username, password } = req.body
+    console.log(req.body)
     if (!password || !username) {
         res.json({
             err: null,

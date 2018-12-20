@@ -1,5 +1,5 @@
 import { action, observable } from 'mobx'
-import { DEFAULT_OPTION, ORDER_TYPE, UNIT, PAY_TYPE } from '../settings/consts'
+import { DEFAULT_OPTION, ORDER_TYPE, UNIT, PAY_TYPE } from '../settings/const'
 import { message } from 'antd'
 
 class Orders {

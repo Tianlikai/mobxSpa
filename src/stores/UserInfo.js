@@ -2,6 +2,8 @@ import { action, observable } from 'mobx'
 import Storage from 'utils/storage'
 import { Modal } from 'antd'
 
+import api from '../api'
+
 class UserInfo {
     @observable
     username = null
@@ -14,8 +16,7 @@ class UserInfo {
 
     @action
     signIn(data, callback) {
-        G.api
-            .signIn({ data })
+        api.signIn(data)
             .then(data => {
                 this.setUserInfo(data)
                 let permissionList = this.saveUserInfo(data)

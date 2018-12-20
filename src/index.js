@@ -1,15 +1,25 @@
 import { Provider } from 'mobx-react'
 
-// 引入全局函数
+/**
+ * 全局函数
+ */
 import 'utils/G.js'
-// store
+
+/**
+ * mobx store
+ */
 import stores from './stores/index'
 
+/**
+ * 路由
+ */
 import createRoutes from './routes'
 
+/**
+ * 公共样式
+ */
 import './styles.scss'
 
-// 路由控件
 const { HashRouter: Router } = ReactRouterDOM
 
 const Entry = () => (

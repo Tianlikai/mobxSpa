@@ -1,5 +1,5 @@
 import { action, observable } from 'mobx'
-import { GRADE } from '../settings/consts'
+import { GRADE } from '../settings/const'
 import moment from 'moment'
 
 class TableSearch {

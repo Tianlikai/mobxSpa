@@ -2,7 +2,7 @@ import moment from 'moment'
 import CloneDeep from 'lodash/cloneDeep'
 
 import { action, observable } from 'mobx'
-import { GRADE } from '../settings/consts'
+import { GRADE } from '../settings/const'
 
 const INFORMATION = {
     createdAt: { label: '开始时间:', value: '-' },

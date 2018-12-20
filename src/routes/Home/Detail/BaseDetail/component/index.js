@@ -8,7 +8,7 @@ import { observer, inject } from 'mobx-react'
 import { Row, Col, Table, Icon, Tooltip } from 'antd'
 
 import ModuleLine from 'components/ModuleLine'
-import ImgWithSave from 'components/img/ImgWithSave'
+import ImgWithSave from 'components/Img/ImgWithSave'
 import { WithBreadcrumb } from 'components/Breadcrumb'
 import ShareByQrModal from 'components/ShareByQrModal'
 
