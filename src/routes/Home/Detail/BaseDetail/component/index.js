@@ -9,7 +9,7 @@ import { Row, Col, Table } from 'antd';
 import Storage from 'utils/storage'; // eslint-disable-line
 
 import ModuleLine from 'components/ModuleLine'; // eslint-disable-line
-import ImgWithSave from 'components/Img/ImgWithSave'; // eslint-disable-line
+import ImgWithSave from 'components/Image/ImgWithSave'; // eslint-disable-line
 import { WithBreadcrumb } from 'components/Breadcrumb'; // eslint-disable-line
 import ShareByQrModal from 'components/ShareByQrModal'; // eslint-disable-line
 
