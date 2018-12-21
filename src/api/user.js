@@ -6,4 +6,7 @@ export default {
       password,
     });
   },
+  getArea() {
+    return this.get('11/public/getArea');
+  },
 };

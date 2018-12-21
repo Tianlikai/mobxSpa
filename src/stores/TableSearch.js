@@ -70,8 +70,8 @@ class TableSearch {
     promotionId, width = 200, autoColor = false, isHyaline = false,
   }) {
     if (!this.imgByte[promotionId]) {
-      G.api
-        .getPromotionQrCode({
+      api
+        .getQRCode({
           promotionId,
           width,
           autoColor,

@@ -1,58 +1,78 @@
 import React, { Component } from 'react';
 
 import PropTypes from 'prop-types';
-import { Form, Input, Button } from 'antd';
-
+import classnames from 'classnames';
 import { createForm } from 'utils/antdUtils'; // eslint-disable-line
+
+import { Form, Button } from 'antd';
+import LoginForm from '../../components/FormGroup';
+import './SignInForm.scss';
+
+const FormItem = Form.Item;
+
+const UserFormItem = () => (
+  <FormItem className="btnGroup">
+    <Button className="searchBtn" htmlType="submit">
+      登陆
+    </Button>
+  </FormItem>
+);
 
 @createForm()
 class SignInForm extends Component {
   static propTypes = {
+    prefix: PropTypes.string,
+    className: PropTypes.string,
     onSubmit: PropTypes.func,
   };
 
-  onSubmit(values) {
+  static defaultProps = {
+    prefix: 'j_signForm',
+  };
+
+  onSubmit = (values) => {
     const { onSubmit } = this.props;
     if (onSubmit) onSubmit(values);
-  }
+  };
 
   get formItems() {
     return [
       {
+        type: 'input',
+        label: '',
         key: 'username',
-        component: <Input size="large" placeholder="请输入帐号" />,
-        props: {
-          validate: [
-            {
-              trigger: 'onChange',
-              rules: [{ required: true, message: '请填写帐号' }],
-            },
-          ],
-        },
+        className: 'ipt_username',
+        placeholder: '请输入账号',
+        size: 'large',
+        required: true,
+        message: '请填写帐号',
+        iptType: 'text',
       },
       {
+        type: 'input',
+        label: '',
         key: 'password',
-        component: <Input size="large" type="password" placeholder="请输入密码" />,
-        props: {
-          rules: [{ required: true, message: '请填写密码' }],
-        },
+        className: 'ipt_password',
+        placeholder: '请输入密码',
+        size: 'large',
+        required: true,
+        message: '请填写密码',
+        iptType: 'password',
       },
     ];
   }
 
-  render({ renderForm }) {
+  render() {
+    const { prefix, className } = this.props;
+    const classes = classnames(prefix, { [className]: className });
     return (
-      <Form onSubmit={this.onSubmit}>
-        {renderForm(this.formItems, {
-          data: { username: G.loginName },
-          noWrap: true,
-          noFooter: true,
-          layout: false,
-        })}
-        <Button htmlType="submit" className="submit" loading={this.isLoading}>
-          {this.isLoading ? '登录中...' : '登录'}
-        </Button>
-      </Form>
+      <div className={classes}>
+        <LoginForm
+          searchMessage={this.formItems}
+          searchFn={this.onSubmit}
+          UserFormItem={UserFormItem}
+        />
+      </div>
     );
   }
 }

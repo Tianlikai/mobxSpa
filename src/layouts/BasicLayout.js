@@ -37,10 +37,10 @@ export default class Home extends Component {
     }
   }
 
-  logOut() {
+  logOut = () => {
     const { User } = this.props;
     User.logOut();
-  }
+  };
 
   render() {
     const {
