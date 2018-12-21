@@ -1,4 +1,4 @@
 /**
  * 权限配置
  */
-export default {}
+export default {};

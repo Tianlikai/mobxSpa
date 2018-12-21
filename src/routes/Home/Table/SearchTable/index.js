@@ -1,16 +1,16 @@
-import Loadable from 'react-loadable'
+import Loadable from 'react-loadable';
 
-import { createRoute } from 'utils/core'
+import { createRoute } from 'utils/core'; // eslint-disable-line
 
-const Spinner = () => null
+const Spinner = () => null;
 const routesConfig = () => ({
-    path: '/table/searchTable',
-    PERMISSIONS: true,
-    config: ['Admin', '表格页', '查询表格'],
-    component: Loadable({
-        loader: () => import('./component'),
-        loading: Spinner
-    })
-})
+  path: '/table/searchTable',
+  PERMISSIONS: true,
+  config: ['Admin', '表格页', '查询表格'],
+  component: Loadable({
+    loader: () => import('./component'),
+    loading: Spinner,
+  }),
+});
 
-export default () => createRoute(routesConfig)
+export default () => createRoute(routesConfig);

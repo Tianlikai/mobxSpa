@@ -1,15 +1,31 @@
-import Component from 'components/Component'
+import React from 'react';
+import PropTypes from 'prop-types';
+import classnames from 'classnames';
 
-const { Switch } = ReactRouterDOM
+const { Switch } = ReactRouterDOM;
 
-export default class Container extends Component {
-    render() {
-        const { routerData } = this.props
-        const { childRoutes } = routerData
-        return (
-            <div className='container'>
-                <Switch>{childRoutes}</Switch>
-            </div>
-        )
-    }
-}
+const Container = (props) => {
+  const {
+    routerData: { childRoutes },
+    prefix,
+    className,
+  } = props;
+  const classes = classnames(prefix, { [className]: className });
+  return (
+    <div className={classes}>
+      <Switch>{childRoutes}</Switch>
+    </div>
+  );
+};
+
+Container.defaultProps = {
+  prefix: 'container',
+};
+
+Container.propTypes = {
+  prefix: PropTypes.string,
+  className: PropTypes.string,
+  routerData: PropTypes.object,
+};
+
+export default Container;

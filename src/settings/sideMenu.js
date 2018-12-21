@@ -7,35 +7,35 @@
  * @param {to} 跳转地址
  */
 export default {
-    home: {
-        iconType: 'dashboard',
-        text: 'Dashboard',
+  home: {
+    iconType: 'dashboard',
+    text: 'Dashboard',
+    PERMISSIONS: true,
+    children: [],
+    to: '/home',
+  },
+  form: {
+    iconType: 'desktop',
+    text: '表单页',
+    PERMISSIONS: true,
+    children: [
+      {
+        to: '/form/baseForm',
+        text: '基础表单',
         PERMISSIONS: true,
-        children: [],
-        to: '/home'
-    },
-    form: {
-        iconType: 'desktop',
-        text: '表单页',
+      },
+    ],
+  },
+  table: {
+    iconType: 'desktop',
+    text: '表格页',
+    PERMISSIONS: true,
+    children: [
+      {
+        to: '/table/searchTable',
+        text: '查询表格',
         PERMISSIONS: true,
-        children: [
-            {
-                to: '/form/baseForm',
-                text: '基础表单',
-                PERMISSIONS: true
-            }
-        ]
-    },
-    table: {
-        iconType: 'desktop',
-        text: '表格页',
-        PERMISSIONS: true,
-        children: [
-            {
-                to: '/table/searchTable',
-                text: '查询表格',
-                PERMISSIONS: true
-            }
-        ]
-    }
-}
+      },
+    ],
+  },
+};

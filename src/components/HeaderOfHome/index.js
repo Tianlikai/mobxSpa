@@ -22,7 +22,11 @@ export default class Header extends Component {
     logOut: PropTypes.func,
   };
 
-  goToTargetPage = (target) => {
+  goToTargetPage = () => {
+    const { currentAddress, AUTHORITY } = this.props;
+    const key = currentAddress.split('/')[2];
+    const { target } = AUTHORITY[key] || {};
+
     if (target) {
       let { state } = G.history.location || {};
       if (state) {
@@ -47,7 +51,7 @@ export default class Header extends Component {
       logOut, currentAddress, AUTHORITY, username,
     } = this.props;
     const key = currentAddress.split('/')[2];
-    const { pageTitle, btnText, target } = AUTHORITY[key] || {};
+    const { pageTitle, btnText } = AUTHORITY[key] || {};
     const hadCreatePermission = this.handleAuthority(); // 是否有创建权限
     const menu = (
       <Menu onClick={logOut}>
@@ -59,14 +63,14 @@ export default class Header extends Component {
         {btnText && hadCreatePermission && (
           <Button
             className={key ? `${'create-order-'}${key}` : 'create-order'}
-            onClick={this.goToTargetPage.bind(null, target)}
+            onClick={this.goToTargetPage}
           >
             {btnText}
           </Button>
         )}
         {pageTitle && <div className="create-order-title">{pageTitle}</div>}
         <Dropdown overlay={menu}>
-          <a>{username}</a>
+          <Button>{username}</Button>
         </Dropdown>
       </div>
     );

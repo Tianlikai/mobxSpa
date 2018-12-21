@@ -1,57 +1,70 @@
-import { inject, observer } from 'mobx-react'
-import Component from 'components/Component'
-import Storage from 'utils/storage'
+import React, { Component } from 'react';
 
-import Layout from './Layout'
-import BasicFooter from './BasicFooter'
+import PropTypes from 'prop-types';
+import { inject, observer } from 'mobx-react';
+import Storage from 'utils/storage'; // eslint-disable-line
 
-import SideMenu from '../components/LeftSideMenu'
-import Header from '../components/HeaderOfHome'
+import Layout from './Layout';
+import BasicFooter from './BasicFooter';
 
-import './styles/BasicLayout.scss'
+import SideMenu from '../components/LeftSideMenu';
+import Header from '../components/HeaderOfHome';
 
-const { Switch } = ReactRouterDOM
-const LayoutSide = Layout.LayoutSide
+import './styles/BasicLayout.scss';
+
+const { Switch } = ReactRouterDOM;
+const { LayoutSide } = Layout;
 
 @inject('User')
 @observer
 export default class Home extends Component {
-    componentDidMount() {
-        const token = Storage.get('token')
-        const username = Storage.get('username')
-        if (!token) {
-            G.history.replace('/signin')
-        } else {
-            G.setUpUser({ token })
-            this.props.User.setUserInfo({ name: username })
-            this.props.User.getArea()
-        }
-    }
+  static propTypes = {
+    User: PropTypes.object.isRequired,
+    routerData: PropTypes.object,
+    location: PropTypes.object,
+  };
 
-    logOut() {
-        this.props.User.logOut()
+  componentDidMount() {
+    const token = Storage.get('token');
+    const username = Storage.get('username');
+    if (!token) {
+      G.history.replace('/signin');
+    } else {
+      G.setUpUser({ token });
+      const { User } = this.props;
+      User.setUserInfo({ name: username });
+      User.getArea();
     }
+  }
 
-    render() {
-        const { routerData } = this.props
-        const { childRoutes } = routerData
+  logOut() {
+    const { User } = this.props;
+    User.logOut();
+  }
 
-        const style = { flexDirection: 'row' }
-        return (
-            <Layout style={style} className='home'>
-                <LayoutSide className='menu'>
-                    <SideMenu selectedKeys={this.props.location.pathname} />
-                </LayoutSide>
-                <Layout>
-                    <Header
-                        logOut={this.logOut}
-                        currentAddress={this.props.location.pathname}
-                        username={Storage.get('username')}
-                    />
-                    <Switch>{childRoutes}</Switch>
-                    <BasicFooter />
-                </Layout>
-            </Layout>
-        )
-    }
+  render() {
+    const {
+      routerData,
+      location: { pathname },
+    } = this.props;
+    const { childRoutes } = routerData;
+
+    const style = { flexDirection: 'row' };
+    return (
+      <Layout style={style} className="home">
+        <LayoutSide className="menu">
+          <SideMenu selectedKeys={pathname} />
+        </LayoutSide>
+        <Layout>
+          <Header
+            logOut={this.logOut}
+            currentAddress={pathname}
+            username={Storage.get('username')}
+          />
+          <Switch>{childRoutes}</Switch>
+          <BasicFooter />
+        </Layout>
+      </Layout>
+    );
+  }
 }

@@ -1,30 +1,42 @@
-import Component from 'components/Component'
-import classNames from 'classnames'
+import React from 'react';
+import PropTypes from 'prop-types';
+import classnames from 'classnames';
 
-import './styles/Layout.scss'
+import './styles/Layout.scss';
 
-class LayoutSide extends Component {
-    render() {
-        const { children, className } = this.props
-        return <div className={className}>{children && children}</div>
-    }
-}
+const LayoutSide = (props) => {
+  const { children, className } = props;
+  return <div className={className}>{children && children}</div>;
+};
 
-class Layout extends Component {
-    static defaultProps = {
-        prefixCls: 't-layout'
-    }
-    render() {
-        const { children, className, prefixCls, style } = this.props
-        const cn = classNames(className, prefixCls)
-        return (
-            <div className={cn} style={style}>
-                {children && children}
-            </div>
-        )
-    }
-}
+LayoutSide.propTypes = {
+  className: PropTypes.string,
+  children: PropTypes.element.isRequired,
+};
 
-Layout.LayoutSide = LayoutSide
+const Layout = (props) => {
+  const {
+    children, className, prefixCls, style,
+  } = props;
+  const classes = classnames(className, prefixCls);
+  return (
+    <div className={classes} style={style}>
+      {children && children}
+    </div>
+  );
+};
 
-export default Layout
+Layout.defaultProps = {
+  prefixCls: 't-layout',
+};
+
+Layout.propTypes = {
+  prefixCls: PropTypes.string,
+  className: PropTypes.string,
+  style: PropTypes.object,
+  children: PropTypes.element.isRequired,
+};
+
+Layout.LayoutSide = LayoutSide;
+
+export default Layout;

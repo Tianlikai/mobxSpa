@@ -1,15 +1,16 @@
-import Loadable from 'react-loadable'
+import Loadable from 'react-loadable';
 
-import { createRoute } from 'utils/core'
-const Spinner = () => null
+import { createRoute } from 'utils/core'; // eslint-disable-line
+
+const Spinner = () => null;
 
 const routesConfig = () => ({
-    path: '/home',
-    PERMISSIONS: true,
-    component: Loadable({
-        loader: () => import('./component'),
-        loading: Spinner
-    })
-})
+  path: '/home',
+  PERMISSIONS: true,
+  component: Loadable({
+    loader: () => import('./component'),
+    loading: Spinner,
+  }),
+});
 
-export default () => createRoute(routesConfig)
+export default () => createRoute(routesConfig);

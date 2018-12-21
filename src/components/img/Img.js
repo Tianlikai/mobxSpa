@@ -11,10 +11,10 @@ const Img = (props) => {
   const cName = className ? `${prefixCls} ${className}` : prefixCls;
   return (
     <div className={cName}>
-      {!imgByte && <Spinner style={loadingStyle} />}
-      {imgByte && (
+      {!imgByte ? <Spinner style={loadingStyle} /> : null}
+      {imgByte ? (
         <img alt="spinner" className={`${prefixCls}-img`} src={`${prefixUrl}${imgByte}`} />
-      )}
+      ) : null}
     </div>
   );
 };

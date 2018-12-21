@@ -1,10 +1,10 @@
-import { createRoute } from 'utils/core'
+import { createRoute } from 'utils/core'; // eslint-disable-line
 
-import NotFound from './component'
+import NotFound from './component';
 
 const routesConfig = () => ({
-    component: NotFound,
-    PERMISSIONS: true
-})
+  component: NotFound,
+  PERMISSIONS: true,
+});
 
-export default () => createRoute(routesConfig)
+export default () => createRoute(routesConfig);
