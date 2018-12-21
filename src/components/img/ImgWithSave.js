@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
 import { Button } from 'antd';
 import Img from './Img';
+
 import './ImgWithSave.scss';
 
-const iiHoc = WrappedComponent => () => class ImgWrapper extends WrappedComponent {
+const iiHoc = WrappedComponent => class extends WrappedComponent {
     static propTypes = {
       titleDownImg: PropTypes.string, // 按钮文案
       prefixUrl: PropTypes.string, // dataUrl 前缀

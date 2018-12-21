@@ -78,7 +78,6 @@ export default class ShareByQrModal extends Component {
       height: '40px',
       margin: '80px auto',
     };
-
     return (
       <Modal {...props}>
         <div className="content">

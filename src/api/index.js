@@ -2,10 +2,10 @@ import axios from 'axios';
 import qs from 'qs';
 
 import user from './user';
+import table from './table';
 
 const instance = axios.create({
-  // eslint-disable-next-line
-  baseURL: __TARGET__ === 'dev' ? '__api' : 'https://yourIp.cn' + '/__api',
+  baseURL: __TARGET__ === 'dev' ? '__api' : 'https://yourIp.cn/__api',
   timeout: 30000,
   withCredentials: false,
   responseType: '',
@@ -16,9 +16,7 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
   (config) => {
-    // eslint-disable-next-line
     const { token } = G;
-
     // eslint-disable-next-line
     if (token) config.headers.Authorization = `Bearer ${token}`;
 
@@ -96,6 +94,6 @@ class Service {
   }
 }
 
-Object.assign(Service.prototype, user);
+Object.assign(Service.prototype, user, table);
 
 export default new Service();
