@@ -2,13 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
-import {
-  Form, Select, Button, Input, DatePicker, AutoComplete,
-} from 'antd';
+import { Form } from 'antd';
 
 const FormItem = Form.Item;
-const { Option } = Select;
-const { RangePicker } = DatePicker;
 
 class CommonGroup extends Component {
   static propTypes = {
@@ -98,146 +94,32 @@ class CommonGroup extends Component {
       prefix,
       UserFormItem,
     } = this.props;
-    // const formItemLayout = {
-    //   labelCol: {
-    //     xs: { span: 24 },
-    //     sm: { span: 8 }
-    //   },
-    //   wrapperCol: {
-    //     xs: { span: 18 },
-    //     sm: { span: 20 }
-    //   }
-    // }
-    // const tailFormItemLayout = {
-    //   wrapperCol: {
-    //     xs: {
-    //       span: 24,
-    //       offset: 0
-    //     },
-    //     sm: {
-    //       span: 14,
-    //       offset: 6
-    //     }
-    //   }
-    // }
     const classes = classnames(prefix, { [className]: className });
     return (
       <div className={classes}>
         <Form onSubmit={this.handleSubmit}>
-          {searchMessage.map((item) => {
-            if (item.type === 'select') {
-              return (
-                <FormItem
-                  // hasFeedback
-                  key={item.key}
-                  label={item.label ? <span>{item.label}</span> : null}
-                  className={item.className ? item.className : null}
-                  onChange={this.handleSearch}
-                >
-                  {getFieldDecorator(item.key, {
-                    rules: [
-                      {
-                        required: false,
-                        message: item.message,
-                      },
-                    ],
-                    initialValue: item.defaultValue,
-                  })(
-                    // option展开的时候，鼠标滚动，下拉会脱离源
-                    <Select
-                      showSearch
-                      notFoundContent=""
-                      optionFilterProp="children"
-                      placeholder={item.placeholder}
-                      key={item.key}
-                      getPopupContainer={triggerNode => triggerNode.parentNode}
-                    >
-                      {item.params
-                        && item.params.map(opt => (
-                          <Option value={opt.value} key={opt.key}>
-                            {item.text}
-                          </Option>
-                        ))}
-                    </Select>,
-                  )}
-                  <br />
-                </FormItem>
-              );
-            }
-            if (item.type === 'date') {
-              return (
-                <FormItem
-                  // hasFeedback
-                  key={item.key}
-                  label={item.label ? <span>{item.label}</span> : null}
-                  className={item.className || ''}
-                  onChange={this.handleSearch}
-                >
-                  {getFieldDecorator(item.key, {
-                    rules: [
-                      {
-                        type: 'object',
-                        required: false,
-                        message: '请输入计划日期',
-                      },
-                    ],
-                  })(
-                    <DatePicker
-                      onChange={item.onChange && item.onChange.bind(this)}
-                      format={item.format || null}
-                      placeholder={item.placeholder}
-                      disabledTime={item.disabledTime || null}
-                      disabledDate={item.disabledDate || null}
-                      showTime={item.showTime || null}
-                    />,
-                  )}
-                </FormItem>
-              );
-            }
-            if (item.type === 'rangePicker') {
-              return (
-                <FormItem
-                  // hasFeedback
-                  key={item.key}
-                  label={item.label ? <span>{item.label}</span> : null}
-                  className={item.className || ''}
-                  onChange={this.handleSearch}
-                >
-                  {getFieldDecorator(item.key)(
-                    <RangePicker
-                      format={item.format || null}
-                      disabledDate={item.disabledDate || null}
-                      showTime={item.showTime || null}
-                      disabledTime={item.disabledTime || null}
-                    />,
-                  )}
-                </FormItem>
-              );
-            }
-            return (
-              <FormItem
-                // hasFeedback
-                key={item.key}
-                label={item.label ? <span>{item.label}</span> : null}
-                className={item.className || ''}
-                onChange={this.handleSearch}
-              >
-                {getFieldDecorator(item.key, {
-                  rules: [
-                    {
-                      required: item.required || false,
-                      message: item.message,
-                    },
-                    {
-                      pattern: item.pattern,
-                      message: item.errorMessage,
-                    },
-                  ],
-                  initialValue: item.defaultValue,
-                })(<Input type={item.iptType || 'text'} placeholder={item.placeholder} />)}
-              </FormItem>
-            );
-          })}
+          {searchMessage.map(item => (
+            <FormItem
+              key={item.key}
+              label={item.label ? <span>{item.label}</span> : null}
+              className={item.className || ''}
+              onChange={this.handleSearch}
+            >
+              {getFieldDecorator(item.key, {
+                rules: [
+                  {
+                    required: item.required || false,
+                    message: item.message,
+                  },
+                  {
+                    pattern: item.pattern,
+                    message: item.errorMessage,
+                  },
+                ],
+                initialValue: item.defaultValue,
+              })(<item.Component placeholder={item.placeholder} />)}
+            </FormItem>
+          ))}
           {UserFormItem ? (
             <UserFormItem className="btnGroup" handleReset={this.handleReset} />
           ) : null}

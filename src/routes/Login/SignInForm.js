@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import { createForm } from 'utils/antdUtils'; // eslint-disable-line
 
-import { Form, Button } from 'antd';
+import { Form, Button, Input } from 'antd';
 import LoginForm from '../../components/FormGroup';
 import './SignInForm.scss';
 
@@ -18,7 +17,6 @@ const UserFormItem = () => (
   </FormItem>
 );
 
-@createForm()
 class SignInForm extends Component {
   static propTypes = {
     prefix: PropTypes.string,
@@ -47,6 +45,7 @@ class SignInForm extends Component {
         required: true,
         message: '请填写帐号',
         iptType: 'text',
+        Component: props => <Input type="text" {...props} />,
       },
       {
         type: 'input',
@@ -58,6 +57,7 @@ class SignInForm extends Component {
         required: true,
         message: '请填写密码',
         iptType: 'password',
+        Component: props => <Input type="password" {...props} />,
       },
     ];
   }
