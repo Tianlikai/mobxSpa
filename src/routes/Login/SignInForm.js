@@ -63,16 +63,38 @@ class SignInForm extends Component {
   }
 
   render() {
-    const { prefix, className } = this.props;
+    const { prefix, className, getFieldDecorator } = this.props;
     const classes = classnames(prefix, { [className]: className });
     return (
-      <div className={classes}>
-        <LoginForm
-          searchMessage={this.formItems}
-          searchFn={this.onSubmit}
-          UserFormItem={UserFormItem}
-        />
-      </div>
+      <Form>
+        <FormItem label="用户名">
+          {getFieldDecorator('username', {
+            rules: [
+              {
+                required: true,
+                message: '请输入用户名',
+              },
+            ],
+          })(<Input placeholder="请输入用户名" />)}
+        </FormItem>
+        <FormItem label="密码">
+          {getFieldDecorator('password', {
+            rules: [
+              {
+                required: true,
+                message: '请输入密码',
+              },
+            ],
+          })(<Input placeholder="请输入密码" />)}
+        </FormItem>
+      </Form>
+      // <div className={classes}>
+      //   <LoginForm
+      //     searchMessage={this.formItems}
+      //     searchFn={this.onSubmit}
+      //     UserFormItem={UserFormItem}
+      //   />
+      // </div>
     );
   }
 }
