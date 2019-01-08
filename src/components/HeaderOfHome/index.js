@@ -20,6 +20,7 @@ export default class Header extends Component {
     currentAddress: PropTypes.string,
     AUTHORITY: PropTypes.object,
     logOut: PropTypes.func,
+    history: PropTypes.object,
   };
 
   goToTargetPage = () => {
@@ -32,7 +33,10 @@ export default class Header extends Component {
       if (state) {
         state = { isBack: true, ...state };
       }
-      G.history.push({
+      const {
+        history: { push },
+      } = this.props;
+      push({
         pathname: target,
         state,
       });

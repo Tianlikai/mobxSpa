@@ -22,13 +22,17 @@ export default class Home extends Component {
     User: PropTypes.object.isRequired,
     routerData: PropTypes.object,
     location: PropTypes.object,
+    history: PropTypes.object,
   };
 
   componentDidMount() {
     const token = Storage.get('token');
     const username = Storage.get('username');
     if (!token) {
-      G.history.replace('/signin');
+      const {
+        history: { replace },
+      } = this.props;
+      replace('/signIn');
     } else {
       G.setUpUser({ token });
       const { User } = this.props;
@@ -38,8 +42,12 @@ export default class Home extends Component {
   }
 
   logOut = () => {
-    const { User } = this.props;
+    const {
+      User,
+      history: { replace },
+    } = this.props;
     User.logOut();
+    replace('/signIn');
   };
 
   render() {

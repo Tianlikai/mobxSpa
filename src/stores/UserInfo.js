@@ -66,7 +66,6 @@ class UserInfo {
     Storage.del('expires_date');
     Storage.del('username');
     Storage.del('permissionList');
-    G.history.push('/signIn');
   }
 
   @action
