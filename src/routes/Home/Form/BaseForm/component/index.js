@@ -26,6 +26,7 @@ class BaseForm extends Component {
   }
 
   handleSubmit = (data) => {
+    debugger
     const { CreatePromotionStore } = this.props;
     CreatePromotionStore.CreatePromotion(data);
   };
@@ -46,15 +47,17 @@ class BaseForm extends Component {
             <meta name="description" content="SPA" />
           </Helmet>
           <ModuleLine title="新增推广" />
-          {loading ? <Spinner /> : null}
-          {!loading ? (
+
+          {loading ? (
+            <Spinner />
+          ) : (
             <BForm
               regions={regions}
               mathType={mathType}
               englishType={englishType}
               onSubmit={this.handleSubmit}
             />
-          ) : null}
+          )}
         </div>
       </WithBreadcrumb>
     );
