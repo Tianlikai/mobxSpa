@@ -1,6 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { Provider } from 'mobx-react';
 
 /**
  * 全局函数
@@ -22,7 +20,8 @@ import createRoutes from './routes';
  */
 import './styles.scss';
 
-const { HashRouter: Router } = ReactRouterDOM;
+const { Provider } = MobxReact;
+const { BrowserRouter: Router } = ReactRouterDOM;
 
 const Entry = () => (
   <Provider {...stores}>

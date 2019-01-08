@@ -5,7 +5,8 @@ import Storage from './storage';
 /**
  * 设置全局变量G
  */
-const createHistory = require('history/createHashHistory').default;
+// const createHistory = require('history/createHashHistory').default;
+const createHistory = require('history/createBrowserHistory').default;
 
 const history = createHistory();
 const location = history.location;

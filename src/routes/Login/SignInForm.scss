@@ -1,29 +1,27 @@
-.j_signForm .pSelectGroup {
-  .ant-form {
-    .ipt_username,
-    .ipt_password {
-      input {
-        width: 100%;
-        height: 54px;
-        border: 1px solid #d9d9d9;
-        border-radius: 6px;
-        font-size: 20px;
-        padding: 0 20px;
-      }
-    }
-    .has-error {
-      input {
-        border-color: #f5222d;
-      }
-    }
-    .btnGroup .searchBtn {
+.j_signForm {
+  .ipt_username,
+  .ipt_password {
+    input {
       width: 100%;
       height: 54px;
-      text-align: center;
-      color: #fff;
-      background: #2c5b8f;
-      font-size: 24px;
+      border: 1px solid #d9d9d9;
       border-radius: 6px;
+      font-size: 20px;
+      padding: 0 20px;
     }
+  }
+  .has-error {
+    input {
+      border-color: #f5222d;
+    }
+  }
+  .btnGroup .searchBtn {
+    width: 100%;
+    height: 54px;
+    text-align: center;
+    color: #fff;
+    background: #2c5b8f;
+    font-size: 24px;
+    border-radius: 6px;
   }
 }

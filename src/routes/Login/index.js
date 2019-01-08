@@ -14,14 +14,17 @@ import './style.scss';
 export default class SignIn extends Component {
   static propTypes = {
     User: PropTypes.string,
+    history: PropTypes.object,
   };
 
   onSubmit = (values) => {
     const { username, password } = values;
     const { User } = this.props;
     User.signIn({ username, password }, () => {
-      const replaceUrl = '/home';
-      G.history.replace(replaceUrl);
+      const {
+        history: { replace },
+      } = this.props;
+      replace('/home');
     });
   };
 

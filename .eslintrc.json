@@ -8,8 +8,12 @@
   },
   "globals": {
     "G": false,
+    "Mobx": false,
     "__DEV__": false,
     "__TARGET__": false,
+    "ReactDOM": false,
+    "PropTypes": false,
+    "MobxReact": false,
     "ReactRouterDOM": false
   },
   "parserOptions": {
