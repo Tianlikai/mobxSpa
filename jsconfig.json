@@ -4,7 +4,7 @@
   "compilerOptions": {
     "target": "es6",
     "experimentalDecorators": true,
-    "allowSyntheticDefaultImports": false,
+    "allowSyntheticDefaultImports": true,
     "baseUrl": "./",
     "jsx": "react",
     "paths": {
@@ -18,5 +18,6 @@
     }
   },
   "exclude": ["node_modules", "dist"],
-  "typeAcquisition": {}
+  "include": ["src/**/*"],
+  "extensions": [".js", ".json"]
 }

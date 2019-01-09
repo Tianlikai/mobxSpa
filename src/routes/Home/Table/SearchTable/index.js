@@ -8,7 +8,7 @@ const routesConfig = () => ({
   PERMISSIONS: true,
   config: ['Admin', '表格页', '查询表格'],
   component: Loadable({
-    loader: () => import('./component'),
+    loader: () => import('./component/index'),
     loading: Spinner,
   }),
 });

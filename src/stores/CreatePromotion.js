@@ -36,13 +36,13 @@ class CreatePromotion {
   }
 
   @action
-  CreatePromotion(data) {
+  CreatePromotion(data, cb) {
     G.api
       .createPromotion({ data })
       .then((resp) => {
         const { id } = resp;
-        G.history.replace(`/detail/baseDetail/${id}`);
         G.delReturnParams('returnParams');
+        if (cb) cb(id);
         Storage.set('fromCreatePromotion', true);
       })
       .catch((e) => {

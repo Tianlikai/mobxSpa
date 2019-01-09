@@ -21,6 +21,7 @@ class SearchTable extends Component {
   static propTypes = {
     TableSearch: PropTypes.object.isRequired,
     routerData: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired,
   };
 
   constructor(props) {
@@ -132,7 +133,8 @@ class SearchTable extends Component {
       pageNo,
       query,
     });
-    G.history.push({ pathname: '/form/baseForm' });
+    const { history: { push } } = this.props;
+    push({ pathname: '/form/baseForm' });
   };
 
   redirectToDetail = (record) => {
@@ -141,7 +143,8 @@ class SearchTable extends Component {
       pageNo,
       query,
     });
-    G.history.push({ pathname: `/detail/baseDetail/${record.id}` });
+    const { history: { push } } = this.props;
+    push({ pathname: `/detail/baseDetail/${record.id}` });
   };
 
   handleOpenShareModal = (record) => {

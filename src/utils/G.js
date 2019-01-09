@@ -8,7 +8,8 @@ import Storage from './storage';
 // const createHistory = require('history/createHashHistory').default;
 const createHistory = require('history/createBrowserHistory').default;
 
-const history = createHistory();
+// const history = createHistory();
+const history = createHistory({ basename: '' });
 const location = history.location;
 
 const G = {

@@ -17,36 +17,6 @@ class BForm extends Component {
     e.preventDefault();
     const { handleSubmit } = this.props;
     handleSubmit();
-    // const {
-    //   area: AREA,
-    //   className,
-    //   englishPress,
-    //   englishTeacher,
-    //   grade,
-    //   mathPress,
-    //   mathTeacher,
-    //   school,
-    // } = values;
-    // const province = AREA[0] || '';
-    // const city = AREA[1] || '';
-    // const area = AREA[2] || '';
-
-    // const data = {
-    //   province,
-    //   city,
-    //   area,
-    //   className,
-    //   englishPress,
-    //   englishTeacher,
-    //   grade,
-    //   mathPress,
-    //   mathTeacher,
-    //   school,
-    // };
-    // const { onSubmit } = this.props;
-    // if (onSubmit) {
-    //   onSubmit(data);
-    // }
   };
 
   render() {

@@ -25,10 +25,34 @@ class BaseForm extends Component {
     CreatePromotionStore.initialData();
   }
 
-  handleSubmit = (data) => {
-    debugger
-    const { CreatePromotionStore } = this.props;
-    CreatePromotionStore.CreatePromotion(data);
+  handleSubmit = (values) => {
+    const {
+      area: AREA,
+      className,
+      englishPress,
+      englishTeacher,
+      grade,
+      mathPress,
+      mathTeacher,
+      school,
+    } = values;
+
+    const { CreatePromotionStore, history: { replace } } = this.props;
+    CreatePromotionStore.CreatePromotion({
+      province: AREA[0] || '',
+      city: AREA[1] || '',
+      area: AREA[2] || '',
+      className,
+      englishPress,
+      englishTeacher,
+      grade,
+      mathPress,
+      mathTeacher,
+      school,
+    }, (id) => {
+      debugger
+      replace(`/detail/baseDetail/${id}`)
+    });
   };
 
   render() {

@@ -116,7 +116,7 @@ const proxy = {
       successful: true,
     });
   },
-  'GET /__api/11/promotion/getPromotionList': function(req, res) {
+  'GET /table/__api/11/promotion/getPromotionList': function(req, res) {
     console.log('GET mock: /__api/11/promotion/getPromotionList');
     const { name, pageNo, itemsPerPage, grade, startTime, endTime } = qs.parse(
       req._parsedUrl.query,
@@ -190,7 +190,7 @@ const proxy = {
       successful: true,
     });
   },
-  'POST /__api/11/promotion/getPromotionQrCode': function(req, res) {
+  'POST /detail/baseDetail/__api/11/promotion/getPromotionQrCode': function(req, res) {
     let url = path.resolve(__dirname, 'images', 'md.jpg');
     console.log('POST mock: /__api/11/promotion/getPromotionQrCode');
     fs.readFile(url, function(err, file) {
@@ -213,7 +213,7 @@ const proxy = {
       }
     });
   },
-  'GET /__api/11/promotion/getPromotionDetail': function(req, res) {
+  'GET /detail/baseDetail/__api/11/promotion/getPromotionDetail': function(req, res) {
     console.log('GET mock: /__api/11/promotion/getPromotionDetail');
     const { promotionId } = qs.parse(req._parsedUrl.query);
     const result = agent.getPromotionById(promotionId);
@@ -231,7 +231,7 @@ const proxy = {
     const area = require('../static/area.json');
     res.json(area);
   },
-  'GET /__api/11/public/getDict/Math_type': function(req, res) {
+  'GET /form/__api/11/public/getDict/Math_type': function(req, res) {
     console.log('GET mock: /__api/11/public/getDict/Math_type');
     res.json({
       code: '0',
@@ -263,7 +263,7 @@ const proxy = {
       successful: true,
     });
   },
-  'GET /__api/11/public/getDict/English_type': function(req, res) {
+  'GET /form/__api/11/public/getDict/English_type': function(req, res) {
     res.json({
       code: '0',
       message: 'success',
@@ -294,7 +294,7 @@ const proxy = {
       successful: true,
     });
   },
-  'POST /__api/11/promotion/addPromotion': function(req, res) {
+  'POST /form/__api/11/promotion/addPromotion': function(req, res) {
     console.log('POST mock: /__api/11/promotion/addPromotion');
     const {
       area,

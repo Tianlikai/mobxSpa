@@ -13,7 +13,7 @@ import stores from './stores/index';
 /**
  * 路由
  */
-import createRoutes from './routes';
+import createRoutes from './routes/index';
 
 /**
  * 公共样式

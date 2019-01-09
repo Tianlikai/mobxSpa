@@ -61,7 +61,6 @@ class Service {
 
   get(url, config = {}) {
     const params = Object.assign({}, this.userInfo, config.params);
-
     return instance.get(url, {
       ...config,
       params,

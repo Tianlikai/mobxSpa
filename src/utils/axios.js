@@ -21,7 +21,6 @@ const Axios = axios.create({
 
 Axios.interceptors.request.use(
   config => {
-    debugger;
     const token = G.token;
 
     if (token) config.headers.Authorization = `Bearer ${token}`;
@@ -37,7 +36,6 @@ Axios.interceptors.request.use(
 );
 
 function fetch(options, urlOptions) {
-  debugger;
   options = Object.assign({}, options, urlOptions);
   if (options.urlParams) {
     options.url = replaceParams(options.url, options.urlParams);
