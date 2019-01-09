@@ -32,6 +32,11 @@ class TableSearch {
   }
 
   @action
+  handleSearch(values) {
+    debugger;
+  }
+
+  @action
   handlePageChange(pageNo) {
     const data = this.getParams({ pageNo });
     this.getData(data);

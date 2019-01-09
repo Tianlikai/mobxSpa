@@ -28,6 +28,13 @@ const TableHoc = config => (WrappedComponent) => {
     }
 
     /**
+     * 顶部搜索
+     */
+    handleSearch = (values) => {
+      this.props[store].handleSearch(values); // eslint-disable-line
+    };
+
+    /**
      * 翻页
      */
     handlePageChange = (page) => {

@@ -181,7 +181,8 @@ class SearchTable extends Component {
     this.loadOrganizationList(params);
   };
 
-  onSubmit = (value) => {
+  handleSearch = (value) => {
+    debugger
     const { timeLimit, grade } = value;
     let { queryCond: name } = value;
     const startTime = timeLimit && timeLimit[0] && timeLimit[0].format('YYYY-MM-DD HH:mm:ss');
@@ -238,7 +239,7 @@ class SearchTable extends Component {
             </Button>
           </ModuleLine>
 
-          <SearchForm onReset={this.onReset} onSubmit={this.onSubmit} initialValue={query} />
+          <SearchForm onReset={this.onReset} onSubmit={this.handleSearch} initialValue={query} />
         </div>
 
         <Table
