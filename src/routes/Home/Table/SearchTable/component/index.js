@@ -8,8 +8,8 @@ import { observer, inject } from 'mobx-react';
 import { Button, Table } from 'antd';
 
 import ModuleLine from 'components/ModuleLine'; // eslint-disable-line
-import { WithBreadcrumb } from 'components/Breadcrumb'; // eslint-disable-line
-import ShareByQrModal from 'components/ShareByQrModal'; // eslint-disable-line
+import { WithBreadcrumb } from 'components/Breadcrumb/index'; // eslint-disable-line
+import ShareByQrModal from 'components/ShareByQrModal/index'; // eslint-disable-line
 
 import SearchForm from './SearchForm';
 
@@ -18,7 +18,12 @@ import './style.scss';
 @inject('TableSearch')
 @observer
 class SearchTable extends Component {
+  static defaultProps = {
+    titleValue: ['本次推广专属小程序二维码', '本次推广专属小程序链接'],
+  }
+
   static propTypes = {
+    titleValue: PropTypes.array,
     TableSearch: PropTypes.object.isRequired,
     routerData: PropTypes.object.isRequired,
     history: PropTypes.object.isRequired,
@@ -173,20 +178,7 @@ class SearchTable extends Component {
     this.loadOrganizationList(params);
   };
 
-  handleChange(value) {
-    const { query } = this.state;
-    this.setState({ pageNo: value.current });
-    const params = Object.assign(query, { pageNo: value.current });
-    this.loadOrganizationList(params);
-  }
-
-  loadOrganizationList(params) {
-    const { TableSearch } = this.props;
-    TableSearch.getPromotionList(params);
-  }
-
-  /* eslint-disable react/sort-comp */
-  onSubmit(value) {
+  onSubmit = (value) => {
     const { timeLimit, grade } = value;
     let { queryCond: name } = value;
     const startTime = timeLimit && timeLimit[0] && timeLimit[0].format('YYYY-MM-DD HH:mm:ss');
@@ -202,33 +194,43 @@ class SearchTable extends Component {
     this.loadOrganizationList(params);
   }
 
+  handleChange(value) {
+    const { query } = this.state;
+    this.setState({ pageNo: value.current });
+    const params = Object.assign(query, { pageNo: value.current });
+    this.loadOrganizationList(params);
+  }
+
+  loadOrganizationList(params) {
+    const { TableSearch } = this.props;
+    TableSearch.getPromotionList(params);
+  }
+
   render() {
     const {
       pageNo, query, record, visibleModal,
     } = this.state;
-    const { routerData, TableSearch } = this.props;
+    const { routerData, TableSearch, titleValue } = this.props;
     const { config } = routerData;
 
     const { table: tableData, chooseImgByte } = TableSearch;
     const { list, count, loading } = tableData;
     const dataSource = mobx.toJS(list);
     const emptyText = { emptyText: '暂无数据' };
-    const pagination = {
-      total: count,
-      current: pageNo,
-      showTotal: () => `共 ${count} 条`,
-    };
     const tableProps = {
       bordered: true,
       dataSource,
       columns: this.columns,
       onChange: this.handleChange,
-      pagination,
+      pagination: {
+        total: count,
+        current: pageNo,
+        showTotal: () => `共 ${count} 条`,
+      },
       loading,
       locale: emptyText,
     };
 
-    const titleValue = ['本次推广专属小程序二维码', '本次推广专属小程序链接'];
     return (
       <WithBreadcrumb config={config}>
         <Helmet>
@@ -238,10 +240,10 @@ class SearchTable extends Component {
         <div className="list">
           <ModuleLine title="查询表格">
             <Button
-              onClick={this.redirectToCreatePromotion}
-              className="promotionBtn"
-              type="primary"
               size="middle"
+              type="primary"
+              className="promotionBtn"
+              onClick={this.redirectToCreatePromotion}
             >
               新增
             </Button>

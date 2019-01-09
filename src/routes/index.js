@@ -1,12 +1,12 @@
 import { createRoutes } from 'utils/core'; // eslint-disable-line
 
-import SignIn from './Login';
+import SignIn from './Login/index';
 
-import Dashboard from './Home/Dashboard';
-import Detail from './Home/Detail';
-import Form from './Home/Form';
-import Table from './Home/Table';
-import NotFound from './ErrorPage/404';
+import Dashboard from './Home/Dashboard/index';
+import Detail from './Home/Detail/index';
+import Form from './Home/Form/index';
+import Table from './Home/Table/index';
+import NotFound from './ErrorPage/404/index';
 
 import BasicLayout from '../layouts/BasicLayout';
 

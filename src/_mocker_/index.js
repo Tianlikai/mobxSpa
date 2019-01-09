@@ -213,6 +213,29 @@ const proxy = {
       }
     });
   },
+  'POST /table/__api/11/promotion/getPromotionQrCode': function(req, res) {
+    let url = path.resolve(__dirname, 'images', 'md.jpg');
+    console.log('POST mock: /__api/11/promotion/getPromotionQrCode');
+    fs.readFile(url, function(err, file) {
+      if (err) {
+        res.json({
+          code: '1',
+          data: null,
+          err: '读取图片失败',
+          message: '读取图片失败',
+          successful: false,
+        });
+      } else {
+        res.json({
+          code: '0',
+          data: file.toString('base64'),
+          err: null,
+          message: 'success!',
+          successful: true,
+        });
+      }
+    });
+  },
   'GET /detail/baseDetail/__api/11/promotion/getPromotionDetail': function(req, res) {
     console.log('GET mock: /__api/11/promotion/getPromotionDetail');
     const { promotionId } = qs.parse(req._parsedUrl.query);

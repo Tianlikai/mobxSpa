@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import moment from 'moment';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 import {
   Form, Input, Button, DatePicker, Select,
@@ -22,24 +22,22 @@ class SearchForm extends Component {
     form: PropTypes.object,
     initialValue: PropTypes.object,
     onReset: PropTypes.func,
-    onSubmit: PropTypes.func,
+    handleSubmit: PropTypes.func,
+    handleReset: PropTypes.func,
   };
 
-  onSubmit(v) {
-    const { onSubmit } = this.props;
-    onSubmit(v);
-  }
+  onSubmit = (e) => {
+    e.preventDefault();
+    const { handleSubmit } = this.props;
+    handleSubmit();
+  };
 
   handleReset = () => {
-    const {
-      form: { resetFields },
-      onReset,
-    } = this.props;
+    const { onReset, handleReset } = this.props;
+
     if (onReset) {
       onReset(() => {
-        if (resetFields) {
-          resetFields();
-        }
+        handleReset();
         return null;
       });
     }
@@ -76,21 +74,25 @@ class SearchForm extends Component {
               </Select>,
             )}
           </FormItem>
+
           <FormItem label="时间范围">
             {getFieldDecorator('timeLimit', {
               initialValue: [startTime, endTime],
             })(<RangePicker format="YYYY-MM-DD HH:MM:SS" placeholder={['开始时间', '结束时间']} />)}
           </FormItem>
+
           <FormItem>
             {getFieldDecorator('queryCond', {
               initialValue: name,
             })(<Search style={searchStyle} placeholder="请输入学校，班级" />)}
           </FormItem>
+
           <FormItem>
             <Button htmlType="submit" type="primary">
               搜索
             </Button>
           </FormItem>
+
           <FormItem>
             <Button type="primary" htmlType="reset" onClick={this.handleReset}>
               重置

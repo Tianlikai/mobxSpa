@@ -18,6 +18,7 @@ class BaseForm extends Component {
   static propTypes = {
     CreatePromotionStore: PropTypes.object.isRequired,
     routerData: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired,
   };
 
   componentDidMount() {
@@ -50,8 +51,7 @@ class BaseForm extends Component {
       mathTeacher,
       school,
     }, (id) => {
-      debugger
-      replace(`/detail/baseDetail/${id}`)
+      replace(`/detail/baseDetail/${id}`);
     });
   };
 

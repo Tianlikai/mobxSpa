@@ -7,6 +7,7 @@ const FormHoc = (WrapperComponent) => {
   class CommonForm extends React.Component {
     static propTypes = {
       onSubmit: PropTypes.func,
+      form: PropTypes.object.isRequired,
     };
 
     handleSubmit = () => {
@@ -18,9 +19,23 @@ const FormHoc = (WrapperComponent) => {
       });
     };
 
+    handleReset = () => {
+      const {
+        form: { resetFields },
+      } = this.props;
+      resetFields();
+    };
+
     render() {
       const { form, ...rest } = this.props;
-      return <WrapperComponent handleSubmit={this.handleSubmit} form={form} {...rest} />;
+      return (
+        <WrapperComponent
+          handleReset={this.handleReset}
+          handleSubmit={this.handleSubmit}
+          form={form}
+          {...rest}
+        />
+      );
     }
   }
   return Form.create()(CommonForm);

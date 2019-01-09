@@ -1,8 +1,8 @@
 import { createRoute } from 'utils/core'; // eslint-disable-line
 
 import Container from '../../../layouts/Container';
-import SearchTable from './SearchTable';
-import NotFound from '../../ErrorPage/404';
+import SearchTable from './SearchTable/index';
+import NotFound from '../../ErrorPage/404/index';
 
 const routesConfig = () => ({
   path: '/table',
