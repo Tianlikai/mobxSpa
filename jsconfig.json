@@ -1,0 +1,22 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=759670
+  // for the documentation about the jsconfig.json format
+  "compilerOptions": {
+    "target": "es6",
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": false,
+    "baseUrl": "./",
+    "jsx": "react",
+    "paths": {
+      "core/*": ["src/core/*"],
+      "libs/*": ["src/libs/*"],
+      "settings/*": ["src/settings/*"],
+      "components/*": ["src/components/*"],
+      "widgets/*": ["src/widgets/*"],
+      "models/*": ["src/models/*"],
+      "styles/*": ["src/styles/*"]
+    }
+  },
+  "exclude": ["node_modules", "dist"],
+  "typeAcquisition": {}
+}
