@@ -1,26 +1,25 @@
 import React, { Component } from 'react';
 
-import * as mobx from 'mobx';
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
-import { observer, inject } from 'mobx-react';
 
 import { Button, Table } from 'antd';
 
 import ModuleLine from 'components/ModuleLine'; // eslint-disable-line
-import { WithBreadcrumb } from 'components/Breadcrumb/index'; // eslint-disable-line
 import ShareByQrModal from 'components/ShareByQrModal/index'; // eslint-disable-line
+import { WithBreadcrumb } from 'components/Breadcrumb/index'; // eslint-disable-line
+
+import TableHoc from '../../../../../hoc/TableHoc';
 
 import SearchForm from './SearchForm';
 
 import './style.scss';
 
-@inject('TableSearch')
-@observer
+@TableHoc({ store: 'TableSearchStore' })
 class SearchTable extends Component {
   static defaultProps = {
     titleValue: ['本次推广专属小程序二维码', '本次推广专属小程序链接'],
-  }
+  };
 
   static propTypes = {
     titleValue: PropTypes.array,
@@ -39,23 +38,23 @@ class SearchTable extends Component {
     };
   }
 
-  componentDidMount() {
-    const returnParams = G.getReturnParams('returnParams');
-    let query = {};
-    let { pageNo } = this.state;
-    const { TableSearch } = this.props;
-    if (!returnParams || !returnParams.effective) {
-      TableSearch.getPromotionList({});
-    } else {
-      const { query: qr, pageNo: pgn } = returnParams;
-      query = qr;
-      pageNo = pgn;
-      const copyQuery = Object.assign({}, query, { pageNo });
-      TableSearch.getPromotionList(copyQuery);
-    }
-    G.delReturnParams('returnParams');
-    this.setState({ query, pageNo });
-  }
+  // componentDidMount() {
+  //   const returnParams = G.getReturnParams('returnParams');
+  //   let query = {};
+  //   let { pageNo } = this.state;
+  //   const { TableSearch } = this.props;
+  //   if (!returnParams || !returnParams.effective) {
+  //     TableSearch.getPromotionList({});
+  //   } else {
+  //     const { query: qr, pageNo: pgn } = returnParams;
+  //     query = qr;
+  //     pageNo = pgn;
+  //     const copyQuery = Object.assign({}, query, { pageNo });
+  //     TableSearch.getPromotionList(copyQuery);
+  //   }
+  //   G.delReturnParams('returnParams');
+  //   this.setState({ query, pageNo });
+  // }
 
   get columns() {
     return [
@@ -138,7 +137,9 @@ class SearchTable extends Component {
       pageNo,
       query,
     });
-    const { history: { push } } = this.props;
+    const {
+      history: { push },
+    } = this.props;
     push({ pathname: '/form/baseForm' });
   };
 
@@ -148,7 +149,9 @@ class SearchTable extends Component {
       pageNo,
       query,
     });
-    const { history: { push } } = this.props;
+    const {
+      history: { push },
+    } = this.props;
     push({ pathname: `/detail/baseDetail/${record.id}` });
   };
 
@@ -192,7 +195,7 @@ class SearchTable extends Component {
     };
     this.setState({ query: params, pageNo: 1 });
     this.loadOrganizationList(params);
-  }
+  };
 
   handleChange(value) {
     const { query } = this.state;
@@ -207,29 +210,14 @@ class SearchTable extends Component {
   }
 
   render() {
+    const { query, record, visibleModal } = this.state;
+
     const {
-      pageNo, query, record, visibleModal,
-    } = this.state;
-    const { routerData, TableSearch, titleValue } = this.props;
+      routerData, titleValue, loading, data,
+    } = this.props;
     const { config } = routerData;
 
-    const { table: tableData, chooseImgByte } = TableSearch;
-    const { list, count, loading } = tableData;
-    const dataSource = mobx.toJS(list);
-    const emptyText = { emptyText: '暂无数据' };
-    const tableProps = {
-      bordered: true,
-      dataSource,
-      columns: this.columns,
-      onChange: this.handleChange,
-      pagination: {
-        total: count,
-        current: pageNo,
-        showTotal: () => `共 ${count} 条`,
-      },
-      loading,
-      locale: emptyText,
-    };
+    // const { chooseImgByte } = TableSearch;
 
     return (
       <WithBreadcrumb config={config}>
@@ -237,7 +225,8 @@ class SearchTable extends Component {
           <title>查询表格 - SPA</title>
           <meta name="description" content="SPA" />
         </Helmet>
-        <div className="list">
+        {/* <div className="list"> */}
+        <div className='table-search-wrapper'>
           <ModuleLine title="查询表格">
             <Button
               size="middle"
@@ -248,9 +237,21 @@ class SearchTable extends Component {
               新增
             </Button>
           </ModuleLine>
+
           <SearchForm onReset={this.onReset} onSubmit={this.onSubmit} initialValue={query} />
-          <Table {...tableProps} />
-          <ShareByQrModal
+        </div>
+
+        <Table
+          bordered
+          className='self-table-wrapper'
+          loading={loading}
+          dataSource={data}
+          pagination={false}
+          columns={this.columns}
+          onChange={this.handleChange}
+        />
+
+        {/* <ShareByQrModal
             key="base-table-modal"
             imgByte={chooseImgByte}
             width={600}
@@ -261,8 +262,8 @@ class SearchTable extends Component {
             visible={visibleModal}
             handleClose={this.handleCloseShareModal}
             titleValue={titleValue}
-          />
-        </div>
+          /> */}
+        {/* </div> */}
       </WithBreadcrumb>
     );
   }

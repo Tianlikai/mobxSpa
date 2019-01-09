@@ -1,6 +1,22 @@
-.ant-calendar-range-middle{
-    margin-left: -12px;
+.baseTable-wrapper {
+  .table-search-wrapper,
+  .self-table-wrapper,
+  .pagWrapper {
+    background: #fff;
+  }
+  .table-search-wrapper {
+    padding: 30px;
+    margin-bottom: 30px;
+  }
+  .pagWrapper {
+    padding: 10px 0;
+    margin-top: 20px;
+    text-align: right;
+  }
 }
-.ant-calendar-range-right .ant-calendar-date-input-wrap{
-    margin-left: 0;
+.ant-calendar-range-middle {
+  margin-left: -12px;
+}
+.ant-calendar-range-right .ant-calendar-date-input-wrap {
+  margin-left: 0;
 }

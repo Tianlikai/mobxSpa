@@ -5,17 +5,12 @@ import Breadcrumb from './Breadcrumb';
 
 const WithBreadcrumb = (props) => {
   const { children, config } = props;
-  return (
-    <div>
-      <Breadcrumb config={config} />
-      {children && children}
-    </div>
-  );
+  return [<Breadcrumb config={config} />, children];
 };
 
 WithBreadcrumb.propTypes = {
   config: PropTypes.array,
-  children: PropTypes.element,
+  children: PropTypes.element.isRequired,
 };
 
 export default WithBreadcrumb;

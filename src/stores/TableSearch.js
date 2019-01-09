@@ -6,7 +6,13 @@ import api from '../api';
 
 class TableSearch {
   @observable
-  table;
+  data = {
+    loading: false,
+    count: 0,
+    pageNo: 1,
+    pageSize: 10,
+    list: [],
+  };
 
   @observable
   imgByte = {};
@@ -17,19 +23,36 @@ class TableSearch {
   @observable
   activeId = null;
 
-  constructor() {
-    this.table = {
-      loading: false,
-      count: 0,
-      list: [],
+  getParams(data) {
+    return {
+      pageNo: this.data.pageNo,
+      pageSize: this.data.pageSize,
+      ...data,
     };
   }
 
   @action
-  getPromotionList({
-    name, grade, pageNo = 1, pageSize = 10, startTime, endTime,
-  }) {
-    this.table.loading = true;
+  handlePageChange(pageNo) {
+    const data = this.getParams({ pageNo });
+    this.getData(data);
+  }
+
+  @action
+  handlePageSizeChange(pageNo, pageSize) {
+    const data = this.getParams({ pageNo, pageSize });
+    this.getData(data);
+  }
+
+  @action
+  getData({
+    name = undefined,
+    grade = undefined,
+    pageNo = 1,
+    pageSize = 10,
+    startTime = undefined,
+    endTime = undefined,
+  } = {}) {
+    this.data.loading = true;
     api
       .initTableData({
         params: {
@@ -41,9 +64,10 @@ class TableSearch {
           endTime,
         },
       })
-      .then((data) => {
-        const count = { data };
-        const list = data.items.map((item) => {
+      .then((resp) => {
+        const { count } = resp;
+
+        const list = resp.items.map((item) => {
           const copyItem = Object.assign({}, item);
           const pos = GRADE.findIndex(grd => grd.value === item.grade);
           copyItem.createdAt = item.createdAt
@@ -57,8 +81,11 @@ class TableSearch {
           copyItem.note = item.note || '';
           return copyItem;
         });
-        this.table = {
+
+        this.data = {
           loading: false,
+          pageNo: pageNo || this.data.pageNo,
+          pageSize: pageSize || this.data.pageSize,
           count,
           list,
         };
