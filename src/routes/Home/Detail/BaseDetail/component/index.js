@@ -19,7 +19,7 @@ import FrameItem from './FrameItem';
 import './style.scss';
 
 @inject('ProDetailStore')
-@inject('TableSearch')
+@inject('TableSearchStore')
 @observer
 class BaseDetail extends Component {
   constructor(props) {
@@ -36,18 +36,18 @@ class BaseDetail extends Component {
         params: { id },
       },
       ProDetailStore,
-      TableSearch,
+      TableSearchStore,
     } = this.props;
     const { pageNo } = this.state;
     const copyQuery = Object.assign({}, { pageNo, id });
     ProDetailStore.getPromotionDetail(copyQuery);
-    TableSearch.getWeiCode({ promotionId: id });
+    TableSearchStore.getWeiCode({ promotionId: id });
     Storage.del('fromCreatePromotion');
   }
 
   componentWillUnmount() {
-    const { ProDetailStore, TableSearch } = this.props;
-    TableSearch.delWeiCode();
+    const { ProDetailStore, TableSearchStore } = this.props;
+    TableSearchStore.delWeiCode();
     ProDetailStore.clearPromotionDetail();
   }
 
@@ -120,14 +120,14 @@ class BaseDetail extends Component {
 
   render() {
     const { visibleModal, pageNo } = this.state;
-    const { routerData, TableSearch, ProDetailStore } = this.props;
+    const { routerData, TableSearchStore, ProDetailStore } = this.props;
     const { config } = routerData;
 
     const { table: tableData, basicInformation, dataOverview } = ProDetailStore;
 
     const { loading, count, list } = tableData;
 
-    const { chooseImgByte } = TableSearch;
+    const { chooseImgByte } = TableSearchStore;
     const dataSource = mobx.toJS(list);
     const pagination = {
       total: count,

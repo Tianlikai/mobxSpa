@@ -226,7 +226,7 @@ class SearchTable extends Component {
           <meta name="description" content="SPA" />
         </Helmet>
         {/* <div className="list"> */}
-        <div className='table-search-wrapper'>
+        <div className="table-search-wrapper">
           <ModuleLine title="查询表格">
             <Button
               size="middle"
@@ -243,7 +243,7 @@ class SearchTable extends Component {
 
         <Table
           bordered
-          className='self-table-wrapper'
+          className="self-table-wrapper"
           loading={loading}
           dataSource={data}
           pagination={false}
