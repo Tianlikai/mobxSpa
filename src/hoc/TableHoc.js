@@ -28,35 +28,40 @@ const TableHoc = config => (WrappedComponent) => {
     }
 
     /**
-     * 顶部搜索
+     * 顶部搜索 接口
+     * 具体实现在 store 中
      */
     handleSearch = (values) => {
       this.props[store].handleSearch(values); // eslint-disable-line
     };
 
     /**
-     * 重置搜索
+     * 重置搜索 接口
+     * 具体实现在 store 中
      */
     handleResetSearch = () => {
       this.props[store].handleResetSearch(); // eslint-disable-line
     };
 
     /**
-     * 翻页
+     * 翻页 接口
+     * 具体实现在 store 中
      */
     handlePageChange = (page) => {
       this.props[store].handlePageChange(page); // eslint-disable-line
     };
 
     /**
-     * 改变pageSize
+     * 改变pageSize 接口
+     * 具体实现在 store 中
      */
     handlePageSizeChange = (page, pageSize) => {
       this.props[store].handlePageSizeChange(page, pageSize); // eslint-disable-line
     };
 
     /**
-     * 排序
+     * 排序 接口
+     * 具体实现在 store 中
      */
     handleSort = (data) => {
       this.props[store].handleSort(data); // eslint-disable-line

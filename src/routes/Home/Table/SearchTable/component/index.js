@@ -23,14 +23,14 @@ class SearchTable extends Component {
 
   static propTypes = {
     loading: PropTypes.bool,
-    data: PropTypes.array,
-    query: PropTypes.object,
-    titleValue: PropTypes.array,
-    store: PropTypes.object,
-    routerData: PropTypes.object.isRequired,
-    history: PropTypes.object.isRequired,
-    handleSearch: PropTypes.func.isRequired,
-    handleResetSearch: PropTypes.func.isRequired,
+    data: PropTypes.array, // 表格数据
+    query: PropTypes.object, // 表单查询信息
+    titleValue: PropTypes.array, // 弹窗提示
+    store: PropTypes.object, // @TableHoc 高阶组件中绑定的 mobx store 对象
+    routerData: PropTypes.object.isRequired, // 路由数据
+    history: PropTypes.object.isRequired, // router history
+    handleSearch: PropTypes.func.isRequired, // @TableHoc 表单搜索接口
+    handleResetSearch: PropTypes.func.isRequired, // @TableHoc 表单重置接口
   };
 
   constructor(props) {

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import PropTypes from 'prop-types';
+
 import {
   Form, Input, Select, Button, Radio, Cascader,
 } from 'antd';
@@ -13,6 +15,52 @@ const RadioGroup = Radio.Group;
 
 @FormHoc
 class BForm extends Component {
+  static defaultProps = {
+    formItemLayout: {
+      labelCol: {
+        xs: { span: 24 },
+        sm: { span: 6 },
+      },
+      wrapperCol: {
+        xs: { span: 24 },
+        sm: { span: 7 },
+      },
+    },
+    tailFormItemLayout: {
+      wrapperCol: {
+        xs: {
+          span: 24,
+          offset: 0,
+        },
+        sm: {
+          span: 6,
+          offset: 6,
+        },
+      },
+    },
+    formItemRadioLayout: {
+      labelCol: {
+        xs: { span: 24 },
+        sm: { span: 6 },
+      },
+      wrapperCol: {
+        xs: { span: 24 },
+        sm: { span: 12 },
+      },
+    },
+  };
+
+  static propTypes = {
+    form: PropTypes.object.isRequired, // antd 表单对象
+    regions: PropTypes.array, // 地区
+    mathType: PropTypes.string, // 数学类型
+    englishType: PropTypes.string, // 英语类型
+    formItemLayout: PropTypes.object,
+    tailFormItemLayout: PropTypes.object,
+    formItemRadioLayout: PropTypes.object,
+    handleSubmit: PropTypes.func.isRequired, // FormHoc 公用方法，该方法调用会默认触发尾部onSubmit回调
+  };
+
   onSubmit = (e) => {
     e.preventDefault();
     const { handleSubmit } = this.props;
@@ -25,40 +73,10 @@ class BForm extends Component {
       mathType,
       englishType,
       form: { getFieldDecorator },
+      formItemLayout,
+      tailFormItemLayout,
+      formItemRadioLayout,
     } = this.props;
-
-    const formItemLayout = {
-      labelCol: {
-        xs: { span: 24 },
-        sm: { span: 6 },
-      },
-      wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 7 },
-      },
-    };
-    const formItemRadioLayout = {
-      labelCol: {
-        xs: { span: 24 },
-        sm: { span: 6 },
-      },
-      wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 12 },
-      },
-    };
-    const tailFormItemLayout = {
-      wrapperCol: {
-        xs: {
-          span: 24,
-          offset: 0,
-        },
-        sm: {
-          span: 6,
-          offset: 6,
-        },
-      },
-    };
 
     return (
       <div className="orderForm-container">

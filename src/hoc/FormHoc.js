@@ -6,8 +6,8 @@ import PropTypes from 'prop-types';
 const FormHoc = (WrapperComponent) => {
   class CommonForm extends React.Component {
     static propTypes = {
-      onSubmit: PropTypes.func.isRequired,
-      form: PropTypes.object.isRequired,
+      onSubmit: PropTypes.func.isRequired, // 提交表单，回调函数，返回表单数据
+      form: PropTypes.object.isRequired, // antd 表单
     };
 
     handleSubmit = () => {
