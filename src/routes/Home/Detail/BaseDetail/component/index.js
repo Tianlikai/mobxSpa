@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 
-import * as mobx from 'mobx';
+import PropTypes from 'prop-types';
+
 import { Helmet } from 'react-helmet';
-import { observer, inject } from 'mobx-react';
+import { inject, observer } from 'mobx-react';
 
 import { Row, Col, Table } from 'antd';
 
@@ -16,39 +17,47 @@ import ShareByQrModal from 'components/ShareByQrModal'; // eslint-disable-line
 import InfoItem from './InfoItem';
 import FrameItem from './FrameItem';
 
+import TableHoc from '../../../../../hoc/TableHoc';
+
 import './style.scss';
 
-@inject('ProDetailStore')
+@TableHoc({ store: 'ProDetailStore', NoPager: true })
 @inject('TableSearchStore')
 @observer
 class BaseDetail extends Component {
+  static defaultProps = {
+    titleValue: ['本次推广专属小程序二维码', '本次推广专属小程序链接'],
+  };
+
+  static propTypes = {
+    loading: PropTypes.bool,
+    titleValue: PropTypes.array,
+    tableData: PropTypes.array,
+    match: PropTypes.object.isRequired,
+    store: PropTypes.object.isRequired, // @TableHoc 高阶组件中绑定的 mobx store 对象
+    routerData: PropTypes.object.isRequired,
+    TableSearchStore: PropTypes.object.isRequired,
+  }
+
   constructor(props) {
     super(props);
     this.state = {
-      pageNo: 1,
       visibleModal: Storage.get('fromCreatePromotion') || false,
     };
   }
 
   componentDidMount() {
     const {
-      match: {
-        params: { id },
-      },
-      ProDetailStore,
-      TableSearchStore,
+      match: { params: { id } = {} },
     } = this.props;
-    const { pageNo } = this.state;
-    const copyQuery = Object.assign({}, { pageNo, id });
-    ProDetailStore.getPromotionDetail(copyQuery);
+    const { TableSearchStore } = this.props;
     TableSearchStore.getWeiCode({ promotionId: id });
-    Storage.del('fromCreatePromotion');
   }
 
   componentWillUnmount() {
-    const { ProDetailStore, TableSearchStore } = this.props;
+    const { store, TableSearchStore } = this.props;
     TableSearchStore.delWeiCode();
-    ProDetailStore.clearPromotionDetail();
+    store.clearPromotionDetail();
   }
 
   get columns() {
@@ -96,22 +105,6 @@ class BaseDetail extends Component {
     ];
   }
 
-  loadOrganizationList = (params) => {
-    const { ProDetailStore } = this.props;
-    ProDetailStore.getPromotionDetail(params);
-  };
-
-  handleChange = (value) => {
-    const {
-      match: {
-        params: { id },
-      },
-    } = this.props;
-    this.setState({ pageNo: value.current });
-    const params = Object.assign({ pageNo: value.current, id });
-    this.loadOrganizationList(params);
-  };
-
   handleCloseShareModal = () => {
     this.setState({
       visibleModal: false,
@@ -119,31 +112,19 @@ class BaseDetail extends Component {
   };
 
   render() {
-    const { visibleModal, pageNo } = this.state;
-    const { routerData, TableSearchStore, ProDetailStore } = this.props;
+    const { visibleModal } = this.state;
+    const {
+      routerData,
+      titleValue,
+      loading,
+      tableData,
+      store,
+      TableSearchStore,
+    } = this.props;
     const { config } = routerData;
 
-    const { table: tableData, basicInformation, dataOverview } = ProDetailStore;
-
-    const { loading, count, list } = tableData;
-
     const { chooseImgByte } = TableSearchStore;
-    const dataSource = mobx.toJS(list);
-    const pagination = {
-      total: count,
-      current: pageNo,
-      showTotal: () => `共 ${count} 条`,
-    };
-    const emptyText = { emptyText: '暂无数据' };
-    const tableProps = {
-      bordered: true,
-      dataSource,
-      columns: this.columns,
-      pagination,
-      loading,
-      locale: emptyText,
-      onChange: this.handleChange,
-    };
+    const { basicInformation, dataOverview } = store;
 
     const loadingStyle = {
       width: '40px',
@@ -151,7 +132,6 @@ class BaseDetail extends Component {
       margin: '30px',
     };
 
-    const titleValue = ['本次推广专属小程序二维码', '本次推广专属小程序链接'];
     return (
       <WithBreadcrumb config={config}>
         <div className="promotionDetail-container">
@@ -171,6 +151,7 @@ class BaseDetail extends Component {
                   />
                 ))}
             </div>
+
             <div className="proInfo-right">
               <ImgWithSave
                 record={basicInformation}
@@ -182,6 +163,7 @@ class BaseDetail extends Component {
             </div>
           </div>
           <ModuleLine title="数据总览" />
+
           <div className="data-frame-container">
             <Row type="flex" justify="space-between">
               {dataOverview
@@ -200,8 +182,17 @@ class BaseDetail extends Component {
                 ))}
             </Row>
           </div>
+
           <ModuleLine title="订单列表" />
-          <Table {...tableProps} />
+
+          <Table
+            bordered
+            loading={loading}
+            dataSource={tableData}
+            columns={this.columns}
+            pagination={false}
+          />
+
           <ShareByQrModal
             key="base-detail-modal"
             className="special"

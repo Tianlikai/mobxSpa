@@ -6,8 +6,6 @@
  * url 拼接参数 {urlParams}
  */
 module.exports = {
-  signIn: { url: '8/user/login', method: 'post' },
-
   getOrganizationList: { url: '11/org/list' },
   getOrganizationDetail: { url: '11/org/getOrganisationById/{orgId}' },
   createOrganization: { url: '11/org/saveOrganisation', method: 'post' },
@@ -23,6 +21,7 @@ module.exports = {
   },
   getOrgLogList: { url: '11/org/log/list' },
   extensionTime: { url: '13/org/setDisabledTime', method: 'post' },
+
   // 订单
   getOpenService: { url: '13/productOrder/getOrg/{orgId}' },
   getOrderList: { url: '13/productOrder/getOrderList' },
@@ -36,16 +35,10 @@ module.exports = {
   getOrdLogList: { url: '13/org/getOrderLogList' },
   getInitService: { url: '13/productOrder/initService' },
   getOrderTotalAmount: { url: '13/productOrder/getMoney', method: 'post' },
+
   // 代理
-  getArea: { url: '11/public/getArea' },
   getTextbookVersion: { url: '11/public/getDict/{type}' },
   createPromotion: { url: '11/promotion/addPromotion', method: 'post' },
-  getPromotionDetail: { url: '11/promotion/getPromotionDetail' },
-  getPromotionList: { url: '11/promotion/getPromotionList' },
   getMyProfit: { url: '11/promotion/getMyProfit' },
   getAgentInformation: { url: '11/promotion/getAgent' },
-  getPromotionQrCode: {
-    url: '11/promotion/getPromotionQrCode',
-    method: 'post',
-  },
 };

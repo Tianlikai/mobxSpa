@@ -238,7 +238,7 @@ const proxy = {
   },
   'GET /detail/baseDetail/__api/11/promotion/getPromotionDetail': function(req, res) {
     console.log('GET mock: /__api/11/promotion/getPromotionDetail');
-    const { promotionId } = qs.parse(req._parsedUrl.query);
+    const { promotionId, pageNo, itemsPerPage } = qs.parse(req._parsedUrl.query);
     const result = agent.getPromotionById(promotionId);
     const data = Object.assign({}, result);
     res.json({

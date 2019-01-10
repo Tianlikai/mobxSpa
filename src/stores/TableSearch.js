@@ -6,7 +6,7 @@ import api from '../api';
 
 class TableSearch {
   @observable
-  data = {
+  tableData = {
     loading: false,
     count: 0,
     pageNo: 1,
@@ -26,9 +26,9 @@ class TableSearch {
 
   getParams(data) {
     return {
-      pageNo: this.data.pageNo,
-      pageSize: this.data.pageSize,
-      ...this.data.query,
+      pageNo: this.tableData.pageNo,
+      pageSize: this.tableData.pageSize,
+      ...this.tableData.query,
       ...data,
     };
   }
@@ -72,7 +72,7 @@ class TableSearch {
     startTime = undefined,
     endTime = undefined,
   } = {}) {
-    this.data.loading = true;
+    this.tableData.loading = true;
     api
       .initTableData({
         params: {
@@ -102,10 +102,10 @@ class TableSearch {
           return copyItem;
         });
 
-        this.data = {
+        this.tableData = {
           loading: false,
-          pageNo: pageNo || this.data.pageNo,
-          pageSize: pageSize || this.data.pageSize,
+          pageNo: pageNo || this.tableData.pageNo,
+          pageSize: pageSize || this.tableData.pageSize,
           count,
           list,
           query: {

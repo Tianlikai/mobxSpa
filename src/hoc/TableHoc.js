@@ -9,7 +9,7 @@ import classnames from 'classnames';
 import { Pagination } from 'antd';
 
 const TableHoc = config => (WrappedComponent) => {
-  const { store, className } = config || {};
+  const { store, className, NoPager } = config || {};
 
   @inject(store)
   @observer
@@ -24,14 +24,23 @@ const TableHoc = config => (WrappedComponent) => {
     };
 
     componentDidMount() {
-      this.props[store].getData(); // eslint-disable-line
+      const {
+        match: { params: { id } = {} },
+      } = this.props;
+      /* eslint-disable */
+      if (id) {
+        // 如果根据路由获取 id 则拿 id 进行调用
+        this.props[store].getData({ id });
+      } else {
+        this.props[store].getData();
+      }
     }
 
     /**
      * 顶部搜索 接口
      * 具体实现在 store 中
      */
-    handleSearch = (values) => {
+    handleSearch = values => {
       this.props[store].handleSearch(values); // eslint-disable-line
     };
 
@@ -47,7 +56,7 @@ const TableHoc = config => (WrappedComponent) => {
      * 翻页 接口
      * 具体实现在 store 中
      */
-    handlePageChange = (page) => {
+    handlePageChange = page => {
       this.props[store].handlePageChange(page); // eslint-disable-line
     };
 
@@ -63,19 +72,17 @@ const TableHoc = config => (WrappedComponent) => {
      * 排序 接口
      * 具体实现在 store 中
      */
-    handleSort = (data) => {
+    handleSort = data => {
       this.props[store].handleSort(data); // eslint-disable-line
     };
 
     render() {
       const { fixClass } = this.props;
       const Store = this.props[store]; // eslint-disable-line
-      const { data } = Store;
-      const table = toJS(data);
+      const { tableData: data } = Store;
+      const tableData = toJS(data);
 
-      const {
-        loading, count, list, pageNo, pageSize, query,
-      } = table;
+      const { loading, count, list, pageNo, pageSize, query } = tableData;
 
       const classes = classnames(fixClass, { [className]: className });
       return (
@@ -83,25 +90,28 @@ const TableHoc = config => (WrappedComponent) => {
           <WrappedComponent
             query={query}
             loading={loading}
-            data={list}
+            tableData={list}
             store={Store}
             handleSort={this.handleSort}
             handleSearch={this.handleSearch}
             handleResetSearch={this.handleResetSearch}
             {...this.props}
           />
-          <div className="pagWrapper">
-            <Pagination
-              showQuickJumper
-              showSizeChanger
-              showTotal={() => `共 ${count} 条`}
-              onChange={this.handlePageChange}
-              onShowSizeChange={this.handlePageSizeChange}
-              current={pageNo}
-              total={count}
-              pageSize={pageSize}
-            />
-          </div>
+
+          {NoPager ? null : (
+            <div className="pagWrapper">
+              <Pagination
+                showQuickJumper
+                showSizeChanger
+                showTotal={() => `共 ${count} 条`}
+                onChange={this.handlePageChange}
+                onShowSizeChange={this.handlePageSizeChange}
+                current={pageNo}
+                total={count}
+                pageSize={pageSize}
+              />
+            </div>
+          )}
         </div>
       );
     }

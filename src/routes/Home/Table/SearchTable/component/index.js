@@ -23,7 +23,7 @@ class SearchTable extends Component {
 
   static propTypes = {
     loading: PropTypes.bool,
-    data: PropTypes.array, // 表格数据
+    tableData: PropTypes.array, // 表格数据
     query: PropTypes.object, // 表单查询信息
     titleValue: PropTypes.array, // 弹窗提示
     store: PropTypes.object, // @TableHoc 高阶组件中绑定的 mobx store 对象
@@ -175,7 +175,7 @@ class SearchTable extends Component {
     const { visibleModal, record } = this.state;
 
     const {
-      routerData, titleValue, loading, data, query,
+      routerData, titleValue, loading, tableData, query,
     } = this.props;
     const { config } = routerData;
 
@@ -208,7 +208,7 @@ class SearchTable extends Component {
           bordered
           className="self-table-wrapper"
           loading={loading}
-          dataSource={data}
+          dataSource={tableData}
           pagination={false}
           columns={this.columns}
         />

@@ -3,6 +3,7 @@ import qs from 'qs';
 
 import user from './user';
 import table from './table';
+import detail from './detail';
 
 const instance = axios.create({
   baseURL: __TARGET__ === 'dev' ? '__api' : 'https://yourIp.cn/__api',
@@ -93,6 +94,6 @@ class Service {
   }
 }
 
-Object.assign(Service.prototype, user, table);
+Object.assign(Service.prototype, user, table, detail);
 
 export default new Service();
