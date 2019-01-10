@@ -1,4 +1,3 @@
-import api from './axios';
 import Storage from './storage';
 
 /* eslint-disable */
@@ -13,7 +12,6 @@ const history = createHistory({ basename: '' });
 const location = history.location;
 
 const G = {
-  api,
   history,
   location,
   gotoSignIn,

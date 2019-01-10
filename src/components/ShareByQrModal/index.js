@@ -1,5 +1,4 @@
-import React from 'react';
-import Component from 'components/Component'; // eslint-disable-line
+import React, { Component } from 'react'; // eslint-disable-line
 import ImgWithSave from 'components/Image/ImgWithSave'; // eslint-disable-line
 
 import PropTypes from 'prop-types';
