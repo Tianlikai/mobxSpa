@@ -3,6 +3,7 @@ import qs from 'qs';
 
 import user from './user';
 import table from './table';
+import form from './form';
 import detail from './detail';
 
 const instance = axios.create({
@@ -94,6 +95,6 @@ class Service {
   }
 }
 
-Object.assign(Service.prototype, user, table, detail);
+Object.assign(Service.prototype, user, table, form, detail);
 
 export default new Service();

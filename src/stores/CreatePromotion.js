@@ -2,6 +2,8 @@ import { action, observable } from 'mobx';
 import Storage from 'utils/storage'; // eslint-disable-line
 import { message } from 'antd';
 
+import api from '../api';
+
 class CreatePromotion {
   @observable
   regions = Storage.get('area') || [];
@@ -19,17 +21,17 @@ class CreatePromotion {
   initialData() {
     this.loading = true;
     if (this.regions.length <= 0) {
-      G.api.getArea().then((data) => {
+      api.getArea().then((data) => {
         this.regions = data;
         Storage.set('area', data);
         this.finishInitial();
       });
     }
-    G.api.getTextbookVersion({ urlParams: { type: 'Math_type' } }).then((data) => {
+    api.getTextbookVersion({ urlParams: { type: 'Math_type' } }).then((data) => {
       this.mathType = data;
       this.finishInitial();
     });
-    G.api.getTextbookVersion({ urlParams: { type: 'English_type' } }).then((data) => {
+    api.getTextbookVersion({ urlParams: { type: 'English_type' } }).then((data) => {
       this.englishType = data;
       this.finishInitial();
     });
@@ -37,13 +39,13 @@ class CreatePromotion {
 
   @action
   CreatePromotion(data, cb) {
-    G.api
-      .createPromotion({ data })
+    api
+      .createRecord({ data })
       .then((resp) => {
+        Storage.set('fromCreatePromotion', true);
         const { id } = resp;
         G.delReturnParams('returnParams');
         if (cb) cb(id);
-        Storage.set('fromCreatePromotion', true);
       })
       .catch((e) => {
         message.error(e.message);

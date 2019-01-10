@@ -37,8 +37,6 @@ module.exports = {
   getOrderTotalAmount: { url: '13/productOrder/getMoney', method: 'post' },
 
   // 代理
-  getTextbookVersion: { url: '11/public/getDict/{type}' },
-  createPromotion: { url: '11/promotion/addPromotion', method: 'post' },
   getMyProfit: { url: '11/promotion/getMyProfit' },
   getAgentInformation: { url: '11/promotion/getAgent' },
 };
