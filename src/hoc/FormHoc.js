@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 const FormHoc = (WrapperComponent) => {
   class CommonForm extends React.Component {
     static propTypes = {
-      onSubmit: PropTypes.func,
+      onSubmit: PropTypes.func.isRequired,
       form: PropTypes.object.isRequired,
     };
 
@@ -19,7 +19,7 @@ const FormHoc = (WrapperComponent) => {
       });
     };
 
-    handleReset = () => {
+    handleResetFields = () => {
       const {
         form: { resetFields },
       } = this.props;
@@ -30,7 +30,7 @@ const FormHoc = (WrapperComponent) => {
       const { form, ...rest } = this.props;
       return (
         <WrapperComponent
-          handleReset={this.handleReset}
+          handleResetFields={this.handleResetFields}
           handleSubmit={this.handleSubmit}
           form={form}
           {...rest}

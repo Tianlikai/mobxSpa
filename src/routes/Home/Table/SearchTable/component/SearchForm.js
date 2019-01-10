@@ -21,9 +21,9 @@ class SearchForm extends Component {
   static propTypes = {
     form: PropTypes.object,
     initialValue: PropTypes.object,
-    onReset: PropTypes.func,
     handleSubmit: PropTypes.func,
     handleReset: PropTypes.func,
+    handleResetFields: PropTypes.func,
   };
 
   onSubmit = (e) => {
@@ -32,15 +32,11 @@ class SearchForm extends Component {
     handleSubmit();
   };
 
-  handleReset = () => {
-    const { onReset, handleReset } = this.props;
-
-    if (onReset) {
-      onReset(() => {
-        handleReset();
-        return null;
-      });
-    }
+  handleReset = (e) => {
+    e.preventDefault();
+    const { handleReset, handleResetFields } = this.props;
+    handleResetFields();
+    handleReset();
   };
 
   render() {

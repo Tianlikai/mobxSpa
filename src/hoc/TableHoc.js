@@ -35,6 +35,13 @@ const TableHoc = config => (WrappedComponent) => {
     };
 
     /**
+     * 重置搜索
+     */
+    handleResetSearch = () => {
+      this.props[store].handleResetSearch(); // eslint-disable-line
+    };
+
+    /**
      * 翻页
      */
     handlePageChange = (page) => {
@@ -62,19 +69,20 @@ const TableHoc = config => (WrappedComponent) => {
       const table = toJS(data);
 
       const {
-        loading, count, list, pageNo, pageSize,
+        loading, count, list, pageNo, pageSize, query,
       } = table;
 
       const classes = classnames(fixClass, { [className]: className });
       return (
         <div className={classes}>
           <WrappedComponent
-            // query={query}
-            // sort={sort}
+            query={query}
             loading={loading}
             data={list}
             store={Store}
             handleSort={this.handleSort}
+            handleSearch={this.handleSearch}
+            handleResetSearch={this.handleResetSearch}
             {...this.props}
           />
           <div className="pagWrapper">

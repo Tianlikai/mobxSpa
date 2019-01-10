@@ -6,12 +6,12 @@ import { Helmet } from 'react-helmet';
 import { Button, Table } from 'antd';
 
 import ModuleLine from 'components/ModuleLine'; // eslint-disable-line
-import ShareByQrModal from 'components/ShareByQrModal/index'; // eslint-disable-line
 import { WithBreadcrumb } from 'components/Breadcrumb/index'; // eslint-disable-line
 
 import TableHoc from '../../../../../hoc/TableHoc';
 
 import SearchForm from './SearchForm';
+import ShareModal from './ShareModal';
 
 import './style.scss';
 
@@ -22,39 +22,24 @@ class SearchTable extends Component {
   };
 
   static propTypes = {
+    loading: PropTypes.bool,
+    data: PropTypes.array,
+    query: PropTypes.object,
     titleValue: PropTypes.array,
-    TableSearch: PropTypes.object.isRequired,
+    store: PropTypes.object,
     routerData: PropTypes.object.isRequired,
     history: PropTypes.object.isRequired,
+    handleSearch: PropTypes.func.isRequired,
+    handleResetSearch: PropTypes.func.isRequired,
   };
 
   constructor(props) {
     super(props);
     this.state = {
       visibleModal: false,
-      pageNo: 1,
-      query: {},
       record: {},
     };
   }
-
-  // componentDidMount() {
-  //   const returnParams = G.getReturnParams('returnParams');
-  //   let query = {};
-  //   let { pageNo } = this.state;
-  //   const { TableSearch } = this.props;
-  //   if (!returnParams || !returnParams.effective) {
-  //     TableSearch.getPromotionList({});
-  //   } else {
-  //     const { query: qr, pageNo: pgn } = returnParams;
-  //     query = qr;
-  //     pageNo = pgn;
-  //     const copyQuery = Object.assign({}, query, { pageNo });
-  //     TableSearch.getPromotionList(copyQuery);
-  //   }
-  //   G.delReturnParams('returnParams');
-  //   this.setState({ query, pageNo });
-  // }
 
   get columns() {
     return [
@@ -132,11 +117,6 @@ class SearchTable extends Component {
   }
 
   redirectToCreatePromotion = () => {
-    const { pageNo, query } = this.state;
-    G.setReturnParams('returnParams', {
-      pageNo,
-      query,
-    });
     const {
       history: { push },
     } = this.props;
@@ -144,11 +124,6 @@ class SearchTable extends Component {
   };
 
   redirectToDetail = (record) => {
-    const { pageNo, query } = this.state;
-    G.setReturnParams('returnParams', {
-      pageNo,
-      query,
-    });
     const {
       history: { push },
     } = this.props;
@@ -160,65 +135,49 @@ class SearchTable extends Component {
       visibleModal: true,
       record,
     });
-    const { TableSearch } = this.props;
-    TableSearch.getWeiCode({ promotionId: record.id, record });
+    const { store } = this.props;
+    store.getWeiCode({ promotionId: record.id, record });
   };
 
   handleCloseShareModal = () => {
-    const { TableSearch } = this.props;
+    const { store } = this.props;
     this.setState(
       {
         visibleModal: false,
         record: {},
       },
-      () => TableSearch.delWeiCode(),
+      () => store.delWeiCode(),
     );
   };
 
-  onReset = (cb) => {
-    const params = {};
-    this.setState({ query: params, pageNo: 1 }, () => cb && cb());
-    this.loadOrganizationList(params);
+  handleReset = () => {
+    const { handleResetSearch } = this.props;
+    handleResetSearch();
   };
 
   handleSearch = (value) => {
-    debugger
     const { timeLimit, grade } = value;
     let { queryCond: name } = value;
     const startTime = timeLimit && timeLimit[0] && timeLimit[0].format('YYYY-MM-DD HH:mm:ss');
     const endTime = timeLimit && timeLimit[1] && timeLimit[1].format('YYYY-MM-DD HH:mm:ss');
     name = name ? name.replace(/^(\s|\u00A0)+/, '').replace(/(\s|\u00A0)+$/, '') : undefined;
-    const params = {
+
+    const { handleSearch } = this.props;
+    handleSearch({
       startTime,
       endTime,
       name,
       grade: grade || undefined,
-    };
-    this.setState({ query: params, pageNo: 1 });
-    this.loadOrganizationList(params);
+    });
   };
 
-  handleChange(value) {
-    const { query } = this.state;
-    this.setState({ pageNo: value.current });
-    const params = Object.assign(query, { pageNo: value.current });
-    this.loadOrganizationList(params);
-  }
-
-  loadOrganizationList(params) {
-    const { TableSearch } = this.props;
-    TableSearch.getPromotionList(params);
-  }
-
   render() {
-    const { query, record, visibleModal } = this.state;
+    const { visibleModal, record } = this.state;
 
     const {
-      routerData, titleValue, loading, data,
+      routerData, titleValue, loading, data, query,
     } = this.props;
     const { config } = routerData;
-
-    // const { chooseImgByte } = TableSearch;
 
     return (
       <WithBreadcrumb config={config}>
@@ -226,7 +185,6 @@ class SearchTable extends Component {
           <title>查询表格 - SPA</title>
           <meta name="description" content="SPA" />
         </Helmet>
-        {/* <div className="list"> */}
         <div className="table-search-wrapper">
           <ModuleLine title="查询表格">
             <Button
@@ -239,7 +197,11 @@ class SearchTable extends Component {
             </Button>
           </ModuleLine>
 
-          <SearchForm onReset={this.onReset} onSubmit={this.handleSearch} initialValue={query} />
+          <SearchForm
+            handleReset={this.handleReset}
+            onSubmit={this.handleSearch}
+            initialValue={query}
+          />
         </div>
 
         <Table
@@ -249,22 +211,18 @@ class SearchTable extends Component {
           dataSource={data}
           pagination={false}
           columns={this.columns}
-          onChange={this.handleChange}
         />
-
-        {/* <ShareByQrModal
-            key="base-table-modal"
-            imgByte={chooseImgByte}
-            width={600}
-            showTitle={false}
-            titleDownImg="保存"
-            record={record}
-            recordType="string"
-            visible={visibleModal}
-            handleClose={this.handleCloseShareModal}
-            titleValue={titleValue}
-          /> */}
-        {/* </div> */}
+        <ShareModal
+          key="base-table-modal"
+          width={600}
+          record={record}
+          showTitle={false}
+          titleDownImg="保存"
+          recordType="string"
+          visible={visibleModal}
+          titleValue={titleValue}
+          handleClose={this.handleCloseShareModal}
+        />
       </WithBreadcrumb>
     );
   }

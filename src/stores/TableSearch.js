@@ -12,6 +12,7 @@ class TableSearch {
     pageNo: 1,
     pageSize: 10,
     list: [],
+    query: {},
   };
 
   @observable
@@ -27,13 +28,27 @@ class TableSearch {
     return {
       pageNo: this.data.pageNo,
       pageSize: this.data.pageSize,
+      ...this.data.query,
       ...data,
     };
   }
 
   @action
   handleSearch(values) {
-    debugger;
+    const params = Object.assign(values, { pageNo: 1 });
+    const data = this.getParams(params);
+    this.getData(data);
+  }
+
+  @action
+  handleResetSearch() {
+    this.getData({
+      pageNo: 1,
+      grade: undefined,
+      name: undefined,
+      startTime: undefined,
+      endTime: undefined,
+    });
   }
 
   @action
@@ -93,6 +108,12 @@ class TableSearch {
           pageSize: pageSize || this.data.pageSize,
           count,
           list,
+          query: {
+            grade,
+            name,
+            startTime,
+            endTime,
+          },
         };
       });
   }

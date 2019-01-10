@@ -3,6 +3,7 @@ import Component from 'components/Component'; // eslint-disable-line
 import ImgWithSave from 'components/Image/ImgWithSave'; // eslint-disable-line
 
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
 import { Modal } from 'antd';
 
 import './style.scss';
@@ -63,7 +64,7 @@ export default class ShareByQrModal extends Component {
 
     const props = {
       title: showTitle ? title : null,
-      className: className ? `goPoints ${className}` : 'goPoints',
+      className: classnames('goPoints', { [className]: className }),
       closable: true,
       visible,
       width: width || 800,
@@ -82,7 +83,7 @@ export default class ShareByQrModal extends Component {
       <Modal {...props}>
         <div className="content">
           <div className="cont-left">
-            <Title className="title" value={titleValue[0]} />
+            <Title className="title" value={titleValue ? titleValue[0] : ''} />
             <ImgWithSave
               imgByte={imgByte}
               record={record}
