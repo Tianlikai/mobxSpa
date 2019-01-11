@@ -15,7 +15,7 @@ export default {
     to: '/home',
   },
   form: {
-    iconType: 'desktop',
+    iconType: 'form',
     text: '表单页',
     PERMISSIONS: true,
     children: [
@@ -27,13 +27,37 @@ export default {
     ],
   },
   table: {
-    iconType: 'desktop',
+    iconType: 'table',
     text: '表格页',
     PERMISSIONS: true,
     children: [
       {
         to: '/table/searchTable',
         text: '查询表格',
+        PERMISSIONS: true,
+      },
+    ],
+  },
+  list: {
+    iconType: 'database',
+    text: '列表页',
+    PERMISSIONS: true,
+    children: [
+      {
+        to: '/list/tabList',
+        text: '卡片表格切换',
+        PERMISSIONS: true,
+      },
+    ],
+  },
+  detail: {
+    iconType: 'profile',
+    text: '详情页',
+    PERMISSIONS: true,
+    children: [
+      {
+        to: '/detail/baseDetail',
+        text: '基础详情页',
         PERMISSIONS: true,
       },
     ],
