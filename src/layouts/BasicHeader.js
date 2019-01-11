@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import { Dropdown, Menu, Button } from 'antd';
 import Storage from 'utils/storage'; // eslint-disable-line
 
-import auth from '../../settings/headerConfig';
-import './style.scss';
+import auth from '../settings/headerConfig';
+import './styles/BasicHeader.scss';
 
 const MenuItem = Menu.Item;
 

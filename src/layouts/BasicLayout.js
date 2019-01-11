@@ -7,8 +7,8 @@ import Storage from 'utils/storage'; // eslint-disable-line
 import Layout from './Layout';
 import BasicFooter from './BasicFooter';
 
-import SideMenu from '../components/LeftSideMenu';
-import Header from '../components/HeaderOfHome/index';
+import SideMenu from './BasicSideMenu';
+import Header from './BasicHeader';
 
 import './styles/BasicLayout.scss';
 
