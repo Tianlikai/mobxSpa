@@ -1,41 +1,33 @@
 /* eslint-disable */
 const env = getEnv('NODE_ENV', 'dev');
-let backendIp;
 const dev = /dev/i.test(env);
-const hot = getEnv('HOT', dev);
-const inline = getEnv('INLINE', dev);
-const host = process.env.HOST ? getIpAddress() : 'localhost';
 const https = getEnv('HTTPS', true);
+const host  =  process.env.HOST ? getIpAddress() : 'localhost';
+const port = parseInt(getEnv('PORT', 8008))
 
+let service_ip;
 if (env.toLowerCase().indexOf('dev') > -1) {
-  backendIp = 'demo.yourIP.cn';
+  service_ip = 'demo.yourIP.cn';
 } else if (env.toLowerCase().indexOf('pro') > -1) {
-  backendIp = 'yourIP.cn';
-}
-
-let port = parseInt(getEnv('PORT'));
-
-if (!port) {
-  port = 8008;
+  service_ip = 'yourIP.cn';
 }
 
 const conf = {
   VERSION: require('./package.json').version,
-  PROTOCOL: https ? 'https' : 'http',
-  HOST: host,
-  // HOST: getEnv('HOST', getIpAddress()), // 后端测试时 使用
-  PORT: port,
-  BACKEND_IP: backendIp,
 
+  PROTOCOL: https ? 'https' : 'http',
+  HTTPS: https,
+  HOST: host,
+  PORT: port ,
+  SERVICE_IP: service_ip,
   ENV: env,
   DEV: dev,
   TARGET: getEnv('TARGET', 'dev'),
-  HOT: hot,
-  INLINE: inline,
-  HTTPS: https,
+  HOT: getEnv('HOT', dev),
+  INLINE: getEnv('INLINE', dev),
 };
 
-conf.FRONTEND = `${conf.PROTOCOL}://${conf.HOST}:${conf.PORT}/`;
+conf.CLIENT = `${conf.PROTOCOL}://${conf.HOST}:${conf.PORT}/`;
 
 outputConf(conf);
 

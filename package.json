@@ -1,6 +1,6 @@
 {
   "name": "mobx_spa",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -9,7 +9,7 @@
     "build:dll": "rimraf src/static/dll.vendor.* && rimraf src/static/manifest.dll.json && webpack --config webpack.dll.config.js",
     "build:webpack": "rimraf dist/* && cross-env NODE_ENV=prod webpack",
     "build": "npm run clean && npm run build:dll && npm run build:webpack",
-    "dev": "cross-env NODE_ENV=dev webpack-dev-server --progress --mode development"
+    "dev": "cross-env HOST=true NODE_ENV=dev webpack-dev-server --progress --mode development"
   },
   "author": "jason tian",
   "license": "ISC",

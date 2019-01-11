@@ -41,14 +41,14 @@ let wp = {
   mode: env.DEV ? 'development' : 'production',
   entry: env.DEV
     ? [
-        'webpack-dev-server/client' + '?' + env.FRONTEND, // 资源服务器地址
+        'webpack-dev-server/client' + '?' + env.CLIENT, // 资源服务器地址
         'webpack/hot/only-dev-server',
         path.join(srcDir, 'index.js'),
       ]
     : ['babel-polyfill', path.join(srcDir, 'index.js')],
   output: {
     filename: env.DEV ? '[name].js' : '[name]-[chunkhash:8].js',
-    publicPath: env.DEV ? env.FRONTEND : `${cdnUrl}/`,
+    publicPath: env.DEV ? env.CLIENT : `${cdnUrl}/`,
     path: distDir,
     chunkFilename: '[name].[chunkhash:8].js',
   },
@@ -157,7 +157,7 @@ let wp = {
         loader: 'url-loader',
         options: {
           limit: 1024,
-          publicPath: env.DEV ? env.FRONTEND : `${cdnUrl}/`,
+          publicPath: env.DEV ? env.CLIENT : `${cdnUrl}/`,
         },
       },
       {
@@ -338,7 +338,7 @@ let wp = {
             }
           }
           path = base + path.replace(rePrefix, '');
-          target = `http://${env.BACKEND_IP}:${port}`;
+          target = `http://${env.SERVICE_IP}:${port}`;
           console.log('request: ' + target + path);
           return target + path;
         },
