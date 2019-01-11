@@ -4,7 +4,7 @@ import moment from 'moment';
 import { GRADE } from '../settings/const';
 import api from '../api';
 
-class TableSearch {
+class Table {
   @observable
   tableData = {
     loading: false,
@@ -148,4 +148,4 @@ class TableSearch {
   }
 }
 
-export default new TableSearch();
+export default new Table();

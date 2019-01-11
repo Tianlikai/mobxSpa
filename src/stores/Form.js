@@ -4,7 +4,7 @@ import { message } from 'antd';
 
 import api from '../api';
 
-class CreatePromotion {
+class Form {
   @observable
   regions = Storage.get('area') || [];
 
@@ -58,4 +58,4 @@ class CreatePromotion {
   }
 }
 
-export default new CreatePromotion();
+export default new Form();

@@ -44,7 +44,7 @@ const DATA_OVERVIEW = [
   },
 ];
 
-class PromotionDetail {
+class Detail {
   @observable
   tableData;
 
@@ -138,4 +138,4 @@ class PromotionDetail {
   }
 }
 
-export default new PromotionDetail();
+export default new Detail();

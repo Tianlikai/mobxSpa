@@ -1,17 +1,11 @@
-import User from './UserInfo';
-import OrganizationStore from './Organization';
-import OrdersStore from './Orders';
-import ProDetailStore from './PromotionDetail';
-import TableSearchStore from './TableSearch';
-import IncomeStore from './Income';
-import CreatePromotionStore from './CreatePromotion';
+import User from './User';
+import DetailStore from './Detail';
+import TableStore from './Table';
+import FormStore from './Form';
 
 export default {
   User,
-  TableSearchStore,
-  OrganizationStore,
-  OrdersStore,
-  ProDetailStore,
-  IncomeStore,
-  CreatePromotionStore,
+  DetailStore,
+  TableStore,
+  FormStore,
 };

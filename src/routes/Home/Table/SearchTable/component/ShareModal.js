@@ -6,16 +6,16 @@ import PropTypes from 'prop-types';
 
 import ShareByQrModal from 'components/ShareByQrModal/index'; // eslint-disable-line
 
-@inject('TableSearchStore')
+@inject('TableStore')
 @observer
 export default class ShareModal extends Component {
   static propTypes = {
-    TableSearchStore: PropTypes.object.isRequired,
+    TableStore: PropTypes.object.isRequired,
   };
 
   render() {
-    const { TableSearchStore } = this.props;
-    const { chooseImgByte } = TableSearchStore;
+    const { TableStore } = this.props;
+    const { chooseImgByte } = TableStore;
     return <ShareByQrModal imgByte={chooseImgByte} {...this.props} />;
   }
 }

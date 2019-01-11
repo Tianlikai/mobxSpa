@@ -4,7 +4,7 @@ import { Modal } from 'antd';
 
 import api from '../api/index';
 
-class UserInfo {
+class User {
   @observable
   username = null;
 
@@ -97,4 +97,4 @@ class UserInfo {
   }
 }
 
-export default new UserInfo();
+export default new User();

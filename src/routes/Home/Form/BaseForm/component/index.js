@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
+import { toJS } from 'mobx'
 import { inject, observer } from 'mobx-react';
 
 import Spinner from 'components/Spinner/Spinner'; // eslint-disable-line
@@ -12,18 +13,18 @@ import BForm from './BForm';
 
 import './style.scss';
 
-@inject('CreatePromotionStore')
+@inject('FormStore')
 @observer
 class BaseForm extends Component {
   static propTypes = {
-    CreatePromotionStore: PropTypes.object.isRequired,
+    FormStore: PropTypes.object.isRequired,
     routerData: PropTypes.object.isRequired,
     history: PropTypes.object.isRequired,
   };
 
   componentDidMount() {
-    const { CreatePromotionStore } = this.props;
-    CreatePromotionStore.initialData();
+    const { FormStore } = this.props;
+    FormStore.initialData();
   }
 
   handleSubmit = (values) => {
@@ -38,8 +39,8 @@ class BaseForm extends Component {
       school,
     } = values;
 
-    const { CreatePromotionStore, history: { replace } } = this.props;
-    CreatePromotionStore.CreatePromotion({
+    const { FormStore, history: { replace } } = this.props;
+    FormStore.CreatePromotion({
       province: AREA[0] || '',
       city: AREA[1] || '',
       area: AREA[2] || '',
@@ -56,12 +57,12 @@ class BaseForm extends Component {
   };
 
   render() {
-    const { routerData, CreatePromotionStore } = this.props;
+    const { routerData, FormStore } = this.props;
     const { config } = routerData;
 
     const {
       regions, mathType, englishType, loading,
-    } = CreatePromotionStore;
+    } = toJS(FormStore);
 
     return (
       <WithBreadcrumb config={config}>

@@ -21,8 +21,8 @@ import TableHoc from '../../../../../hoc/TableHoc';
 
 import './style.scss';
 
-@TableHoc({ store: 'ProDetailStore', NoPager: true })
-@inject('TableSearchStore')
+@TableHoc({ store: 'DetailStore', NoPager: true })
+@inject('TableStore')
 @observer
 class BaseDetail extends Component {
   static defaultProps = {
@@ -36,7 +36,7 @@ class BaseDetail extends Component {
     match: PropTypes.object.isRequired,
     store: PropTypes.object.isRequired, // @TableHoc 高阶组件中绑定的 mobx store 对象
     routerData: PropTypes.object.isRequired,
-    TableSearchStore: PropTypes.object.isRequired,
+    TableStore: PropTypes.object.isRequired,
   }
 
   constructor(props) {
@@ -50,13 +50,13 @@ class BaseDetail extends Component {
     const {
       match: { params: { id } = {} },
     } = this.props;
-    const { TableSearchStore } = this.props;
-    TableSearchStore.getWeiCode({ promotionId: id });
+    const { TableStore } = this.props;
+    TableStore.getWeiCode({ promotionId: id });
   }
 
   componentWillUnmount() {
-    const { store, TableSearchStore } = this.props;
-    TableSearchStore.delWeiCode();
+    const { store, TableStore } = this.props;
+    TableStore.delWeiCode();
     store.clearPromotionDetail();
   }
 
@@ -120,11 +120,11 @@ class BaseDetail extends Component {
       loading,
       tableData,
       store,
-      TableSearchStore,
+      TableStore,
     } = this.props;
     const { config } = routerData;
 
-    const { chooseImgByte } = TableSearchStore;
+    const { chooseImgByte } = TableStore;
     const { basicInformation, dataOverview } = store;
 
     const loadingStyle = {

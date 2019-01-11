@@ -15,7 +15,7 @@ import ShareModal from './ShareModal';
 
 import './style.scss';
 
-@TableHoc({ store: 'TableSearchStore' })
+@TableHoc({ store: 'TableStore' })
 class SearchTable extends Component {
   static defaultProps = {
     titleValue: ['本次推广专属小程序二维码', '本次推广专属小程序链接'],
