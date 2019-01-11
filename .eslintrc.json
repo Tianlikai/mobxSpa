@@ -11,6 +11,8 @@
     "Mobx": false,
     "__DEV__": false,
     "__TARGET__": false,
+    "__BASENAME__": false,
+    "__ROUTER__": false,
     "ReactDOM": false,
     "PropTypes": false,
     "MobxReact": false,

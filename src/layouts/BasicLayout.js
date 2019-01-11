@@ -8,7 +8,7 @@ import Layout from './Layout';
 import BasicFooter from './BasicFooter';
 
 import SideMenu from '../components/LeftSideMenu';
-import Header from '../components/HeaderOfHome';
+import Header from '../components/HeaderOfHome/index';
 
 import './styles/BasicLayout.scss';
 
@@ -45,9 +45,13 @@ export default class Home extends Component {
     const {
       User,
       history: { replace },
+      location: { pathname },
     } = this.props;
     User.logOut();
-    replace('/signIn');
+    replace({
+      pathname: '/signIn',
+      search: `?from=${pathname}`,
+    });
   };
 
   render() {

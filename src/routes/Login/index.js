@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+import qs from 'qs';
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import { observer, inject } from 'mobx-react';
@@ -14,7 +15,8 @@ import './style.scss';
 export default class SignIn extends Component {
   static propTypes = {
     User: PropTypes.string,
-    history: PropTypes.object,
+    history: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired,
   };
 
   onSubmit = (values) => {
@@ -23,8 +25,10 @@ export default class SignIn extends Component {
     User.signIn({ username, password }, () => {
       const {
         history: { replace },
+        location: { search },
       } = this.props;
-      replace('/home');
+      const { from } = qs.parse(search.substr(1));
+      replace(`${from}`);
     });
   };
 

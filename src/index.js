@@ -25,7 +25,7 @@ const { BrowserRouter: Router } = ReactRouterDOM;
 
 const Entry = () => (
   <Provider {...stores}>
-    <Router>{createRoutes()}</Router>
+    <Router basename={__BASENAME__}>{createRoutes()}</Router>
   </Provider>
 );
 

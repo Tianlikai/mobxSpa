@@ -1,9 +1,13 @@
 /* eslint-disable */
+
+/**
+ * 系统变量配置
+ */
 const env = getEnv('NODE_ENV', 'dev');
 const dev = /dev/i.test(env);
 const https = getEnv('HTTPS', true);
-const host  =  process.env.HOST ? getIpAddress() : 'localhost';
-const port = parseInt(getEnv('PORT', 8008))
+const host = process.env.HOST ? getIpAddress() : 'localhost';
+const port = parseInt(getEnv('PORT', 8008));
 
 let service_ip;
 if (env.toLowerCase().indexOf('dev') > -1) {
@@ -14,14 +18,15 @@ if (env.toLowerCase().indexOf('dev') > -1) {
 
 const conf = {
   VERSION: require('./package.json').version,
-
   PROTOCOL: https ? 'https' : 'http',
   HTTPS: https,
   HOST: host,
-  PORT: port ,
+  PORT: port,
+  BASENAME: '', // BrowserRouter 的 basename
   SERVICE_IP: service_ip,
   ENV: env,
   DEV: dev,
+  ROUTER: 'BrowserRouter', // react-router 采用的路由
   TARGET: getEnv('TARGET', 'dev'),
   HOT: getEnv('HOT', dev),
   INLINE: getEnv('INLINE', dev),

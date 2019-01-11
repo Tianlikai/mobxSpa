@@ -20,30 +20,30 @@ export default class Header extends Component {
     currentAddress: PropTypes.string,
     AUTHORITY: PropTypes.object,
     logOut: PropTypes.func,
-    history: PropTypes.object,
+    // history: PropTypes.object,
   };
 
-  goToTargetPage = () => {
-    const { currentAddress, AUTHORITY } = this.props;
-    const key = currentAddress.split('/')[2];
-    const { target } = AUTHORITY[key] || {};
+  // goToTargetPage = () => {
+  //   const { currentAddress, AUTHORITY } = this.props;
+  //   const key = currentAddress.split('/')[2];
+  //   const { target } = AUTHORITY[key] || {};
 
-    if (target) {
-      let { state } = G.history.location || {};
-      if (state) {
-        state = { isBack: true, ...state };
-      }
-      const {
-        history: { push },
-      } = this.props;
-      push({
-        pathname: target,
-        state,
-      });
-    } else {
-      G.history.goBack();
-    }
-  };
+  //   if (target) {
+  //     let { state } = G.history.location || {};
+  //     if (state) {
+  //       state = { isBack: true, ...state };
+  //     }
+  //     const {
+  //       history: { push },
+  //     } = this.props;
+  //     push({
+  //       pathname: target,
+  //       state,
+  //     });
+  //   } else {
+  //     G.history.goBack();
+  //   }
+  // };
 
   handleAuthority = () => {
     const permissionList = Storage.get('permissionList') || [];

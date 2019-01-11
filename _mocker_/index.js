@@ -251,7 +251,7 @@ const proxy = {
   },
   'GET /__api/11/public/getArea': function(req, res) {
     console.log('GET mock: /__api/11/public/getArea');
-    const area = require('../static/area.json');
+    const area = require('../src/static/area.json');
     res.json(area);
   },
   'GET /form/__api/11/public/getDict/Math_type': function(req, res) {

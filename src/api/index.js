@@ -45,7 +45,6 @@ instance.interceptors.response.use(
       response: { status },
     } = err;
     if (status === 401) {
-      // eslint-disable-next-line
       G.gotoSignIn();
     } else {
       Promise.reject(err);

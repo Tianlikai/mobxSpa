@@ -4,29 +4,36 @@ import Storage from './storage';
 /**
  * 设置全局变量G
  */
-// const createHistory = require('history/createHashHistory').default;
-const createHistory = require('history/createBrowserHistory').default;
+let history;
 
-// const history = createHistory();
-const history = createHistory({ basename: '' });
-const location = history.location;
+if (__ROUTER__ === 'BrowserRouter') {
+  const createHistory = require('history/createBrowserHistory').default;
+  history = createHistory({ basename: __BASENAME__ });
+} else {
+  const createHistory = require('history/createHashHistory').default;
+  history = createHistory();
+}
 
 const G = {
   history,
-  location,
   gotoSignIn,
   setUpUser,
   getQuery,
   encodeQuery,
-  setReturnParams,
-  getReturnParams,
-  updateReturnParams,
-  delReturnParams,
   checkPermission,
 };
 
 function gotoSignIn() {
   G.history.push('/signIn');
+  if (__ROUTER__ === 'BrowserRouter') {
+    // BrowserRouter 的history没有对外暴露
+    // mobx操作了shouldComponentUpdate方法和 react-router 冲突
+    // 导致页面不会刷新
+    // 在这里强制刷新登录页面
+    setTimeout(() => {
+      window.location.reload();
+    }, 0);
+  }
 }
 
 function setUpUser(data) {
@@ -64,27 +71,6 @@ function encodeQuery(params) {
       result = `${result + p}=${params[p]}`;
     });
   return result;
-}
-
-function setReturnParams(key, params) {
-  if (params) Storage.set(key, params);
-}
-
-function getReturnParams(key) {
-  const returnParams = Storage.get(key) || null;
-  return returnParams;
-}
-
-function updateReturnParams(key) {
-  const returnParams = Storage.get(key) || null;
-  if (returnParams) {
-    returnParams.effective = true;
-    Storage.set(key, returnParams);
-  }
-}
-
-function delReturnParams(key) {
-  Storage.del(key);
 }
 
 function checkPermission(hadPermissionList) {

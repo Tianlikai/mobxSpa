@@ -44,7 +44,6 @@ class CreatePromotion {
       .then((resp) => {
         Storage.set('fromCreatePromotion', true);
         const { id } = resp;
-        G.delReturnParams('returnParams');
         if (cb) cb(id);
       })
       .catch((e) => {
