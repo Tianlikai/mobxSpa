@@ -252,7 +252,6 @@ let wp = {
     stats: { color: true },
     overlay: true, // 报错时会在浏览器全屏弹出
     before(app) {
-      console.log(app);
       apiMocker(app, mocker);
     },
     proxy: {
