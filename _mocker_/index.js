@@ -140,6 +140,30 @@ const proxy = {
       successful: true,
     });
   },
+  'GET /list/__api/11/promotion/getPromotionList': function(req, res) {
+    console.log('GET mock: /__api/11/promotion/getPromotionList');
+    const { name, pageNo, itemsPerPage, grade, startTime, endTime } = qs.parse(
+      req._parsedUrl.query,
+    );
+    const { items, count } = agent.getProList(
+      name,
+      pageNo,
+      itemsPerPage,
+      grade,
+      startTime,
+      endTime,
+    );
+    res.json({
+      code: '0',
+      data: {
+        count: count,
+        items: items,
+      },
+      err: null,
+      message: 'success!',
+      successful: true,
+    });
+  },
   'GET /__api/11/promotion/getAgent': function(req, res) {
     console.log('GET mock: /__api/11/promotion/getAgent');
     const data = agent.getMyInfo();

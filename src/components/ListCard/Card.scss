@@ -1,0 +1,68 @@
+.cardWrapper {
+  position: relative;
+  width: 240px;
+  padding: 0 20px 20px 20px;
+  img {
+    width: 100%;
+    border-radius: 3px;
+  }
+}
+.cardTitle {
+  color: #333;
+  width: 140px;
+  margin: 0 auto;
+  overflow: hidden;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.statusWrapper {
+  color: #666;
+  text-align: center;
+}
+.dropDown {
+  position: absolute;
+  top: 5px;
+  right: 28px;
+  height: 26px;
+  width: 26px;
+  line-height: 26px;
+  text-align: center;
+  border-radius: 50%;
+  cursor: pointer;
+  i {
+    color: white;
+  }
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+}
+.previewTitle {
+  text-align: center;
+  font-size: 18px;
+}
+.videoMethod {
+  display: inline-block;
+  width: 72px;
+  text-align: center;
+}
+.checkbox {
+  position: absolute;
+  top: 8px;
+  left: 28px;
+}
+.imgWrapper {
+  width: 200px;
+  height: 113px;
+  img {
+    height: 100%;
+    width: 100%;
+  }
+}
+.pointBC {
+  display: inline-block;
+  width: 26px;
+  height: 26px;
+  background-image: url("./point@3x.png");
+  background-size: 26px 26px;
+}
