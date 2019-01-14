@@ -56,7 +56,7 @@ export default {
     PERMISSIONS: true,
     children: [
       {
-        to: '/detail/baseDetail',
+        to: '/detail/baseDetail/1200000',
         text: '基础详情页',
         PERMISSIONS: true,
       },
