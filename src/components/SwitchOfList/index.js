@@ -64,7 +64,7 @@ export default class SwitchOfList extends React.Component {
 }
 
 SwitchOfList.defaultProps = {
-  fixClass: 'root',
+  fixClass: 'root-switch',
   showType: 'card',
 };
 
