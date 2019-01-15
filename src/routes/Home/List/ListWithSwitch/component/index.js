@@ -21,7 +21,7 @@ import TableHoc from '../../../../../hoc/TableHoc';
 
 import './style.scss';
 
-@TableHoc({ store: 'ListStore' })
+@TableHoc({ store: 'ListStore', className: 'listWrapper' })
 export default class ListWithSwitch extends Component {
   static propTypes = {
     loading: PropTypes.bool,
@@ -167,7 +167,7 @@ export default class ListWithSwitch extends Component {
           pagination={false}
           columns={this.columns}
           dataSource={tableData}
-          className={classnames('selfTable', { displayNone: showType === 'card' })}
+          className={classnames('self-table-wrapper', { displayNone: showType === 'card' })}
         />
       </WithBreadcrumb>
     );

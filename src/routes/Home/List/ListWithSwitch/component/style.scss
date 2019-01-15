@@ -1,5 +1,6 @@
 .baseTable-wrapper {
   .table-search-wrapper,
+  .self-table-wrapper,
   .pagWrapper {
     background: #fff;
   }
@@ -10,9 +11,11 @@
     padding: 30px;
     margin-bottom: 30px;
   }
+}
+.listWrapper {
   .pagWrapper {
     padding: 10px 0;
-    margin-top: 20px;
+    margin-top: 30px;
     text-align: right;
   }
 }
