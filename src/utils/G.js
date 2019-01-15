@@ -24,7 +24,13 @@ const G = {
 };
 
 function gotoSignIn() {
-  G.history.push('/signIn');
+  const {
+    location: { pathname },
+  } = window;
+  G.history.replace({
+    pathname: '/signIn',
+    search: `?from=${pathname}`,
+  });
   if (__ROUTER__ === 'BrowserRouter') {
     // BrowserRouter 的history没有对外暴露
     // mobx操作了shouldComponentUpdate方法和 react-router 冲突

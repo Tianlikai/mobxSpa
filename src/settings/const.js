@@ -94,6 +94,29 @@ const SYSTEM_IDS = {
 
 const QINIU_DOMAIN = 'https://lcdns-pic.your.com/';
 
+const STATUS_VIDEO = [
+  {
+    value: '',
+    text: '全部',
+  },
+  {
+    value: '0',
+    text: '未提审',
+  },
+  {
+    value: '1',
+    text: '待审核',
+  },
+  {
+    value: '2',
+    text: '需修改',
+  },
+  {
+    value: '3',
+    text: '审核通过',
+  },
+];
+
 export {
   OPTION, // 订单列表状态 通用
   ORG_STATE, // 机构列表状态
@@ -111,4 +134,5 @@ export {
   GRADE, // 年级表
   SYSTEM_IDS,
   QINIU_DOMAIN,
+  STATUS_VIDEO, // 视频状态
 };
