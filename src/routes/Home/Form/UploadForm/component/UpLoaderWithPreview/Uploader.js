@@ -48,7 +48,7 @@ class Uploader extends React.Component {
     const { bucket } = this.props;
     let { value = '' } = this.props;
 
-    this.bucket = bucket || 'learnta-pics';
+    this.bucket = bucket || 'learnta-video-public';
     this.domain = QINIU_BUCKETS[bucket];
 
     if (value && value.indexOf('lcdns-pic.learnta.com') === -1) {
