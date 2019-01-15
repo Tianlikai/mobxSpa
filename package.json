@@ -25,6 +25,7 @@
     "moment": "^2.23.0",
     "object-assign": "^4.1.1",
     "prop-types": "^15.6.2",
+    "qiniu-js": "^2.5.3",
     "qs": "^6.6.0",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",

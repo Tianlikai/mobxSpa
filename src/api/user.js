@@ -9,4 +9,7 @@ export default {
   getArea() {
     return this.get('11/public/getArea');
   },
+  getUploadToken() {
+    return this.get('0/upload');
+  },
 };

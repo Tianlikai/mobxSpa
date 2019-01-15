@@ -269,7 +269,8 @@ let wp = {
               case '0':
                 port = '';
                 base = '';
-                target = 'https://demo.yourIP.cn';
+                target = 'https://demo.learnta.cn';
+                // target = 'https://demo.yourIP.cn';
                 break;
               case '1':
                 port = FRONT_PORT;

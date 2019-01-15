@@ -20,7 +20,6 @@ export default class Container extends React.Component {
   };
 
   handleTabChange = (key) => {
-    debugger;
     console.log(key);
   };
 

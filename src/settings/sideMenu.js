@@ -24,6 +24,11 @@ export default {
         text: '基础表单',
         PERMISSIONS: true,
       },
+      {
+        to: '/form/uploadForm',
+        text: '上传表单',
+        PERMISSIONS: true,
+      },
     ],
   },
   table: {

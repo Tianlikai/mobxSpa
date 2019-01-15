@@ -68,7 +68,7 @@ instanceOnline.interceptors.request.use(
     const { token } = G;
     // eslint-disable-next-line
     // if (token) config.headers.Authorization = `Bearer ${token}`;
-    if (token) config.headers.Authorization = 'Bearer 7614b03e-73c0-3396-ac77-a6294a55561a';
+    if (token) config.headers.Authorization = 'Bearer 05106764-4fac-39ac-8109-abf3e3ff91c0';
 
     return config;
   },
@@ -81,12 +81,12 @@ instanceOnline.interceptors.response.use(
       data: { code, data },
     } = resp;
     if (code === '0' && data) {
-      return data;
+      return Promise.resolve(data);
     }
     if (code && code !== '0') {
       return Promise.reject(data);
     }
-    return data;
+    return Promise.resolve(resp.data);
   },
   (err) => {
     const {
