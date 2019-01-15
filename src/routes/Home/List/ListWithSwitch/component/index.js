@@ -1,27 +1,105 @@
 import React, { Component } from 'react';
 
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
+
 import { Helmet } from 'react-helmet';
 
-import ModuleLine from 'components/ModuleLine'; // eslint-disable-line
+import { Table } from 'antd';
+
 import { WithBreadcrumb } from 'components/Breadcrumb/index'; // eslint-disable-line
 
 import Select from 'components/Select/index'; // eslint-disable-line
+import ListCard from 'components/ListCard/index'; // eslint-disable-line
+import ActionSet from 'components/ActionSet/index'; // eslint-disable-line
+import ModuleLine from 'components/ModuleLine'; // eslint-disable-line
+import VideoState from 'components/VideoState/index'; // eslint-disable-line
 import SwitchOfList from 'components/SwitchOfList/index'; // eslint-disable-line
+import TextWithIntercept from 'components/TextWithIntercept/index'; // eslint-disable-line
 
 import TableHoc from '../../../../../hoc/TableHoc';
 
 import './style.scss';
 
-@TableHoc({ store: 'TableStore' })
+@TableHoc({ store: 'ListStore' })
 export default class ListWithSwitch extends Component {
   static propTypes = {
+    loading: PropTypes.bool,
+    tableData: PropTypes.array,
     routerData: PropTypes.object.isRequired, // 路由数据
   };
 
   state = {
+    showType: 'card',
     filterData: {},
   };
+
+  get columns() {
+    return [
+      {
+        title: '视频ID',
+        dataIndex: 'id',
+        key: 'id',
+      },
+      {
+        title: '创建时间',
+        dataIndex: 'createdAt',
+        key: 'createdAt',
+      },
+      {
+        title: '视频名称',
+        dataIndex: 'fileName',
+        key: 'fileName',
+        render: text => <TextWithIntercept text={text} len={10} />,
+      },
+      {
+        title: '知识点关联状态',
+        dataIndex: 'kpoint',
+        key: 'kpoint',
+        render: (text) => {
+          const value = text[0] ? text[0].name : '尚未关联知识点';
+          return <TextWithIntercept text={value} len={10} />;
+        },
+      },
+      {
+        title: '自定义标签',
+        dataIndex: 'userDefinedTags',
+        key: 'userDefinedTags',
+        render: (text) => {
+          let str = '';
+          if (text && text.length > 0) {
+            str = text.reduce((l, r) => (l += `${r},`), '');
+          } else {
+            return '-';
+          }
+          str = str.substring(0, str.length - 1);
+          return <TextWithIntercept text={str} len={10} />;
+        },
+      },
+      {
+        title: '视频状态',
+        dataIndex: 'state',
+        key: 'state',
+        render: (text, record) => <VideoState size={10} record={record} text={text} />,
+      },
+      {
+        title: '操作',
+        dataIndex: 'action',
+        key: 'action',
+        className: 'td-action',
+        render: (text, record) => (
+          <ActionSet
+            page="personal"
+            record={record}
+            // handleOpenPreview={this.handleOpenPreview.bind(this, record)}
+            // handleEditVideo={this.handleEditVideo.bind(this, record)}
+            // handleModifyVideo={this.handleModifyVideo.bind(this, record)}
+            // handleDelete={this.handleDelete.bind(this, record)}
+          />
+        ),
+      },
+    ];
+  }
 
   handleSelect = (data) => {
     this.setState({
@@ -29,8 +107,12 @@ export default class ListWithSwitch extends Component {
     });
   };
 
+  handleSwitchChange = (showType) => {
+    this.setState({ showType });
+  };
+
   render() {
-    const { routerData } = this.props;
+    const { routerData, loading, tableData } = this.props;
     const { config } = routerData;
 
     const SelectData = [
@@ -46,7 +128,7 @@ export default class ListWithSwitch extends Component {
       },
     ];
 
-    const { filterData } = this.state;
+    const { filterData, showType } = this.state;
 
     return (
       <WithBreadcrumb config={config}>
@@ -63,7 +145,30 @@ export default class ListWithSwitch extends Component {
             handleSelect={this.handleSelect}
           />
         </div>
-        <SwitchOfList />
+        <SwitchOfList
+          showType={showType}
+          onChange={this.handleSwitchChange}
+        />
+        <ListCard
+          key="listCard"
+          page="personal"
+          data={tableData}
+          loading={loading}
+          display={showType === 'card'}
+          // handleDelete={this.handleDelete.bind(this)}
+          // handleEditVideo={this.handleEditVideo.bind(this)}
+          // handleModifyVideo={this.handleModifyVideo.bind(this)}
+          // handleOpenPreview={this.handleOpenPreview.bind(this)}
+        />
+        <Table
+          key="table"
+          bordered
+          loading={loading}
+          pagination={false}
+          columns={this.columns}
+          dataSource={tableData}
+          className={classnames('selfTable', { displayNone: showType === 'card' })}
+        />
       </WithBreadcrumb>
     );
   }

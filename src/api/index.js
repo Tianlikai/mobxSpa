@@ -4,6 +4,7 @@ import qs from 'qs';
 import user from './user';
 import table from './table';
 import form from './form';
+import list from './list';
 import detail from './detail';
 
 const instance = axios.create({
@@ -52,9 +53,57 @@ instance.interceptors.response.use(
   },
 );
 
+const instanceOnline = axios.create({
+  baseURL: __TARGET__ === 'dev' ? '/__online' : 'https://yourIp.cn/__api',
+  timeout: 30000,
+  withCredentials: false,
+  responseType: '',
+  headers: {
+    'Content-Type': 'application/json;charset=utf-8',
+  },
+});
+
+instanceOnline.interceptors.request.use(
+  (config) => {
+    const { token } = G;
+    // eslint-disable-next-line
+    // if (token) config.headers.Authorization = `Bearer ${token}`;
+    if (token) config.headers.Authorization = 'Bearer 7614b03e-73c0-3396-ac77-a6294a55561a';
+
+    return config;
+  },
+  err => Promise.reject(err),
+);
+
+instanceOnline.interceptors.response.use(
+  (resp) => {
+    const {
+      data: { code, data },
+    } = resp;
+    if (code === '0' && data) {
+      return data;
+    }
+    if (code && code !== '0') {
+      return Promise.reject(data);
+    }
+    return data;
+  },
+  (err) => {
+    const {
+      response: { status },
+    } = err;
+    if (status === 401) {
+      G.gotoSignIn();
+    } else {
+      Promise.reject(err);
+    }
+  },
+);
+
 class Service {
-  constructor(userInfo) {
+  constructor(userInfo, ins) {
     this.userInfo = userInfo;
+    this.ins = ins;
     if (userInfo && userInfo.clientId) {
       this.userInfo.device_id = userInfo.clientId;
     }
@@ -62,7 +111,7 @@ class Service {
 
   get(url, config = {}) {
     const params = Object.assign({}, this.userInfo, config.params);
-    return instance.get(url, {
+    return this.ins.get(url, {
       ...config,
       params,
     });
@@ -71,19 +120,19 @@ class Service {
   post(url, data, config = {}) {
     const DATA = Object.assign({}, this.userInfo, data);
 
-    return instance.post(url, DATA, config);
+    return this.ins.post(url, DATA, config);
   }
 
   put(url, data, config = {}) {
     const DATA = Object.assign({}, this.userInfo, data);
 
-    return instance.put(url, qs.stringify(DATA), config);
+    return this.ins.put(url, qs.stringify(DATA), config);
   }
 
   delete(url, config = {}) {
     const params = Object.assign({}, this.userInfo, config.params);
 
-    return instance.delete(url, {
+    return this.ins.delete(url, {
       ...config,
       params,
     });
@@ -94,6 +143,9 @@ class Service {
   }
 }
 
-Object.assign(Service.prototype, user, table, form, detail);
+Object.assign(Service.prototype, user, table, form, list, detail);
 
-export default new Service();
+export default new Service(null, instance);
+
+const ApiOnline = new Service(null, instanceOnline);
+export { ApiOnline };

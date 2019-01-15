@@ -22,9 +22,9 @@ export default class SwitchOfList extends React.Component {
   }
 
   handleRedirectToCard = () => {
-    const { handleRedirectToCard } = this.props;
-    if (handleRedirectToCard) {
-      handleRedirectToCard('table');
+    const { onChange } = this.props;
+    if (onChange) {
+      onChange('table');
     } else {
       this.setState({
         showType: 'table',
@@ -33,9 +33,9 @@ export default class SwitchOfList extends React.Component {
   };
 
   handleRedirectToTable = () => {
-    const { handleRedirectToTable } = this.props;
-    if (handleRedirectToTable) {
-      handleRedirectToTable('card');
+    const { onChange } = this.props;
+    if (onChange) {
+      onChange('card');
     } else {
       this.setState({
         showType: 'card',
@@ -72,6 +72,5 @@ SwitchOfList.propTypes = {
   fixClass: PropTypes.string, // 固定root名
   className: PropTypes.string, // 接受 className 和root 合并
   showType: PropTypes.string, // 展示 table 还是 listCard
-  handleRedirectToTable: PropTypes.func, // 外部切换tabs 到 table
-  handleRedirectToCard: PropTypes.func, // 外部切换tabs 到 card
+  onChange: PropTypes.func, // 外部切换tabs
 };

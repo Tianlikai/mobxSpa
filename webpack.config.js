@@ -255,13 +255,13 @@ let wp = {
       apiMocker(app, mocker);
     },
     proxy: {
-      '/__api/*': {
+      '/__online/*': {
         changeOrigin: true,
         secure: false,
         target: 'https://demo.yourIP.cn', // 随便写，但必须有
         router: function(req) {
           let path = req.originalUrl;
-          let rePrefix = /^\/__api\/(\d+)?/;
+          let rePrefix = /^\/__online\/(\d+)?/;
           let port, base, target;
           if (rePrefix.test(path)) {
             let flag = RegExp.$1;
@@ -276,7 +276,7 @@ let wp = {
                 base = '/fo/rest';
                 break; // 做题端
               case '2':
-                port = ADMIN_PORT;
+                port = 8095;
                 base = '/admin_service';
                 break; // 后台
               // case '3': port = TASK_PORT; base = '/beat'; break // 任务卡
@@ -338,7 +338,8 @@ let wp = {
             }
           }
           path = base + path.replace(rePrefix, '');
-          target = `http://${env.SERVICE_IP}:${port}`;
+          // target = `http://${env.SERVICE_IP}:${port}`;
+          target = `https://t2.learnta.cn`;
           console.log('request: ' + target + path);
           return target + path;
         },

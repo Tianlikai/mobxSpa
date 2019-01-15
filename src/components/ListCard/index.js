@@ -1,9 +1,10 @@
 import React from 'react';
+import classnames from 'classnames';
 
 import { Spin, Checkbox } from 'antd';
 import Card from './Card';
 
-import styles from './style.scss';
+import './style.scss';
 
 export default class ListCard extends React.Component {
   static defaultProps = {
@@ -19,14 +20,6 @@ export default class ListCard extends React.Component {
       indeterminate: false,
       checkAll: false,
     };
-  }
-
-  commonUtil(data) {
-    const pageIds = data.map(item => item.id);
-    const currentPage = new Set([...pageIds]);
-    const currentSize = currentPage.size; // now 总数
-
-    return { currentPage, currentSize };
   }
 
   componentWillReceiveProps(nextProps) {
@@ -106,6 +99,14 @@ export default class ListCard extends React.Component {
     );
   };
 
+  commonUtil(data) {
+    const pageIds = data.map(item => item.id);
+    const currentPage = new Set([...pageIds]);
+    const currentSize = currentPage.size; // now 总数
+
+    return { currentPage, currentSize };
+  }
+
   render() {
     const { indeterminate, checkAll, selectedRowKeys } = this.state;
     const {
@@ -120,15 +121,17 @@ export default class ListCard extends React.Component {
       ...props
     } = this.props;
 
-    let classes = display ? `${styles.root} ${fixWrapper}` : `${styles.displayNone} ${fixWrapper}`;
-
-    classes = loading ? `${classes} ${styles.loading}` : classes;
+    const classes = classnames(fixWrapper, {
+      'root-listCard': display,
+      displayNone: !display,
+      loading,
+    });
 
     return (
       <div className={classes}>
         {selectedVideos && data && data.length > 0 ? (
           <Checkbox
-            className={`${styles.check} ${fixSelect}`}
+            className={`check ${fixSelect}`}
             indeterminate={indeterminate}
             checked={checkAll}
             onChange={this.handleCheckAll}
@@ -137,7 +140,7 @@ export default class ListCard extends React.Component {
           </Checkbox>
         ) : null}
 
-        <div className={`${styles.listRoot} ${fixContent}`}>
+        <div className={`listRoot ${fixContent}`}>
           {data
             && data.map(card => (
               <Card
@@ -150,7 +153,7 @@ export default class ListCard extends React.Component {
               />
             ))}
           {loading ? (
-            <div className={styles.spinLoading}>
+            <div className="spinLoading">
               <Spin />
             </div>
           ) : null}

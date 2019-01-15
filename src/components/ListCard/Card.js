@@ -1,22 +1,55 @@
 import React from 'react';
 
+import PropTypes from 'prop-types';
+import classnames from 'classnames';
+
 import { Menu, Dropdown as DropDown, Checkbox } from 'antd';
 
-import IconCircle from '../IconCircle';
+import IconCircle from '../IconCircle/index';
 
-import { STATUS_VIDEO } from '../../../../config';
+import { STATUS_VIDEO } from '../../settings/const';
 
-import styles from './Card.scss';
+import './Card.scss';
 
-export const Title = props => <div className={props.classes}>{props.name}</div>;
+export const Title = (props) => {
+  const { classes, name } = props;
+  return <div className={classes}>{name}</div>;
+};
+
+Title.propTypes = {
+  classes: PropTypes.string,
+  name: PropTypes.string,
+};
 
 class Card extends React.Component {
   static defaultProps = {
     fixClass: 'videoItem',
   };
 
+  static propTypes = {
+    id: PropTypes.number,
+    page: PropTypes.string,
+    cover: PropTypes.string,
+    fixClass: PropTypes.string,
+    className: PropTypes.string,
+    isSuperRight: PropTypes.bool,
+    fileName: PropTypes.string,
+    state: PropTypes.number,
+    selectedRowKeys: PropTypes.array,
+    selectedVideos: PropTypes.array,
+    onChange: PropTypes.func,
+    handleDelete: PropTypes.func,
+    handleReBack: PropTypes.func,
+    handleReview: PropTypes.func,
+    handleOpenPreview: PropTypes.func,
+    handleEditVideo: PropTypes.func,
+    handleModifyVideo: PropTypes.func,
+    handleOpenConnect: PropTypes.func,
+  };
+
   constructor(props) {
     super(props);
+    this.onChange = this.onChange.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
     this.handleReBack = this.handleReBack.bind(this);
     this.handleReview = this.handleReview.bind(this);
@@ -24,6 +57,11 @@ class Card extends React.Component {
     this.handleModifyVideo = this.handleModifyVideo.bind(this);
     this.handleOpenConnect = this.handleOpenConnect.bind(this);
     this.handleOpenPreview = this.handleOpenPreview.bind(this);
+  }
+
+  onChange() {
+    const { onChange, id } = this.props;
+    if (onChange) onChange(id);
   }
 
   handleDelete() {
@@ -75,23 +113,18 @@ class Card extends React.Component {
     }
   }
 
-  onChange = (e) => {
-    const { onChange, id } = this.props;
-    if (onChange) onChange(id);
-  };
-
   render() {
     const {
+      id,
       page,
       cover,
-      fixClass,
       fileName,
       state, // 视频状态
+      fixClass,
       className,
-      selectedRowKeys,
-      id,
       isSuperRight,
       selectedVideos,
+      selectedRowKeys,
     } = this.props;
 
     let stateText;
@@ -144,10 +177,11 @@ class Card extends React.Component {
       case 'hasPreview':
         hasPreview = true;
         break;
+      default:
+        break;
     }
-
-    const hasDrop = // 下啦菜单展示
-      hasPreview
+    // 下啦菜单展示
+    const hasDrop = hasPreview
       || hasEdit
       || hasLook
       || hasModify
@@ -160,7 +194,7 @@ class Card extends React.Component {
       <Menu>
         {hasPreview ? (
           <Menu.Item>
-            <span className={styles.videoMethod} onClick={this.handleOpenPreview}>
+            <span className="videoMethod" onClick={this.handleOpenPreview}>
               预览
             </span>
           </Menu.Item>
@@ -168,7 +202,7 @@ class Card extends React.Component {
 
         {hasEdit ? (
           <Menu.Item>
-            <span className={styles.videoMethod} onClick={this.handleEditVideo}>
+            <span className="videoMethod" onClick={this.handleEditVideo}>
               编辑
             </span>
           </Menu.Item>
@@ -176,7 +210,7 @@ class Card extends React.Component {
 
         {hasLook ? (
           <Menu.Item>
-            <span className={styles.videoMethod} onClick={this.handleEditVideo}>
+            <span className="videoMethod" onClick={this.handleEditVideo}>
               查看
             </span>
           </Menu.Item>
@@ -184,7 +218,7 @@ class Card extends React.Component {
 
         {hasModify ? (
           <Menu.Item>
-            <span className={styles.videoMethod} onClick={this.handleModifyVideo}>
+            <span className="videoMethod" onClick={this.handleModifyVideo}>
               编辑
             </span>
           </Menu.Item>
@@ -192,7 +226,7 @@ class Card extends React.Component {
 
         {hasReview ? (
           <Menu.Item>
-            <span className={styles.videoMethod} onClick={this.handleReview}>
+            <span className="videoMethod" onClick={this.handleReview}>
               审核
             </span>
           </Menu.Item>
@@ -200,7 +234,7 @@ class Card extends React.Component {
 
         {hasConnect ? (
           <Menu.Item>
-            <span className={styles.videoMethod} onClick={this.handleOpenConnect}>
+            <span className="videoMethod" onClick={this.handleOpenConnect}>
               关联知识点
             </span>
           </Menu.Item>
@@ -208,24 +242,20 @@ class Card extends React.Component {
 
         {hasDel ? (
           <Menu.Item>
-            <span className={styles.videoMethod} onClick={this.handleDelete}>
+            <span className="videoMethod" onClick={this.handleDelete}>
               删除
             </span>
           </Menu.Item>
         ) : null}
         {hasReBack ? (
           <Menu.Item>
-            <span className={styles.videoMethod} onClick={this.handleReBack}>
+            <span className="videoMethod" onClick={this.handleReBack}>
               恢复
             </span>
           </Menu.Item>
         ) : null}
       </Menu>
     );
-
-    const classes = className
-      ? `${styles.cardWrapper} ${fixClass} ${className}`
-      : `${styles.cardWrapper} ${fixClass}`;
 
     let bcg = '';
     switch (state) {
@@ -241,38 +271,36 @@ class Card extends React.Component {
       case 3:
         bcg = '#77BC2B';
         break;
+      default:
+        break;
     }
 
     const checked = selectedRowKeys ? selectedRowKeys.has(id) : false;
 
     return (
-      <div className={classes}>
-        <div className={styles.imgWrapper}>
+      <div className={classnames('cardWrapper', `${fixClass}`, { [className]: className })}>
+        <div className="imgWrapper">
           <img src={cover} alt="cover" />
         </div>
-        <div className={styles.cardTitle}>{fileName}</div>
+        <div className="cardTitle">{fileName}</div>
 
         {stateText && page !== 'recycleBin' ? (
-          <div className={styles.statusWrapper}>
+          <div className="statusWrapper">
             <IconCircle size={10} bcg={bcg} />
             <span>{stateText}</span>
           </div>
         ) : null}
 
         {hasDrop ? (
-          <div className={`${styles.dropDown} videoDropDown`}>
+          <div className="dropDown videoDropDown">
             <DropDown placement="bottomRight" overlay={itemMenu}>
-              <span className={styles.pointBC} />
+              <span className="pointBC" />
             </DropDown>
           </div>
         ) : null}
 
         {selectedVideos ? (
-          <Checkbox
-            checked={checked}
-            className={`${styles.checkbox} videoCheckbox`}
-            onChange={this.onChange}
-          />
+          <Checkbox checked={checked} className="checkbox videoCheckbox" onChange={this.onChange} />
         ) : null}
       </div>
     );

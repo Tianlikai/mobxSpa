@@ -1,11 +1,9 @@
-.root {
+.root-listCard {
   position: relative;
-}
-.check {
-  position: absolute;
-  font-size: 16px;
-  top: -30px;
-  :global {
+  .check {
+    position: absolute;
+    font-size: 16px;
+    top: -30px;
     .ant-checkbox-inner {
       height: 16px;
       width: 16px;
@@ -21,25 +19,25 @@
       }
     }
   }
-}
-.listRoot {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  justify-content: flex-start;
-  margin-left: -20px;
-  margin-right: -20px;
-  font-size: 14px;
-}
-.loading {
-  opacity: 0.7;
-}
-.displayNone {
-  display: none;
-}
-.spinLoading {
-  position: absolute;
-  width: 100%;
-  text-align: center;
-  padding-top: 145px;
+  .listRoot {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin-left: -20px;
+    margin-right: -20px;
+    font-size: 14px;
+    .spinLoading {
+      position: absolute;
+      width: 100%;
+      text-align: center;
+      padding-top: 145px;
+    }
+  }
+  .loading {
+    opacity: 0.7;
+  }
+  .displayNone {
+    display: none;
+  }
 }
