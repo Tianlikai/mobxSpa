@@ -5,7 +5,7 @@ import classnames from 'classnames';
 
 import { Helmet } from 'react-helmet';
 
-import { Table } from 'antd';
+import { Table, Button } from 'antd';
 
 import { WithBreadcrumb } from 'components/Breadcrumb/index'; // eslint-disable-line
 
@@ -137,7 +137,16 @@ export default class ListWithSwitch extends Component {
           <meta name="description" content="SPA" />
         </Helmet>
         <div className="table-search-wrapper">
-          <ModuleLine title="查询表格" />
+          <ModuleLine title="卡片表格切换">
+            <Button
+              size="middle"
+              type="primary"
+              className="create-btn"
+              onClick={this.redirectToCreate}
+            >
+              新增
+            </Button>
+          </ModuleLine>
           <Select
             data={SelectData}
             value={filterData}
@@ -145,10 +154,7 @@ export default class ListWithSwitch extends Component {
             handleSelect={this.handleSelect}
           />
         </div>
-        <SwitchOfList
-          showType={showType}
-          onChange={this.handleSwitchChange}
-        />
+        <SwitchOfList showType={showType} onChange={this.handleSwitchChange} />
         <ListCard
           key="listCard"
           page="personal"

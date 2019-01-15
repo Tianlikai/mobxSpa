@@ -8,6 +8,7 @@ const order = require('./order');
 const agent = require('./agent');
 const orgLog = require('./orgLog');
 const orderLog = require('./orderLog');
+const list = require('./list');
 
 const proxy = {
   'POST /__api/8/user/login': login,
@@ -129,6 +130,21 @@ const proxy = {
       startTime,
       endTime,
     );
+    res.json({
+      code: '0',
+      data: {
+        count: count,
+        items: items,
+      },
+      err: null,
+      message: 'success!',
+      successful: true,
+    });
+  },
+  'POST /list/__api/2/video/orgVideo/list/1': function(req, res) {
+    console.log('POST mock: /__api/2/video/orgVideo/list/1');
+    const { isOwn, pageNo, pageSize } = req.body;
+    const { items, count } = list.getList(pageNo, pageSize);
     res.json({
       code: '0',
       data: {
