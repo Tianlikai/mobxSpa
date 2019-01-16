@@ -1,6 +1,21 @@
-:global {
-  .previewBtn {
-    border-color: #449aef;
-    color: #449aef;
+.video-info-input {
+  position: relative;
+  .video-info-name {
+    float: left;
   }
+  .up-loader-wrapper {
+    float: right;
+  }
+  .video-info-name {
+    width: 80%;
+  }
+  &:after {
+    content: "";
+    display: block;
+    clear: both;
+  }
+}
+.previewBtn {
+  border-color: #449aef;
+  color: #449aef;
 }

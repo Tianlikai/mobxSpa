@@ -17,10 +17,10 @@ export const QINIU_BUCKETS = {
 
 class Uploader extends React.Component {
   static defaultProps = {
-    mimeType: null,
+    // mimeType: null,
     typeErrMessage: '上传文件格式不正确',
-    sizeLimit: 10000 * 1024 * 1024,
-    sizeErrMessage: '仅允许上传5M以内的图片',
+    // sizeLimit: 10000 * 1024 * 1024,
+    // sizeErrMessage: '仅允许上传5M以内的图片',
     width: 80,
     height: 80,
   };
@@ -28,9 +28,9 @@ class Uploader extends React.Component {
   static propTypes = {
     width: PropTypes.number,
     height: PropTypes.number,
-    mimeType: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
-    sizeLimit: PropTypes.number,
-    sizeErrMessage: PropTypes.string,
+    // mimeType: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
+    // sizeLimit: PropTypes.number,
+    // sizeErrMessage: PropTypes.string,
     typeErrMessage: PropTypes.string,
     children: PropTypes.element,
     type: PropTypes.string,

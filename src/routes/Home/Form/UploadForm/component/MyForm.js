@@ -69,6 +69,10 @@ class MyForm extends Component {
     handleSubmit();
   };
 
+  onChange = (values) => {
+    values;
+  };
+
   validatorVideo(rule, value, callback) {
     const len = Object.keys(value).length;
     if (!len) return callback('请上传视频');
@@ -89,7 +93,7 @@ class MyForm extends Component {
       formItemRadioLayout,
     } = this.props;
 
-    const mimeType = ['video/mp4', 'video/quicktime', 'image/png'];
+    const mimeType = ['video/mp4', 'video/quicktime'];
 
     return (
       <div className="orderForm-container">

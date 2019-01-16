@@ -1,14 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Button } from 'antd';
+import { Button, Input } from 'antd';
 
 // import Preview from 'widgets/Preview/Preview';
 import Card from 'components/ListCard/Card'; // eslint-disable-line
 import { Title } from 'components/ListCard/Card'; // eslint-disable-line
 
-import UpLoader from './Uploader';
-
+import UpLoaderTrigger from './UpLoaderTrigger';
 import './style.scss';
 
 export default class FormUpLoader extends React.Component {
@@ -61,24 +60,19 @@ export default class FormUpLoader extends React.Component {
     const { value, mimeType } = this.props;
     const { medias, name } = value || {};
     const marginTop = { marginTop: 4 };
-    const PreviewTitle = (
-      <Title
-        name={name && name.length > 60 ? `${name.substring(0, 60)}...` : name}
-        classes="previewTitle"
-      />
-    );
+    // const PreviewTitle = (
+    //   <Title
+    //     name={name && name.length > 60 ? `${name.substring(0, 60)}...` : name}
+    //     classes="previewTitle"
+    //   />
+    // );
 
     return (
       <div>
-        <UpLoader
-          value={name}
-          mimeType={mimeType}
-          type="formUploadItem"
-          bucket="learnta-video-public"
-          text={medias ? '重新上传' : '点击上传'}
-          onComplete={this.handleComplete}
-          changeFileName={this.handleChangeFileName}
-        />
+        <div className="video-info-input">
+          <Input type="text" className="video-info-name" />
+          <UpLoaderTrigger />
+        </div>
 
         {medias && name ? (
           <Card
@@ -96,7 +90,6 @@ export default class FormUpLoader extends React.Component {
         >
           预览
         </Button>
-
         {/* {preview && medias && (
           <Preview
             type="video"
