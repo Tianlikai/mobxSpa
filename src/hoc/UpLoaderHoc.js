@@ -3,10 +3,10 @@ import * as Q from 'qiniu-js';
 
 import { message } from 'antd';
 
-import UpLoaderTrigger from 'components/UpLoaderTrigger/index'; // eslint-disable-line
 import { ApiOnline as api } from '../api/index';
 
-const UpLoaderHoc = Component => class extends Component {
+const UpLoaderHoc = (WrapperComponent) => {
+  class Loader extends React.Component {
     uploadByQ = (token, file) => {
       const key = undefined;
       const putExtra = {
@@ -21,29 +21,46 @@ const UpLoaderHoc = Component => class extends Component {
       this.subscription = observable.subscribe(this.next, this.error, this.complete);
     };
 
-    next = (value) => {
-      console.info(value);
+    cancel = () => {};
+
+    next = (info) => {
+      if (this.loader.next) {
+        this.loader.next(info);
+      }
     };
 
     error = (error) => {
-      if (super.uploadError) return super.uploadError(error);
+      if (this.loader.uploadError) return this.loader.uploadError(error);
       return message.error('上传失败');
     };
 
     complete = (data) => {
-      if (super.uploadComplete) return super.uploadComplete(data);
+      if (this.loader.uploadComplete) return this.loader.uploadComplete(data);
       return message.success('上传成功');
     };
 
     onChange = (files) => {
       api.getUploadToken({ bucket: this.bucket || 'learnta-pics' }).then((data) => {
+        // this.setState({ loading: true });
         this.uploadByQ(data.uptoken, files);
       });
     };
 
     render() {
-      return <UpLoaderTrigger onChange={this.onChange}>{super.render()}</UpLoaderTrigger>;
+      // const { loading, progress } = this.state;
+
+      // <Modal
+      //   title="正在上传"
+      //   visible={loading}
+      //   onCancel={this.cancel}
+      //   footer={<Button onClick={this.cancel}>取消上传</Button>}
+      // >
+      //   <Progress percent={progress} status="active" />
+      // </Modal>,
+      return <WrapperComponent ref={loader => (this.loader = loader)} onChange={this.onChange} />;
     }
+  }
+  return Loader;
 };
 
 export default UpLoaderHoc;

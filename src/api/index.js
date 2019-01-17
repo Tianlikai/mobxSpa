@@ -68,7 +68,7 @@ instanceOnline.interceptors.request.use(
     const { token } = G;
     // eslint-disable-next-line
     // if (token) config.headers.Authorization = `Bearer ${token}`;
-    if (token) config.headers.Authorization = 'Bearer 5d5462d4-ca46-323a-94be-2776a9f16427';
+    if (token) config.headers.Authorization = 'Bearer d29b50a3-ba28-3485-9049-5a2b04ce2ef3';
 
     return config;
   },
