@@ -7,20 +7,6 @@ import { ApiOnline as api } from '../api/index';
 
 const UpLoaderHoc = (WrapperComponent) => {
   class Loader extends React.Component {
-    uploadByQ = (token, file) => {
-      const key = undefined;
-      const putExtra = {
-        fname: '',
-        params: {},
-      };
-      const config = {
-        useCdnDomain: true,
-      };
-      const observable = Q.upload(file, key, token, putExtra, config);
-
-      this.subscription = observable.subscribe(this.next, this.error, this.complete);
-    };
-
     cancel = () => {};
 
     next = (info) => {
@@ -35,14 +21,35 @@ const UpLoaderHoc = (WrapperComponent) => {
     };
 
     complete = (data) => {
-      if (this.loader.uploadComplete) return this.loader.uploadComplete(data);
+      const {
+        lastModified, name, size, type,
+      } = this.file;
+      if (this.loader.uploadComplete) {
+        return this.loader.uploadComplete({
+          lastModified,
+          name,
+          size,
+          type,
+          ...data,
+        });
+      }
       return message.success('上传成功');
     };
 
-    onChange = (files) => {
+    upload = (file) => {
+      this.file = file;
       api.getUploadToken({ bucket: this.bucket || 'learnta-pics' }).then((data) => {
-        // this.setState({ loading: true });
-        this.uploadByQ(data.uptoken, files);
+        const key = undefined;
+        const token = data.uptoken;
+        const putExtra = {
+          fname: '',
+          params: {},
+        };
+        const config = {
+          useCdnDomain: true,
+        };
+        const observable = Q.upload(file, key, token, putExtra, config);
+        this.subscription = observable.subscribe(this.next, this.error, this.complete);
       });
     };
 
@@ -57,7 +64,13 @@ const UpLoaderHoc = (WrapperComponent) => {
       // >
       //   <Progress percent={progress} status="active" />
       // </Modal>,
-      return <WrapperComponent ref={loader => (this.loader = loader)} onChange={this.onChange} />;
+      return (
+        <WrapperComponent
+          ref={loader => (this.loader = loader)}
+          upload={this.upload}
+          {...this.props}
+        />
+      );
     }
   }
   return Loader;
