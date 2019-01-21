@@ -16,24 +16,29 @@ const UpLoaderHoc = (WrapperComponent) => {
     };
 
     error = (error) => {
-      if (this.loader.uploadError) return this.loader.uploadError(error);
+      if (this.loader.uploadError) {
+        return this.loader.uploadError(error);
+      }
       return message.error('上传失败');
     };
 
     complete = (data) => {
       const {
-        lastModified, name, size, type,
+        lastModified, lastModifiedDate, name, size, type, webkitRelativePath,
       } = this.file;
       if (this.loader.uploadComplete) {
-        return this.loader.uploadComplete({
+        this.loader.uploadComplete({
           lastModified,
+          lastModifiedDate,
           name,
           size,
           type,
+          webkitRelativePath,
           ...data,
         });
+      } else {
+        message.success('上传成功');
       }
-      return message.success('上传成功');
     };
 
     upload = (file) => {

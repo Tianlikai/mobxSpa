@@ -5,44 +5,48 @@ import CloneDeep from 'lodash/cloneDeep';
 import { Icon } from 'antd';
 
 import UpLoaderTrigger from 'components/UpLoaderTrigger/index'; // eslint-disable-line
-import UpLoadWithProgress from 'components/UpLoadWithProgress/index'; // eslint-disable-line
+import FileProgress from 'components/UpLoadWithProgress/index'; // eslint-disable-line
 import UpLoaderHoc from '../../../../../../hoc/UpLoaderHoc';
 
 import './style.scss';
 
-@UpLoaderHoc
-export default class FormUpLoader extends React.Component {
-  static propTypes = {
-    upload: PropTypes.func,
-    onChange: PropTypes.func,
-  };
+const UpLoadWithProgress = UpLoaderHoc(FileProgress);
 
+export default class FormUpLoader extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       files: [],
+      finish: [],
     };
   }
 
-  next = (info) => {
-    console.log(info);
+  handleCancelFile = (file) => {
+    debugger;
   };
 
-  uploadComplete = (data) => {
-    const { onChange } = this.props;
-    onChange(data);
+  handleDeleteFile = (file) => {
+    debugger;
   };
 
-  uploadError = () => {};
+  handleUploadSuccess = (newFile) => {
+    const { finish } = this.state;
+    const uploaded = finish.slice();
+    const tag = uploaded.findIndex(file => file.hash === newFile.hash);
+    if (tag < 0) {
+      uploaded.push(newFile);
+      this.setState({
+        finish: uploaded,
+      });
+    }
+  };
 
   handleFileChange = (Files) => {
-    // const { upload } = this.props;
-    // upload(file[0]);
     const { files } = this.state;
     const copyFiles = CloneDeep(files);
     for (let i = 0; i < Files.length; i += 1) {
       const file = Files[i];
-      const pos = copyFiles.findIndex(f => f.name !== file.name);
+      const pos = copyFiles.findIndex(f => f.name === file.name);
       if (pos < 0) copyFiles.push(file);
     }
     this.setState({
@@ -51,16 +55,24 @@ export default class FormUpLoader extends React.Component {
   };
 
   render() {
-    const { files } = this.state;
+    const { files, finish } = this.state;
     return (
       <div className="upLoader_with_preview">
         <UpLoaderTrigger className="loader_trigger" multiple onChange={this.handleFileChange}>
           <Icon type="download" />
           上传文件
         </UpLoaderTrigger>
-        {files.map(file => (
-          <UpLoadWithProgress file={file} />
-        ))}
+        <div className="upLoader_container">
+          {files.map(file => (
+            <UpLoadWithProgress
+              key={file.name}
+              file={file}
+              onCancel={this.handleCancelFile}
+              onDelete={this.handleDeleteFile}
+              onUploadSuccess={this.handleUploadSuccess}
+            />
+          ))}
+        </div>
       </div>
     );
   }
