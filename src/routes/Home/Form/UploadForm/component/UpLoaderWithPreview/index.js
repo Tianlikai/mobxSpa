@@ -21,12 +21,31 @@ export default class FormUpLoader extends React.Component {
     };
   }
 
-  handleCancelFile = (file) => {
-    debugger;
+  handleCancelFile = (cancelFile) => {
+    const { files } = this.state;
+    const F = files.slice();
+    const pos = F.findIndex(file => file.name === cancelFile.name);
+    if (pos >= 0) F.splice(pos, 1);
+    this.setState({
+      files: F,
+    });
   };
 
-  handleDeleteFile = (file) => {
-    debugger;
+  handleDeleteFile = (deleteFile) => {
+    const { files, finish } = this.state;
+    const F = files.slice();
+    const uploaded = finish.slice();
+
+    const pos1 = F.findIndex(file => file.name === deleteFile.name);
+    const pos2 = uploaded.findIndex(file => file.name === deleteFile.name);
+
+    if (pos1 >= 0) F.splice(pos1, 1);
+    if (pos2 >= 0) uploaded.splice(pos2, 1);
+
+    this.setState({
+      files: F,
+      finish: uploaded,
+    });
   };
 
   handleUploadSuccess = (newFile) => {
