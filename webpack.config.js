@@ -1,14 +1,18 @@
 /* eslint-disable */
 const path = require('path');
 const webpack = require('webpack');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ManifestPlugin = require('webpack-manifest-plugin');
-const WebpackMd5Hash = require('webpack-md5-hash');
-const apiMocker = require('webpack-api-mocker');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HappyPack = require('happypack');
+const apiMocker = require('webpack-api-mocker');
+const WebpackMd5Hash = require('webpack-md5-hash');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const ManifestPlugin = require('webpack-manifest-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+
 const happyThreadPool = HappyPack.ThreadPool({ size: 5 });
 const manifest = require('./src/static/manifest.dll.json');
 require('babel-polyfill');
@@ -64,8 +68,6 @@ let wp = {
     },
   },
   cache: env.DEV,
-  // 不打包以下库，通过dll处理
-  // key是全局变量名，value是引用的库名
   externals: {
     React: 'react',
     ReactDOM: 'react-dom',
@@ -80,20 +82,18 @@ let wp = {
     splitChunks: {
       cacheGroups: {
         vendor: {
-          // node_modules内的依赖库
           chunks: 'all',
           test: /[\\/]node_modules[\\/]/,
           name: 'vendor',
-          minChunks: 1, // 被不同entry引用次数(import),1次的话没必要提取
+          minChunks: 1,
           maxInitialRequests: 5,
           minSize: 0,
           priority: 100,
         },
         common: {
-          // ‘src/js’ 下的js文件
           chunks: 'all',
-          test: /[\\/]src[\\/]/, // 也可以值文件/[\\/]src[\\/]js[\\/].*\.js/,
-          name: 'common', // 生成文件名，依据output规则
+          test: /[\\/]src[\\/]/,
+          name: 'common',
           minChunks: 2,
           maxInitialRequests: 5,
           minSize: 0,
@@ -104,6 +104,14 @@ let wp = {
     runtimeChunk: {
       name: 'manifest',
     },
+    minimizer: [
+      new UglifyJsPlugin({
+        cache: true,
+        parallel: true,
+        sourceMap: true,
+      }),
+      new OptimizeCSSAssetsPlugin({}),
+    ],
   },
   module: {
     rules: [
@@ -118,29 +126,11 @@ let wp = {
         use: ['happypack/loader?id=js'],
       },
       {
-        test: /\.css$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: ['happypack/loader?id=css'],
-        }),
-      },
-      {
-        test: /\.s(a|c)ss$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: [
-            {
-              loader: 'css-loader',
-            },
-            {
-              loader: 'postcss-loader',
-            },
-            {
-              loader: 'sass-loader',
-              options: { importLoaders: 1 },
-            },
-          ],
-        }),
+        test: /\.(sa|sc|c)ss$/,
+        use: [
+          { loader: env.DEV ? 'style-loader' : MiniCssExtractPlugin.loader },
+          { loader: 'happypack/loader?id=css' },
+        ],
       },
       {
         test: /\.(png|svg|jpg|gif)$/,
@@ -158,9 +148,7 @@ let wp = {
   },
   plugins: [
     new HappyPack({
-      // 用唯一的标识符 id 来代表当前的 HappyPack 是用来处理一类特定的文件
       id: 'js',
-      // 如何处理 .js 文件，用法和 Loader 配置中一样
       loaders: [
         {
           loader: 'babel-loader',
@@ -169,22 +157,16 @@ let wp = {
           },
         },
       ],
-      // 使用共享进程池中的子进程去处理任务
       threadPool: happyThreadPool,
-      // ... 其它配置项
     }),
     new HappyPack({
       id: 'css',
-      // 如何处理 .css 文件，用法和 Loader 配置中一样
-      loaders: ['css-loader'],
-      // 使用共享进程池中的子进程去处理任务
+      loaders: [{ loader: 'css-loader' }, { loader: 'postcss-loader' }, { loader: 'sass-loader' }],
       threadPool: happyThreadPool,
     }),
-    // 用ExtractTextPlugin之后hot无效，所以开发模式下禁用
-    new ExtractTextPlugin({
-      filename: env.DEV ? 'style.css' : 'style-[md5:contenthash:hex:20].css',
-      disable: env.DEV,
-      allChunks: true,
+    new MiniCssExtractPlugin({
+      filename: env.DEV ? '[name].css' : '[name].[hash].css',
+      chunkFilename: env.DEV ? '[id].css' : '[id].[hash].css',
     }),
     new HtmlWebpackPlugin({
       title: 'my structure',
@@ -194,7 +176,6 @@ let wp = {
       dllJS: env.DEV ? `/static/${getDllName()}.js` : `${cdnUrl}/${getDllName()}.js`,
       dllCSS: env.DEV ? `/static/${getDllName()}.css` : `${cdnUrl}/${getDllName()}.css`,
     }),
-    // 定义全局变量React指向react库就不用每次import react
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery',
@@ -216,7 +197,6 @@ let wp = {
       context: rootDir,
       manifest: require('./src/static/manifest.dll.json'),
     }),
-    // css变化时不会影响js的hash，参看hash,chunkhash,contenthash的区别
     new WebpackMd5Hash(),
     new ManifestPlugin(),
     new CopyWebpackPlugin([
@@ -226,6 +206,7 @@ let wp = {
         flatten: true,
       },
     ]),
+    new webpack.NamedModulesPlugin(),
   ],
   devServer: {
     // publicPath: 'http://127.0.0.1:8000/', // bundle.js来源
