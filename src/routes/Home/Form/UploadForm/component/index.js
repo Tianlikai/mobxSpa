@@ -28,38 +28,7 @@ class UploadForm extends Component {
   }
 
   handleSubmit = (values) => {
-    const {
-      area: AREA,
-      className,
-      englishPress,
-      englishTeacher,
-      grade,
-      mathPress,
-      mathTeacher,
-      school,
-    } = values;
-
-    const {
-      FormStore,
-      history: { replace },
-    } = this.props;
-    FormStore.CreatePromotion(
-      {
-        province: AREA[0] || '',
-        city: AREA[1] || '',
-        area: AREA[2] || '',
-        className,
-        englishPress,
-        englishTeacher,
-        grade,
-        mathPress,
-        mathTeacher,
-        school,
-      },
-      (id) => {
-        replace(`/detail/baseDetail/${id}`);
-      },
-    );
+    console.log(values);
   };
 
   render() {
@@ -81,7 +50,7 @@ class UploadForm extends Component {
             <meta name="description" content="SPA" />
           </Helmet>
           <ModuleLine title="新增记录（上传表单）" />
-          <MyForm />
+          <MyForm onSubmit={this.handleSubmit} />
         </div>
       </WithBreadcrumb>
     );

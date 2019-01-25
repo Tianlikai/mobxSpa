@@ -2,18 +2,15 @@ import React, { Component } from 'react';
 
 import PropTypes from 'prop-types';
 
-import {
-  Form, Input, Select, Button, Radio,
-} from 'antd';
+import { Form, Button } from 'antd';
 
-import UpLoaderWithPreview from './UpLoaderWithPreview/index';
+import MulSelect from 'components/MulSelect/index'; // eslint-disable-line
+import UpLoaderWithPreview from 'components/UpLoaderWithPreview/index'; // eslint-disable-line
 
 import FormHoc from '../../../../../hoc/FormHoc';
 import { GRADE } from 'settings/const'; // eslint-disable-line
 
 const FormItem = Form.Item;
-const { Option } = Select;
-const RadioGroup = Radio.Group;
 
 @FormHoc
 class MyForm extends Component {
@@ -40,26 +37,12 @@ class MyForm extends Component {
         },
       },
     },
-    formItemRadioLayout: {
-      labelCol: {
-        xs: { span: 24 },
-        sm: { span: 6 },
-      },
-      wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 12 },
-      },
-    },
   };
 
   static propTypes = {
     form: PropTypes.object.isRequired, // antd 表单对象
-    regions: PropTypes.array, // 地区
-    mathType: PropTypes.string, // 数学类型
-    englishType: PropTypes.string, // 英语类型
     formItemLayout: PropTypes.object,
     tailFormItemLayout: PropTypes.object,
-    formItemRadioLayout: PropTypes.object,
     handleSubmit: PropTypes.func.isRequired, // FormHoc 公用方法，该方法调用会默认触发尾部onSubmit回调
   };
 
@@ -67,10 +50,6 @@ class MyForm extends Component {
     e.preventDefault();
     const { handleSubmit } = this.props;
     handleSubmit();
-  };
-
-  onChange = (values) => {
-    values;
   };
 
   validatorVideo(rule, value, callback) {
@@ -84,13 +63,9 @@ class MyForm extends Component {
 
   render() {
     const {
-      regions,
-      mathType,
-      englishType,
       form: { getFieldDecorator },
       formItemLayout,
       tailFormItemLayout,
-      formItemRadioLayout,
     } = this.props;
 
     const mimeType = ['video/mp4', 'video/quicktime'];
@@ -109,6 +84,13 @@ class MyForm extends Component {
                 // { validator: this.validatorVideo },
               ],
             })(<UpLoaderWithPreview mimeType={mimeType} />)}
+          </FormItem>
+
+          <FormItem className="defaultFormItem" {...formItemLayout} label="自定义标签">
+            {getFieldDecorator('userDefinedTags', {
+              initialValue: [],
+              rules: [{ required: true, message: '请填写自定义标签' }],
+            })(<MulSelect warningInfo={false} />)}
           </FormItem>
 
           <FormItem {...tailFormItemLayout}>
