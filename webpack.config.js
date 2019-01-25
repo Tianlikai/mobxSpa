@@ -133,21 +133,11 @@ let wp = {
               loader: 'css-loader',
             },
             {
-              loader: 'sass-loader',
-              options: { importLoaders: 1 },
+              loader: 'postcss-loader',
             },
             {
-              loader: 'postcss-loader',
-              options: {
-                sourceMap: true,
-                ident: 'postcss',
-                parser: 'postcss-scss',
-                plugins: () => [
-                  require('autoprefixer')({
-                    browsers: ['last 10 version', 'ie >= 10'],
-                  }),
-                ],
-              },
+              loader: 'sass-loader',
+              options: { importLoaders: 1 },
             },
           ],
         }),
