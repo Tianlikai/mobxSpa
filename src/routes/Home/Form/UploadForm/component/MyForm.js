@@ -100,10 +100,13 @@ class MyForm extends Component {
         <Form onSubmit={this.onSubmit}>
           <FormItem className="orderForm-item" {...formItemLayout} label="视频名称">
             {getFieldDecorator('video', {
-              initialValue: {},
+              initialValue: {
+                files: [],
+                finish: [],
+              },
               rules: [
                 { required: true, message: '请上传视频' },
-                { validator: this.validatorVideo },
+                // { validator: this.validatorVideo },
               ],
             })(<UpLoaderWithPreview mimeType={mimeType} />)}
           </FormItem>
