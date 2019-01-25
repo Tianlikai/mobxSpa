@@ -3,7 +3,9 @@
 const path = require('path');
 
 const webpack = require('webpack');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 const rootDir = path.resolve(__dirname);
 const staticDir = path.resolve(rootDir, 'src', 'static');
@@ -30,6 +32,16 @@ module.exports = {
     filename: 'dll.[name].[chunkhash].js',
     library: 'dll_[name]_[chunkhash]',
   },
+  optimization: {
+    minimizer: [
+      new UglifyJsPlugin({
+        cache: true,
+        parallel: true,
+        sourceMap: true,
+      }),
+      new OptimizeCSSAssetsPlugin({}),
+    ],
+  },
   module: {
     rules: [
       {
@@ -45,31 +57,13 @@ module.exports = {
         },
       },
       {
-        test: /\.css$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: 'css-loader',
-        }),
-      },
-      {
-        test: /\.s(a|c)ss$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: [
-            {
-              loader: 'css-loader',
-              options: {
-                sourceMap: false,
-              },
-            },
-            {
-              loader: 'sass-loader',
-              options: {
-                sourceMap: false,
-              },
-            },
-          ],
-        }),
+        test: /\.(sa|sc|c)ss$/,
+        use: [
+          { loader: MiniCssExtractPlugin.loader },
+          { loader: 'css-loader' },
+          { loader: 'postcss-loader' },
+          { loader: 'sass-loader' },
+        ],
       },
       {
         test: /\.(png|svg|jpg|gif)$/,
@@ -90,7 +84,7 @@ module.exports = {
       name: 'dll_[name]_[chunkhash]',
       context: rootDir,
     }),
-    new ExtractTextPlugin({
+    new MiniCssExtractPlugin({
       filename: 'dll.[name].[chunkhash].css',
       allChunks: true,
     }),
