@@ -43,13 +43,7 @@ const ACTIVITY_PORT = 8331;
 
 let wp = {
   mode: env.DEV ? 'development' : 'production',
-  entry: env.DEV
-    ? [
-        'webpack-dev-server/client' + '?' + env.CLIENT, // 资源服务器地址
-        'webpack/hot/only-dev-server',
-        path.join(srcDir, 'index.js'),
-      ]
-    : ['babel-polyfill', path.join(srcDir, 'index.js')],
+  entry: path.resolve(__dirname, './src/index.js'),
   output: {
     filename: env.DEV ? '[name].js' : '[name]-[chunkhash:8].js',
     publicPath: env.DEV ? env.CLIENT : `${cdnUrl}/`,
@@ -206,7 +200,6 @@ let wp = {
         flatten: true,
       },
     ]),
-    new webpack.NamedModulesPlugin(),
   ],
   devServer: {
     // publicPath: 'http://127.0.0.1:8000/', // bundle.js来源

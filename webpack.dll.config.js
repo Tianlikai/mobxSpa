@@ -45,18 +45,6 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.js$/,
-        loader: 'source-map-loader',
-        enforce: 'pre',
-      },
-      {
-        test: /\.js$/,
-        loader: 'babel-loader',
-        options: {
-          cacheDirectory: false,
-        },
-      },
-      {
         test: /\.(sa|sc|c)ss$/,
         use: [
           { loader: MiniCssExtractPlugin.loader },

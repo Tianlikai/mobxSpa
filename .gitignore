@@ -16,15 +16,10 @@
 .env.test.local
 .env.production.local
 
+package-lock.json
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-
-.idea
-yarn.lock
-package-lock.json
-*bak
-.vscode
 
 # dll
 /public/dll.*
