@@ -16,6 +16,7 @@ module.exports = {
     vendor: [
       'antd',
       'antd/dist/antd.min.css',
+      'echarts',
       'react',
       'react-dom',
       'react-helmet',

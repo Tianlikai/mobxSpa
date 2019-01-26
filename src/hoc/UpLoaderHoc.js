@@ -3,7 +3,8 @@ import * as Q from 'qiniu-js';
 
 import { message } from 'antd';
 
-import { ApiOnline as api } from '../api/index';
+// import { ApiOnline as api } from '../api/index';
+import api from '../api/index';
 
 const UpLoaderHoc = (WrapperComponent) => {
   class Loader extends React.Component {

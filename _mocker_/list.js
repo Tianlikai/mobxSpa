@@ -19,7 +19,7 @@ const COVER = URL.map(item => `https://lcdns-vv.learnta.com/res/${item}?vframe/j
 class List {
   constructor() {
     const cachedPro = [];
-    for (let i = 0; i < this.initialMyProLength; i += 1) {
+    for (let i = 0; i < 10; i += 1) {
       const mock = Mock.mock({
         item: {
           'category|1': [0, 1],
