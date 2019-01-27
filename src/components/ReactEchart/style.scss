@@ -1,0 +1,8 @@
+.chart-wrapper {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin: 20px 0;
+  &:first-child {
+    margin: 0;
+  }
+}
