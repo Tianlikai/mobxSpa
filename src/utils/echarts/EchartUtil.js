@@ -1,9 +1,9 @@
 import { ColorArray } from './EchartType';
 
-function foreachDataSetBackgroundColors(datas, i, type) {
+function foreachDataSetBackgroundColors(data, i, type) {
   const result = [];
   /* eslint-disable */
-  datas.forEach(items => {
+  data.forEach(item => {
     const list = {};
     list.value = item === -1 ? '-' : item;
     list.itemStyle = {
