@@ -14,6 +14,9 @@ const env = require('./env');
 const FRONT_PORT = 8080;
 
 module.exports = merge(baseConfig, {
+  mode: 'development',
+  devtool: 'source-map',
+  cache: true,
   devServer: {
     // publicPath: 'http://127.0.0.1:8000/', // bundle.js
     contentBase: path.join(__dirname, '../src'), // 服务静态资源目录

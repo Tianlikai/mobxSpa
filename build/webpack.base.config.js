@@ -28,7 +28,6 @@ function getDllName() {
 }
 
 module.exports = {
-  mode: env.DEV ? 'development' : 'production',
   entry: path.resolve(__dirname, '../src/index.js'),
   output: {
     filename: env.DEV ? '[name].js' : '[name]-[chunkhash:8].js',
@@ -36,7 +35,6 @@ module.exports = {
     path: distDir,
     chunkFilename: '[name].[chunkhash:8].js',
   },
-  devtool: env.DEV && 'source-map',
   resolve: {
     extensions: ['.js', '.json'],
     alias: {
@@ -47,7 +45,6 @@ module.exports = {
       redactor: path.join(srcDir, 'static/redactor'),
     },
   },
-  cache: env.DEV,
   externals: {
     React: 'react',
     ReactDOM: 'react-dom',
