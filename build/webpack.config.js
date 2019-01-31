@@ -14,7 +14,7 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 const happyThreadPool = HappyPack.ThreadPool({ size: 5 });
-const manifest = require('../static/manifest.dll.json');
+const manifest = require('../src/static/manifest.dll.json');
 require('babel-polyfill');
 
 const env = require('./env.js');
@@ -58,7 +58,7 @@ let wp = {
       layouts: path.join(srcDir, 'layouts'),
       utils: path.join(srcDir, 'utils'),
       settings: path.join(srcDir, 'settings'),
-      redactor: path.join(rootDir, '../static/redactor'),
+      redactor: path.join(srcDir, 'static/redactor'),
     },
   },
   cache: env.DEV,
@@ -189,13 +189,13 @@ let wp = {
     ),
     new webpack.DllReferencePlugin({
       context: rootDir,
-      manifest: require('../static/manifest.dll.json'),
+      manifest: require('../src/static/manifest.dll.json'),
     }),
     new WebpackMd5Hash(),
     new ManifestPlugin(),
     new CopyWebpackPlugin([
       {
-        from: '../static/dll.vendor.*',
+        from: '../src/static/dll.vendor.*',
         to: '',
         flatten: true,
       },
