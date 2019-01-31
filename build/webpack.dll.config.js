@@ -8,7 +8,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 const rootDir = path.resolve(__dirname);
-const staticDir = path.resolve(rootDir, 'src', 'static');
+const staticDir = path.resolve(rootDir, '../static');
 
 module.exports = {
   mode: 'production',

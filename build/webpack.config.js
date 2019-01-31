@@ -14,16 +14,16 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 const happyThreadPool = HappyPack.ThreadPool({ size: 5 });
-const manifest = require('./src/static/manifest.dll.json');
+const manifest = require('../static/manifest.dll.json');
 require('babel-polyfill');
 
 const env = require('./env.js');
-const mocker = path.resolve('./_mocker_/index.js');
+const mocker = path.resolve(__dirname, '../_mocker_/index.js');
 
 const cdnUrl = ''; // 静态资源上传地址
 const rootDir = path.resolve(__dirname);
-const srcDir = path.join(rootDir, 'src');
-const distDir = path.join(rootDir, 'dist');
+const srcDir = path.join(rootDir, '../src');
+const distDir = path.join(rootDir, '../dist');
 
 const FRONT_PORT = 8080;
 const ADMIN_PORT = 9090;
@@ -43,7 +43,7 @@ const ACTIVITY_PORT = 8331;
 
 let wp = {
   mode: env.DEV ? 'development' : 'production',
-  entry: path.resolve(__dirname, './src/index.js'),
+  entry: path.resolve(__dirname, '../src/index.js'),
   output: {
     filename: env.DEV ? '[name].js' : '[name]-[chunkhash:8].js',
     publicPath: env.DEV ? env.CLIENT : `${cdnUrl}/`,
@@ -58,7 +58,7 @@ let wp = {
       layouts: path.join(srcDir, 'layouts'),
       utils: path.join(srcDir, 'utils'),
       settings: path.join(srcDir, 'settings'),
-      redactor: path.join(srcDir, 'static/redactor'),
+      redactor: path.join(rootDir, '../static/redactor'),
     },
   },
   cache: env.DEV,
@@ -189,13 +189,13 @@ let wp = {
     ),
     new webpack.DllReferencePlugin({
       context: rootDir,
-      manifest: require('./src/static/manifest.dll.json'),
+      manifest: require('../static/manifest.dll.json'),
     }),
     new WebpackMd5Hash(),
     new ManifestPlugin(),
     new CopyWebpackPlugin([
       {
-        from: 'src/static/dll.vendor.*',
+        from: '../static/dll.vendor.*',
         to: '',
         flatten: true,
       },

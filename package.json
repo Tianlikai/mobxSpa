@@ -1,15 +1,15 @@
 {
   "name": "mobx_spa",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "clean": "rimraf src/static/dll.vendor.* && rimraf src/static/manifest.dll.json",
-    "build:dll": "rimraf src/static/dll.vendor.* && rimraf src/static/manifest.dll.json && webpack --config webpack.dll.config.js",
+    "clean": "rimraf static/dll.vendor.* && rimraf static/manifest.dll.json",
+    "build:dll": "rimraf static/dll.vendor.* && rimraf static/manifest.dll.json && webpack --config build/webpack.dll.config.js",
     "build:webpack": "rimraf dist/* && cross-env NODE_ENV=prod webpack",
     "build": "npm run clean && npm run build:dll && npm run build:webpack",
-    "dev": "cross-env HOST=true NODE_ENV=dev webpack-dev-server --progress --mode development"
+    "dev": "cross-env HOST=true NODE_ENV=dev webpack-dev-server --config build/webpack.config.js --progress --mode development"
   },
   "author": "jason tian",
   "license": "ISC",
