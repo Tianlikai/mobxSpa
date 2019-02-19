@@ -4,10 +4,10 @@
     input {
       width: 100%;
       height: 54px;
+      padding: 0 20px;
+      font-size: 20px;
       border: 1px solid #d9d9d9;
       border-radius: 6px;
-      font-size: 20px;
-      padding: 0 20px;
     }
   }
   .has-error {
@@ -18,10 +18,10 @@
   .btnGroup .searchBtn {
     width: 100%;
     height: 54px;
-    text-align: center;
     color: #fff;
-    background: #2c5b8f;
     font-size: 24px;
+    text-align: center;
+    background: #2c5b8f;
     border-radius: 6px;
   }
 }

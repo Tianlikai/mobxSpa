@@ -2,11 +2,11 @@
   position: relative;
   .check {
     position: absolute;
-    font-size: 16px;
     top: -30px;
+    font-size: 16px;
     .ant-checkbox-inner {
-      height: 16px;
       width: 16px;
+      height: 16px;
       &::after {
         top: 2px;
         left: 5px;
@@ -21,17 +21,17 @@
   }
   .listRoot {
     display: flex;
-    flex-wrap: wrap;
     flex-direction: row;
+    flex-wrap: wrap;
     justify-content: flex-start;
-    margin-left: -20px;
     margin-right: -20px;
+    margin-left: -20px;
     font-size: 14px;
     .spinLoading {
       position: absolute;
       width: 100%;
-      text-align: center;
       padding-top: 145px;
+      text-align: center;
     }
   }
   .loading {

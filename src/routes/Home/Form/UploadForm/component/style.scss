@@ -3,9 +3,9 @@
   background: white;
 }
 .create-order-promotionDetail {
-  float: left;
-  left: 30px;
   top: 12px;
+  left: 30px;
+  float: left;
 }
 .orderForm-container {
   margin-top: 40px;
@@ -16,26 +16,23 @@
       &::before {
         display: inline-block;
         margin-right: 4px;
-        content: "*";
-        font-family: SimSun;
-        line-height: 1;
-        font-size: 14px;
         color: #f5222d;
+        font-size: 14px;
+        font-family: SimSun, sans-serif;
+        line-height: 1;
+        content: '*';
       }
       &::after {
-        content: "";
-      }
-    }
-    &.specialE div label,
-    &.specialM div label {
-      &::before {
-        content: "";
+        content: '';
       }
     }
     &.specialM div label,
     &.specialE div label {
+      &::before {
+        content: '';
+      }
       &::after {
-        content: "";
+        content: '';
       }
     }
   }

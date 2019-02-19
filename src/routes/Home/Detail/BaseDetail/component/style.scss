@@ -3,33 +3,33 @@
   background: white;
   .proInfo-container {
     position: relative;
-    font-size: 13px;
     padding-bottom: 80px;
+    font-size: 13px;
     .proInfo-left {
       padding-top: 20px;
       .proInfo-item {
         float: left;
-        margin-bottom: 5px;
         width: 195px;
+        margin-bottom: 5px;
         overflow: hidden;
-        text-overflow: ellipsis;
         white-space: nowrap;
+        text-overflow: ellipsis;
         .proInfo-item-label {
           margin-right: 5px;
         }
       }
       &::after {
-        content: "";
         display: block;
         clear: both;
+        content: "";
       }
     }
     .proInfo-right {
       position: absolute;
-      right: 0;
       top: 0;
-      height: 100px;
+      right: 0;
       width: 100px;
+      height: 100px;
       .code {
         width: 100px;
         height: 100px;
@@ -43,42 +43,42 @@
       }
     }
     &::after {
-      content: "";
       display: block;
       clear: both;
+      content: "";
     }
   }
 }
 .operations-orgGo {
   .ant-btn {
+    display: block;
     box-sizing: border-box;
     width: 70px;
     height: 30px;
-    line-height: 30px;
-    display: block;
-    text-align: center;
     padding: 0;
+    line-height: 30px;
+    text-align: center;
     &.ant-btn-primary {
+      margin-right: 10px;
+      margin-bottom: 10px;
       background-color: #2c5b8f;
       border: #2c5b8f;
-      margin-bottom: 10px;
-      margin-right: 10px;
     }
   }
 }
 .create-order-createPromotion {
-  float: left;
-  left: 30px;
   top: 12px;
+  left: 30px;
+  float: left;
 }
 
 .data-frame-container {
   margin-bottom: 1em;
   .data-frame-item {
     height: 188px;
+    padding: 30px 9%;
     border-radius: 2px;
     box-shadow: 0 0 4px #bfbfbf;
-    padding: 30px 9%;
     .item-title {
       font-size: 14px;
       .title-icon-right-show {
@@ -88,12 +88,12 @@
       }
     }
     .item-value {
-      font-size: 30px;
       color: #000;
+      font-size: 30px;
     }
     .item-bar {
-      margin-top: 55px;
       height: 1px;
+      margin-top: 55px;
       background-color: #bfbfbf;
     }
     .item-footer {
