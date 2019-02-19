@@ -1,5 +1,6 @@
 import React from 'react';
 import classnames from 'classnames';
+import PropTypes from 'prop-types';
 
 import { Spin, Checkbox } from 'antd';
 import Card from './Card';
@@ -13,10 +14,23 @@ export default class ListCard extends React.Component {
     fixContent: 'videoListContent',
   };
 
+  static propTypes = {
+    fixWrapper: PropTypes.string,
+    fixSelect: PropTypes.string,
+    fixContent: PropTypes.string,
+    className: PropTypes.string,
+    display: PropTypes.bool,
+    loading: PropTypes.bool,
+    data: PropTypes.array,
+    selectedRowKeys: PropTypes.array,
+    handleChange: PropTypes.func,
+  };
+
   constructor(props) {
     super(props);
+    const { selectedRowKeys } = props;
     this.state = {
-      selectedRowKeys: props.selectedRowKeys ? new Set(props.selectedRowKeys) : new Set([]), // 总数
+      selectedRowKeys: selectedRowKeys ? new Set(selectedRowKeys) : new Set([]), // 总数
       indeterminate: false,
       checkAll: false,
     };

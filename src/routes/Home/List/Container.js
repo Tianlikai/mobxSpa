@@ -19,9 +19,7 @@ export default class Container extends React.Component {
     routerData: PropTypes.object,
   };
 
-  handleTabChange = (key) => {
-    console.log(key);
-  };
+  handleTabChange = () => {};
 
   render() {
     const {

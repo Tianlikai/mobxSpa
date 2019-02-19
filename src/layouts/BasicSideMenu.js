@@ -88,6 +88,7 @@ export default class SideMenu extends Component {
                       </Item>
                     );
                   }
+                  return null;
                 })}
               </SubMenu>
             );

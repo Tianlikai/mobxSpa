@@ -5,15 +5,14 @@ import {
   formatterHintWithDbClick,
   adjustGrid,
   getSeriesItem,
-} from './EchartUtil';
+} from './EChartUtil';
 import {
-  BAR_SeriesItemType,
-  BAR_LabelPosition,
-  BAR_MaxWidth,
-  BAR_MinHeight,
+  BAR_SERIES_ITEM_TYPE,
+  BAR_LABEL_POSITION,
+  BAR_MAX_WIDTH,
+  BAR_MIN_HEIGHT,
   DataZoomWidth,
-  ColorArray,
-} from './EchartType';
+} from './EChartType';
 
 /**
  * 返回条形图表配置 option
@@ -28,13 +27,7 @@ function getBarChartOpt({
   type, chartData, from, isShow, WhetherTheTrip,
 }) {
   const {
-    legend,
-    x_name: seriesName,
-    y_name,
-    x: seriesData,
-    y,
-    groupNum,
-    group_type = [],
+    legend, xName, yName, x: seriesData, y, groupNum, groupType = [],
   } = chartData;
   const flag = y.every(ele => ele === ''); // 判断是否所有的刻度标签都为空
   const option = {
@@ -65,14 +58,14 @@ function getBarChartOpt({
       containLabel: true,
     },
     xAxis: {
-      name: seriesName,
+      name: xName,
       nameLocation: 'middle',
       nameGap: 25,
       type: 'value',
       boundaryGap: [0, 0.01],
     },
     yAxis: {
-      name: y_name,
+      name: yName,
       type: 'category',
       data: y,
     },
@@ -94,16 +87,16 @@ function getBarChartOpt({
   };
   if (flag) option.grid.left = '70px'; // 如果坐标轴刻度标签全部为空 则设置该属性 防止坐标轴名称显示不全
   const groupCount = seriesData.length; // 多个分组方式时的组数
-  for (let i = 0; i < groupCount; i++) {
+  for (let i = 0; i < groupCount; i += 1) {
     const datas = foreachDataSetBackgroundColors(seriesData[i], i, type);
     const itemInfo = {
-      name: groupNum === 1 ? seriesName : `${legend[i]}`,
-      type: BAR_SeriesItemType,
-      barMaxWidth: BAR_MaxWidth,
-      barMinHeight: BAR_MinHeight,
+      name: groupNum === 1 ? xName : `${legend[i]}`,
+      type: BAR_SERIES_ITEM_TYPE,
+      barMaxWidth: BAR_MAX_WIDTH,
+      barMinHeight: BAR_MIN_HEIGHT,
       colorIndex: i,
       show: false,
-      position: BAR_LabelPosition,
+      position: BAR_LABEL_POSITION,
       color: '#4A4A4A',
       data: datas,
     };
@@ -122,11 +115,11 @@ function getBarChartOpt({
   if (isShow) {
     // 是否显示数值
     const mainAxisLen = y.length; // y轴显示的数目
-    for (let i = 0, y = option.series.length; i < y; i++) {
+    for (let i = 0, Y = option.series.length; i < Y; i += 1) {
       option.series[i].label.normal.show = true;
     }
     // 时间类型的数据 需要设置dataDoom 要显示最新的
-    if (group_type && (group_type[0] === 'datetime' || group_type[0] === 'date')) {
+    if (groupType && (groupType[0] === 'datetime' || groupType[0] === 'date')) {
       option.dataZoom[0].start = 100 - getDataZoomEnd(mainAxisLen);
     } else {
       option.dataZoom[0].end = getDataZoomEnd(mainAxisLen);

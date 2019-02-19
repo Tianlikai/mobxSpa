@@ -21,6 +21,7 @@ const TableHoc = config => (WrappedComponent) => {
     static propTypes = {
       fixClass: PropTypes.string,
       className: PropTypes.string,
+      match: PropTypes.object,
     };
 
     componentDidMount() {
