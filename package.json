@@ -9,8 +9,22 @@
     "build:dll": "rimraf static/dll.vendor.* && rimraf static/manifest.dll.json && webpack --config build/webpack.dll.config.js",
     "build:webpack": "rimraf dist/* && cross-env NODE_ENV=prod webpack --config build/index.js",
     "build": "npm run clean && npm run build:dll && npm run build:webpack",
-    "dev": "cross-env HOST=true NODE_ENV=dev webpack-dev-server --config build/index.js --progress --mode development"
+    "dev": "cross-env HOST=true NODE_ENV=dev webpack-dev-server --config build/index.js --progress --mode development",
+    "lint:staged": "lint-staged",
+    "lint:eslint": "eslint 'src/**/*.js'",
+    "lint:eslint:fix": "eslint 'src/**/*.js' --fix"
   },
+  "lint-staged": {
+    "*.js": [
+      "npm run lint:eslint:fix",
+      "git add --force"
+    ],
+    "*.json": [
+      "prettier --write",
+      "git add --force"
+    ]
+  },
+  "pre-commit": "lint:staged",
   "author": "jason tian",
   "license": "ISC",
   "dependencies": {
@@ -59,6 +73,7 @@
     "css-loader": "^1.0.0",
     "eslint": "^5.10.0",
     "eslint-config-airbnb": "^17.1.0",
+    "eslint-config-prettier": "^4.0.0",
     "eslint-config-standard": "^12.0.0",
     "eslint-loader": "^2.1.1",
     "eslint-plugin-babel": "^5.3.0",
@@ -66,17 +81,21 @@
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.2",
     "eslint-plugin-markdown": "^1.0.0-rc.0",
+    "eslint-plugin-prettier": "^3.0.1",
     "eslint-plugin-promise": "^3.8.0",
     "eslint-plugin-react": "^7.11.1",
     "eslint-plugin-standard": "^3.1.0",
     "file-loader": "^1.1.11",
     "happypack": "^5.0.0",
     "html-webpack-plugin": "^3.2.0",
+    "lint-staged": "^8.1.4",
     "mini-css-extract-plugin": "^0.5.0",
     "node-sass": "^4.9.2",
     "optimize-css-assets-webpack-plugin": "^5.0.1",
     "postcss-loader": "^3.0.0",
     "postcss-scss": "^2.0.0",
+    "pre-commit": "^1.2.2",
+    "prettier": "1.16.4",
     "rimraf": "^2.6.2",
     "sass-loader": "^7.1.0",
     "source-map-loader": "^0.2.3",
