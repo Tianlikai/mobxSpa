@@ -1,0 +1,11 @@
+**/*.md
+**/*.svg
+**/*.ejs
+**/*.html
+_mocker_/
+build/
+dist/
+node_modules/
+src/static/
+package-lock.json
+package.json
