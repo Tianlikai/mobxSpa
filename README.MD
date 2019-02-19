@@ -10,6 +10,12 @@
 
 如果对你的项目搭建有帮助的话，随手给个星，感谢。
 
+## 本次更新
+
+- 添加 style-lint 检查 style
+- 添加 pre-commit 和 lint-staged，限制代码库代码风格
+- 按照 styleLint 和 eslint 配置文件，自动格式化代码，修正代码库代码风格。
+
 ## 特点
 
 - webpack 一个适用于真实项目开发配置
@@ -18,6 +24,7 @@
 - axios 基于模块组织 api 接口
 - 基于 antd 提供了表单，表格，上传的高阶组件。统一了以上场景的公共业务
 - 基于路由和组件的按需加载模块
+- style 和 js 使用 lint限制, git hooks 强制统一资源代码风格
 
 ## 文件目录
 
@@ -59,6 +66,10 @@
 ├── .eslintignore                   eslint忽略
 ├── .eslintrc.json                  eslint
 ├── .gitignore                      git忽略文件
+├── .prettierignore                 格式化代码忽略文件
+├── .prettierrc                     格式化自定义配置文件
+├── .stylelintrc.json               style lint 配置文件
+├── .gitignore                      git忽略文件
 ├── jsconfig.json                   代码兼容装饰器写法
 ├── package.json                    项目依赖 npm
 ├── postcss.config.js               postcss 插件配置
@@ -73,7 +84,7 @@
 - react-loadable
 - mobx 数据流
 - webpack 4.xx
-- ESLint 代码规范
+- ESLint styleLint lint-staged pre-commit 代码规范
 - axios 异步请求
 - antd ui
 - mock 模拟接口数据
@@ -92,7 +103,6 @@
 
 ## 待优化项
 
-- 提交代码时对代码做校验，强制规范代码
 - loading 改为体验更好的占位符
 - React 生命周期替换，以及新的 API 的使用，React 从 16.3 起到 17 将逐渐废除[componentWillReceiveProps]()，[componentWillMount]()，[componentWillUpdate]()
 
@@ -110,3 +120,9 @@ V 2.0.1
 - Api 接口不再统一配置，按照功能模块进行区分
 - 添加 [表单]()，[表格]()，[上传]() 高阶组件
 - 添加简单的 dashboard 页面
+
+v 2.0.2
+
+- 添加 style-lint 检查 style
+- 添加 pre-commit 和 lint-staged，限制代码库代码风格
+- 按照 styleLint 和 eslint 配置文件，自动格式化代码，修正代码库代码风格。
