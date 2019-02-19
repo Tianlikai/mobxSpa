@@ -11,17 +11,23 @@
     "build": "npm run clean && npm run build:dll && npm run build:webpack",
     "dev": "cross-env HOST=true NODE_ENV=dev webpack-dev-server --config build/index.js --progress --mode development",
     "lint:staged": "lint-staged",
+    "lint:style": "stylelint 'src/**/*.scss' --syntax scss",
     "lint:eslint": "eslint 'src/**/*.js'",
-    "lint:eslint:fix": "eslint 'src/**/*.js' --fix"
+    "lint-fix:style": "stylelint --fix 'src/**/*.scss' --syntax scss",
+    "lint-fix:eslint": "eslint 'src/**/*.js' --fix"
   },
   "lint-staged": {
     "*.js": [
-      "npm run lint:eslint:fix",
+      "npm run lint-fix:eslint",
       "git add --force"
     ],
     "*.json": [
       "prettier --write",
       "git add --force"
+    ],
+    "*.scss": [
+      "stylelint --syntax=scss",
+      "git add"
     ]
   },
   "pre-commit": "lint:staged",
@@ -100,6 +106,12 @@
     "sass-loader": "^7.1.0",
     "source-map-loader": "^0.2.3",
     "style-loader": "^0.22.1",
+    "stylelint": "^9.10.1",
+    "stylelint-config-prettier": "^4.0.0",
+    "stylelint-config-rational-order": "0.0.4",
+    "stylelint-config-standard": "^18.2.0",
+    "stylelint-declaration-block-no-ignored-properties": "^1.1.0",
+    "stylelint-order": "^2.0.0",
     "uglifyjs-webpack-plugin": "^2.1.1",
     "url-loader": "^1.0.1",
     "webpack": "^4.16.5",
