@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 
 import { Select } from 'antd';
 
-import './style.scss';
-
 const { Option } = Select;
 
 export default class MulSelect extends React.Component {
