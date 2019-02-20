@@ -14,6 +14,7 @@ export default class SwitchOfList extends React.Component {
     };
   }
 
+  // TODO:
   componentWillReceiveProps(nextProps) {
     const { showType } = nextProps;
     this.setState({

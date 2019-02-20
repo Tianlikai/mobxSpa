@@ -29,6 +29,7 @@ export default class FormUpLoader extends React.Component {
     };
   }
 
+  // TODO:
   componentWillReceiveProps(nextProps) {
     const {
       value: { files = [], finish = [] },

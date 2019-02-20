@@ -36,6 +36,7 @@ export default class ListCard extends React.Component {
     };
   }
 
+  // TODO:
   componentWillReceiveProps(nextProps) {
     const { data, selectedRowKeys: selectedVideos } = nextProps;
     if (selectedVideos) {
