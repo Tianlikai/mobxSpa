@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-
-import { toJS } from 'mobx';
-import { inject, observer } from 'mobx-react';
-
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
+import { toJS } from 'mobx';
+import { inject, observer } from 'mobx-react';
 
 import { Pagination } from 'antd';
 

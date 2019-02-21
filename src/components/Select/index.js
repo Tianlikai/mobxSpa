@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
+
 import { Radio } from 'antd';
 
 import './style.scss';
@@ -42,9 +43,7 @@ export default class BaseSelect extends React.Component {
           return (
             <div key={option.dataKey} className="radio-item">
               <label className="radioGroup-label" htmlFor={option.label}>
-                {`${
-                  option.label
-                }:`}
+                {`${option.label}:`}
               </label>
               <RadioGroup
                 name={option.dataKey}

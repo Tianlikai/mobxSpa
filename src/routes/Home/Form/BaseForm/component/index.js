@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import { toJS } from 'mobx';
@@ -7,7 +6,7 @@ import { inject, observer } from 'mobx-react';
 
 import Spinner from 'components/Spinner/Spinner'; // eslint-disable-line
 import ModuleLine from 'components/ModuleLine'; // eslint-disable-line
-import { WithBreadcrumb } from 'components/Breadcrumb'; // eslint-disable-line
+import { WithBreadcrumb } from 'components/Breadcrumb/index'; // eslint-disable-line
 
 import BForm from './BForm';
 

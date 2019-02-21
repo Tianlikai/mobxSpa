@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
 import { Link } from 'react-router-dom';
 
 import { Menu, Icon } from 'antd';
+
 import SIDE_MENU from '../settings/sideMenu';
 
 import Logo from '../static/logo.svg';

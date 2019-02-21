@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-
 import PropTypes from 'prop-types';
-
 import { Helmet } from 'react-helmet';
 import { inject, observer } from 'mobx-react';
 
@@ -14,10 +12,10 @@ import ImgWithSave from 'components/Image/ImgWithSave'; // eslint-disable-line
 import { WithBreadcrumb } from 'components/Breadcrumb'; // eslint-disable-line
 import ShareByQrModal from 'components/ShareByQrModal'; // eslint-disable-line
 
+import TableHoc from '../../../../../hoc/TableHoc';
+
 import InfoItem from './InfoItem';
 import FrameItem from './FrameItem';
-
-import TableHoc from '../../../../../hoc/TableHoc';
 
 import './style.scss';
 

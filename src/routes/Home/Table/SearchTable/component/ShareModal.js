@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-
 import { inject, observer } from 'mobx-react';
-
 import PropTypes from 'prop-types';
 
 import ShareByQrModal from 'components/ShareByQrModal/index'; // eslint-disable-line

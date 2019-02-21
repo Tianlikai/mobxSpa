@@ -26,6 +26,12 @@
 - 基于路由和组件的按需加载模块
 - style 和 js 使用 lint限制, git hooks 强制统一资源代码风格
 
+## 规范列表
+
+- [eslint](https://www.npmjs.com/package/eslint) 继承 [airbnb](https://www.npmjs.com/package/eslint-config-airbnb)，自定义部分 rules
+- [stylelint](https://www.npmjs.com/package/stylelint) 限制样式文件，对 .js 文件中样式使用 rules 进行忽略
+- 文件引用顺序，1 公共库 2 公共业务（util函数，通用组件，hoc）3 业务组件 4 配置文件 5 样式 6 const 结构
+
 ## 文件目录
 
 ```

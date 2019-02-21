@@ -10,6 +10,7 @@
     "declaration-empty-line-before": null,
     "no-invalid-double-slash-comments": null,
     "no-descending-specificity": null,
-    "plugin/declaration-block-no-ignored-properties": true
+    "plugin/declaration-block-no-ignored-properties": true,
+    "no-missing-end-of-source-newline": null
   }
 }

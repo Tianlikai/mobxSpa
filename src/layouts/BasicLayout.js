@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-
 import PropTypes from 'prop-types';
 import { inject, observer } from 'mobx-react';
+
 import Storage from 'utils/storage'; // eslint-disable-line
 
 import Layout from './Layout';
 import BasicFooter from './BasicFooter';
-
 import SideMenu from './BasicSideMenu';
 import Header from './BasicHeader';
 

@@ -9,12 +9,12 @@ const IconCircle = (props) => {
   const {
     size, fixClass, className, bcg,
   } = props;
+  const classes = classnames(fixClass, { [className]: className });
   const style = {
     height: size,
     width: size,
     backgroundColor: bcg || '#2c5b8f',
   };
-  const classes = classnames(fixClass, { [className]: className });
   return <span style={style} className={classes} />;
 };
 

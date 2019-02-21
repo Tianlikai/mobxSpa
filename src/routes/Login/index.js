@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-
 import qs from 'qs';
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';

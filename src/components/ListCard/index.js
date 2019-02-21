@@ -3,6 +3,7 @@ import classnames from 'classnames';
 import PropTypes from 'prop-types';
 
 import { Spin, Checkbox } from 'antd';
+
 import Card from './Card';
 
 import './style.scss';

@@ -1,24 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
+
+import './styles/BasicFooter.scss';
 
 const BasicFooter = (props) => {
-  const styDiv = {
-    textAlign: 'center',
-    height: 100,
-    marginTop: 20,
-  };
-  const { className } = props;
+  const { fixClass, className } = props;
+
   return (
-    <div className={className} style={styDiv}>
+    <div className={classnames(fixClass, { [className]: className })}>
       Project maintenance
-      {' '}
       <br />
       by jason
     </div>
   );
 };
+BasicFooter.defaultProps = {
+  fixClass: 'lBasicFooter',
+};
 
 BasicFooter.propTypes = {
+  fixClass: PropTypes.string,
   className: PropTypes.string,
 };
 
