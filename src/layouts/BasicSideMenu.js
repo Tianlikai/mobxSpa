@@ -6,7 +6,8 @@ import { Menu, Icon } from 'antd';
 
 import SIDE_MENU from '../settings/sideMenu';
 
-import Logo from '../static/logo.svg';
+import Logo from './logo.svg';
+
 import './styles/BasicSideMenu.scss';
 
 const { Item, SubMenu } = Menu;

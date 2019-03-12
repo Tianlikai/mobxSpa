@@ -29,7 +29,7 @@ module.exports = {
     ],
   },
   output: {
-    path: staticDir,
+    path: path.resolve(staticDir, 'dll'),
     filename: 'dll.[name].[chunkhash].js',
     library: 'dll_[name]_[chunkhash]',
   },
@@ -69,7 +69,7 @@ module.exports = {
   },
   plugins: [
     new webpack.DllPlugin({
-      path: path.resolve(staticDir, 'manifest.dll.json'),
+      path: path.resolve(staticDir, 'dll', 'manifest.dll.json'),
       name: 'dll_[name]_[chunkhash]',
       context: rootDir,
     }),

@@ -12,7 +12,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 const happyThreadPool = HappyPack.ThreadPool({ size: 5 });
-const manifest = require('../src/static/manifest.dll.json');
+const manifest = require('../src/static/dll/manifest.dll.json');
 require('babel-polyfill');
 
 const env = require('./env.js');
@@ -150,8 +150,8 @@ module.exports = {
       template: path.resolve(srcDir, 'index.ejs'),
       inject: false,
       hash: true,
-      dllJS: env.DEV ? `/static/${getDllName()}.js` : `${cdnUrl}/${getDllName()}.js`,
-      dllCSS: env.DEV ? `/static/${getDllName()}.css` : `${cdnUrl}/${getDllName()}.css`,
+      dllJS: env.DEV ? `/static/dll/${getDllName()}.js` : `${cdnUrl}/${getDllName()}.js`,
+      dllCSS: env.DEV ? `/static/dll/${getDllName()}.css` : `${cdnUrl}/${getDllName()}.css`,
     }),
     new webpack.ProvidePlugin({
       $: 'jquery',
@@ -172,13 +172,13 @@ module.exports = {
     ),
     new webpack.DllReferencePlugin({
       context: rootDir,
-      manifest: require('../src/static/manifest.dll.json'),
+      manifest: require('../src/static/dll/manifest.dll.json'),
     }),
     new WebpackMd5Hash(),
     new ManifestPlugin(),
     new CopyWebpackPlugin([
       {
-        from: '../src/static/dll.vendor.*',
+        from: '../src/static/dll/dll.vendor.*',
         to: '',
         flatten: true,
       },
