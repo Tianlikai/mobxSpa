@@ -10,12 +10,6 @@
 
 如果对你的项目搭建有帮助的话，随手给个星，感谢。
 
-## 本次更新
-
-- 添加 style-lint 检查 style
-- 添加 pre-commit 和 lint-staged，限制代码库代码风格
-- 按照 styleLint 和 eslint 配置文件，自动格式化代码，修正代码库代码风格。
-
 ## 特点
 
 - webpack 一个适用于真实项目开发配置

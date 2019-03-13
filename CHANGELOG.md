@@ -12,3 +12,10 @@ v 2.0.2
 - 添加 style-lint 检查 style
 - 添加 pre-commit 和 lint-staged，限制代码库代码风格
 - 按照 styleLint 和 eslint 配置文件，自动格式化代码，修正代码库代码风格。
+
+v 2.0.3
+
+- fixed 路由权限验证逻辑
+- 规范项目文件命名 R-路由文件，P-页面文件/页面样式（防止命名冲突），L-公共布局文件/布局样式
+- 项目变更记录，统一添加到 CHANGELOG.md
+- fixed package.json script clean 脚本 具体删除文件
