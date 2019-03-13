@@ -1,15 +1,14 @@
 import { createRoutes } from 'utils/core'; // eslint-disable-line
 
-import SignIn from './Login/index';
+import SignIn from './PLogin/index';
+import Dashboard from './RHome/PDashboard/route';
+import Form from './RHome/RForm/index';
+import Table from './RHome/RTable/index';
+import List from './RHome/RList/index';
+import Detail from './RHome/RDetail/index';
+import NotFound from './RErrorPage/P404/route';
 
-import Dashboard from './Home/Dashboard/index';
-import Form from './Home/Form/index';
-import Table from './Home/Table/index';
-import List from './Home/List/index';
-import Detail from './Home/Detail/index';
-import NotFound from './ErrorPage/404/index';
-
-import BasicLayout from '../layouts/BasicLayout';
+import BasicLayout from '../layouts/LBasic/index';
 
 const routesConfig = () => [
   {

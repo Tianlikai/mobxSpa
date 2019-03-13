@@ -1,0 +1,16 @@
+.LBasicSideMenu {
+  .logo {
+    height: 70px;
+    padding: 0 0 0 24px;
+    color: white;
+    font-size: 20px;
+    line-height: 70px;
+    background: #001529;
+    img {
+      height: 35px;
+    }
+  }
+  .ant-menu-dark.ant-menu-inline .ant-menu-item-selected {
+    background: #3296be;
+  }
+}

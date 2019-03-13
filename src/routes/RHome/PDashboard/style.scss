@@ -1,0 +1,103 @@
+.PDashboard {
+  padding: 0 20px;
+  .dashboard-header {
+    height: 65px;
+    line-height: 65px;
+    .dashboard-icon {
+      font-weight: bold;
+      font-size: 16px;
+      i {
+        margin-right: 10px;
+        font-size: 24px;
+      }
+    }
+  }
+  .dashboard-wrap {
+    display: flex;
+    flex: auto;
+    border-top: 1px solid #ddd;
+    .dashboard-sideMenu {
+      flex: 0 0 250px;
+      width: 250px;
+      min-width: 250px;
+      max-width: 250px;
+      .dashboard-side-title {
+        height: 30px;
+        margin: 15px;
+        color: #333;
+        font-weight: 500;
+      }
+      .dashboard-list {
+        .dashboard-list-item {
+          position: relative;
+          height: 50px;
+          margin: 4px 15px;
+          color: #666;
+          font-size: 14px;
+          letter-spacing: 0.04px;
+          background-color: #fff;
+          border: 1px solid #ebebeb;
+          border-radius: 2px;
+          cursor: pointer;
+          &:hover {
+            box-shadow: 0 0 6px 0 hsla(0, 0%, 40%, 0.5);
+            .d-l-item-del {
+              display: inline-block;
+            }
+          }
+          .d-l-item-sort {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            margin: 13px 10px;
+            color: #220968;
+            text-align: center;
+            background-color: #f1f1fa;
+            border: 1px solid #f1f1fa;
+            border-radius: 50%;
+            &.active {
+              color: #f1f1fa;
+              background-color: #222f73;
+            }
+          }
+          .d-l-item-name {
+            color: #333;
+            font-weight: 700;
+          }
+          .d-l-item-del {
+            position: absolute;
+            top: 18px;
+            right: 15px;
+            display: none;
+          }
+          &.self {
+            background: #f2f2f2;
+          }
+          &.dashed {
+            border-style: dashed;
+            .d-l-item-add {
+              margin: 18px 10px;
+            }
+          }
+          &.dashed:hover {
+            box-shadow: none;
+          }
+        }
+      }
+    }
+    .dashboard-content {
+      width: 100%;
+      background: #fff;
+      border-left: 1px solid #ddd;
+      .dashboard-time {
+        display: block;
+        padding: 20px 20px;
+        color: #121314;
+        font-size: 20px;
+      }
+      .chart-list {
+        padding: 0 20px;
+      }
+    }
+  }
+}
