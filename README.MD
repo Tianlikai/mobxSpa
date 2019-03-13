@@ -25,6 +25,7 @@
 - 基于 antd 提供了表单，表格，上传的高阶组件。统一了以上场景的公共业务
 - 基于路由和组件的按需加载模块
 - style 和 js 使用 lint限制, git hooks 强制统一资源代码风格
+- 业务场景模块抽离
 
 ## 规范列表
 
@@ -107,10 +108,13 @@
 
 - npm run build
 
-## 待优化项
+## TODO
 
 - loading 改为体验更好的占位符
 - React 生命周期替换，以及新的 API 的使用，React 从 16.3 起到 17 将逐渐废除[componentWillReceiveProps]()，[componentWillMount]()，[componentWillUpdate]()
+- 当项目体积变大，是否针对暂存区进行lint检查
+- 引入 git 提交格式规范
+- React ref/context/lazy/suspense/error api 使用
 
 ## 未来展望
 
