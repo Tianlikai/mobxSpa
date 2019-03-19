@@ -26,7 +26,7 @@ export default class SignIn extends Component {
         history: { replace },
         location: { search },
       } = this.props;
-      const { from } = qs.parse(search.substr(1));
+      const { from = 'home' } = qs.parse(search.substr(1));
       replace(`${from}`);
     });
   };
