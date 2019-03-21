@@ -148,7 +148,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       title: 'my structure',
       template: path.resolve(srcDir, 'index.ejs'),
-      inject: false,
+      inject: true,
       hash: true,
       dllJS: env.DEV ? `/static/dll/${getDllName()}.js` : `${cdnUrl}/${getDllName()}.js`,
       dllCSS: env.DEV ? `/static/dll/${getDllName()}.css` : `${cdnUrl}/${getDllName()}.css`,
@@ -178,7 +178,7 @@ module.exports = {
     new ManifestPlugin(),
     new CopyWebpackPlugin([
       {
-        from: '../src/static/dll/dll.vendor.*',
+        from: path.join(srcDir, '/static/dll/dll.vendor.*'),
         to: '',
         flatten: true,
       },
