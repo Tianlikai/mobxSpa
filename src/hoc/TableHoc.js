@@ -7,7 +7,12 @@ import { inject, observer } from 'mobx-react';
 import { Pagination } from 'antd';
 
 const TableHoc = config => (WrappedComponent) => {
-  const { store, className, NoPager } = config || {};
+  const {
+    store, // 绑定 store
+    className,
+    NoPager, // 是否需要外置翻页器
+    dealFormatData = data => data, // 清理列表数据方法
+  } = config || {};
 
   @inject(store)
   @observer
@@ -27,19 +32,26 @@ const TableHoc = config => (WrappedComponent) => {
         match: { params: { id } = {} },
       } = this.props;
       /* eslint-disable */
+
+      const {
+        tableData: { count, needReload },
+      } = this.props[store];
+
+      if (count !== 0 && !needReload) return null;
       if (id) {
         // 如果根据路由获取 id 则拿 id 进行调用
         this.props[store].getData({ id });
       } else {
         this.props[store].getData();
       }
+      return null;
     }
 
     /**
      * 顶部搜索 接口
      * 具体实现在 store 中
      */
-    handleSearch = values => {
+    handleSearch = (values) => {
       this.props[store].handleSearch(values); // eslint-disable-line
     };
 
@@ -55,7 +67,7 @@ const TableHoc = config => (WrappedComponent) => {
      * 翻页 接口
      * 具体实现在 store 中
      */
-    handlePageChange = page => {
+    handlePageChange = (page) => {
       this.props[store].handlePageChange(page); // eslint-disable-line
     };
 
@@ -71,7 +83,7 @@ const TableHoc = config => (WrappedComponent) => {
      * 排序 接口
      * 具体实现在 store 中
      */
-    handleSort = data => {
+    handleSort = (data) => {
       this.props[store].handleSort(data); // eslint-disable-line
     };
 
@@ -80,20 +92,22 @@ const TableHoc = config => (WrappedComponent) => {
       const Store = this.props[store]; // eslint-disable-line
       const { tableData: data } = Store;
       const tableData = toJS(data);
-
-      const { loading, count, list, pageNo, pageSize, query } = tableData;
-
       const classes = classnames(fixClass, { [className]: className });
+
+      const { loading, count, listItems, pageNo, pageSize, query } = tableData;
+
+      const formatData = dealFormatData(listItems);
+
       return (
         <div className={classes}>
           <WrappedComponent
-            query={query}
             loading={loading}
-            tableData={list}
-            store={Store}
+            query={query}
+            tableData={formatData}
             handleSort={this.handleSort}
             handleSearch={this.handleSearch}
             handleResetSearch={this.handleResetSearch}
+            store={Store}
             {...this.props}
           />
 

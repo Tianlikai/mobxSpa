@@ -12,10 +12,11 @@ import TableHoc from '../../../../hoc/TableHoc';
 
 import SearchForm from './SearchForm';
 import ShareModal from './ShareModal';
+import dealFormatData from './util';
 
 import './style.scss';
 
-@TableHoc({ store: 'TableStore' })
+@TableHoc({ store: 'TableStore', dealFormatData })
 class SearchTable extends Component {
   static defaultProps = {
     titleValue: ['本次推广专属小程序二维码', '本次推广专属小程序链接'],
@@ -178,7 +179,6 @@ class SearchTable extends Component {
       routerData, titleValue, loading, tableData, query,
     } = this.props;
     const { config } = routerData;
-
     return (
       <WithBreadcrumb config={config}>
         <Helmet>

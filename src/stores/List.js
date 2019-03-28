@@ -1,7 +1,5 @@
 import { action, observable } from 'mobx';
-import moment from 'moment';
 
-import { GRADE } from '../settings/const';
 // import { ApiOnline as api } from '../api/index';
 import api from '../api/index';
 
@@ -12,8 +10,11 @@ class List {
     count: 0,
     pageNo: 1,
     pageSize: 10,
-    list: [],
+    listItems: [],
+    byId: {},
     query: {},
+    errorMessage: undefined,
+    needReload: false,
   };
 
   @observable
@@ -88,29 +89,18 @@ class List {
         },
       })
       .then((resp) => {
-        const { count } = resp;
-
-        const list = resp.items.map((item) => {
-          const copyItem = Object.assign({}, item);
-          const pos = GRADE.findIndex(grd => grd.value === item.grade);
-          copyItem.createdAt = item.createdAt
-            ? moment(item.createdAt).format('YYYY-MM-DD HH:mm:ss')
-            : '-';
-          copyItem.payTime = item.payTime || '-';
-          copyItem.grade = item.grade && pos >= 0 ? GRADE[pos].text : '-';
-          copyItem.payMoney = item.payMoney ? `¥${item.payMoney}` : '-';
-          copyItem.className = item.className || '-';
-          copyItem.key = item.id;
-          copyItem.note = item.note || '';
-          return copyItem;
-        });
+        const { count, items: listItems } = resp;
+        const byId = listItems.map(item => item.id);
 
         this.tableData = {
           loading: false,
           pageNo: pageNo || this.tableData.pageNo,
           pageSize: pageSize || this.tableData.pageSize,
           count,
-          list,
+          listItems,
+          byId,
+          errorMessage: undefined,
+          needReload: false,
           query: {
             grade,
             name,

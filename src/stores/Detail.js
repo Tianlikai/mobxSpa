@@ -52,7 +52,7 @@ class Detail {
     this.tableData = {
       loading: false,
       count: 0,
-      list: [],
+      listItems: [],
     };
     this.basicInformation = INFORMATION;
     this.dataOverview = DATA_OVERVIEW;
@@ -107,7 +107,7 @@ class Detail {
         this.dataOverview = dataOverview;
 
         const count = data.totalCourseOrderNumber;
-        const list = data.courseOrderlist.map((item) => {
+        const listItems = data.courseOrderlist.map((item) => {
           const copy = Object.assign({}, item);
           const pos = GRADE.findIndex(grade => grade.value === item.grade);
           copy.payTime = item.payTime ? moment(item.payTime).format('YYYY-MM-DD HH:mm:ss') : '-';
@@ -126,7 +126,7 @@ class Detail {
         this.tableData = {
           loading: false,
           count,
-          list,
+          listItems,
         };
       });
   }
