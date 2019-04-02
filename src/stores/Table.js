@@ -1,20 +1,11 @@
 import { action, observable } from 'mobx';
 
+import TableModel from './modal/TableModel';
 import api from '../api';
 
 class Table {
   @observable
-  tableData = {
-    loading: false,
-    count: 0,
-    pageNo: 1,
-    pageSize: 10,
-    listItems: [],
-    byId: {},
-    query: {},
-    errorMessage: undefined,
-    needReload: false,
-  };
+  tableData;
 
   @observable
   imgByte = {};
@@ -25,19 +16,15 @@ class Table {
   @observable
   activeId = null;
 
-  getParams(data) {
-    return {
-      pageNo: this.tableData.pageNo,
-      pageSize: this.tableData.pageSize,
-      ...this.tableData.query,
-      ...data,
-    };
+  constructor(Model) {
+    this.tableModel = new Model();
+    this.tableData = this.tableModel.tableData;
   }
 
   @action
   handleSearch(values) {
     const params = Object.assign(values, { pageNo: 1 });
-    const data = this.getParams(params);
+    const data = this.tableModel.getParams(params);
     this.getData(data);
   }
 
@@ -54,13 +41,13 @@ class Table {
 
   @action
   handlePageChange(pageNo) {
-    const data = this.getParams({ pageNo });
+    const data = this.tableModel.getParams({ pageNo });
     this.getData(data);
   }
 
   @action
   handlePageSizeChange(pageNo, pageSize) {
-    const data = this.getParams({ pageNo, pageSize });
+    const data = this.tableModel.getParams({ pageNo, pageSize });
     this.getData(data);
   }
 
@@ -138,4 +125,4 @@ class Table {
   }
 }
 
-export default new Table();
+export default new Table(TableModel);
