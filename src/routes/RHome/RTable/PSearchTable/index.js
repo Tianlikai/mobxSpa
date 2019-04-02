@@ -160,10 +160,10 @@ class SearchTable extends Component {
   };
 
   handleSearch = (value) => {
-    const { timeLimit, grade } = value;
+    const { timeLimit = [undefined, undefined], grade } = value;
     let { queryCond: name } = value;
-    const startTime = timeLimit && timeLimit[0] && timeLimit[0].format('YYYY-MM-DD HH:mm:ss');
-    const endTime = timeLimit && timeLimit[1] && timeLimit[1].format('YYYY-MM-DD HH:mm:ss');
+    const startTime = timeLimit[0] && timeLimit[0].format('YYYY-MM-DD HH:mm:ss');
+    const endTime = timeLimit[1] && timeLimit[1].format('YYYY-MM-DD HH:mm:ss');
     name = name ? name.replace(/^(\s|\u00A0)+/, '').replace(/(\s|\u00A0)+$/, '') : undefined;
 
     const { handleSearch } = this.props;
@@ -179,9 +179,13 @@ class SearchTable extends Component {
     const { visibleModal, record } = this.state;
 
     const {
-      routerData, titleValue, loading, tableData, query,
+      routerData: { config },
+      titleValue,
+      loading,
+      tableData,
+      query,
     } = this.props;
-    const { config } = routerData;
+
     return (
       <WithBreadcrumb config={config}>
         <Helmet>

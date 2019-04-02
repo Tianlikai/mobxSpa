@@ -20,24 +20,25 @@ export default class FormUpLoader extends React.Component {
 
   constructor(props) {
     super(props);
+
     const {
       value: { files = [], finish = [] },
     } = props;
+
     this.state = {
       files,
       finish,
     };
   }
 
-  // TODO:
-  componentWillReceiveProps(nextProps) {
+  static getDerivedStateFromProps(props) {
     const {
       value: { files = [], finish = [] },
-    } = nextProps;
-    this.setState({
+    } = props;
+    return {
       files,
       finish,
-    });
+    };
   }
 
   computedFiles = (Files, files) => {

@@ -15,12 +15,15 @@ export default class SwitchOfList extends React.Component {
     };
   }
 
-  // TODO:
-  componentWillReceiveProps(nextProps) {
-    const { showType } = nextProps;
-    this.setState({
-      showType,
-    });
+  static getDerivedStateFromProps(props, state) {
+    const { showType: propsType } = props;
+    const { showType: stateType } = state;
+    if (propsType && propsType !== stateType) {
+      return {
+        showType: propsType,
+      };
+    }
+    return null;
   }
 
   handleRedirectToCard = () => {
@@ -73,6 +76,6 @@ SwitchOfList.defaultProps = {
 SwitchOfList.propTypes = {
   fixClass: PropTypes.string, // 固定root名
   className: PropTypes.string, // 接受 className 和root 合并
-  showType: PropTypes.string, // 展示 table 还是 listCard
+  showType: PropTypes.string,
   onChange: PropTypes.func, // 外部切换tabs
 };

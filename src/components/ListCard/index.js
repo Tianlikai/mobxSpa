@@ -8,6 +8,14 @@ import Card from './Card';
 
 import './style.scss';
 
+const commonUtil = (data) => {
+  const pageIds = data.map(item => item.id);
+  const currentPage = new Set([...pageIds]);
+  const currentSize = currentPage.size; // now 总数
+
+  return { currentPage, currentSize };
+};
+
 export default class ListCard extends React.Component {
   static defaultProps = {
     fixWrapper: 'videoCardList',
@@ -37,31 +45,31 @@ export default class ListCard extends React.Component {
     };
   }
 
-  // TODO:
-  componentWillReceiveProps(nextProps) {
-    const { data, selectedRowKeys: selectedVideos } = nextProps;
+  static getDerivedStateFromProps(props, state) {
+    const { data, selectedRowKeys: selectedVideos } = props;
     if (selectedVideos) {
-      const { currentPage, currentSize } = this.commonUtil(data);
+      const { currentPage, currentSize } = commonUtil(data);
 
       const oldPage = new Set([...selectedVideos]);
 
-      const { selectedRowKeys } = this.state;
+      const { selectedRowKeys } = state;
       const ids = new Set([...selectedRowKeys]);
 
       const intersect = new Set([...currentPage].filter(x => ids.has(x)));
 
-      this.setState({
+      return {
         selectedRowKeys: oldPage,
         indeterminate: intersect.size && intersect.size < currentSize,
         checkAll: intersect.size !== 0 && intersect.size === currentSize,
-      });
+      };
     }
+    return null;
   }
 
   handleChange = (id) => {
     const { data } = this.props;
 
-    const { currentPage, currentSize } = this.commonUtil(data);
+    const { currentPage, currentSize } = commonUtil(data);
 
     const { selectedRowKeys } = this.state;
     const ids = new Set([...selectedRowKeys]);
@@ -90,7 +98,7 @@ export default class ListCard extends React.Component {
 
   handleCheckAll = (e) => {
     const { data } = this.props;
-    const { currentPage } = this.commonUtil(data);
+    const { currentPage } = commonUtil(data);
 
     const { selectedRowKeys } = this.state;
     const ids = new Set([...selectedRowKeys]);
@@ -114,14 +122,6 @@ export default class ListCard extends React.Component {
       },
     );
   };
-
-  commonUtil(data) {
-    const pageIds = data.map(item => item.id);
-    const currentPage = new Set([...pageIds]);
-    const currentSize = currentPage.size; // now 总数
-
-    return { currentPage, currentSize };
-  }
 
   render() {
     const { indeterminate, checkAll, selectedRowKeys } = this.state;

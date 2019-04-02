@@ -8,15 +8,6 @@ class List {
   @observable
   tableData;
 
-  @observable
-  imgByte = {};
-
-  @observable
-  chooseImgByte = null;
-
-  @observable
-  activeId = null;
-
   constructor(Model) {
     this.tableModel = new Model();
     this.tableData = this.tableModel.tableData;
@@ -96,35 +87,6 @@ class List {
           },
         };
       });
-  }
-
-  @action
-  getWeiCode({
-    promotionId, width = 200, autoColor = false, isHyaline = false,
-  }) {
-    if (!this.imgByte[promotionId]) {
-      api
-        .getQRCode({
-          promotionId,
-          width,
-          autoColor,
-          isHyaline,
-        })
-        .then((data) => {
-          this.imgByte[promotionId] = data;
-          this.chooseImgByte = data;
-          this.activeId = promotionId;
-        });
-    } else {
-      this.chooseImgByte = this.imgByte[promotionId];
-      this.activeId = promotionId;
-    }
-  }
-
-  @action
-  delWeiCode() {
-    this.activeId = null;
-    this.chooseImgByte = null;
   }
 }
 
