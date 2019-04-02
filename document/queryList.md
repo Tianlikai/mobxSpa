@@ -579,7 +579,7 @@ class SearchTable extends Component {
 
 ## 我在项目中的具体实践
 
-- [原文地址]()
+- [原文地址](https://github.com/Tianlikai/MyTutorial/issues/6)
 - [企业级SPA项目](https://github.com/Tianlikai/mobxSpa)
 
 clone项目，查看项目的 表格页 -> 查询表格

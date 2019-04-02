@@ -105,7 +105,6 @@
 ## TODO
 
 - loading 改为体验更好的占位符
-- React 生命周期替换，以及新的 API 的使用，React 从 16.3 起到 17 将逐渐废除[componentWillReceiveProps]()，[componentWillMount]()，[componentWillUpdate]()
 - 当项目体积变大，是否针对暂存区进行lint检查
 - 引入 git 提交格式规范
 - React ref/context/lazy/suspense/error api 使用
