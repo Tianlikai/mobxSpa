@@ -7,10 +7,10 @@ import Storage from './storage';
 let history;
 
 if (__ROUTER__ === 'BrowserRouter') {
-  const createHistory = require('history/createBrowserHistory').default;
+  const createHistory = require("history").createBrowserHistory;
   history = createHistory({ basename: __BASENAME__ });
 } else {
-  const createHistory = require('history/createHashHistory').default;
+  const createHistory = require("history").createHashHistory;
   history = createHistory();
 }
 
