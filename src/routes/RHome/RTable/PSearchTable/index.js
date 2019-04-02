@@ -16,7 +16,10 @@ import dealFormatData from './util';
 
 import './style.scss';
 
-@TableHoc({ store: 'TableStore', dealFormatData })
+// 可以使用缓存数据的返回页面
+const noNeedReloadPathname = ['/form/baseForm', '/detail/baseDetail/'];
+
+@TableHoc({ store: 'TableStore', dealFormatData, noNeedReloadPathname })
 class SearchTable extends Component {
   static defaultProps = {
     titleValue: ['本次推广专属小程序二维码', '本次推广专属小程序链接'],

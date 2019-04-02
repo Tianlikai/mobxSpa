@@ -11,6 +11,7 @@ const TableHoc = config => (WrappedComponent) => {
     store, // 绑定 store
     className,
     NoPager, // 是否需要外置翻页器
+    noNeedReloadPathname = [], // 不需要重新加载数据的返回页面
     dealFormatData = data => data, // 清理列表数据方法
   } = config || {};
 
@@ -24,20 +25,33 @@ const TableHoc = config => (WrappedComponent) => {
     static propTypes = {
       fixClass: PropTypes.string,
       className: PropTypes.string,
-      match: PropTypes.object,
+      location: PropTypes.object.isRequired,
+      match: PropTypes.object.isRequired,
     };
 
     componentDidMount() {
       const {
         match: { params: { id } = {} },
+        location: { pathname },
       } = this.props;
       /* eslint-disable */
-
       const {
         tableData: { count, needReload },
       } = this.props[store];
 
-      if (count !== 0 && !needReload) return null;
+      const preLocation = window.RouterPathname.find((item) => item !== pathname); // [preLocation, curLocation]
+
+      const noNeedReloadTag = !preLocation
+        ? false
+        : noNeedReloadPathname.some((item) => {
+            return preLocation.startsWith(item);
+          });
+
+      // 数据没有更新使用缓存数据
+      if (count !== 0 && !needReload && noNeedReloadTag) {
+        return null;
+      }
+
       if (id) {
         // 如果根据路由获取 id 则拿 id 进行调用
         this.props[store].getData({ id });

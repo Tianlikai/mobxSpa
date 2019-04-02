@@ -19,7 +19,7 @@ const routesConfig = () => [
   },
   {
     path: '/',
-    exact: false,
+    exact: true,
     PERMISSIONS: true,
     component: BasicLayout,
     indexRoute: '/home',
