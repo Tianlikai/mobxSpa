@@ -19,3 +19,8 @@ v 2.0.3
 - 规范项目文件命名 R-路由文件，P-页面文件/页面样式（防止命名冲突），L-公共布局文件/布局样式
 - 项目变更记录，统一添加到 CHANGELOG.md
 - fixed package.json script clean 脚本 具体删除文件
+
+v 2.0.4
+
+- React api update componentWillReceiveProps -> getDerivedStateFromProps
+- 定义列表 数据模型和公共方
