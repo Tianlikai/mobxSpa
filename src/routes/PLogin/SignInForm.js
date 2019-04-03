@@ -46,7 +46,7 @@ class SignInForm extends Component {
                 message: '请输入用户名',
               },
             ],
-          })(<Input type="text" placeholder="请输入用户名" />)}
+          })(<Input type="text" placeholder="请输入用户名: admin" />)}
         </FormItem>
 
         <FormItem className="ipt_password">
@@ -57,7 +57,7 @@ class SignInForm extends Component {
                 message: '请输入密码',
               },
             ],
-          })(<Input type="password" placeholder="请输入密码" />)}
+          })(<Input type="password" placeholder="请输入密码: admin" />)}
         </FormItem>
         <FormItem className="btnGroup">
           <Button className="searchBtn" htmlType="submit">

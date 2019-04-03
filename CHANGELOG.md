@@ -24,3 +24,4 @@ v 2.0.4
 
 - React api update componentWillReceiveProps -> getDerivedStateFromProps
 - 定义列表 数据模型和公共方
+- 生成项目文件之间依赖svg（使用工具madge -> https://github.com/pahen/madge）
