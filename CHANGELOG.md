@@ -24,4 +24,23 @@ v 2.0.4
 
 - React api update componentWillReceiveProps -> getDerivedStateFromProps
 - 定义列表 数据模型和公共方
-- 生成项目文件之间依赖svg（使用工具madge -> https://github.com/pahen/madge）
+- 生成项目文件之间依赖 svg（使用工具 madge -> https://github.com/pahen/madge）
+
+v update_bundle_config
+
+升级项目依赖库
+
+- add "@babel/polyfill": "^7.4.3"
+- "react": "^16.4.2" -> "^16.8.6"
+- "react-dom": "^16.4.2" -> "^16.8.6"
+- "autoprefixer": "^9.1.0" -> "^9.5.1
+- "css-loader": "^1.0.0" -> "^2.1.1"
+- "file-loader": "^1.1.11" -> "^3.0.1"
+- "mini-css-extract-plugin": "^0.5.0" -> "^0.6.0"
+- "node-sass": "^4.9.2" -> "^4.11.0"
+- "rimraf": "^2.6.2" -> "^2.6.3"
+- "style-loader": "^0.22.1" -> "^0.23.1"
+- "url-loader": "^1.0.1" -> "^1.1.2"
+- "webpack": "^4.16.5" -> "^4.30.0"
+- "webpack-cli": "^3.1.0" -> "^3.3.0"
+- ·"webpack-dev-server": "^3.1.5" -> "^3.3.1"
