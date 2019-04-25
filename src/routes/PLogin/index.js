@@ -11,7 +11,7 @@ import './style.scss';
 
 @inject('User')
 @observer
-export default class SignIn extends Component {
+class SignIn extends Component {
   static propTypes = {
     User: PropTypes.string,
     history: PropTypes.object.isRequired,
@@ -50,3 +50,5 @@ export default class SignIn extends Component {
     );
   }
 }
+
+export default SignIn;

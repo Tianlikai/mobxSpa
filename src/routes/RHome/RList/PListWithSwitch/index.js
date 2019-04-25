@@ -21,7 +21,7 @@ import TableHoc from '../../../../hoc/TableHoc';
 import './style.scss';
 
 @TableHoc({ store: 'ListStore', className: 'listWrapper' })
-export default class ListWithSwitch extends Component {
+class ListWithSwitch extends Component {
   static propTypes = {
     loading: PropTypes.bool,
     tableData: PropTypes.array,
@@ -178,3 +178,5 @@ export default class ListWithSwitch extends Component {
     );
   }
 }
+
+export default ListWithSwitch;

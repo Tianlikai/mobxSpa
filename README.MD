@@ -18,14 +18,14 @@
 - axios 基于模块组织 api 接口
 - 基于 antd 提供了表单，表格，上传的高阶组件。统一了以上场景的公共业务
 - 基于路由和组件的按需加载模块
-- style 和 js 使用 lint限制, git hooks 强制统一资源代码风格
+- style 和 js 使用 lint 限制, git hooks 强制统一资源代码风格
 - 业务场景模块抽离
 
 ## 规范列表
 
 - [eslint](https://www.npmjs.com/package/eslint) 继承 [airbnb](https://www.npmjs.com/package/eslint-config-airbnb)，自定义部分 rules
 - [stylelint](https://www.npmjs.com/package/stylelint) 限制样式文件，对 .js 文件中样式使用 rules 进行忽略
-- 文件引用顺序，1 公共库 2 公共业务（util函数，通用组件，hoc）3 业务组件 4 配置文件 5 样式 6 const 结构
+- 文件引用顺序，1 公共库 2 公共业务（util 函数，通用组件，hoc）3 业务组件 4 配置文件 5 样式 6 const 结构
 
 ## 文件目录
 
@@ -105,7 +105,7 @@
 ## TODO
 
 - loading 改为体验更好的占位符
-- 当项目体积变大，是否针对暂存区进行lint检查
+- 当项目体积变大，是否针对暂存区进行 lint 检查
 - 引入 git 提交格式规范
 - React ref/context/lazy/suspense/error api 使用
 

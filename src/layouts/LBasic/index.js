@@ -15,7 +15,7 @@ const { Switch } = ReactRouterDOM;
 
 @inject('User')
 @observer
-export default class BasicLayout extends Component {
+class BasicLayout extends Component {
   static propTypes = {
     User: PropTypes.object.isRequired,
     routerData: PropTypes.object,
@@ -75,3 +75,5 @@ export default class BasicLayout extends Component {
     );
   }
 }
+
+export default BasicLayout;

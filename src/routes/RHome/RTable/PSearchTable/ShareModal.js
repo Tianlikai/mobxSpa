@@ -6,7 +6,7 @@ import ShareByQrModal from 'components/ShareByQrModal/index'; // eslint-disable-
 
 @inject('TableStore')
 @observer
-export default class ShareModal extends Component {
+class ShareModal extends Component {
   static propTypes = {
     TableStore: PropTypes.object.isRequired,
   };
@@ -17,3 +17,5 @@ export default class ShareModal extends Component {
     return <ShareByQrModal imgByte={chooseImgByte} {...this.props} />;
   }
 }
+
+export default ShareModal;
