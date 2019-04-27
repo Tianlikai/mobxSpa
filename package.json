@@ -115,15 +115,12 @@
     "stylelint-declaration-block-no-ignored-properties": "^1.1.0",
     "stylelint-order": "^2.0.0",
     "terser-webpack-plugin": "^1.2.3",
-    "uglifyjs-webpack-plugin": "^2.1.1",
     "url-loader": "^1.1.2",
     "webpack": "^4.30.0",
     "webpack-api-mocker": "^1.5.9",
     "webpack-bundle-analyzer": "^2.13.1",
     "webpack-cli": "^3.3.0",
     "webpack-dev-server": "^3.3.1",
-    "webpack-manifest-plugin": "^2.0.3",
-    "webpack-md5-hash": "0.0.6",
     "webpack-merge": "^4.2.1"
   }
 }
