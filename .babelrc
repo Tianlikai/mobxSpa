@@ -1,38 +1,16 @@
 {
-  "env": {
-    "dev": {
-      "presets": [
-        "es2015",
-        "stage-0",
-        "react"
-      ],
-      "plugins": [
-        "transform-decorators-legacy",
-        "transform-function-bind",
-        "transform-es3-member-expression-literals",
-        "transform-es3-property-literals",
-        "transform-object-rest-spread",
-        "transform-class-properties",
-        ["transform-runtime", {"polyfill": false}]
-      ]
-    },
-    "prod": {
-      "presets": [
-        "es2015",
-        "stage-0",
-        "react"
-      ],
-      "plugins": [
-        "transform-decorators-legacy",
-        "transform-function-bind",
-        "transform-es3-member-expression-literals",
-        "transform-es3-property-literals",
-        "transform-object-rest-spread",
-        "transform-class-properties",
-        ["transform-runtime", {"polyfill": false}],
-        "transform-react-constant-elements",
-        "transform-react-remove-prop-types"
-      ]
-    }
-  }
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "useBuiltIns": "usage"
+      }
+    ],
+    "@babel/preset-react"
+  ],
+  "plugins": [
+    ["@babel/plugin-syntax-dynamic-import"],
+    ["@babel/plugin-proposal-decorators", { "legacy": true }],
+    ["@babel/plugin-proposal-class-properties", { "loose": true }]
+  ]
 }
