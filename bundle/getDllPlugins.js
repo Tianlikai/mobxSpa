@@ -1,30 +1,10 @@
 const fs = require('fs');
 const path = require('path');
 const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
 
-const env = require('./env.js');
-
-const getCommonPlugins = () => {
-  const plugins = [
-    new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, '../src', 'index.html'),
-    }),
-    new webpack.ProvidePlugin({
-      React: 'react',
-      ReactDOM: 'react-dom',
-      PropTypes: 'prop-types',
-      MobxReact: 'mobx-react',
-      ReactRouterDOM: 'react-router-dom',
-    }),
-    new webpack.DefinePlugin(
-      Object.keys(env).reduce((res, k) => {
-        res[`__${k}__`] = JSON.stringify(env[k]);
-        return res;
-      }, {}),
-    ),
-  ];
+const getDllPlugins = () => {
+  const plugins = [];
 
   const files = fs.readdirSync(path.resolve(__dirname, '../dll'));
 
@@ -47,4 +27,4 @@ const getCommonPlugins = () => {
   return plugins;
 };
 
-module.exports = getCommonPlugins;
+module.exports = getDllPlugins;

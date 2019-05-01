@@ -3,7 +3,8 @@
     [
       "@babel/preset-env",
       {
-        "useBuiltIns": "usage"
+        "useBuiltIns": "usage",
+        "corejs": "2"
       }
     ],
     "@babel/preset-react"
@@ -11,6 +12,14 @@
   "plugins": [
     ["@babel/plugin-syntax-dynamic-import"],
     ["@babel/plugin-proposal-decorators", { "legacy": true }],
-    ["@babel/plugin-proposal-class-properties", { "loose": true }]
+    ["@babel/plugin-proposal-class-properties", { "loose": true }],
+    [
+      "import",
+      {
+        "libraryName": "antd",
+        "libraryDirectory": "es",
+        "style": "css"
+      }
+    ]
   ]
 }

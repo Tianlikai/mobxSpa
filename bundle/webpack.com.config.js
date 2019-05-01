@@ -1,5 +1,9 @@
 const path = require('path');
-const getCommonPlugins = require('./getCommonPlugins');
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+const getDllPlugins = require('./getDllPlugins');
+const env = require('./env.js');
 
 module.exports = {
   entry: {
@@ -58,7 +62,7 @@ module.exports = {
   },
   module: {
     rules: [
-      { test: /\.jsx?$/, exclude: /node_modules/, loader: 'babel-loader' },
+      { test: /\.jsx?$/, exclude: /node_modules/, use: [{ loader: 'happypack/loader?id=js' }] },
       {
         test: /\.(png|jpg|svg|gif)$/,
         use: {
@@ -76,5 +80,23 @@ module.exports = {
       },
     ],
   },
-  plugins: getCommonPlugins(),
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: path.resolve(__dirname, '../src', 'index.html'),
+    }),
+    new webpack.ProvidePlugin({
+      React: 'react',
+      ReactDOM: 'react-dom',
+      PropTypes: 'prop-types',
+      MobxReact: 'mobx-react',
+      ReactRouterDOM: 'react-router-dom',
+    }),
+    new webpack.DefinePlugin(
+      Object.keys(env).reduce((res, k) => {
+        res[`__${k}__`] = JSON.stringify(env[k]);
+        return res;
+      }, {}),
+    ),
+    ...getDllPlugins(),
+  ],
 };

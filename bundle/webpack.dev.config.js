@@ -1,41 +1,63 @@
 const path = require('path');
 const webpack = require('webpack');
+const HappyPack = require('happypack');
 const webpackApiMocker = require('webpack-api-mocker');
+
+const happyThreadPool = HappyPack.ThreadPool({ size: 5 });
+
+const host = '127.0.0.1';
+const protocol = 'https';
+const port = 9000;
+
+const publicPath = `${protocol}://${host}:${port}/`;
 
 module.exports = {
   mode: 'development',
   devtool: 'cheap-module-eval-source-map',
+  cache: true,
   output: {
     filename: '[name].js',
     chunkFilename: '[name].chunk.js',
+    publicPath,
   },
   module: {
     rules: [
       {
         test: /\.(sa|sc|c)ss$/,
-        use: [
-          'style-loader',
-          {
-            loader: 'css-loader',
-            options: {
-              importLoaders: 2,
-            },
-          },
-          'sass-loader',
-          'postcss-loader',
-        ],
+        use: [{ loader: 'style-loader' }, { loader: 'happypack/loader?id=css' }],
       },
     ],
   },
-  plugins: [new webpack.HotModuleReplacementPlugin()],
+  plugins: [
+    new HappyPack({
+      id: 'js',
+      loaders: [
+        {
+          loader: 'babel-loader',
+          options: {
+            cacheDirectory: true,
+          },
+        },
+      ],
+      threadPool: happyThreadPool,
+    }),
+    new HappyPack({
+      id: 'css',
+      loaders: [{ loader: 'css-loader' }, { loader: 'sass-loader' }, { loader: 'postcss-loader' }],
+      threadPool: happyThreadPool,
+    }),
+    new webpack.HotModuleReplacementPlugin(),
+  ],
   devServer: {
-    contentBase: path.resolve(__dirname, '../dist'),
+    contentBase: path.resolve(__dirname, '../src'),
+    host,
+    port,
     open: true,
     hot: true,
-    stats: true,
-    https: true,
+    https: protocol === 'https',
     overlay: true,
     compress: true,
+    stats: { color: true },
     historyApiFallback: true,
     before(app) {
       webpackApiMocker(app, path.resolve(__dirname, '../_mocker_', 'index.js'));
