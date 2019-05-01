@@ -4,12 +4,9 @@ const HappyPack = require('happypack');
 const webpackApiMocker = require('webpack-api-mocker');
 
 const happyThreadPool = HappyPack.ThreadPool({ size: 5 });
+const environment = require('./environment');
 
-const host = '127.0.0.1';
-const protocol = 'https';
-const port = 9000;
-
-const publicPath = `${protocol}://${host}:${port}/`;
+const publicPath = `${environment.PROTOCOL}://${environment.HOST}:${environment.PORT}/`;
 
 module.exports = {
   mode: 'development',
@@ -50,11 +47,11 @@ module.exports = {
   ],
   devServer: {
     contentBase: path.resolve(__dirname, '../src'),
-    host,
-    port,
+    host: environment.HOST,
+    port: environment.PORT,
     open: true,
     hot: true,
-    https: protocol === 'https',
+    https: environment.PROTOCOL === 'https',
     overlay: true,
     compress: true,
     stats: { color: true },

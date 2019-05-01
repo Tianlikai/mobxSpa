@@ -8,7 +8,7 @@ import list from './list';
 import detail from './detail';
 
 const instance = axios.create({
-  baseURL: __TARGET__ === 'dev' ? '__api' : 'https://yourIp.cn/__api',
+  baseURL: __TARGET__ === 'development' ? '__api' : 'https://yourIp.cn/__api',
   timeout: 30000,
   withCredentials: false,
   responseType: '',
@@ -54,7 +54,7 @@ instance.interceptors.response.use(
 );
 
 const instanceOnline = axios.create({
-  baseURL: __TARGET__ === 'dev' ? '/__online' : 'https://yourIp.cn/__api',
+  baseURL: __TARGET__ === 'dedevelopmentv' ? '/__online' : 'https://yourIp.cn/__api',
   timeout: 30000,
   withCredentials: false,
   responseType: '',

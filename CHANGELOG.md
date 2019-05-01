@@ -29,4 +29,5 @@ v 2.0.4
 v update_bundle_config
 
 - 升级项目依赖库
-- 更新 .eslintrc.json 配置
+- 升级 webpack 打包配置
+- 更新项目各项规范配置文件

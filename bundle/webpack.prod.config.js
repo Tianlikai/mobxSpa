@@ -1,6 +1,7 @@
 const HappyPack = require('happypack');
 const TerserJSPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 const happyThreadPool = HappyPack.ThreadPool({ size: 5 });
@@ -41,6 +42,9 @@ module.exports = {
       id: 'css',
       loaders: [{ loader: 'css-loader' }, { loader: 'sass-loader' }, { loader: 'postcss-loader' }],
       threadPool: happyThreadPool,
+    }),
+    new BundleAnalyzerPlugin({
+      analyzerMode: 'static',
     }),
     new MiniCssExtractPlugin({
       filename: '[name].[chunkhash:8].css',

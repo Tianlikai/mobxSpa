@@ -33,14 +33,17 @@
 ├── node_modules:                   模块文件夹
 |   └── ...
 ├── _mocker_:                       mock接口数据
-├── build:                          webpack配置文件
-|   ├── env:                        环境变量配置
+├── bundle:                         webpack配置文件
+|   ├── util:                       工具函数
+|   ├── environment:                环境变量配置
+|   ├── getDllPlugins:              获取dll包
 |   ├── index:                      调用webpack入口文件
-|   ├── webpack.base.config:        webpack通用配置
+|   ├── webpack.com.config:         webpack通用配置
 |   ├── webpack.dev.config:         webpack开发配置
 |   ├── webpack.dll.config:         webpack公共依赖库打包
 |   └── webpack.prod.config:        webpack生产配置
 ├── dist:                           打包生成目录
+├── dll:                            dll包文件
 ├── src:                            开发目录
 |   ├── api:                        API配置，axios封装
 |   ├── components:                 公共组件
@@ -56,12 +59,12 @@
 |   |   ├── headConfig.js:          顶部模块配置
 |   |   ├── permissions.js:         权限配置
 |   |   └── sideMenu.js:            目录
-|   ├── static:                     静态文件
 |   ├── store:                      mobx store文件
 |   ├── utils:                      工具函数
 |   ├── index.ejs:                  模版文件
 |   ├── index.js:                   入口文件
 |   └── style.scss:                 公共样式
+├── static                          静态文件
 ├── .babelrc                        babel配置文件
 ├── .editorconfig                   不通操作系统编码格式统一
 ├── .eslintignore                   eslint忽略
@@ -95,12 +98,17 @@
 
 - git clone https://github.com/Tianlikai/mobxSpa.git
 - npm i
-- npm run build:dll
 - npm run dev
 
 ## 生产环境
 
 - npm run build
+
+## 更新 dll 包
+
+当你所定制的 dll 包有升级或需要新增时，请重新打包
+
+- npm run build:dll
 
 ## TODO
 

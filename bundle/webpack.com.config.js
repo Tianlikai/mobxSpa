@@ -3,7 +3,7 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const getDllPlugins = require('./getDllPlugins');
-const env = require('./env.js');
+const env = require('./environment');
 
 module.exports = {
   entry: {
@@ -83,6 +83,8 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, '../src', 'index.html'),
+      inject: true,
+      favicon: path.resolve(__dirname, '../static', 'rl.ico'),
     }),
     new webpack.ProvidePlugin({
       React: 'react',
@@ -92,9 +94,9 @@ module.exports = {
       ReactRouterDOM: 'react-router-dom',
     }),
     new webpack.DefinePlugin(
-      Object.keys(env).reduce((res, k) => {
-        res[`__${k}__`] = JSON.stringify(env[k]);
-        return res;
+      Object.keys(env).reduce((result, key) => {
+        result[`__${key}__`] = JSON.stringify(env[key]);
+        return result;
       }, {}),
     ),
     ...getDllPlugins(),
