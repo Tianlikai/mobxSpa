@@ -56,7 +56,7 @@ export default class SideMenu extends Component {
       onOpenChange: this.handleOpenChange,
     };
     return (
-      <div className="LBasicSideMenu">
+      <aside className="LBasicSideMenu">
         <div className="logo">
           <img src={Logo} alt="logo" />
           <span> ~~~~</span>
@@ -95,7 +95,7 @@ export default class SideMenu extends Component {
             );
           })}
         </Menu>
-      </div>
+      </aside>
     );
   }
 }

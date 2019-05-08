@@ -10,9 +10,9 @@ const FlexLayout = (props) => {
   } = props;
   const classes = classnames(className, prefixCls);
   return (
-    <div className={classes} style={style}>
+    <section className={classes} style={style}>
       {children && children}
-    </div>
+    </section>
   );
 };
 

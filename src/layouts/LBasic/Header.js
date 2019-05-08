@@ -64,7 +64,7 @@ export default class Header extends Component {
       </Menu>
     );
     return (
-      <div className="LBasicHeader">
+      <header className="LBasicHeader">
         {btnText && hadCreatePermission && (
           <Button
             className={key ? `${'create-order-'}${key}` : 'create-order'}
@@ -77,7 +77,7 @@ export default class Header extends Component {
         <Dropdown overlay={menu}>
           <Button>{username}</Button>
         </Dropdown>
-      </div>
+      </header>
     );
   }
 }

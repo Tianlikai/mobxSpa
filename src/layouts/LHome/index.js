@@ -14,9 +14,9 @@ const HomeLayout = (props) => {
   } = props;
   const classes = classnames(prefix, { [className]: className });
   return (
-    <div className={classes}>
+    <main className={classes}>
       <Switch>{childRoutes}</Switch>
-    </div>
+    </main>
   );
 };
 

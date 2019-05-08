@@ -181,7 +181,7 @@ export default class Dashboard extends React.Component {
           <title>仪表盘 - SPA</title>
           <meta name="description" content="SPA" />
         </Helmet>
-        <div className="PDashboard">
+        <main className="PDashboard">
           <div className="dashboard-header">
             <span className="dashboard-icon">
               <Icon type="dashboard" />
@@ -245,7 +245,7 @@ export default class Dashboard extends React.Component {
               </div>
             </div>
           </div>
-        </div>
+        </main>
       </React.Fragment>
     );
   }

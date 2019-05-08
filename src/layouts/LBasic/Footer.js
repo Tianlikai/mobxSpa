@@ -8,11 +8,11 @@ const BasicFooter = (props) => {
   const { fixClass, className } = props;
 
   return (
-    <div className={classnames(fixClass, { [className]: className })}>
+    <footer className={classnames(fixClass, { [className]: className })}>
       Project maintenance
       <br />
       by jason
-    </div>
+    </footer>
   );
 };
 BasicFooter.defaultProps = {
