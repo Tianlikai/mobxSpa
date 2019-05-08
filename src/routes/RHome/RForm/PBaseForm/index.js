@@ -4,9 +4,9 @@ import { Helmet } from 'react-helmet';
 import { toJS } from 'mobx';
 import { inject, observer } from 'mobx-react';
 
-import Spinner from 'components/Spinner/Spinner'; // eslint-disable-line
-import ModuleLine from 'components/ModuleLine'; // eslint-disable-line
-import { WithBreadcrumb } from 'components/Breadcrumb/index'; // eslint-disable-line
+import Spinner from '@/components/Spinner/Spinner';
+import ModuleLine from '@/components/ModuleLine';
+import { WithBreadcrumb } from '@/components/Breadcrumb/index';
 
 import BForm from './BForm';
 
@@ -38,21 +38,27 @@ class BaseForm extends Component {
       school,
     } = values;
 
-    const { FormStore, history: { replace } } = this.props;
-    FormStore.CreatePromotion({
-      province: AREA[0] || '',
-      city: AREA[1] || '',
-      area: AREA[2] || '',
-      className,
-      englishPress,
-      englishTeacher,
-      grade,
-      mathPress,
-      mathTeacher,
-      school,
-    }, (id) => {
-      replace(`/detail/baseDetail/${id}`);
-    });
+    const {
+      FormStore,
+      history: { replace },
+    } = this.props;
+    FormStore.CreatePromotion(
+      {
+        province: AREA[0] || '',
+        city: AREA[1] || '',
+        area: AREA[2] || '',
+        className,
+        englishPress,
+        englishTeacher,
+        grade,
+        mathPress,
+        mathTeacher,
+        school,
+      },
+      (id) => {
+        replace(`/detail/baseDetail/${id}`);
+      },
+    );
   };
 
   render() {

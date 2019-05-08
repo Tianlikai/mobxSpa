@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { inject, observer } from 'mobx-react';
 
-import Storage from 'utils/storage'; // eslint-disable-line
+import Storage from '@/utils/storage';
 
 import FlexLayout from '../component/FlexLayout/index';
 import Header from './Header';

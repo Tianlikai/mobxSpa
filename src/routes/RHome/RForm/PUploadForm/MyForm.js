@@ -4,12 +4,10 @@ import PropTypes from 'prop-types';
 
 import { Form, Button } from 'antd';
 
-import MulSelect from 'components/MulSelect/index'; // eslint-disable-line
-import UpLoaderWithPreview from 'components/UpLoaderWithPreview/index'; // eslint-disable-line
+import MulSelect from '@/components/MulSelect/index';
+import UpLoaderWithPreview from '@/components/UpLoaderWithPreview/index';
 
 import FormHoc from '../../../../hoc/FormHoc';
-
-import { GRADE } from 'settings/const'; // eslint-disable-line
 
 const FormItem = Form.Item;
 

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import { Menu, Icon } from 'antd';
 
-import SIDE_MENU from '../../settings/sideMenu';
+import SIDE_MENU from '@/settings/sideMenu';
 
 import Logo from './logo.svg';
 

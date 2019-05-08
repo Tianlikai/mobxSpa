@@ -6,7 +6,7 @@ import {
 } from 'antd';
 
 import FormHoc from '../../../../hoc/FormHoc';
-import { GRADE } from 'settings/const'; // eslint-disable-line
+import { GRADE } from '@/settings/const';
 
 const FormItem = Form.Item;
 const { Option } = Select;

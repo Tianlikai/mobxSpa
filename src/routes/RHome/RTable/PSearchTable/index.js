@@ -5,8 +5,8 @@ import { Helmet } from 'react-helmet';
 
 import { Button, Table } from 'antd';
 
-import ModuleLine from 'components/ModuleLine'; // eslint-disable-line
-import { WithBreadcrumb } from 'components/Breadcrumb/index'; // eslint-disable-line
+import ModuleLine from '@/components/ModuleLine';
+import { WithBreadcrumb } from '@/components/Breadcrumb/index';
 
 import TableHoc from '../../../../hoc/TableHoc';
 

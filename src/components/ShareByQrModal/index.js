@@ -1,10 +1,10 @@
-import React, { Component } from 'react'; // eslint-disable-line
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
 import { Modal } from 'antd';
 
-import ImgWithSave from 'components/Image/ImgWithSave'; // eslint-disable-line
+import ImgWithSave from '@/components/Image/ImgWithSave';
 
 import './style.scss';
 

@@ -3,7 +3,7 @@ import React from 'react';
 /**
  * 全局函数
  */
-import 'utils/G.js'; // eslint-disable-line
+import '@/utils/G';
 
 /**
  * mobx store

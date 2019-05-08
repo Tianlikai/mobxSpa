@@ -5,12 +5,12 @@ import { inject, observer } from 'mobx-react';
 
 import { Row, Col, Table } from 'antd';
 
-import Storage from 'utils/storage'; // eslint-disable-line
+import Storage from '@/utils/storage';
 
-import ModuleLine from 'components/ModuleLine'; // eslint-disable-line
-import ImgWithSave from 'components/Image/ImgWithSave'; // eslint-disable-line
-import { WithBreadcrumb } from 'components/Breadcrumb'; // eslint-disable-line
-import ShareByQrModal from 'components/ShareByQrModal'; // eslint-disable-line
+import ModuleLine from '@/components/ModuleLine';
+import ImgWithSave from '@/components/Image/ImgWithSave';
+import { WithBreadcrumb } from '@/components/Breadcrumb';
+import ShareByQrModal from '@/components/ShareByQrModal';
 
 import TableHoc from '../../../../hoc/TableHoc';
 

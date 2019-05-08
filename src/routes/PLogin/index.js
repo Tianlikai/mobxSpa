@@ -5,7 +5,7 @@ import { Helmet } from 'react-helmet';
 import { observer, inject } from 'mobx-react';
 
 import SignInForm from './SignInForm';
-import BasicFooter from '../../layouts/LBasic/Footer';
+import BasicFooter from '@/layouts/LBasic/Footer';
 
 import './style.scss';
 

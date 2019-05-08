@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { GRADE } from '../../../../settings/const';
+import { GRADE } from '@/settings/const';
 
 /**
  * 对需要展示的数据，进行格式清洗

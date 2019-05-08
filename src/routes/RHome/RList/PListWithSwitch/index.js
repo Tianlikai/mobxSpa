@@ -7,14 +7,14 @@ import { Helmet } from 'react-helmet';
 
 import { Table, Button } from 'antd';
 
-import { WithBreadcrumb } from 'components/Breadcrumb/index'; // eslint-disable-line
-import Select from 'components/Select/index'; // eslint-disable-line
-import ListCard from 'components/ListCard/index'; // eslint-disable-line
-import ActionSet from 'components/ActionSet/index'; // eslint-disable-line
-import ModuleLine from 'components/ModuleLine'; // eslint-disable-line
-import VideoState from 'components/VideoState/index'; // eslint-disable-line
-import SwitchOfList from 'components/SwitchOfList/index'; // eslint-disable-line
-import TextWithIntercept from 'components/TextWithIntercept/index'; // eslint-disable-line
+import { WithBreadcrumb } from '@/components/Breadcrumb/index';
+import Select from '@/components/Select/index';
+import ListCard from '@/components/ListCard/index';
+import ActionSet from '@/components/ActionSet/index';
+import ModuleLine from '@/components/ModuleLine';
+import VideoState from '@/components/VideoState/index';
+import SwitchOfList from '@/components/SwitchOfList/index';
+import TextWithIntercept from '@/components/TextWithIntercept/index';
 
 import TableHoc from '../../../../hoc/TableHoc';
 

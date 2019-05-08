@@ -7,7 +7,7 @@ import { Menu, Dropdown as DropDown, Checkbox } from 'antd';
 
 import IconCircle from '../IconCircle/index';
 
-import { STATUS_VIDEO } from '../../settings/const';
+import { STATUS_VIDEO } from '@/settings/const';
 
 import './Card.scss';
 

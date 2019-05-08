@@ -18,10 +18,10 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.json'],
     alias: {
-      components: path.resolve(__dirname, '../src', 'components'),
-      layouts: path.resolve(__dirname, '../src', 'layouts'),
-      utils: path.resolve(__dirname, '../src', 'utils'),
-      settings: path.resolve(__dirname, '../src', 'settings'),
+      '@/components': path.resolve(__dirname, '../src', 'components'),
+      '@/layouts': path.resolve(__dirname, '../src', 'layouts'),
+      '@/utils': path.resolve(__dirname, '../src', 'utils'),
+      '@/settings': path.resolve(__dirname, '../src', 'settings'),
     },
   },
   externals: {

@@ -5,9 +5,8 @@ import { Helmet } from 'react-helmet';
 // import { toJS } from 'mobx'
 // import { inject, observer } from 'mobx-react';
 
-import Spinner from 'components/Spinner/Spinner'; // eslint-disable-line
-import ModuleLine from 'components/ModuleLine'; // eslint-disable-line
-import { WithBreadcrumb } from 'components/Breadcrumb'; // eslint-disable-line
+import ModuleLine from '@/components/ModuleLine';
+import { WithBreadcrumb } from '@/components/Breadcrumb';
 
 import MyForm from './MyForm';
 

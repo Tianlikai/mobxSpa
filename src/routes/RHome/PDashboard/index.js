@@ -3,9 +3,9 @@ import { Helmet } from 'react-helmet';
 
 import { Icon, Tooltip } from 'antd';
 
-import MomentNow from 'components/MomentNow/index'; // eslint-disable-line
-import getChartOpt from '../../../utils/echarts/index';
-import ReChart from '../../../components/ReactEchart/ReactEchart';
+import getChartOpt from '@/utils/echarts/index';
+import MomentNow from '@/components/MomentNow/index';
+import ReChart from '@/components/ReactEchart/ReactEchart';
 
 import './style.scss';
 

@@ -1,4 +1,4 @@
-import { createRoute } from 'utils/core'; // eslint-disable-line
+import { createRoute } from '@/utils/core';
 
 import NotFound from './index';
 

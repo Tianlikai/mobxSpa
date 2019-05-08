@@ -4,8 +4,8 @@ import CloneDeep from 'lodash/cloneDeep';
 
 import { Icon } from 'antd';
 
-import UpLoaderTrigger from 'components/UpLoaderTrigger/index'; // eslint-disable-line
-import FileProgress from 'components/UpLoadWithProgress/index'; // eslint-disable-line
+import UpLoaderTrigger from '@/components/UpLoaderTrigger/index';
+import FileProgress from '@/components/UpLoadWithProgress/index';
 import UpLoaderHoc from '../../hoc/UpLoaderHoc';
 
 import './style.scss';

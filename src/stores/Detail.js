@@ -2,7 +2,7 @@ import moment from 'moment';
 import CloneDeep from 'lodash/cloneDeep';
 
 import { action, observable } from 'mobx';
-import { GRADE } from '../settings/const';
+import { GRADE } from '@/settings/const';
 import api from '../api';
 
 const INFORMATION = {

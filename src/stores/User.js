@@ -1,5 +1,5 @@
 import { action, observable } from 'mobx';
-import Storage from 'utils/storage'; // eslint-disable-line
+import Storage from '@/utils/storage';
 import { Modal } from 'antd';
 
 import api from '../api/index';

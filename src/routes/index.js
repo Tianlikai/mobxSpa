@@ -1,4 +1,4 @@
-import { createRoutes } from 'utils/core'; // eslint-disable-line
+import { createRoutes } from '@/utils/core';
 
 import SignIn from './PLogin/index';
 import Dashboard from './RHome/PDashboard/route';
@@ -8,7 +8,7 @@ import List from './RHome/RList/index';
 import Detail from './RHome/RDetail/index';
 import NotFound from './RErrorPage/P404/route';
 
-import BasicLayout from '../layouts/LBasic/index';
+import BasicLayout from '@/layouts/LBasic/index';
 
 const routesConfig = () => [
   {

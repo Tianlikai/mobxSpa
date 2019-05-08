@@ -5,7 +5,7 @@ import classnames from 'classnames';
 import { Tooltip } from 'antd';
 
 import IconCircle from '../IconCircle/index';
-import { STATUS_VIDEO } from '../../settings/const';
+import { STATUS_VIDEO } from '@/settings/const';
 
 const VideoState = (props) => {
   const {

@@ -8,13 +8,7 @@
     "baseUrl": "./",
     "jsx": "react",
     "paths": {
-      "core/*": ["src/core/*"],
-      "libs/*": ["src/libs/*"],
-      "settings/*": ["src/settings/*"],
-      "components/*": ["src/components/*"],
-      "widgets/*": ["src/widgets/*"],
-      "models/*": ["src/models/*"],
-      "styles/*": ["src/styles/*"]
+      "@/*": ["./src/*"]
     }
   },
   "exclude": ["node_modules", "dist"],

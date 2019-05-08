@@ -9,7 +9,7 @@ import {
 
 import FormHoc from '../../../../hoc/FormHoc';
 
-import { GRADE } from 'settings/const'; // eslint-disable-line
+import { GRADE } from '@/settings/const';
 
 const FormItem = Form.Item;
 const { Search } = Input;
