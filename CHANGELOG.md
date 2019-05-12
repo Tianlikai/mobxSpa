@@ -35,3 +35,6 @@ v update_bundle_config
 v 2.0.5
 
 - 修改项目别名配置
+- moment.js 包含很多国际化配置文件导致体积过大，更改为 day.js 替代
+- 按需打包 lodash
+- 修复 polyfill 重复打包

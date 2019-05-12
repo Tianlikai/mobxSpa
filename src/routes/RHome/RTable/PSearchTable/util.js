@@ -1,4 +1,4 @@
-import moment from 'moment';
+import dayJs from 'dayjs';
 import { GRADE } from '@/settings/const';
 
 /**
@@ -9,9 +9,7 @@ function dealFormatData(items) {
   return items.map((item) => {
     const copyItem = item;
     const pos = GRADE.findIndex(grd => grd.value === item.grade);
-    copyItem.createdAt = item.createdAt
-      ? moment(item.createdAt).format('YYYY-MM-DD HH:mm:ss')
-      : '-';
+    copyItem.createdAt = item.createdAt ? dayJs(item.createdAt).format('YYYY-MM-DD HH:mm:ss') : '-';
     copyItem.payTime = item.payTime || '-';
     copyItem.grade = item.grade && pos >= 0 ? GRADE[pos].text : '-';
     copyItem.payMoney = item.payMoney ? `¥${item.payMoney}` : '-';

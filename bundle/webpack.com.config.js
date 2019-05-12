@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 
 const getDllPlugins = require('./getDllPlugins');
 const env = require('./environment');
@@ -22,6 +23,7 @@ module.exports = {
       '@/layouts': path.resolve(__dirname, '../src', 'layouts'),
       '@/utils': path.resolve(__dirname, '../src', 'utils'),
       '@/settings': path.resolve(__dirname, '../src', 'settings'),
+      moment: 'dayjs',
     },
   },
   externals: {
@@ -81,6 +83,7 @@ module.exports = {
     ],
   },
   plugins: [
+    new LodashModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, '../src', 'index.html'),
       inject: true,
@@ -89,7 +92,6 @@ module.exports = {
     new webpack.ProvidePlugin({
       React: 'react',
       ReactDOM: 'react-dom',
-      PropTypes: 'prop-types',
       MobxReact: 'mobx-react',
       ReactRouterDOM: 'react-router-dom',
     }),

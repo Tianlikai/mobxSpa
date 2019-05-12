@@ -1,17 +1,15 @@
 import React from 'react';
-import moment from 'moment';
+import dayJs from 'dayjs';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
-moment.locale('zh-cn');
-
-export default class MomentNow extends React.Component {
+export default class dayJsNow extends React.Component {
   static propTypes = {
     className: PropTypes.string,
   };
 
   state = {
-    time: moment().format('MMMM Do YYYY, h:mm:ss a'),
+    time: dayJs().format('MMMM D YYYY, h:mm:ss A'),
   };
 
   componentDidMount() {
@@ -24,7 +22,7 @@ export default class MomentNow extends React.Component {
 
   tick = () => {
     this.setState({
-      time: moment().format('MMMM Do YYYY, h:mm:ss a'),
+      time: dayJs().format('MMMM D YYYY, h:mm:ss A'),
     });
   };
 

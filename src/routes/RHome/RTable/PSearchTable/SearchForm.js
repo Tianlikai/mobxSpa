@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import moment from 'moment';
+import dayJs from 'dayjs';
 import PropTypes from 'prop-types';
 
 import {
@@ -50,9 +50,9 @@ class SearchForm extends Component {
       endTime: undefined,
     };
 
-    startTime = startTime ? moment(startTime, 'YYYY-MM-DD HH:MM:SS') : undefined;
+    startTime = startTime ? dayJs(startTime).format('YYYY-MM-DD HH:MM:SS') : undefined;
 
-    endTime = endTime ? moment(endTime, 'YYYY-MM-DD HH:MM:SS') : undefined;
+    endTime = endTime ? dayJs(endTime).format('YYYY-MM-DD HH:MM:SS') : undefined;
 
     return (
       <div className="search">

@@ -1,5 +1,5 @@
 const Mock = require('mockjs');
-const moment = require('moment');
+const dayJs = require('dayjs');
 
 const mathVersion = ['通用版', '人教版', '浙教版', '苏教版', '北师大版'];
 const englishVersion = ['通用版', '人教版', '外研版', '苏教译林版', '上海牛津版'];
@@ -230,7 +230,7 @@ class Agent {
     const id = this.cachedPro.length + 1;
     const data = {
       id,
-      createdAt: moment().format('YYYY-MM-DD HH:mm:ss'),
+      createdAt: dayJs().format('YYYY-MM-DD HH:mm:ss'),
       address: city,
       school,
       grade,

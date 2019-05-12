@@ -1,4 +1,4 @@
-import moment from 'moment';
+import dayJs from 'dayjs';
 import CloneDeep from 'lodash/cloneDeep';
 
 import { action, observable } from 'mobx';
@@ -71,7 +71,7 @@ class Detail {
         keys.forEach((key) => {
           if (key === 'createdAt') {
             basicInformation[key].value = data[key]
-              ? moment(data[key]).format('YYYY-MM-DD HH:mm:ss')
+              ? dayJs(data[key]).format('YYYY-MM-DD HH:mm:ss')
               : '-';
           } else if (key === 'grade') {
             const pos = GRADE.findIndex(grade => grade.value === data[key]);
@@ -110,7 +110,7 @@ class Detail {
         const listItems = data.courseOrderlist.map((item) => {
           const copy = Object.assign({}, item);
           const pos = GRADE.findIndex(grade => grade.value === item.grade);
-          copy.payTime = item.payTime ? moment(item.payTime).format('YYYY-MM-DD HH:mm:ss') : '-';
+          copy.payTime = item.payTime ? dayJs(item.payTime).format('YYYY-MM-DD HH:mm:ss') : '-';
           copy.payMoney = item.payMoney ? `¥${item.payMoney}` : '-';
           copy.share = item.share ? `¥${item.share}` : '-';
           if (item.grade && pos >= 0) {

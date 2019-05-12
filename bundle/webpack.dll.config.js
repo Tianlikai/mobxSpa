@@ -10,10 +10,8 @@ module.exports = {
     vendors: [
       'axios',
       'classnames',
-      'lodash',
       'mobx',
       'mobx-react',
-      'moment',
       'prop-types',
       'react-content-loader',
       'react-helmet',
