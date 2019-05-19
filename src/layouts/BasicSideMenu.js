@@ -25,6 +25,17 @@ export default class SideMenu extends Component {
     };
   }
 
+  static getDerivedStateFromProps(props, state) {
+    const { selectedKeys } = props;
+    const openKey = selectedKeys.split('/')[1];
+    if (state.openKeys.indexOf(openKey) < 0) {
+      return {
+        openKeys: state.openKeys.concat(openKey),
+      };
+    }
+    return null;
+  }
+
   get menu() {
     const SHOW_SIDE_MENU = {};
     Object.keys(SIDE_MENU).map((key) => {
@@ -87,6 +98,7 @@ export default class SideMenu extends Component {
                         <Link to={item.to}>{item.text}</Link>
                       </Item>
                     );
+                    return null;
                   }
                 })}
               </SubMenu>
