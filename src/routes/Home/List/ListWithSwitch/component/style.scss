@@ -1,0 +1,25 @@
+.baseTable-wrapper {
+  .table-search-wrapper,
+  .self-table-wrapper,
+  .pagWrapper {
+    background: #fff;
+  }
+  .displayNone {
+    display: none;
+  }
+  .table-search-wrapper {
+    padding: 30px;
+    margin-bottom: 30px;
+  }
+}
+.listWrapper {
+  .pagWrapper {
+    padding: 10px 0;
+    margin-top: 30px;
+    text-align: right;
+  }
+  .create-btn {
+    float: right;
+    margin-top: -4px;
+  }
+}

@@ -1,37 +1,32 @@
-import Component from './components/Component'
-import { Provider } from 'mobx-react'
-// 引入全局函数
-import './libs/G.js'
+import React from 'react';
 
-// 单页面应用主文件
-import Home from './routes/home/Home'
-// 登陆页面
-import SignIn from './routes/signIn/SignIn'
-// mobx store
-import stores from './stores/index'
+/**
+ * 全局函数
+ */
+import 'utils/G.js'; // eslint-disable-line
 
-import './styles.scss'
+/**
+ * mobx store
+ */
+import stores from './stores/index';
 
-// 路由控件
-const { HashRouter: Router, Route, Switch } = ReactRouterDOM
+/**
+ * 路由
+ */
+import createRoutes from './routes/index';
 
-class Entry extends Component {
-    render() {
-        return (
-            <Provider {...stores}>
-                <Router>
-                    <Switch>
-                        <Route
-                            exact
-                            path='/signIn'
-                            render={props => <SignIn {...props} />}
-                        />
-                        <Route path='/' render={props => <Home {...props} />} />
-                    </Switch>
-                </Router>
-            </Provider>
-        )
-    }
-}
+/**
+ * 公共样式
+ */
+import './styles.scss';
 
-ReactDOM.render(<Entry />, document.querySelector('#root'))
+const { Provider } = MobxReact;
+const { BrowserRouter: Router } = ReactRouterDOM;
+
+const Entry = () => (
+  <Provider {...stores}>
+    <Router basename={__BASENAME__}>{createRoutes()}</Router>
+  </Provider>
+);
+
+ReactDOM.render(<Entry />, document.querySelector('#root'));

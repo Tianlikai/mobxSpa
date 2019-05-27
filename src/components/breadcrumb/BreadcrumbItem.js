@@ -1,24 +1,26 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React from 'react';
+import PropTypes from 'prop-types';
 
-class BreadcrumbItem extends React.Component {
-    static defaultProps = {
-        prefixCls: 'breadItem',
-        separator: '/',
-        label: 'string'
-    }
-    static propTypes = {
-        prefixCls: PropTypes.string,
-        separator: PropTypes.oneOfType([PropTypes.element, PropTypes.string])
-    }
-    render() {
-        const { prefixCls, separator, label } = this.props
-        return (
-            <span>
-                <span className={`${prefixCls}-label`}>{label}</span>
-                <span className={`${prefixCls}-separator`}>{separator}</span>
-            </span>
-        )
-    }
-}
-export default BreadcrumbItem
+const BreadcrumbItem = (props) => {
+  const { prefixCls, separator, label } = props;
+  return (
+    <span>
+      <span className={`${prefixCls}-label`}>{label}</span>
+      <span className={`${prefixCls}-separator`}>{separator}</span>
+    </span>
+  );
+};
+
+BreadcrumbItem.defaultProps = {
+  prefixCls: 'breadItem',
+  separator: '/',
+  label: 'string',
+};
+
+BreadcrumbItem.propTypes = {
+  label: PropTypes.string,
+  prefixCls: PropTypes.string,
+  separator: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
+};
+
+export default BreadcrumbItem;

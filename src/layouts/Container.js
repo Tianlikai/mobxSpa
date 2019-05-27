@@ -1,25 +1,31 @@
-import Component from '../components/Component'
-import Breadcrumb from '../components/breadcrumb'
+import React from 'react';
+import PropTypes from 'prop-types';
+import classnames from 'classnames';
 
-const Container = config => WrappedComponent =>
-    class extends Component {
-        render() {
-            const footer = {
-                color: 'gray',
-                fontSize: 18
-            }
-            return (
-                <div className='container'>
-                    <div className='content'>
-                        <Breadcrumb config={config} />
-                        <WrappedComponent {...this.props} />
-                    </div>
-                    <div className='footer' style={footer}>
-                        power to go!
-                    </div>
-                </div>
-            )
-        }
-    }
+const { Switch } = ReactRouterDOM;
 
-export default Container
+const Container = (props) => {
+  const {
+    routerData: { childRoutes },
+    prefix,
+    className,
+  } = props;
+  const classes = classnames(prefix, { [className]: className });
+  return (
+    <div className={classes}>
+      <Switch>{childRoutes}</Switch>
+    </div>
+  );
+};
+
+Container.defaultProps = {
+  prefix: 'container',
+};
+
+Container.propTypes = {
+  prefix: PropTypes.string,
+  className: PropTypes.string,
+  routerData: PropTypes.object,
+};
+
+export default Container;
