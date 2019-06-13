@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
-import { toJS } from 'mobx'
+import { toJS } from 'mobx';
 import { inject, observer } from 'mobx-react';
 
 import Spinner from 'components/Spinner/Spinner'; // eslint-disable-line

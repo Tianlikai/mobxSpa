@@ -156,6 +156,10 @@ const CANVASDATA = {
   },
 };
 
+/**
+ * 该页面只是一个静态页面，没有加业务，之后添加
+ */
+
 export default class Dashboard extends React.Component {
   todo = () => {};
 

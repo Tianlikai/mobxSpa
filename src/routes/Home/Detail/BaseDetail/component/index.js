@@ -109,7 +109,7 @@ class BaseDetail extends Component {
     this.setState({
       visibleModal: false,
     });
-    Storage.del('fromCreatePromotion')
+    Storage.del('fromCreatePromotion');
   };
 
   render() {

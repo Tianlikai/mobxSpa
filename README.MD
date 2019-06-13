@@ -1,56 +1,68 @@
 # mobx_antd_react
 
-中后台 spa 完整项目脚手架。
+中后台 SPA 完整项目脚手架。
 
 ![](./print.png)
 
 ## 写在前面
 
-使用 webpack4.xx，区分开发环境和生产环境，开发环境打包编译超快，生产环境的优化基本都有。
-mobx 做状态管理，灵活方便
-antd 做 ui 易于维护
-axios 请求 api
-mock 数据前端独立开发
+这是一个不断迭代，与时俱进的中后台项目。
 
-写得不容易
-大家喜欢的话随手给个星，感谢。
+如果对你的项目搭建有帮助的话，随手给个星，感谢。
+
+## 特点
+
+- webpack 一个适用于真实项目开发配置
+- Router 做了基本权限处理，跳转，以及一个更好的组织项目模块的路由配置函数
+- mobx 处理数据流，简单易用
+- axios 基于模块组织 api 接口
+- 基于 antd 提供了表单，表格，上传的高阶组件。统一了以上场景的公共业务
+- 基于路由和组件的按需加载模块
 
 ## 文件目录
 
 ```
 ├── node_modules:                   模块文件夹
 |   └── ...
+├── _mocker_:                       mock接口数据
+├── build:                          webpack配置文件
+|   ├── env:                        环境变量配置
+|   ├── index:                      调用webpack入口文件
+|   ├── webpack.base.config:        webpack通用配置
+|   ├── webpack.dev.config:         webpack开发配置
+|   ├── webpack.dll.config:         webpack公共依赖库打包
+|   └── webpack.prod.config:        webpack生产配置
 ├── dist:                           打包生成目录
 ├── src:                            开发目录
+|   ├── api:                        API配置，axios封装
 |   ├── components:                 公共组件
+|   ├── hoc:                        公共业务
 |   ├── layouts:                    布局组件
-|   ├── libs:                       全局工具函数
-|   ├── mocker:                     模拟接口
-|   ├── pages:                      项目view
-|   |   ├── myAgent:                我的代理模块
-|   |   ├── operationLog:           日志模块
-|   |   ├── orgAdmin:               我的机构模块
-|   |   ├── styles:                 home/sign的样式
-|   |   ├── Home.js:                项目骨架
-|   |   └── SignIn.js:              登陆模块
+|   ├── routes:                     项目路由
+|   |   ├── ErrorPage:              错误导航页面
+|   |   ├── Home:                   主路由模块
+|   |   ├── Login:                  登录页面
+|   |   └── index.js:               路由配置文件
+|   ├── settings:                   配置文件
+|   |   ├── const.js:               常量文件
+|   |   ├── headConfig.js:          顶部模块配置
+|   |   ├── permissions.js:         权限配置
+|   |   └── sideMenu.js:            目录
 |   ├── static:                     静态文件
 |   ├── store:                      mobx store文件
-|   ├── setting:                    配置文件
-|   |   ├── api.js:                 API配置文件
-|   |   ├── consts.js:              常量文件
-|   |   └── routeAndPermissions.js: 权限/路由配置
+|   ├── utils:                      工具函数
 |   ├── index.ejs:                  模版文件
-|   └── index.js:                   入口文件
+|   ├── index.js:                   入口文件
+|   └── style.scss:                 公共样式
 ├── .babelrc                        babel配置文件
+├── .editorconfig                   不通操作系统编码格式统一
 ├── .eslintignore                   eslint忽略
 ├── .eslintrc.json                  eslint
 ├── .gitignore                      git忽略文件
-├── env.js                          开发变量配置
 ├── jsconfig.json                   代码兼容装饰器写法
 ├── package.json                    项目依赖 npm
-├── README.MD                       项目信息
-├── webpack.config.js               webpack配置文件
-└── webpack.dll.config.js           dll分离公共库
+├── postcss.config.js               postcss 插件配置
+└── README.MD                       项目信息
 ```
 
 ## 技术栈
@@ -58,50 +70,43 @@ mock 数据前端独立开发
 - react 16.3xx
 - react-dom
 - react-router 4.xx
+- react-loadable
 - mobx 数据流
 - webpack 4.xx
 - ESLint 代码规范
 - axios 异步请求
 - antd ui
 - mock 模拟接口数据
+- echarts
 
 ## 开发环境
 
 - git clone https://github.com/Tianlikai/mobxSpa.git
 - npm i
+- npm run build:dll
 - npm run dev
 
 ## 生产环境
 
 - npm run build
 
-## 项目理解指南
-
-- 此处先了解项目如何启动并如何运行所以请先忽略 webpack 等工具
-- 首先请看明白之前的“文件目录”
-- 看懂项目主要是看懂项目骨架
-- /src/index.js 先看项目入口
-- /src/pages/Home.js 主文件骨架 进入文件看注释（结合/src/settings/routeAndPermissions.js 看）
-- /src/settings/routeAndPermissions.js 配置文件 （结合/src/pages/Home.js 看）
-- /src/pages/myAgent/index.js 项目子模块 进入文件看注释 （结合/src/settings/routeAndPermissions.js 看）
-
 ## 待优化项
 
-- 权限/路由/目录 三者之间项目映射 简化配置
-- mobx 性能优化
-- 编写单元测试
-- 异步请求优化
-- 动态加载组件 [react-loadable](https://github.com/jamiebuilds/react-loadable)
+- 提交代码时对代码做校验，强制规范代码
+- loading 改为体验更好的占位符
+- React 生命周期替换，以及新的 API 的使用，React 从 16.3 起到 17 将逐渐废除[componentWillReceiveProps]()，[componentWillMount]()，[componentWillUpdate]()
 
 ## 未来展望
 
-- css in js [style-component](https://github.com/styled-components/styled-components)
-- 脚本生成组件模块以及测试用例
-- 离线优先
+- 异步渲染
 
-## 注意
+## 更新路径
 
-- windows 平台下“git clone”项目可能会出现丢失 src 目录下部分代码
-- windows 平台下可以通过 Download Zip 形式下载
-- 解压后部分“import”文件名或出错，通过“npm i” -> "npm run dev“ 会抛出所有错误文件目录定位
-- 找到修改为正确的文件目录即可
+V 2.0.1
+
+- 修改项目文件组织结构
+- 修改项目路由配置方式（更好的结合[import]()动态加载，和公共模块拆分）
+- 更新 webpack 配置，将开发和生产环境拆分为更小的 webpack 文件，通过[webpack-merge]() 合并
+- Api 接口不再统一配置，按照功能模块进行区分
+- 添加 [表单]()，[表格]()，[上传]() 高阶组件
+- 添加简单的 dashboard 页面

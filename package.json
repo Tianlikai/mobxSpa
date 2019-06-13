@@ -1,15 +1,15 @@
 {
   "name": "mobx_spa",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "clean": "rimraf src/static/dll.vendor.* && rimraf src/static/manifest.dll.json",
-    "build:dll": "rimraf src/static/dll.vendor.* && rimraf src/static/manifest.dll.json && webpack --config webpack.dll.config.js",
-    "build:webpack": "rimraf dist/* && cross-env NODE_ENV=prod webpack",
+    "clean": "rimraf static/dll.vendor.* && rimraf static/manifest.dll.json",
+    "build:dll": "rimraf static/dll.vendor.* && rimraf static/manifest.dll.json && webpack --config build/webpack.dll.config.js",
+    "build:webpack": "rimraf dist/* && cross-env NODE_ENV=prod webpack --config build/index.js",
     "build": "npm run clean && npm run build:dll && npm run build:webpack",
-    "dev": "cross-env HOST=true NODE_ENV=dev webpack-dev-server --progress --mode development"
+    "dev": "cross-env HOST=true NODE_ENV=dev webpack-dev-server --config build/index.js --progress --mode development"
   },
   "author": "jason tian",
   "license": "ISC",
@@ -89,6 +89,7 @@
     "webpack-cli": "^3.1.0",
     "webpack-dev-server": "^3.1.5",
     "webpack-manifest-plugin": "^2.0.3",
-    "webpack-md5-hash": "0.0.6"
+    "webpack-md5-hash": "0.0.6",
+    "webpack-merge": "^4.2.1"
   }
 }

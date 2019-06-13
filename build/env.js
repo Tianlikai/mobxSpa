@@ -17,7 +17,7 @@ if (env.toLowerCase().indexOf('dev') > -1) {
 }
 
 const conf = {
-  VERSION: require('./package.json').version,
+  VERSION: require('../package').version,
   PROTOCOL: https ? 'https' : 'http',
   HTTPS: https,
   HOST: host,

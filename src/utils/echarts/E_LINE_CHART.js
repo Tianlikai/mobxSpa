@@ -5,14 +5,13 @@ import {
   formatterHintWithDbClick,
   adjustGrid,
   getSeriesItem,
-} from './EchartUtil';
+} from './EChartUtil';
 import {
-  LINE_SeriesItemType,
-  LINE_LabelPosition,
-  LINE_SymbolSize,
+  LINE_SERIES_ITEM_TYPE,
+  LINE_LABEL_POSITION,
+  LINE_SYMBOL_SIZE,
   DataZoomWidth,
-  ColorArray,
-} from './EchartType';
+} from './EChartType';
 
 /**
  * 返回折线图配置 option
@@ -28,12 +27,12 @@ function getColumnChartOpt({
 }) {
   const {
     legend,
-    x_name,
+    xName,
     y_name: seriesName,
     x,
     y: seriesData,
     groupNum,
-    group_type = [],
+    groupType = [],
   } = chartData;
   const option = {
     tooltip: {
@@ -63,7 +62,7 @@ function getColumnChartOpt({
       containLabel: true,
     },
     xAxis: {
-      name: x_name,
+      name: xName,
       nameLocation: 'middle',
       nameGap: 25,
       type: 'category',
@@ -90,15 +89,15 @@ function getColumnChartOpt({
     series: [],
   };
   const groupCount = seriesData.length; // 多个分组方式时的组数
-  for (let i = 0; i < groupCount; i++) {
+  for (let i = 0; i < groupCount; i += 1) {
     const datas = foreachDataSetBackgroundColors(seriesData[i], i, type);
     const itemInfo = {
       name: groupNum === 1 ? seriesName : `${legend[i]}`,
-      type: LINE_SeriesItemType,
-      symbolSize: LINE_SymbolSize,
+      type: LINE_SERIES_ITEM_TYPE,
+      symbolSize: LINE_SYMBOL_SIZE,
       colorIndex: i,
       show: false,
-      position: LINE_LabelPosition,
+      position: LINE_LABEL_POSITION,
       color: '#4A4A4A',
       data: datas,
     };
@@ -117,11 +116,11 @@ function getColumnChartOpt({
   if (isShow) {
     // 是否显示数值
     const mainAxisLen = x.length; // y轴显示的数目
-    for (let i = 0, y = option.series.length; i < y; i++) {
+    for (let i = 0, y = option.series.length; i < y; i += 1) {
       option.series[i].label.normal.show = true;
     }
     // 时间类型的数据 需要设置dataDoom 要显示最新的
-    if (group_type && (group_type[0] === 'datetime' || group_type[0] === 'date')) {
+    if (groupType && (groupType[0] === 'datetime' || groupType[0] === 'date')) {
       option.dataZoom[0].start = 100 - getDataZoomEnd(mainAxisLen);
     } else {
       option.dataZoom[0].end = getDataZoomEnd(mainAxisLen);

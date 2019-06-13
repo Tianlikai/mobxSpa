@@ -17,9 +17,9 @@ import './style.scss';
 // @observer
 class UploadForm extends Component {
   static propTypes = {
-    FormStore: PropTypes.object.isRequired,
+    // FormStore: PropTypes.object.isRequired,
     routerData: PropTypes.object.isRequired,
-    history: PropTypes.object.isRequired,
+    // history: PropTypes.object.isRequired,
   };
 
   componentDidMount() {
@@ -27,9 +27,7 @@ class UploadForm extends Component {
     // FormStore.initialData();
   }
 
-  handleSubmit = (values) => {
-    console.log(values);
-  };
+  handleSubmit = () => {};
 
   render() {
     const {

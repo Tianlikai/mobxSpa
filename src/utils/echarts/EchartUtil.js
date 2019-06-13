@@ -1,4 +1,4 @@
-import { ColorArray } from './EchartType';
+import { ColorArray } from './EChartType';
 
 function foreachDataSetBackgroundColors(data, i, type) {
   const result = [];
