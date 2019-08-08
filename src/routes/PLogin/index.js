@@ -9,6 +9,8 @@ import BasicFooter from '@/layouts/LBasic/Footer';
 
 import './style.scss';
 
+const PREFIX = `${__PROJECT__}PSignIn`;
+
 @inject('User')
 @observer
 class SignIn extends Component {
@@ -33,19 +35,19 @@ class SignIn extends Component {
 
   render() {
     return (
-      <div className="PSignIn">
+      <div className={PREFIX}>
         <Helmet>
           <title>登录 - SPA</title>
           <meta name="description" content="SPA" />
         </Helmet>
-        <div className="header" />
-        <div className="content">
-          <div className="logo">
-            <div className="title">Backstage management</div>
+        <header className={`${PREFIX}-header`} />
+        <main className={`${PREFIX}-content`}>
+          <div className={`${PREFIX}-content-logo`}>
+            <div className={`${PREFIX}-content-title`}>Backstage management</div>
           </div>
           <SignInForm onSubmit={this.onSubmit} />
-        </div>
-        <BasicFooter className="footer" />
+        </main>
+        <BasicFooter className={`${PREFIX}-footer`} />
       </div>
     );
   }

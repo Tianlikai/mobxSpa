@@ -1,10 +1,7 @@
-.PSignIn {
+.#{$projectPrefix}PSignIn{
   position: relative;
   height: 100%;
-  .logo {
-    width: 98px;
-  }
-  .header {
+  &-header {
     position: absolute;
     top: 0;
     right: 0;
@@ -15,7 +12,7 @@
     text-align: left;
     background: #001529;
   }
-  .content {
+  &-content {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -24,28 +21,17 @@
     height: 368px;
     margin-top: -184px;
     margin-left: -200px;
-    .logo {
+    &-logo {
       width: 100%;
       text-align: center;
-      img {
-        width: 160px;
-      }
     }
-    .title {
+    &-title {
       margin: 11px;
       color: #666;
       font-size: 24px;
     }
-    .submit {
-      width: 100%;
-      height: 60px;
-      color: #fff;
-      font-size: 24px;
-      text-align: center;
-      background: #2c5b8f;
-    }
   }
-  .footer {
+  &-footer {
     position: absolute;
     bottom: 20px;
     left: 50%;
@@ -53,16 +39,5 @@
     width: 150px;
     height: 40px;
     margin-left: -75px;
-    img {
-      width: 100%;
-      height: 100%;
-    }
-  }
-  input {
-    width: 100%;
-    height: 60px;
-    padding: 0 30px;
-    font-size: 20px;
-    background: #f0f1f3;
   }
 }
