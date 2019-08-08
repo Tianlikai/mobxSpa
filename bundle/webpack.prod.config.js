@@ -1,3 +1,4 @@
+const path = require('path');
 const HappyPack = require('happypack');
 const TerserJSPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -40,7 +41,16 @@ module.exports = {
     }),
     new HappyPack({
       id: 'css',
-      loaders: [{ loader: 'css-loader' }, { loader: 'sass-loader' }, { loader: 'postcss-loader' }],
+      loaders: [
+        { loader: 'css-loader' },
+        { loader: 'postcss-loader' },
+        { loader: 'sass-loader' },
+        {
+          loader: 'sass-resources-loader',
+          options: {
+            resources: path.resolve(__dirname, '../src/variable.scss'),
+          },
+        }],
       threadPool: happyThreadPool,
     }),
     new BundleAnalyzerPlugin({

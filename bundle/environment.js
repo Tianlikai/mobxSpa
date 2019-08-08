@@ -5,6 +5,7 @@ const getIpAddress = require('./util/getIpAddress');
  * 定义环境变量
  */
 const env = {
+  PROJECT: 'SPA-',
   PROTOCOL: 'https',
   HOST: getIpAddress(),
   PORT: 9000,

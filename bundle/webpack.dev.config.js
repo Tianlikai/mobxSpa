@@ -40,7 +40,16 @@ module.exports = {
     }),
     new HappyPack({
       id: 'css',
-      loaders: [{ loader: 'css-loader' }, { loader: 'postcss-loader' }, { loader: 'sass-loader' }],
+      loaders: [
+        { loader: 'css-loader' },
+        { loader: 'postcss-loader' },
+        { loader: 'sass-loader' },
+        {
+          loader: 'sass-resources-loader',
+          options: {
+            resources: path.resolve(__dirname, '../src/variable.scss'),
+          },
+        }],
       threadPool: happyThreadPool,
     }),
     new webpack.HotModuleReplacementPlugin(),
