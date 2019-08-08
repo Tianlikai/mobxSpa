@@ -40,7 +40,7 @@ module.exports = {
     }),
     new HappyPack({
       id: 'css',
-      loaders: [{ loader: 'css-loader' }, { loader: 'sass-loader' }, { loader: 'postcss-loader' }],
+      loaders: [{ loader: 'css-loader' }, { loader: 'postcss-loader' }, { loader: 'sass-loader' }],
       threadPool: happyThreadPool,
     }),
     new webpack.HotModuleReplacementPlugin(),
