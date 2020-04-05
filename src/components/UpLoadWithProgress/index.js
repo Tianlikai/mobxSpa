@@ -1,7 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Progress, Icon, Tooltip } from 'antd';
+import { Progress, Tooltip } from 'antd';
+import {
+  CloseCircleOutlined,
+  DeleteOutlined,
+  PauseCircleOutlined,
+  PaperClipOutlined,
+} from '@ant-design/icons';
 
 import './style.scss';
 
@@ -57,23 +63,23 @@ export default class UpLoadWithProgress extends React.Component {
         <div className="upload_section_bottom">
           {progress < 100 ? (
             <Tooltip title="暂停">
-              <Icon type="pause-circle" />
+              <PauseCircleOutlined />
             </Tooltip>
           ) : null}
 
           {progress < 100 ? null : (
             <Tooltip title="复制链接">
-              <Icon type="paper-clip" />
+              <PaperClipOutlined />
             </Tooltip>
           )}
 
           {progress < 100 ? (
             <Tooltip title="取消">
-              <Icon onClick={this.onCancel} type="close" />
+              <CloseCircleOutlined />
             </Tooltip>
           ) : (
             <Tooltip title="删除">
-              <Icon onClick={this.onDel} type="delete" />
+              <DeleteOutlined />
             </Tooltip>
           )}
         </div>

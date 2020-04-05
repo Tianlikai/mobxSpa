@@ -1,6 +1,6 @@
 .root-switch {
   margin: 30px 0;
-  span {
+  > span {
     display: inline-block;
     float: right;
     width: 40px;
@@ -17,7 +17,7 @@
     }
   }
   &::after {
-    content: "";
+    content: '';
     display: block;
     clear: both;
   }

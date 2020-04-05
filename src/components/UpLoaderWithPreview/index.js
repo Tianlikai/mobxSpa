@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import CloneDeep from 'lodash/cloneDeep';
 
-import { Icon } from 'antd';
+import { DownloadOutlined } from '@ant-design/icons';
 
 import UpLoaderTrigger from '@/components/UpLoaderTrigger/index';
 import FileProgress from '@/components/UpLoadWithProgress/index';
@@ -20,14 +20,9 @@ export default class FormUpLoader extends React.Component {
 
   constructor(props) {
     super(props);
-
-    const {
-      value: { files = [], finish = [] },
-    } = props;
-
     this.state = {
-      files,
-      finish,
+      files: [],
+      finish: [],
     };
   }
 
@@ -45,7 +40,7 @@ export default class FormUpLoader extends React.Component {
     const copyFiles = CloneDeep(files);
     for (let i = 0; i < Files.length; i += 1) {
       const file = Files[i];
-      const pos = copyFiles.findIndex(f => f.name === file.name);
+      const pos = copyFiles.findIndex((f) => f.name === file.name);
       if (pos < 0) copyFiles.push(file);
     }
     return copyFiles;
@@ -53,7 +48,7 @@ export default class FormUpLoader extends React.Component {
 
   computedFinish = (newFile, finish) => {
     const uploaded = finish.slice();
-    const tag = uploaded.findIndex(file => file.hash === newFile.hash);
+    const tag = uploaded.findIndex((file) => file.hash === newFile.hash);
     if (tag < 0) {
       uploaded.push(newFile);
       return uploaded;
@@ -68,7 +63,7 @@ export default class FormUpLoader extends React.Component {
         value: { files, finish },
       } = this.props;
       const F = files.slice();
-      const pos = F.findIndex(file => file.name === cancelFile.name);
+      const pos = F.findIndex((file) => file.name === cancelFile.name);
       if (pos >= 0) F.splice(pos, 1);
       onChange({
         files: F,
@@ -77,7 +72,7 @@ export default class FormUpLoader extends React.Component {
     } else {
       const { files } = this.state;
       const F = files.slice();
-      const pos = F.findIndex(file => file.name === cancelFile.name);
+      const pos = F.findIndex((file) => file.name === cancelFile.name);
       if (pos >= 0) F.splice(pos, 1);
       this.setState({
         files: F,
@@ -94,8 +89,8 @@ export default class FormUpLoader extends React.Component {
       const F = files.slice();
       const uploaded = finish.slice();
 
-      const pos1 = F.findIndex(file => file.name === deleteFile.name);
-      const pos2 = uploaded.findIndex(file => file.name === deleteFile.name);
+      const pos1 = F.findIndex((file) => file.name === deleteFile.name);
+      const pos2 = uploaded.findIndex((file) => file.name === deleteFile.name);
 
       if (pos1 >= 0) F.splice(pos1, 1);
       if (pos2 >= 0) uploaded.splice(pos2, 1);
@@ -108,8 +103,8 @@ export default class FormUpLoader extends React.Component {
       const F = files.slice();
       const uploaded = finish.slice();
 
-      const pos1 = F.findIndex(file => file.name === deleteFile.name);
-      const pos2 = uploaded.findIndex(file => file.name === deleteFile.name);
+      const pos1 = F.findIndex((file) => file.name === deleteFile.name);
+      const pos2 = uploaded.findIndex((file) => file.name === deleteFile.name);
 
       if (pos1 >= 0) F.splice(pos1, 1);
       if (pos2 >= 0) uploaded.splice(pos2, 1);
@@ -171,11 +166,11 @@ export default class FormUpLoader extends React.Component {
     return (
       <div className="upLoader_with_preview">
         <UpLoaderTrigger className="loader_trigger" multiple onChange={this.handleFileChange}>
-          <Icon type="download" />
+          <DownloadOutlined />
           上传文件
         </UpLoaderTrigger>
         <div className="upLoader_container">
-          {files.map(file => (
+          {files.map((file) => (
             <UpLoadWithProgress
               key={file.name}
               file={file}

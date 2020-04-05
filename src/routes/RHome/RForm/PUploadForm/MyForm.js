@@ -7,12 +7,16 @@ import { Form, Button } from 'antd';
 import MulSelect from '@/components/MulSelect/index';
 import UpLoaderWithPreview from '@/components/UpLoaderWithPreview/index';
 
-import FormHoc from '../../../../hoc/FormHoc';
-
 const FormItem = Form.Item;
 
-@FormHoc
 class MyForm extends Component {
+  static propTypes = {
+    form: PropTypes.object.isRequired, // antd 表单对象
+    formItemLayout: PropTypes.object,
+    tailFormItemLayout: PropTypes.object,
+    handleSubmit: PropTypes.func.isRequired, // FormHoc 公用方法，该方法调用会默认触发尾部onSubmit回调
+  };
+
   static defaultProps = {
     formItemLayout: {
       labelCol: {
@@ -38,13 +42,6 @@ class MyForm extends Component {
     },
   };
 
-  static propTypes = {
-    form: PropTypes.object.isRequired, // antd 表单对象
-    formItemLayout: PropTypes.object,
-    tailFormItemLayout: PropTypes.object,
-    handleSubmit: PropTypes.func.isRequired, // FormHoc 公用方法，该方法调用会默认触发尾部onSubmit回调
-  };
-
   onSubmit = (e) => {
     e.preventDefault();
     const { handleSubmit } = this.props;
@@ -61,19 +58,16 @@ class MyForm extends Component {
   }
 
   render() {
-    const {
-      form: { getFieldDecorator },
-      formItemLayout,
-      tailFormItemLayout,
-    } = this.props;
+    const { formItemLayout, tailFormItemLayout } = this.props;
 
     const mimeType = ['video/mp4', 'video/quicktime'];
-
+    const initialValues = { video: { files: [], finish: [] } };
     return (
       <div className="orderForm-container">
-        <Form onSubmit={this.onSubmit}>
-          <FormItem className="orderForm-item" {...formItemLayout} label="视频名称">
-            {getFieldDecorator('video', {
+        <Form onSubmit={this.onSubmit} initialValues={initialValues}>
+          <FormItem className="orderForm-item" name="video" {...formItemLayout} label="视频名称">
+            <UpLoaderWithPreview mimeType={mimeType} />
+            {/* {getFieldDecorator('video', {
               initialValue: {
                 files: [],
                 finish: [],
@@ -82,14 +76,20 @@ class MyForm extends Component {
                 { required: true, message: '请上传视频' },
                 // { validator: this.validatorVideo },
               ],
-            })(<UpLoaderWithPreview mimeType={mimeType} />)}
+            })()} */}
           </FormItem>
 
-          <FormItem className="defaultFormItem" {...formItemLayout} label="自定义标签">
-            {getFieldDecorator('userDefinedTags', {
+          <FormItem
+            className="defaultFormItem"
+            name="userDefinedTags"
+            {...formItemLayout}
+            label="自定义标签"
+          >
+            <MulSelect warningInfo={false} />
+            {/* {getFieldDecorator('userDefinedTags', {
               initialValue: [],
               rules: [{ required: true, message: '请填写自定义标签' }],
-            })(<MulSelect warningInfo={false} />)}
+            })(<MulSelect warningInfo={false} />)} */}
           </FormItem>
 
           <FormItem {...tailFormItemLayout}>

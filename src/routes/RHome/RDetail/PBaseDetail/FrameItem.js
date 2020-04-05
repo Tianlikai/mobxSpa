@@ -2,12 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
-import { Icon, Tooltip } from 'antd';
+import { Tooltip } from 'antd';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
 
 const FrameItem = (props) => {
-  const {
-    showHint, title, titleHint, value, footerTitle, footerValue,
-  } = props;
+  const { showHint, title, titleHint, value, footerTitle, footerValue } = props;
 
   const classes = classnames({
     'title-icon-right-show': showHint,
@@ -19,7 +18,7 @@ const FrameItem = (props) => {
       <div className="item-title">
         {title}
         <Tooltip title={titleHint}>
-          <Icon className={classes} type="exclamation-circle-o" />
+          <ExclamationCircleOutlined className={classes} />
         </Tooltip>
       </div>
       <div className="item-value">{value}</div>

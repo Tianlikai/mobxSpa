@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import { Menu, Icon } from 'antd';
+import { Menu } from 'antd';
 
 import SIDE_MENU from '@/settings/sideMenu';
 
@@ -78,7 +78,7 @@ export default class SideMenu extends Component {
           {Object.keys(this.menu).map((key) => {
             const title = (
               <span>
-                <Icon type={this.menu[key].iconType} />
+                {this.menu[key].iconType}
                 <span>{this.menu[key].text}</span>
               </span>
             );
@@ -86,7 +86,7 @@ export default class SideMenu extends Component {
               return (
                 <Item key={this.menu[key].to}>
                   <Link to={this.menu[key].to}>
-                    <Icon type={this.menu[key].iconType} />
+                    {this.menu[key].iconType}
                     {this.menu[key].text}
                   </Link>
                 </Item>

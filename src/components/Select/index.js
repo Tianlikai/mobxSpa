@@ -10,11 +10,6 @@ const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
 
 export default class BaseSelect extends React.Component {
-  static defaultProps = {
-    data: [],
-    fixClass: 'radio-group',
-  };
-
   static propTypes = {
     fixClass: PropTypes.string,
     className: PropTypes.string,
@@ -22,6 +17,11 @@ export default class BaseSelect extends React.Component {
     data: PropTypes.array,
     filterData: PropTypes.object,
     handleSelect: PropTypes.func,
+  };
+
+  static defaultProps = {
+    data: [],
+    fixClass: 'radio-group',
   };
 
   radioHandle = (e) => {
@@ -32,9 +32,7 @@ export default class BaseSelect extends React.Component {
   };
 
   render() {
-    const {
-      value = {}, data, fixClass, className,
-    } = this.props;
+    const { value = {}, data, fixClass, className } = this.props;
 
     return (
       <div className={classnames(fixClass, { [className]: className })}>
@@ -50,7 +48,7 @@ export default class BaseSelect extends React.Component {
                 value={value[key] || ''}
                 onChange={this.radioHandle}
               >
-                {option.children.map(item => (
+                {option.children.map((item) => (
                   <RadioButton key={`${option.dataKey}${item.key}`} value={item.key}>
                     {item.value}
                   </RadioButton>

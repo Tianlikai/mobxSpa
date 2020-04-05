@@ -9,7 +9,7 @@ import Card from './Card';
 import './style.scss';
 
 const commonUtil = (data) => {
-  const pageIds = data.map(item => item.id);
+  const pageIds = data.map((item) => item.id);
   const currentPage = new Set([...pageIds]);
   const currentSize = currentPage.size; // now 总数
 
@@ -17,12 +17,6 @@ const commonUtil = (data) => {
 };
 
 export default class ListCard extends React.Component {
-  static defaultProps = {
-    fixWrapper: 'videoCardList',
-    fixSelect: 'videoSelectAllBtn',
-    fixContent: 'videoListContent',
-  };
-
   static propTypes = {
     fixWrapper: PropTypes.string,
     fixSelect: PropTypes.string,
@@ -33,6 +27,12 @@ export default class ListCard extends React.Component {
     data: PropTypes.array,
     selectedRowKeys: PropTypes.array,
     handleChange: PropTypes.func,
+  };
+
+  static defaultProps = {
+    fixWrapper: 'videoCardList',
+    fixSelect: 'videoSelectAllBtn',
+    fixContent: 'videoListContent',
   };
 
   constructor(props) {
@@ -55,7 +55,7 @@ export default class ListCard extends React.Component {
       const { selectedRowKeys } = state;
       const ids = new Set([...selectedRowKeys]);
 
-      const intersect = new Set([...currentPage].filter(x => ids.has(x)));
+      const intersect = new Set([...currentPage].filter((x) => ids.has(x)));
 
       return {
         selectedRowKeys: oldPage,
@@ -80,7 +80,7 @@ export default class ListCard extends React.Component {
       ids.add(id);
     }
 
-    const intersect = new Set([...currentPage].filter(x => ids.has(x)));
+    const intersect = new Set([...currentPage].filter((x) => ids.has(x)));
 
     this.setState(
       {
@@ -107,7 +107,7 @@ export default class ListCard extends React.Component {
 
     const set = checked
       ? new Set([...ids, ...currentPage])
-      : new Set([...ids].filter(x => !currentPage.has(x)));
+      : new Set([...ids].filter((x) => !currentPage.has(x)));
 
     this.setState(
       {
@@ -158,7 +158,7 @@ export default class ListCard extends React.Component {
 
         <div className={`listRoot ${fixContent}`}>
           {data
-            && data.map(card => (
+            && data.map((card) => (
               <Card
                 key={card.id}
                 {...card}

@@ -1,9 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
-const HappyPack = require('happypack');
 const webpackApiMocker = require('webpack-api-mocker');
 
-const happyThreadPool = HappyPack.ThreadPool({ size: 5 });
 const environment = require('./environment');
 
 const publicPath = `${environment.PROTOCOL}://${environment.HOST}:${environment.PORT}/`;
@@ -20,40 +18,29 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(sa|sc|c)ss$/,
-        use: [{ loader: 'style-loader' }, { loader: 'happypack/loader?id=css' }],
+        test: /\.css$/i,
+        exclude: path.join(__dirname, '../src'),
+        use: ['thread-loader', 'style-loader', 'css-loader'],
+      },
+      {
+        test: /\.s[ac]ss$/i,
+        use: [
+          'thread-loader',
+          'style-loader',
+          'css-loader',
+          'postcss-loader',
+          'sass-loader',
+          {
+            loader: 'sass-resources-loader',
+            options: {
+              resources: path.resolve(__dirname, '../src/variable.scss'),
+            },
+          },
+        ],
       },
     ],
   },
-  plugins: [
-    new HappyPack({
-      id: 'js',
-      loaders: [
-        {
-          loader: 'babel-loader',
-          options: {
-            cacheDirectory: true,
-          },
-        },
-      ],
-      threadPool: happyThreadPool,
-    }),
-    new HappyPack({
-      id: 'css',
-      loaders: [
-        { loader: 'css-loader' },
-        { loader: 'postcss-loader' },
-        { loader: 'sass-loader' },
-        {
-          loader: 'sass-resources-loader',
-          options: {
-            resources: path.resolve(__dirname, '../src/variable.scss'),
-          },
-        }],
-      threadPool: happyThreadPool,
-    }),
-    new webpack.HotModuleReplacementPlugin(),
-  ],
+  plugins: [new webpack.HotModuleReplacementPlugin()],
   devServer: {
     contentBase: path.resolve(__dirname, '../src'),
     host: environment.HOST,

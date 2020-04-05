@@ -5,9 +5,8 @@ import classnames from 'classnames';
 
 import { Menu, Dropdown as DropDown, Checkbox } from 'antd';
 
-import IconCircle from '../IconCircle/index';
-
 import { STATUS_VIDEO } from '@/settings/const';
+import IconCircle from '../IconCircle/index';
 
 import './Card.scss';
 
@@ -22,10 +21,6 @@ Title.propTypes = {
 };
 
 class Card extends React.Component {
-  static defaultProps = {
-    fixClass: 'videoItem',
-  };
-
   static propTypes = {
     id: PropTypes.number,
     page: PropTypes.string,
@@ -45,6 +40,10 @@ class Card extends React.Component {
     handleEditVideo: PropTypes.func,
     handleModifyVideo: PropTypes.func,
     handleOpenConnect: PropTypes.func,
+  };
+
+  static defaultProps = {
+    fixClass: 'videoItem',
   };
 
   constructor(props) {

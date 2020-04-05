@@ -1,3 +1,12 @@
+import React from 'react';
+import {
+  DashboardOutlined,
+  FormOutlined,
+  ProfileOutlined,
+  TableOutlined,
+  UnorderedListOutlined,
+} from '@ant-design/icons';
+
 /**
  * 左侧菜单 需要展示的路由
  * @param {iconType} antd内置图标
@@ -8,14 +17,14 @@
  */
 export default {
   home: {
-    iconType: 'dashboard',
+    iconType: <DashboardOutlined />,
     text: 'Dashboard',
     PERMISSIONS: true,
     children: [],
     to: '/home',
   },
   form: {
-    iconType: 'form',
+    iconType: <FormOutlined />,
     text: '表单页',
     PERMISSIONS: true,
     children: [
@@ -32,7 +41,7 @@ export default {
     ],
   },
   table: {
-    iconType: 'table',
+    iconType: <TableOutlined />,
     text: '表格页',
     PERMISSIONS: true,
     children: [
@@ -44,7 +53,7 @@ export default {
     ],
   },
   list: {
-    iconType: 'database',
+    iconType: <UnorderedListOutlined />,
     text: '列表页',
     PERMISSIONS: true,
     children: [
@@ -56,7 +65,7 @@ export default {
     ],
   },
   detail: {
-    iconType: 'profile',
+    iconType: <ProfileOutlined />,
     text: '详情页',
     PERMISSIONS: true,
     children: [

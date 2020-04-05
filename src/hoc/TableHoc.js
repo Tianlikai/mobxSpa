@@ -6,27 +6,27 @@ import { inject, observer } from 'mobx-react';
 
 import { Pagination } from 'antd';
 
-const TableHoc = config => (WrappedComponent) => {
+const TableHoc = (config) => (WrappedComponent) => {
   const {
     store, // 绑定 store
     className,
     NoPager, // 是否需要外置翻页器
     noNeedReloadPathname = [], // 不需要重新加载数据的返回页面
-    dealFormatData = data => data, // 清理列表数据方法
+    dealFormatData = (data) => data, // 清理列表数据方法
   } = config || {};
 
   @inject(store)
   @observer
   class BaseTable extends Component {
-    static defaultProps = {
-      fixClass: 'baseTable-wrapper',
-    };
-
     static propTypes = {
       fixClass: PropTypes.string,
       className: PropTypes.string,
       location: PropTypes.object.isRequired,
       match: PropTypes.object.isRequired,
+    };
+
+    static defaultProps = {
+      fixClass: 'baseTable-wrapper',
     };
 
     componentDidMount() {

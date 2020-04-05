@@ -23,7 +23,6 @@ module.exports = {
       '@/layouts': path.resolve(__dirname, '../src', 'layouts'),
       '@/utils': path.resolve(__dirname, '../src', 'utils'),
       '@/settings': path.resolve(__dirname, '../src', 'settings'),
-      moment: 'dayjs',
     },
   },
   externals: {
@@ -33,38 +32,21 @@ module.exports = {
     ReactRouterDOM: 'react-router-dom',
     MobxReact: 'mobx-react',
   },
-  optimization: {
-    usedExports: true,
-    runtimeChunk: {
-      name: 'runtime',
-    },
-    splitChunks: {
-      chunks: 'all',
-      minSize: 30000,
-      maxSize: 0,
-      minChunks: 1,
-      maxAsyncRequests: 5,
-      maxInitialRequests: 3,
-      automaticNameDelimiter: '~',
-      name: true,
-      cacheGroups: {
-        vendors: {
-          test: /[\\/]node_modules[\\/]/,
-          priority: -10,
-          name: 'vendors',
-        },
-        default: {
-          minChunks: 2,
-          priority: -20,
-          reuseExistingChunk: true,
-          name: 'common',
-        },
-      },
-    },
-  },
   module: {
     rules: [
-      { test: /\.jsx?$/, exclude: /node_modules/, use: [{ loader: 'happypack/loader?id=js' }] },
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: [
+          { loader: 'thread-loader' },
+          {
+            loader: 'babel-loader',
+            options: {
+              cacheDirectory: true,
+            },
+          },
+        ],
+      },
       {
         test: /\.(png|jpg|svg|gif)$/,
         use: {

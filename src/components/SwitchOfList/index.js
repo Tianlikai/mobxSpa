@@ -2,8 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
-import { Icon } from 'antd';
-
+import { AppstoreOutlined, BarsOutlined } from '@ant-design/icons';
 import './style.scss';
 
 export default class SwitchOfList extends React.Component {
@@ -58,10 +57,10 @@ export default class SwitchOfList extends React.Component {
     return (
       <div className={classes}>
         <span className={classesBars} onClick={this.handleRedirectToCard}>
-          <Icon type="bars" />
+          <BarsOutlined />
         </span>
         <span className={classesCard} onClick={this.handleRedirectToTable}>
-          <Icon type="appstore-o" />
+          <AppstoreOutlined />
         </span>
       </div>
     );

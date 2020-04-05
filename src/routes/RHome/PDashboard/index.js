@@ -1,7 +1,8 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 
-import { Icon, Tooltip } from 'antd';
+import { Tooltip } from 'antd';
+import { CloseOutlined, DashboardOutlined, PlusOutlined } from '@ant-design/icons';
 
 import getChartOpt from '@/utils/echarts/index';
 import MomentNow from '@/components/MomentNow/index';
@@ -184,7 +185,7 @@ export default class Dashboard extends React.Component {
         <main className="PDashboard">
           <div className="dashboard-header">
             <span className="dashboard-icon">
-              <Icon type="dashboard" />
+              <DashboardOutlined />
               仪表盘
             </span>
           </div>
@@ -196,42 +197,42 @@ export default class Dashboard extends React.Component {
                   <span className="d-l-item-sort active">1</span>
                   <span className="d-l-item-name">个人看板</span>
                   <Tooltip title="删除">
-                    <Icon className="d-l-item-del" type="close" />
+                    <CloseOutlined className="d-l-item-del" />
                   </Tooltip>
                 </div>
                 <div className="dashboard-list-item">
                   <span className="d-l-item-sort">2</span>
                   <span className="d-l-item-name">个人看板</span>
                   <Tooltip title="删除">
-                    <Icon className="d-l-item-del" type="close" />
+                    <CloseOutlined className="d-l-item-del" />
                   </Tooltip>
                 </div>
                 <div className="dashboard-list-item">
                   <span className="d-l-item-sort">3</span>
                   <span className="d-l-item-name">个人看板</span>
                   <Tooltip title="删除">
-                    <Icon className="d-l-item-del" type="close" />
+                    <CloseOutlined className="d-l-item-del" />
                   </Tooltip>
                 </div>
                 <div className="dashboard-list-item">
                   <span className="d-l-item-sort">5</span>
                   <span className="d-l-item-name">个人看板</span>
                   <Tooltip title="删除">
-                    <Icon className="d-l-item-del" type="close" />
+                    <CloseOutlined className="d-l-item-del" />
                   </Tooltip>
                 </div>
                 <div className="dashboard-list-item">
                   <span className="d-l-item-sort">6</span>
                   <span className="d-l-item-name">个人看板</span>
                   <Tooltip title="删除">
-                    <Icon className="d-l-item-del" type="close" />
+                    <CloseOutlined className="d-l-item-del" />
                   </Tooltip>
                 </div>
               </div>
               <div className="dashboard-side-title">自定义</div>
               <div className="dashboard-list">
                 <div className="dashboard-list-item self dashed">
-                  <Icon className="d-l-item-add" type="plus" />
+                  <PlusOutlined className="d-l-item-add" />
                   <span className="d-l-item-name">新建仪表盘</span>
                 </div>
               </div>

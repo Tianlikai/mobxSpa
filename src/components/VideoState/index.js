@@ -4,8 +4,8 @@ import classnames from 'classnames';
 
 import { Tooltip } from 'antd';
 
-import IconCircle from '../IconCircle/index';
 import { STATUS_VIDEO } from '@/settings/const';
+import IconCircle from '../IconCircle/index';
 
 const VideoState = (props) => {
   const {

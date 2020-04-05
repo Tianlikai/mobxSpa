@@ -11,17 +11,17 @@ import './header.scss';
 const MenuItem = Menu.Item;
 
 export default class Header extends Component {
-  static defaultProps = {
-    AUTHORITY: auth,
-    username: '匿名用户',
-  };
-
   static propTypes = {
     username: PropTypes.string,
     currentAddress: PropTypes.string,
     AUTHORITY: PropTypes.object,
     logOut: PropTypes.func,
     // history: PropTypes.object,
+  };
+
+  static defaultProps = {
+    AUTHORITY: auth,
+    username: '匿名用户',
   };
 
   // goToTargetPage = () => {
@@ -52,9 +52,7 @@ export default class Header extends Component {
   };
 
   render() {
-    const {
-      logOut, currentAddress, AUTHORITY, username,
-    } = this.props;
+    const { logOut, currentAddress, AUTHORITY, username } = this.props;
     const key = currentAddress.split('/')[2];
     const { pageTitle, btnText } = AUTHORITY[key] || {};
     const hadCreatePermission = this.handleAuthority(); // 是否有创建权限

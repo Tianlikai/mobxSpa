@@ -9,14 +9,14 @@ const { TabPane } = Tabs;
 const { Switch } = ReactRouterDOM;
 
 export default class Container extends React.Component {
-  static defaultProps = {
-    prefix: 'container',
-  };
-
   static propTypes = {
     prefix: PropTypes.string,
     className: PropTypes.string,
     routerData: PropTypes.object,
+  };
+
+  static defaultProps = {
+    prefix: 'container',
   };
 
   handleTabChange = () => {};

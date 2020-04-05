@@ -1,17 +1,41 @@
 const path = require('path');
-const HappyPack = require('happypack');
 const TerserJSPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-
-const happyThreadPool = HappyPack.ThreadPool({ size: 5 });
 
 module.exports = {
   mode: 'production',
   // devtool: 'cheap-module-source-map',
   optimization: {
     minimizer: [new TerserJSPlugin({}), new OptimizeCSSAssetsPlugin({})],
+    usedExports: true,
+    runtimeChunk: {
+      name: 'runtime',
+    },
+    splitChunks: {
+      chunks: 'all',
+      minSize: 30000,
+      maxSize: 0,
+      minChunks: 1,
+      maxAsyncRequests: 5,
+      maxInitialRequests: 3,
+      automaticNameDelimiter: '~',
+      name: true,
+      cacheGroups: {
+        vendors: {
+          test: /[\\/]node_modules[\\/]/,
+          priority: -10,
+          name: 'vendors',
+        },
+        default: {
+          minChunks: 2,
+          priority: -20,
+          reuseExistingChunk: true,
+          name: 'common',
+        },
+      },
+    },
   },
   output: {
     filename: '[name].[chunkhash:8].js',
@@ -21,38 +45,35 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(sa|sc|c)ss$/,
-        use: [{ loader: MiniCssExtractPlugin.loader }, { loader: 'happypack/loader?id=css' }],
+        test: /\.css$/i,
+        exclude: path.join(__dirname, '../src'),
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+          },
+          'css-loader',
+        ],
+      },
+      {
+        test: /\.s[ac]ss$/i,
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+          },
+          'css-loader',
+          'postcss-loader',
+          'sass-loader',
+          {
+            loader: 'sass-resources-loader',
+            options: {
+              resources: path.resolve(__dirname, '../src/variable.scss'),
+            },
+          },
+        ],
       },
     ],
   },
   plugins: [
-    new HappyPack({
-      id: 'js',
-      loaders: [
-        {
-          loader: 'babel-loader',
-          options: {
-            cacheDirectory: true,
-          },
-        },
-      ],
-      threadPool: happyThreadPool,
-    }),
-    new HappyPack({
-      id: 'css',
-      loaders: [
-        { loader: 'css-loader' },
-        { loader: 'postcss-loader' },
-        { loader: 'sass-loader' },
-        {
-          loader: 'sass-resources-loader',
-          options: {
-            resources: path.resolve(__dirname, '../src/variable.scss'),
-          },
-        }],
-      threadPool: happyThreadPool,
-    }),
     new BundleAnalyzerPlugin({
       analyzerMode: 'static',
     }),

@@ -21,10 +21,6 @@ const noNeedReloadPathname = ['/form/baseForm', '/detail/baseDetail/'];
 
 @TableHoc({ store: 'TableStore', dealFormatData, noNeedReloadPathname })
 class SearchTable extends Component {
-  static defaultProps = {
-    titleValue: ['本次推广专属小程序二维码', '本次推广专属小程序链接'],
-  };
-
   static propTypes = {
     loading: PropTypes.bool,
     tableData: PropTypes.array, // 表格数据
@@ -35,6 +31,10 @@ class SearchTable extends Component {
     history: PropTypes.object.isRequired, // router history
     handleSearch: PropTypes.func.isRequired, // @TableHoc 表单搜索接口
     handleResetSearch: PropTypes.func.isRequired, // @TableHoc 表单重置接口
+  };
+
+  static defaultProps = {
+    titleValue: ['本次推广专属小程序二维码', '本次推广专属小程序链接'],
   };
 
   constructor(props) {
@@ -206,7 +206,7 @@ class SearchTable extends Component {
 
           <SearchForm
             handleReset={this.handleReset}
-            onSubmit={this.handleSearch}
+            onFinish={this.handleSearch}
             initialValue={query}
           />
         </div>

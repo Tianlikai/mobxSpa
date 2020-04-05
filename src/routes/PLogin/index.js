@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import { observer, inject } from 'mobx-react';
 
-import SignInForm from './SignInForm';
 import BasicFooter from '@/layouts/LBasic/Footer';
+import SignInForm from './SignInForm';
 
 import './style.scss';
 
@@ -45,7 +45,7 @@ class SignIn extends Component {
           <div className={`${PREFIX}-content-logo`}>
             <div className={`${PREFIX}-content-title`}>Backstage management</div>
           </div>
-          <SignInForm onSubmit={this.onSubmit} />
+          <SignInForm onFinish={this.onSubmit} />
         </main>
         <BasicFooter className={`${PREFIX}-footer`} />
       </div>

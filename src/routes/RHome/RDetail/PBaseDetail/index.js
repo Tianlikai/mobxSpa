@@ -23,10 +23,6 @@ import './style.scss';
 @inject('TableStore')
 @observer
 class BaseDetail extends Component {
-  static defaultProps = {
-    titleValue: ['本次推广专属小程序二维码', '本次推广专属小程序链接'],
-  };
-
   static propTypes = {
     loading: PropTypes.bool,
     titleValue: PropTypes.array,
@@ -35,7 +31,11 @@ class BaseDetail extends Component {
     store: PropTypes.object.isRequired, // @TableHoc 高阶组件中绑定的 mobx store 对象
     routerData: PropTypes.object.isRequired,
     TableStore: PropTypes.object.isRequired,
-  }
+  };
+
+  static defaultProps = {
+    titleValue: ['本次推广专属小程序二维码', '本次推广专属小程序链接'],
+  };
 
   constructor(props) {
     super(props);
@@ -112,14 +112,7 @@ class BaseDetail extends Component {
 
   render() {
     const { visibleModal } = this.state;
-    const {
-      routerData,
-      titleValue,
-      loading,
-      tableData,
-      store,
-      TableStore,
-    } = this.props;
+    const { routerData, titleValue, loading, tableData, store, TableStore } = this.props;
     const { config } = routerData;
 
     const { chooseImgByte } = TableStore;
@@ -142,7 +135,7 @@ class BaseDetail extends Component {
           <div className="proInfo-container">
             <div className="proInfo-left">
               {basicInformation
-                && Object.keys(basicInformation).map(key => (
+                && Object.keys(basicInformation).map((key) => (
                   <InfoItem
                     key={key}
                     label={basicInformation[key].label}
@@ -166,7 +159,7 @@ class BaseDetail extends Component {
           <div className="data-frame-container">
             <Row type="flex" justify="space-between">
               {dataOverview
-                && dataOverview.map(col => (
+                && dataOverview.map((col) => (
                   <Col span={7}>
                     <FrameItem
                       key={col.key}
