@@ -42,7 +42,7 @@
     "@ant-design/icons": "^4.0.5",
     "@babel/runtime-corejs2": "^7.4.4",
     "antd": "^4.1.0",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "classnames": "^2.2.6",
     "core-js": "^2.6.5",
     "dayjs": "^1.8.21",
