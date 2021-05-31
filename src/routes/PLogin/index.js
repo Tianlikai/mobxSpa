@@ -15,7 +15,7 @@ const PREFIX = `${__PROJECT__}PSignIn`;
 @observer
 class SignIn extends Component {
   static propTypes = {
-    User: PropTypes.string,
+    User: PropTypes.object,
     history: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired,
   };

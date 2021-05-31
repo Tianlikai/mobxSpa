@@ -1,8 +1,9 @@
-import { action, observable } from 'mobx';
+import { action, observable, flow } from 'mobx';
 import Storage from '@/utils/storage';
 import { Modal } from 'antd';
 
 import api from '../api/index';
+
 
 class User {
   @observable
@@ -18,20 +19,18 @@ class User {
   area = null;
 
   @action
-  signIn(data, callback) {
-    api
-      .signIn(data)
-      .then((resp) => {
-        this.setUserInfo(resp);
-        const permissionList = this.saveUserInfo(resp);
-        callback(permissionList);
-      })
-      .catch((error) => {
-        Modal.error({
-          title: error.message,
-        });
+  signIn = flow(function* singInAction(data, callback) {
+    try {
+      const resp = yield api.signIn(data);
+      this.setUserInfo(resp);
+      const permissionList = this.saveUserInfo(resp);
+      callback(permissionList);
+    } catch (error) {
+      Modal.error({
+        title: error.message,
       });
-  }
+    }
+  })
 
   @action
   setUserInfo(data) {

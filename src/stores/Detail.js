@@ -1,7 +1,7 @@
 import dayJs from 'dayjs';
 import CloneDeep from 'lodash/cloneDeep';
 
-import { action, observable } from 'mobx';
+import { action, observable, runInAction } from 'mobx';
 import { GRADE } from '@/settings/const';
 import api from '../api';
 
@@ -46,17 +46,17 @@ const DATA_OVERVIEW = [
 
 class Detail {
   @observable
-  tableData;
+  tableData = {
+    loading: false,
+    count: 0,
+    listItems: [],
+  };
 
-  constructor() {
-    this.tableData = {
-      loading: false,
-      count: 0,
-      listItems: [],
-    };
-    this.basicInformation = INFORMATION;
-    this.dataOverview = DATA_OVERVIEW;
-  }
+  @observable
+  basicInformation = INFORMATION;
+
+  @observable
+  dataOverview = DATA_OVERVIEW;
 
   @action
   getData({ id, pageNo = 1, pageSize = 10 } = {}) {
@@ -66,68 +66,70 @@ class Detail {
         params: { promotionId: id, pageNo, itemsPerPage: pageSize },
       })
       .then((data) => {
-        const basicInformation = CloneDeep(this.basicInformation);
-        const keys = Object.keys(basicInformation);
-        keys.forEach((key) => {
-          if (key === 'createdAt') {
-            basicInformation[key].value = data[key]
-              ? dayJs(data[key]).format('YYYY-MM-DD HH:mm:ss')
-              : '-';
-          } else if (key === 'grade') {
-            const pos = GRADE.findIndex(grade => grade.value === data[key]);
-            basicInformation[key].value = data[key] && pos >= 0 ? GRADE[pos].text : '-';
-          } else {
-            basicInformation[key].value = data[key] || '-';
-          }
-        });
-        this.basicInformation = basicInformation;
-
-        const dataOverview = this.dataOverview.slice();
-        dataOverview.forEach((item, i) => {
-          switch (item.key) {
-            case 'registerNumber': {
-              dataOverview[i].total = data.registerNumber;
-              dataOverview[i].yesterday = data.yesterdayRegisterNumber;
-              break;
+        runInAction(() => {
+          const basicInformation = CloneDeep(this.basicInformation);
+          const keys = Object.keys(basicInformation);
+          keys.forEach((key) => {
+            if (key === 'createdAt') {
+              basicInformation[key].value = data[key]
+                ? dayJs(data[key]).format('YYYY-MM-DD HH:mm:ss')
+                : '-';
+            } else if (key === 'grade') {
+              const pos = GRADE.findIndex(grade => grade.value === data[key]);
+              basicInformation[key].value = data[key] && pos >= 0 ? GRADE[pos].text : '-';
+            } else {
+              basicInformation[key].value = data[key] || '-';
             }
-            case 'payRegisterNumber': {
-              dataOverview[i].total = data.payRegisterNumber;
-              dataOverview[i].yesterday = data.yesterdayPayRegisterNumber;
-              break;
-            }
-            case 'totalShare': {
-              dataOverview[i].total = data.totalShare;
-              dataOverview[i].yesterday = data.yesterdayShare;
-              break;
-            }
-            default:
-              break;
-          }
-        });
-        this.dataOverview = dataOverview;
+          });
+          this.basicInformation = basicInformation;
 
-        const count = data.totalCourseOrderNumber;
-        const listItems = data.courseOrderlist.map((item) => {
-          const copy = Object.assign({}, item);
-          const pos = GRADE.findIndex(grade => grade.value === item.grade);
-          copy.payTime = item.payTime ? dayJs(item.payTime).format('YYYY-MM-DD HH:mm:ss') : '-';
-          copy.payMoney = item.payMoney ? `¥${item.payMoney}` : '-';
-          copy.share = item.share ? `¥${item.share}` : '-';
-          if (item.grade && pos >= 0) {
-            const i = GRADE.findIndex(grade => grade.value === item.grade);
-            copy.grade = pos >= 0 ? GRADE[i].text : '-';
-          } else {
-            copy.grade = '-';
-          }
-          copy.key = item.id;
-          return item;
-        });
+          const dataOverview = this.dataOverview.slice();
+          dataOverview.forEach((item, i) => {
+            switch (item.key) {
+              case 'registerNumber': {
+                dataOverview[i].total = data.registerNumber;
+                dataOverview[i].yesterday = data.yesterdayRegisterNumber;
+                break;
+              }
+              case 'payRegisterNumber': {
+                dataOverview[i].total = data.payRegisterNumber;
+                dataOverview[i].yesterday = data.yesterdayPayRegisterNumber;
+                break;
+              }
+              case 'totalShare': {
+                dataOverview[i].total = data.totalShare;
+                dataOverview[i].yesterday = data.yesterdayShare;
+                break;
+              }
+              default:
+                break;
+            }
+          });
+          this.dataOverview = dataOverview;
 
-        this.tableData = {
-          loading: false,
-          count,
-          listItems,
-        };
+          const count = data.totalCourseOrderNumber;
+          const listItems = data.courseOrderlist.map((item) => {
+            const copy = Object.assign({}, item);
+            const pos = GRADE.findIndex(grade => grade.value === item.grade);
+            copy.payTime = item.payTime ? dayJs(item.payTime).format('YYYY-MM-DD HH:mm:ss') : '-';
+            copy.payMoney = item.payMoney ? `¥${item.payMoney}` : '-';
+            copy.share = item.share ? `¥${item.share}` : '-';
+            if (item.grade && pos >= 0) {
+              const i = GRADE.findIndex(grade => grade.value === item.grade);
+              copy.grade = pos >= 0 ? GRADE[i].text : '-';
+            } else {
+              copy.grade = '-';
+            }
+            copy.key = item.id;
+            return item;
+          });
+
+          this.tableData = {
+            loading: false,
+            count,
+            listItems,
+          };
+        });
       });
   }
 

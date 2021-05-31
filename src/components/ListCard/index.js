@@ -45,32 +45,41 @@ export default class ListCard extends React.Component {
     };
   }
 
-  static getDerivedStateFromProps(props, state) {
+  static getDerivedStateFromProps(props) {
+    // const { data, selectedRowKeys: selectedVideos } = props;
+    // if (selectedVideos) {
+    //   const { currentPage, currentSize } = commonUtil(data);
+
+    //   const oldPage = new Set([...selectedVideos]);
+
+    //   const { selectedRowKeys } = state;
+    //   const ids = new Set([...selectedRowKeys]);
+
+    //   const intersect = new Set([...currentPage].filter((x) => ids.has(x)));
+    //   console.log(222, {
+    //     indeterminate: intersect.size && intersect.size < currentSize,
+    //   });
+    //   return {
+    //     selectedRowKeys: oldPage,
+    //     indeterminate: intersect.size && intersect.size < currentSize,
+    //     checkAll: intersect.size !== 0 && intersect.size === currentSize,
+    //   };
+    // }
+    // return null;
     const { data, selectedRowKeys: selectedVideos } = props;
     if (selectedVideos) {
-      const { currentPage, currentSize } = commonUtil(data);
-
-      const oldPage = new Set([...selectedVideos]);
-
-      const { selectedRowKeys } = state;
-      const ids = new Set([...selectedRowKeys]);
-
-      const intersect = new Set([...currentPage].filter((x) => ids.has(x)));
-
+      const { currentSize } = commonUtil(data);
+      const propLen = selectedVideos.length;
       return {
-        selectedRowKeys: oldPage,
-        indeterminate: intersect.size && intersect.size < currentSize,
-        checkAll: intersect.size !== 0 && intersect.size === currentSize,
+        selectedRowKeys: new Set([...selectedVideos]),
+        indeterminate: propLen !== 0 && propLen < currentSize,
+        checkAll: propLen !== 0 && propLen === currentSize,
       };
     }
     return null;
   }
 
   handleChange = (id) => {
-    const { data } = this.props;
-
-    const { currentPage, currentSize } = commonUtil(data);
-
     const { selectedRowKeys } = this.state;
     const ids = new Set([...selectedRowKeys]);
 
@@ -79,48 +88,21 @@ export default class ListCard extends React.Component {
     } else {
       ids.add(id);
     }
-
-    const intersect = new Set([...currentPage].filter((x) => ids.has(x)));
-
-    this.setState(
-      {
-        selectedRowKeys: ids,
-        indeterminate: intersect.size && intersect.size < currentSize,
-        checkAll: intersect.size !== 0 && intersect.size === currentSize,
-      },
-      () => {
-        const { handleChange } = this.props;
-        const array = Array.from(ids);
-        handleChange(array);
-      },
-    );
+    const { handleChange } = this.props;
+    const array = Array.from(ids);
+    handleChange(array);
   };
 
   handleCheckAll = (e) => {
     const { data } = this.props;
     const { currentPage } = commonUtil(data);
-
-    const { selectedRowKeys } = this.state;
-    const ids = new Set([...selectedRowKeys]);
-
     const { checked } = e.target;
-
     const set = checked
-      ? new Set([...ids, ...currentPage])
-      : new Set([...ids].filter((x) => !currentPage.has(x)));
-
-    this.setState(
-      {
-        selectedRowKeys: set,
-        indeterminate: false,
-        checkAll: checked,
-      },
-      () => {
-        const { handleChange } = this.props;
-        const array = Array.from(set);
-        handleChange(array);
-      },
-    );
+      ? new Set([...currentPage])
+      : new Set([]);
+    const { handleChange } = this.props;
+    const array = Array.from(set);
+    handleChange(array);
   };
 
   render() {

@@ -24,7 +24,7 @@ FlexLayout.propTypes = {
   prefixCls: PropTypes.string,
   className: PropTypes.string,
   style: PropTypes.object,
-  children: PropTypes.element.isRequired,
+  children: PropTypes.arrayOf(PropTypes.element).isRequired,
 };
 
 export default FlexLayout;

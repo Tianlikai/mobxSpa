@@ -14,7 +14,7 @@ class MyForm extends Component {
     form: PropTypes.object.isRequired, // antd 表单对象
     formItemLayout: PropTypes.object,
     tailFormItemLayout: PropTypes.object,
-    handleSubmit: PropTypes.func.isRequired, // FormHoc 公用方法，该方法调用会默认触发尾部onSubmit回调
+    onSubmit: PropTypes.func.isRequired, // FormHoc 公用方法，该方法调用会默认触发尾部onFinish回调
   };
 
   static defaultProps = {
@@ -42,10 +42,9 @@ class MyForm extends Component {
     },
   };
 
-  onSubmit = (e) => {
-    e.preventDefault();
-    const { handleSubmit } = this.props;
-    handleSubmit();
+  onFinish = values => {
+    const { onSubmit } = this.props;
+    onSubmit(values);
   };
 
   validatorVideo(rule, value, callback) {
@@ -64,7 +63,7 @@ class MyForm extends Component {
     const initialValues = { video: { files: [], finish: [] } };
     return (
       <div className="orderForm-container">
-        <Form onSubmit={this.onSubmit} initialValues={initialValues}>
+        <Form onFinish={this.onFinish} initialValues={initialValues}>
           <FormItem className="orderForm-item" name="video" {...formItemLayout} label="视频名称">
             <UpLoaderWithPreview mimeType={mimeType} />
             {/* {getFieldDecorator('video', {

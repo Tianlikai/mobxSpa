@@ -18,7 +18,7 @@ class BForm extends Component {
     formItemLayout: PropTypes.object,
     tailFormItemLayout: PropTypes.object,
     formItemRadioLayout: PropTypes.object,
-    handleSubmit: PropTypes.func.isRequired, // FormHoc 公用方法，该方法调用会默认触发尾部onSubmit回调
+    onSubmit: PropTypes.func.isRequired, // FormHoc 公用方法，该方法调用会默认触发尾部onFinish回调
   };
 
   static defaultProps = {
@@ -56,10 +56,9 @@ class BForm extends Component {
     },
   };
 
-  onSubmit = (e) => {
-    e.preventDefault();
-    const { handleSubmit } = this.props;
-    handleSubmit();
+  onFinish = values => {
+    const { onSubmit } = this.props;
+    onSubmit(values);
   };
 
   render() {
@@ -74,7 +73,7 @@ class BForm extends Component {
 
     return (
       <div className="orderForm-container">
-        <Form onSubmit={this.onSubmit}>
+        <Form onFinish={this.onFinish}>
           <FormItem className="orderForm-item" name="area" label="配置地区" {...formItemLayout}>
             <Cascader options={regions} />
             {/* {getFieldDecorator('area', {
