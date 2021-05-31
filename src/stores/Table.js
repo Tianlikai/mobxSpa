@@ -1,4 +1,4 @@
-import { action, observable } from 'mobx';
+import { action, observable, flow } from 'mobx';
 
 import TableModel from './modal/TableModel';
 import api from '../api';
@@ -29,14 +29,23 @@ class Table {
   }
 
   @action
+  handleSort(values) {
+    const params = Object.assign(values, { pageNo: 1 });
+    const data = this.tableModel.getParams(params);
+    this.getData(data);
+  }
+
+  @action
   handleResetSearch() {
-    this.getData({
+    const params = Object.assign({
       pageNo: 1,
       grade: undefined,
       name: undefined,
       startTime: undefined,
       endTime: undefined,
-    });
+    }, { pageNo: 1 });
+    const data = this.tableModel.getParams(params);
+    this.getData(data);
   }
 
   @action
@@ -51,72 +60,72 @@ class Table {
     this.getData(data);
   }
 
-  @action
-  getData({
+
+  getData = flow(function* getDataAction({
     name = undefined,
     grade = undefined,
     pageNo = 1,
     pageSize = 10,
     startTime = undefined,
     endTime = undefined,
+    order = undefined,
   } = {}) {
     this.tableData.loading = true;
-    api
-      .initTableData({
-        params: {
-          name,
-          grade,
-          pageNo,
-          itemsPerPage: pageSize,
-          startTime,
-          endTime,
-        },
-      })
-      .then((resp) => {
-        const { count, items: listItems } = resp;
-        const byId = listItems.map(item => item.id);
+    const resp = yield api.initTableData({
+      params: {
+        name,
+        grade,
+        pageNo,
+        itemsPerPage: pageSize,
+        startTime,
+        endTime,
+        order,
+      },
+    });
+    const { count, items: listItems } = resp;
+    const byId = listItems.map(item => item.id);
+    const tableData = {
+      loading: false,
+      pageNo: pageNo || this.tableData.pageNo,
+      pageSize: pageSize || this.tableData.pageSize,
+      count,
+      listItems,
+      byId,
+      errorMessage: undefined,
+      needReload: false,
+      query: {
+        grade,
+        name,
+        startTime,
+        endTime,
+        order,
+      },
+    };
+    this.tableModel.tableData = tableData;
+    this.tableData = tableData;
+  });
 
-        this.tableData = {
-          loading: false,
-          pageNo: pageNo || this.tableData.pageNo,
-          pageSize: pageSize || this.tableData.pageSize,
-          count,
-          listItems,
-          byId,
-          errorMessage: undefined,
-          needReload: false,
-          query: {
-            grade,
-            name,
-            startTime,
-            endTime,
-          },
-        };
-      });
-  }
-
-  @action
-  getWeiCode({
-    promotionId, width = 200, autoColor = false, isHyaline = false,
+  getWeiCode = flow(function* getWeiCodeAction({
+    promotionId,
+    width = 200,
+    autoColor = false,
+    isHyaline = false,
   }) {
     if (!this.imgByte[promotionId]) {
-      api
-        .getQRCode({
-          promotionId,
-          width,
-          autoColor,
-          isHyaline,
-        })
-        .then((data) => {
-          this.imgByte[promotionId] = data;
-          this.chooseImgByte = data;
-          this.activeId = promotionId;
-        });
+      const data = yield api.getQRCode({
+        promotionId,
+        width,
+        autoColor,
+        isHyaline,
+      });
+      this.imgByte[promotionId] = data;
+      this.chooseImgByte = data;
+      this.activeId = promotionId;
     } else {
       this.chooseImgByte = this.imgByte[promotionId];
       this.activeId = promotionId;
     }
-  }
+  })
 
   @action
   delWeiCode() {

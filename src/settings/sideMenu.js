@@ -15,15 +15,17 @@ import {
  * @param {children} 子菜单
  * @param {to} 跳转地址
  */
-export default {
-  home: {
+export default [
+  {
+    key: 'home',
     iconType: <DashboardOutlined />,
     text: 'Dashboard',
     PERMISSIONS: true,
     children: [],
     to: '/home',
   },
-  form: {
+  {
+    key: 'form',
     iconType: <FormOutlined />,
     text: '表单页',
     PERMISSIONS: true,
@@ -40,7 +42,8 @@ export default {
       },
     ],
   },
-  table: {
+  {
+    key: 'table',
     iconType: <TableOutlined />,
     text: '表格页',
     PERMISSIONS: true,
@@ -52,7 +55,8 @@ export default {
       },
     ],
   },
-  list: {
+  {
+    key: 'list',
     iconType: <UnorderedListOutlined />,
     text: '列表页',
     PERMISSIONS: true,
@@ -64,7 +68,8 @@ export default {
       },
     ],
   },
-  detail: {
+  {
+    key: 'detail',
     iconType: <ProfileOutlined />,
     text: '详情页',
     PERMISSIONS: true,
@@ -76,4 +81,4 @@ export default {
       },
     ],
   },
-};
+];

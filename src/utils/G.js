@@ -81,10 +81,9 @@ function encodeQuery(params) {
 
 function checkPermission(hadPermissionList) {
   if (
-    Object.prototype.toString.call(hadPermissionList) === '[object Boolean]' &&
-    hadPermissionList
+    Object.prototype.toString.call(hadPermissionList) === '[object Boolean]'
   ) {
-    return true;
+    return hadPermissionList;
   }
   const permissionList = Storage.get('permissionList') || [];
   const permissions = hadPermissionList.findIndex(p => permissionList.indexOf(p) >= 0);

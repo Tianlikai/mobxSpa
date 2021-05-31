@@ -31,6 +31,7 @@ class ListWithSwitch extends Component {
   state = {
     showType: 'card',
     filterData: {},
+    selectedRowKeys: [],
   };
 
   get columns() {
@@ -110,6 +111,12 @@ class ListWithSwitch extends Component {
     this.setState({ showType });
   };
 
+  handleChange = ids => {
+    this.setState({
+      selectedRowKeys: ids,
+    });
+  }
+
   render() {
     const { routerData, loading, tableData } = this.props;
     const { config } = routerData;
@@ -127,7 +134,7 @@ class ListWithSwitch extends Component {
       },
     ];
 
-    const { filterData, showType } = this.state;
+    const { filterData, showType, selectedRowKeys } = this.state;
 
     return (
       <WithBreadcrumb config={config}>
@@ -158,8 +165,10 @@ class ListWithSwitch extends Component {
           key="listCard"
           page="personal"
           data={tableData}
+          selectedRowKeys={selectedRowKeys}
           loading={loading}
           display={showType === 'card'}
+          handleChange={this.handleChange}
           // handleDelete={this.handleDelete.bind(this)}
           // handleEditVideo={this.handleEditVideo.bind(this)}
           // handleModifyVideo={this.handleModifyVideo.bind(this)}

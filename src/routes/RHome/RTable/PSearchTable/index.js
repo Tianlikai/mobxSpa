@@ -31,6 +31,7 @@ class SearchTable extends Component {
     history: PropTypes.object.isRequired, // router history
     handleSearch: PropTypes.func.isRequired, // @TableHoc 表单搜索接口
     handleResetSearch: PropTypes.func.isRequired, // @TableHoc 表单重置接口
+    handleSort: PropTypes.func.isRequired, // @TableHoc Table排序
   };
 
   static defaultProps = {
@@ -51,6 +52,7 @@ class SearchTable extends Component {
         title: '创建时间',
         dataIndex: 'createdAt',
         key: 'createdAt',
+        sorter: true, // 服务端排序
       },
       {
         title: '地区',
@@ -161,11 +163,10 @@ class SearchTable extends Component {
 
   handleSearch = (value) => {
     const { timeLimit = [undefined, undefined], grade } = value;
-    let { queryCond: name } = value;
+    let { name } = value;
     const startTime = timeLimit[0] && timeLimit[0].format('YYYY-MM-DD HH:mm:ss');
     const endTime = timeLimit[1] && timeLimit[1].format('YYYY-MM-DD HH:mm:ss');
     name = name ? name.replace(/^(\s|\u00A0)+/, '').replace(/(\s|\u00A0)+$/, '') : undefined;
-
     const { handleSearch } = this.props;
     handleSearch({
       startTime,
@@ -174,6 +175,11 @@ class SearchTable extends Component {
       grade: grade || undefined,
     });
   };
+
+  handleTableChange = (...[,, { order }]) => {
+    const { handleSort } = this.props;
+    handleSort({ order });
+  }
 
   render() {
     const { visibleModal, record } = this.state;
@@ -216,6 +222,7 @@ class SearchTable extends Component {
           className="self-table-wrapper"
           loading={loading}
           dataSource={tableData}
+          onChange={this.handleTableChange}
           pagination={false}
           columns={this.columns}
         />

@@ -17,7 +17,7 @@ class TableModel {
     return {
       pageNo: this.pageNo,
       pageSize: this.pageSize,
-      ...this.query,
+      ...this.tableData.query,
       ...data,
     };
   }

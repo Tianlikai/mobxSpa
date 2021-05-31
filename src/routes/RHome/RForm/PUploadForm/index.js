@@ -26,7 +26,9 @@ class UploadForm extends Component {
     // FormStore.initialData();
   }
 
-  handleSubmit = () => {};
+  handleSubmit = () => {
+    // console.log('上传表单的数据', values);
+  };
 
   render() {
     const {
