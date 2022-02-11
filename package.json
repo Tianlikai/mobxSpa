@@ -51,7 +51,7 @@
     "mobx": "^5.0.3",
     "mobx-react": "^5.2.3",
     "mockjs": "^1.0.1-beta3",
-    "node-sass": "^4.13.1",
+    "node-sass": "^7.0.0",
     "object-assign": "^4.1.1",
     "prop-types": "^15.6.2",
     "qiniu-js": "^2.5.3",
