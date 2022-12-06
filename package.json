@@ -55,7 +55,7 @@
     "object-assign": "^4.1.1",
     "prop-types": "^15.6.2",
     "qiniu-js": "^2.5.3",
-    "qs": "^6.6.0",
+    "qs": "^6.9.7",
     "react": "^16.8.6",
     "react-content-loader": "^4.0.1",
     "react-dom": "^16.8.6",
